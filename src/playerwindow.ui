@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>813</width>
-    <height>609</height>
+    <width>824</width>
+    <height>421</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -76,7 +76,9 @@
      <string>Current position </string>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(0, 0, 255);</string>
+     <string notr="true">QLCDNumber{
+color: rgb(0, 0, 255);
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
@@ -125,7 +127,10 @@
      <string>Duration</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(112, 112, 84);</string>
+     <string notr="true">QLCDNumber
+{
+color: rgb(112, 112, 84);
+}</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
@@ -241,7 +246,9 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Playback speed as a factor of original speed&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: grey;</string>
+     <string notr="true">QLabel{
+color: grey;
+}</string>
     </property>
     <property name="text">
      <string>1.00x</string>
@@ -2081,7 +2088,9 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Width x Height&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: grey;</string>
+     <string notr="true">QLabel{
+color: grey;
+}</string>
     </property>
     <property name="text">
      <string>wxh</string>
@@ -2105,11 +2114,41 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Audio bitrate&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 75 7pt &quot;MS Shell Dlg 2&quot;;
-color: grey;</string>
+     <string notr="true">QLabel{font: 75 7pt &quot;MS Shell Dlg 2&quot;;
+color: grey;
+}</string>
     </property>
     <property name="text">
      <string>wxh</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonFblike">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>60</y>
+      <width>22</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>22</width>
+      <height>22</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Like ExMplayer</string>
+    </property>
+    <property name="text">
+     <string>Like</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/like_icon.png</normaloff>:/images/like_icon.png</iconset>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
@@ -2132,7 +2171,7 @@ color: grey;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>813</width>
+     <width>824</width>
      <height>20</height>
     </rect>
    </property>

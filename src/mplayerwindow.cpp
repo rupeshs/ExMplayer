@@ -507,6 +507,7 @@ void MplayerWindow::changeEvent(QEvent *e) {
 		QWidget::changeEvent(e);
 	}
 }
+
  void MplayerWindow::hideEvent(QHideEvent *e)
 {
    this->showtext=true;
@@ -517,10 +518,12 @@ void MplayerWindow::changeEvent(QEvent *e) {
 }
 void MplayerWindow::mousePressEvent(QMouseEvent *event)
 {
+
     rphLabelEx::mousePressEvent(event);
 }
 void  MplayerWindow::mouseMoveEvent(QMouseEvent *event)
 {
+
    rphLabelEx::mouseMoveEvent(event);
 }
 

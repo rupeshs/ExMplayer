@@ -48,27 +48,28 @@ class QTimer;
 
 class Screen : public rphLabelEx
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Screen(QWidget* parent = 0, Qt::WindowFlags f = 0);
-	~Screen();
-       bool showtext;
-       void  setShowText(bool en){showtext=en;}
+    Screen(QWidget* parent = 0, Qt::WindowFlags f = 0);
+    ~Screen();
+    bool showtext;
+    void  setShowText(bool en){showtext=en;}
 protected:
+
 #if !NEW_MOUSE_CHECK_POS
-	virtual void mouseMoveEvent( QMouseEvent * e );
+    virtual void mouseMoveEvent( QMouseEvent * e );
 #endif
-	virtual void paintEvent ( QPaintEvent * e );
+    virtual void paintEvent ( QPaintEvent * e );
 
 protected slots:
-	virtual void checkMousePos();
+    virtual void checkMousePos();
 
 private:
 #if NEW_MOUSE_CHECK_POS
-	QPoint mouse_last_position;
+    QPoint mouse_last_position;
 #else
-        //QPoint cursor_pos, last_cursor_pos;
+    //QPoint cursor_pos, last_cursor_pos;
 #endif
 };
 
@@ -76,21 +77,21 @@ private:
 
 class MplayerLayer : public Screen
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	MplayerLayer(QWidget* parent = 0, Qt::WindowFlags f = 0);
-	~MplayerLayer();
+    MplayerLayer(QWidget* parent = 0, Qt::WindowFlags f = 0);
+    ~MplayerLayer();
 
 
 
 
 public slots:
-	//! Should be called when a file has started. 
+    //! Should be called when a file has started.
     /*! It's needed to know if the background has to be cleared or not. */
-	void playingStarted();
-	//! Should be called when a file has stopped.
-	void playingStopped();
+    void playingStarted();
+    //! Should be called when a file has stopped.
+    void playingStopped();
 
 
 
@@ -98,7 +99,7 @@ private:
 
 
 
-	bool playing;
+    bool playing;
 };
 
 
@@ -109,101 +110,102 @@ class MplayerWindow : public Screen
 public:
     MplayerWindow( QWidget* parent = 0, Qt::WindowFlags f = 0);
     ~MplayerWindow();
-MplayerLayer * mplayerlayer;
-        void showLogo( bool b);
+    MplayerLayer * mplayerlayer;
+    void showLogo( bool b);
 
-	MplayerLayer * videoLayer() { return mplayerlayer; };
+    MplayerLayer * videoLayer() { return mplayerlayer; };
 
-	void setResolution( int w, int h);
-	void setAspect( double asp);
-	void setMonitorAspect(double asp);
-	void updateVideoWindow();
-
-
-	void setColorKey(QColor c);
+    void setResolution( int w, int h);
+    void setAspect( double asp);
+    void setMonitorAspect(double asp);
+    void updateVideoWindow();
 
 
-	void setOffsetX( int );
-	int offsetX();
+    void setColorKey(QColor c);
 
-	void setOffsetY( int );
-	int offsetY();
 
-	void setZoom( double );
-	double zoom();
+    void setOffsetX( int );
+    int offsetX();
 
-	void allowVideoMovement(bool b) { allow_video_movement = b; };
-	bool isVideoMovementAllowed() { return allow_video_movement; };
+    void setOffsetY( int );
+    int offsetY();
 
-	virtual QSize sizeHint () const;
-	virtual QSize minimumSizeHint() const;
+    void setZoom( double );
+    double zoom();
 
-	virtual bool eventFilter( QObject * watched, QEvent * event );
-        void setShowVideo(bool en){showvideo=en;update();}
-        long int getWinid(){return (long int)this->winId();}
+    void allowVideoMovement(bool b) { allow_video_movement = b; };
+    bool isVideoMovementAllowed() { return allow_video_movement; };
+
+    virtual QSize sizeHint () const;
+    virtual QSize minimumSizeHint() const;
+
+    virtual bool eventFilter( QObject * watched, QEvent * event );
+    void setShowVideo(bool en){showvideo=en;update();}
+    long int getWinid(){return (long int)this->winId();}
 public slots:
-	void moveLeft();
-	void moveRight();
-	void moveUp();
-	void moveDown();
-	void incZoom();
-	void decZoom();
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
+    void incZoom();
+    void decZoom();
 
 #if DELAYED_RESIZE
 protected slots:
-	void resizeLater();
+    void resizeLater();
 #endif
 
 protected:
-	virtual void retranslateStrings();
-	virtual void changeEvent ( QEvent * event ) ;
-  virtual void mousePressEvent(QMouseEvent *event);
-  virtual void mouseMoveEvent(QMouseEvent *event);
-        virtual void resizeEvent( QResizeEvent * e);
-        virtual void mouseReleaseEvent( QMouseEvent * e);
-	virtual void mouseDoubleClickEvent( QMouseEvent * e );
-	virtual void wheelEvent( QWheelEvent * e );
+    virtual void retranslateStrings();
+    virtual void changeEvent ( QEvent * event ) ;
+    virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void resizeEvent( QResizeEvent * e);
+    virtual void mouseReleaseEvent( QMouseEvent * e);
+    virtual void mouseDoubleClickEvent( QMouseEvent * e );
+    virtual void wheelEvent( QWheelEvent * e );
 
-	void moveLayer( int offset_x, int offset_y );
-        virtual void hideEvent(QHideEvent *);
-        virtual void showEvent(QShowEvent *);
+    void moveLayer( int offset_x, int offset_y );
+    virtual void hideEvent(QHideEvent *);
+    virtual void showEvent(QShowEvent *);
 signals:
     //void rightButtonReleased( QPoint p );
-	void doubleClicked();
-	void leftClicked();
-	void rightClicked();
-	void middleClicked();
-	void xbutton1Clicked(); // first X button
-	void xbutton2Clicked(); // second X button
-	void keyPressed(QKeyEvent * e);
-	void wheelUp();
-	void wheelDown();
-	void mouseMoved(QPoint);
-        void mouseMoveEventsg(QMouseEvent *e);
-        void mousewheelsg(QWheelEvent * event);
-         void resizeVideo(int wid, int hei);
+    void doubleClicked();
+    void leftClicked();
+    void rightClicked();
+    void middleClicked();
+    void xbutton1Clicked(); // first X button
+    void xbutton2Clicked(); // second X button
+    void keyPressed(QKeyEvent * e);
+    void wheelUp();
+    void wheelDown();
+    void mouseMoved(QPoint);
+    void mouseMoveEventsg(QMouseEvent *e);
+    void mousewheelsg(QWheelEvent * event);
+    void resizeVideo(int wid, int hei);
 protected:
-        int video_width, video_height;
-        double aspect;
-	double monitoraspect;
+
+    int video_width, video_height;
+    double aspect;
+    double monitoraspect;
 
 
-	QLabel * logo;
+    QLabel * logo;
 
-	// Zoom and moving
-	int offset_x, offset_y;
-	double zoom_factor;
+    // Zoom and moving
+    int offset_x, offset_y;
+    double zoom_factor;
 
-	// Original pos and dimensions of the mplayerlayer
-	// before zooming or moving
-	int orig_x, orig_y;
-	int orig_width, orig_height;
+    // Original pos and dimensions of the mplayerlayer
+    // before zooming or moving
+    int orig_x, orig_y;
+    int orig_width, orig_height;
 
-	bool allow_video_movement;
-        bool showvideo;
+    bool allow_video_movement;
+    bool showvideo;
 
 #if DELAYED_RESIZE
-	QTimer * resize_timer;
+    QTimer * resize_timer;
 #endif
 };
 

@@ -17,7 +17,6 @@
         <file>images/sh2.png</file>
         <file>images/sh3.png</file>
         <file>images/flow.png</file>
-        <file>images/rphMPFE_sh.png</file>
         <file>images/player.png</file>
         <file>images/audio.png</file>
         <file>images/video.png</file>
@@ -88,5 +87,8 @@
         <file>images/ExMplayer.ico</file>
         <file>images/ExMplayer.png</file>
         <file>images/backanim.gif</file>
+        <file>images/rphMPFE_sh.png</file>
+        <file>images/like_icon.png</file>
+        <file>images/lk.png</file>
     </qresource>
 </RCC>

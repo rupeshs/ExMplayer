@@ -595,6 +595,7 @@ void  PlayerWindow::setupMyUi()
     ui->toolBarSeek->addSeparator();
     ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
     ui->toolBarSeek->addSeparator();
+   ui->toolBarSeek->addWidget(ui->toolButtonFblike);
 
     // ui->toolBarSeek->addWidget(youtubeBox);
     ui->actionPlay_Previous_File->setVisible(false);
@@ -875,7 +876,7 @@ void PlayerWindow::startingPlayback()
         //starting timers
         coreTimer->start();
         frameTimer->start(1);
-        playerTimer->start(1000);
+
         if  (!ui->action_Stop->isVisible()){
             ui->action_Stop->setVisible(true);
         }
@@ -1022,8 +1023,8 @@ void PlayerWindow::startingPlayback()
 
         }
         if( !mp->hasvideo()&&mp->hasaudio()){
-            if (this->width()>450 &&this->height()>145)
-            {//this->resize(450,145);
+            if (this->width()>450 ||this->height()>145)
+            {this->resize(450,145);
             }
             //#ifdef Q_OS_WIN
             //this->resize(450,145);
@@ -1205,7 +1206,7 @@ void PlayerWindow::startingPlayback()
     }
 
           //qDebug()<<"-------Audio :"<<mp->hasaudio()<<"Video :"<<mp->hasvideo();
-
+     playerTimer->start(1000);
     mutex.unlock();
     //youtubeBox->lineEdit->setText("");
     // youtubeBox->lineEdit->setText(Title);
@@ -2414,6 +2415,13 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
             hidetimer->stop();
         }
     }
+    if (e->buttons() & Qt::LeftButton) {
+        if(e->y()<videoWin->height()+ this->menuBar()->height()){
+
+            move(e->globalPos() - dragPosition);
+        }
+             e->accept();
+         }
 
 }
 void PlayerWindow::hidestatus()
@@ -4466,7 +4474,22 @@ void PlayerWindow::image2Pixmap(QImage &img,QPixmap &pixmap)
 }
 void PlayerWindow::resizeVideoWindow(int w,int h)
 {
-    qDebug()<<"$$$$$$$$$$"<<w <<"sss "<<h;
+
     videoWin->setAspect((float)w/h);
      this->resize(w,h);
+}
+ void PlayerWindow::mousePressEvent(QMouseEvent *event)
+ {
+
+     if (event->button() == Qt::LeftButton) {
+         if(event->y()<videoWin->height()+this->menuBar()->height()){
+              dragPosition = event->globalPos() - frameGeometry().topLeft();
+              }
+             event->accept();
+          }
+ }
+
+void PlayerWindow::on_toolButtonFblike_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://www.facebook.com/exmplayer"));
 }

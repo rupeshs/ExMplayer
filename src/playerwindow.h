@@ -81,6 +81,7 @@ protected:
 private:
 
     Ui::PlayerWindow *ui;
+    QPoint dragPosition;
     QStringList basicmetainfo;
     bool starting;
     QLocalSocket *socket;
@@ -427,8 +428,10 @@ private slots:
     void removingfile();
     void ShowStop();
     void image2Pixmap(QImage &img,QPixmap &pixmap);
+    void mousePressEvent(QMouseEvent *event);
 
 
+    void on_toolButtonFblike_clicked();
 };
 
 #endif // PLAYERWINDOW_H

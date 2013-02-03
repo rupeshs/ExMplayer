@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'playerwindow.h'
 **
-** Created: Sun Jan 27 21:26:27 2013
+** Created: Sun Feb 3 16:35:52 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_PlayerWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-     237,   14, // methods
+     240,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,248 +35,252 @@ static const uint qt_meta_data_PlayerWindow[] = {
       30,   28,   13,   13, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      51,   13,   13,   13, 0x08,
+      55,   51,   13,   13, 0x08,
       82,   13,   13,   13, 0x08,
-     119,   13,   13,   13, 0x08,
-     139,   13,   13,   13, 0x08,
-     171,   13,   13,   13, 0x08,
-     205,   13,   13,   13, 0x08,
-     243,   13,   13,   13, 0x08,
-     272,   13,   13,   13, 0x08,
-     316,   13,   13,   13, 0x08,
+     113,   13,   13,   13, 0x08,
+     150,   13,   13,   13, 0x08,
+     170,   13,   13,   13, 0x08,
+     202,   13,   13,   13, 0x08,
+     236,   13,   13,   13, 0x08,
+     274,   13,   13,   13, 0x08,
+     303,   13,   13,   13, 0x08,
      347,   13,   13,   13, 0x08,
-     376,   13,   13,   13, 0x08,
-     408,   13,   13,   13, 0x08,
+     378,   13,   13,   13, 0x08,
+     407,   13,   13,   13, 0x08,
      439,   13,   13,   13, 0x08,
-     474,   13,   13,   13, 0x08,
-     509,   13,   13,   13, 0x08,
-     538,   13,   13,   13, 0x08,
-     574,   13,   13,   13, 0x08,
+     470,   13,   13,   13, 0x08,
+     505,   13,   13,   13, 0x08,
+     540,   13,   13,   13, 0x08,
+     569,   13,   13,   13, 0x08,
      605,   13,   13,   13, 0x08,
-     632,   13,   13,   13, 0x08,
-     670,   13,   13,   13, 0x08,
-     706,   13,   13,   13, 0x08,
-     741,   13,   13,   13, 0x08,
-     777,   13,   13,   13, 0x08,
-     805,   13,   13,   13, 0x08,
-     838,   13,   13,   13, 0x08,
-     878,  870,   13,   13, 0x08,
-     914,  870,   13,   13, 0x08,
-     947,   13,   13,   13, 0x08,
-     973,   13,   13,   13, 0x08,
-    1007,   13,   13,   13, 0x08,
-    1037,   13,   13,   13, 0x08,
-    1064,   13,   13,   13, 0x08,
-    1089,   13,   13,   13, 0x08,
-    1117,   13,   13,   13, 0x08,
-    1151,   13,   13,   13, 0x08,
-    1195,   13,   13,   13, 0x08,
-    1223,   13,   13,   13, 0x08,
-    1267,   13,   13,   13, 0x08,
-    1304, 1297,   13,   13, 0x08,
-    1332,   13,   13,   13, 0x08,
-    1372,   13,   13,   13, 0x08,
-    1408,   13,   13,   13, 0x08,
-    1447,   13,   13,   13, 0x08,
-    1478, 1472,   13,   13, 0x08,
-    1503,   13,   13,   13, 0x08,
-    1536,   13,   13,   13, 0x08,
-    1568,   13,   13,   13, 0x08,
-    1598,   13,   13,   13, 0x08,
-    1640,   13,   13,   13, 0x08,
-    1670, 1472,   13,   13, 0x08,
-    1702,   13,   13,   13, 0x08,
-    1735, 1297,   13,   13, 0x08,
-    1772,   13,   13,   13, 0x08,
-    1809,   13,   13,   13, 0x08,
-    1841,   13,   13,   13, 0x08,
-    1873,   13,   13,   13, 0x08,
-    1903,   13,   13,   13, 0x08,
-    1935,   13,   13,   13, 0x08,
-    1970,   13,   13,   13, 0x08,
-    2005,   13,   13,   13, 0x08,
-    2041,   13,   13,   13, 0x08,
-    2078,   13,   13,   13, 0x08,
-    2113,   13,   13,   13, 0x08,
-    2146,   13,   13,   13, 0x08,
-    2176,   13,   13,   13, 0x08,
-    2211,   13,   13,   13, 0x08,
-    2246,   13,   13,   13, 0x08,
-    2276,   13,   13,   13, 0x08,
-    2308,   13,   13,   13, 0x08,
+     636,   13,   13,   13, 0x08,
+     663,   13,   13,   13, 0x08,
+     701,   13,   13,   13, 0x08,
+     737,   13,   13,   13, 0x08,
+     772,   13,   13,   13, 0x08,
+     808,   13,   13,   13, 0x08,
+     836,   13,   13,   13, 0x08,
+     869,   13,   13,   13, 0x08,
+     909,  901,   13,   13, 0x08,
+     945,  901,   13,   13, 0x08,
+     978,   13,   13,   13, 0x08,
+    1004,   13,   13,   13, 0x08,
+    1038,   13,   13,   13, 0x08,
+    1068,   13,   13,   13, 0x08,
+    1095,   13,   13,   13, 0x08,
+    1120,   13,   13,   13, 0x08,
+    1148,   13,   13,   13, 0x08,
+    1182,   13,   13,   13, 0x08,
+    1226,   13,   13,   13, 0x08,
+    1254,   13,   13,   13, 0x08,
+    1298,   13,   13,   13, 0x08,
+    1335, 1328,   13,   13, 0x08,
+    1363,   13,   13,   13, 0x08,
+    1403,   13,   13,   13, 0x08,
+    1439,   13,   13,   13, 0x08,
+    1478,   13,   13,   13, 0x08,
+    1509, 1503,   13,   13, 0x08,
+    1534,   13,   13,   13, 0x08,
+    1567,   13,   13,   13, 0x08,
+    1599,   13,   13,   13, 0x08,
+    1629,   13,   13,   13, 0x08,
+    1671,   13,   13,   13, 0x08,
+    1701, 1503,   13,   13, 0x08,
+    1733,   13,   13,   13, 0x08,
+    1766, 1328,   13,   13, 0x08,
+    1803,   13,   13,   13, 0x08,
+    1840,   13,   13,   13, 0x08,
+    1872,   13,   13,   13, 0x08,
+    1904,   13,   13,   13, 0x08,
+    1934,   13,   13,   13, 0x08,
+    1966,   13,   13,   13, 0x08,
+    2001,   13,   13,   13, 0x08,
+    2036,   13,   13,   13, 0x08,
+    2072,   13,   13,   13, 0x08,
+    2109,   13,   13,   13, 0x08,
+    2144,   13,   13,   13, 0x08,
+    2177,   13,   13,   13, 0x08,
+    2207,   13,   13,   13, 0x08,
+    2242,   13,   13,   13, 0x08,
+    2277,   13,   13,   13, 0x08,
+    2307,   13,   13,   13, 0x08,
     2339,   13,   13,   13, 0x08,
-    2381, 2375,   13,   13, 0x08,
-    2418,   13,   13,   13, 0x08,
-    2450, 2442,   13,   13, 0x08,
-    2476, 1472,   13,   13, 0x08,
-    2503, 1472,   13,   13, 0x08,
-    2535, 1472,   13,   13, 0x08,
-    2560, 1472,   13,   13, 0x08,
-    2592, 1472,   13,   13, 0x08,
-    2629, 2622,   13,   13, 0x08,
-    2666, 2660,   13,   13, 0x08,
-    2703,   13,   13,   13, 0x08,
-    2727,   13,   13,   13, 0x08,
-    2775,   13,   13,   13, 0x08,
-    2820,   13,   13,   13, 0x08,
-    2863,   13,   13,   13, 0x08,
-    2896,   13,   13,   13, 0x08,
-    2935,   13,   13,   13, 0x08,
-    2967,   13,   13,   13, 0x08,
-    2999,   13,   13,   13, 0x08,
-    3032,   13,   13,   13, 0x08,
-    3059,   13,   13,   13, 0x08,
-    3089,   13,   13,   13, 0x08,
-    3119,   13,   13,   13, 0x08,
-    3149,   13,   13,   13, 0x08,
-    3195,   13,   13,   13, 0x08,
-    3227,   13,   13,   13, 0x08,
-    3254,   13,   13,   13, 0x08,
+    2370,   13,   13,   13, 0x08,
+    2412, 2406,   13,   13, 0x08,
+    2449,   13,   13,   13, 0x08,
+    2481, 2473,   13,   13, 0x08,
+    2507, 1503,   13,   13, 0x08,
+    2534, 1503,   13,   13, 0x08,
+    2566, 1503,   13,   13, 0x08,
+    2591, 1503,   13,   13, 0x08,
+    2623, 1503,   13,   13, 0x08,
+    2660, 2653,   13,   13, 0x08,
+    2697, 2691,   13,   13, 0x08,
+    2734,   13,   13,   13, 0x08,
+    2758,   13,   13,   13, 0x08,
+    2806,   13,   13,   13, 0x08,
+    2851,   13,   13,   13, 0x08,
+    2894,   13,   13,   13, 0x08,
+    2927,   13,   13,   13, 0x08,
+    2966,   13,   13,   13, 0x08,
+    2998,   13,   13,   13, 0x08,
+    3030,   13,   13,   13, 0x08,
+    3063,   13,   13,   13, 0x08,
+    3090,   13,   13,   13, 0x08,
+    3120,   13,   13,   13, 0x08,
+    3150,   13,   13,   13, 0x08,
+    3180,   13,   13,   13, 0x08,
+    3226,   13,   13,   13, 0x08,
+    3258,   13,   13,   13, 0x08,
     3285,   13,   13,   13, 0x08,
-    3315,   13,   13,   13, 0x08,
-    3356,   13,   13,   13, 0x08,
-    3390,   13,   13,   13, 0x08,
-    3417,   13,   13,   13, 0x08,
-    3446,   13,   13,   13, 0x08,
-    3473,   13,   13,   13, 0x08,
-    3500,   13,   13,   13, 0x08,
-    3534,   13,   13,   13, 0x08,
-    3562,   13,   13,   13, 0x08,
-    3595,   13,   13,   13, 0x08,
-    3629,   13,   13,   13, 0x08,
-    3661,   13,   13,   13, 0x08,
-    3691,   13,   13,   13, 0x08,
-    3731,   13,   13,   13, 0x08,
-    3769,   13,   13,   13, 0x08,
-    3807,   13,   13,   13, 0x08,
-    3843,   13,   13,   13, 0x08,
-    3879,   13,   13,   13, 0x08,
-    3912,   13,   13,   13, 0x08,
-    3945,   13,   13,   13, 0x08,
-    3978,   13,   13,   13, 0x08,
-    4012,   13,   13,   13, 0x08,
-    4046,   13,   13,   13, 0x08,
-    4085,   13,   13,   13, 0x08,
-    4125,   13,   13,   13, 0x08,
-    4162,   13,   13,   13, 0x08,
-    4200,   13,   13,   13, 0x08,
-    4239,   13,   13,   13, 0x08,
-    4279,   13,   13,   13, 0x08,
-    4306,   13,   13,   13, 0x08,
-    4333,   13,   13,   13, 0x08,
-    4360,   13,   13,   13, 0x08,
-    4386,   13,   13,   13, 0x08,
-    4419,   13,   13,   13, 0x08,
-    4449, 1472,   13,   13, 0x08,
-    4483,   13,   13,   13, 0x08,
-    4513,   13,   13,   13, 0x08,
-    4544, 1297,   13,   13, 0x08,
-    4579,   13,   13,   13, 0x08,
-    4606,   13,   13,   13, 0x08,
-    4630,   13,   13,   13, 0x08,
-    4647,   13,   13,   13, 0x08,
-    4669,   13,   13,   13, 0x08,
-    4681,   13,   13,   13, 0x08,
-    4701, 4691,   13,   13, 0x08,
-    4726,   13,   13,   13, 0x08,
-    4745,   13,   13,   13, 0x08,
-    4761,   13,   13,   13, 0x08,
-    4782, 1472,   13,   13, 0x08,
-    4802,   13,   13,   13, 0x08,
-    4816,   13,   13,   13, 0x08,
-    4829, 1297,   13,   13, 0x08,
-    4858, 1297,   13,   13, 0x08,
-    4885, 1297,   13,   13, 0x08,
-    4906,   13,   13,   13, 0x08,
-    4932,   13,   13,   13, 0x08,
-    4959,   13,   13,   13, 0x08,
-    4986,   13,   13,   13, 0x08,
-    5010,   13,   13,   13, 0x08,
-    5044,   13,   13,   13, 0x08,
-    5071,   13,   13,   13, 0x08,
-    5112, 5096,   13,   13, 0x08,
-    5156, 5152,   13,   13, 0x08,
-    5178,   13,   13,   13, 0x08,
-    5206,   13,   13,   13, 0x08,
-    5225, 5222,   13,   13, 0x08,
-    5257,   13,   13,   13, 0x08,
-    5274,   28,   13,   13, 0x08,
-    5303,   13,   13,   13, 0x08,
-    5319, 5316,   13,   13, 0x08,
-    5341,   13,   13,   13, 0x08,
-    5351,   13,   13,   13, 0x08,
-    5363, 2660,   13,   13, 0x08,
-    5396, 2660,   13,   13, 0x08,
-    5419, 2660,   13,   13, 0x08,
-    5450,   13,   13,   13, 0x08,
-    5460,   13,   13,   13, 0x08,
-    5469,   13,   13,   13, 0x08,
-    5479,   13,   13,   13, 0x08,
-    5490, 2660,   13,   13, 0x08,
-    5533, 5530,   13,   13, 0x08,
-    5556, 2660,   13,   13, 0x08,
-    5581,   13,   13,   13, 0x08,
-    5597, 5590,   13,   13, 0x08,
-    5626,   13,   13,   13, 0x08,
-    5649,   13,   13,   13, 0x08,
-    5665,   13,   13,   13, 0x08,
-    5681, 5678,   13,   13, 0x08,
-    5702,   13,   13,   13, 0x08,
-    5714,   13,   13,   13, 0x08,
-    5734,   13,   13,   13, 0x08,
-    5753, 5748,   13,   13, 0x08,
-    5787, 5783,   13,   13, 0x08,
-    5804,   13,   13,   13, 0x08,
-    5822,   13,   13,   13, 0x08,
-    5842,   13,   13,   13, 0x08,
-    5864, 5861,   13,   13, 0x08,
-    5900,   13,   13,   13, 0x08,
-    5915,   13,   13,   13, 0x08,
-    5937, 5928,   13,   13, 0x08,
-    5966,   13,   13,   13, 0x08,
-    5983,   13,   13,   13, 0x08,
-    5993,   13,   13,   13, 0x08,
-    6017,   13, 6013,   13, 0x08,
-    6025,   13,   13,   13, 0x08,
-    6035,   13,   13,   13, 0x08,
-    6052,   13,   13,   13, 0x08,
-    6068,   13,   13,   13, 0x08,
-    6086, 5152,   13,   13, 0x08,
-    6101,   13,   13,   13, 0x08,
-    6123, 6119,   13,   13, 0x08,
-    6143,   13,   13,   13, 0x08,
-    6166, 6158,   13,   13, 0x08,
-    6196, 6119,   13,   13, 0x08,
-    6224,   13, 6216,   13, 0x08,
-    6241, 6236,   13,   13, 0x08,
-    6272, 6266,   13,   13, 0x08,
-    6293,   13,   13,   13, 0x08,
-    6307,   13, 6216,   13, 0x08,
-    6324, 2660,   13,   13, 0x08,
-    6356,   13,   13,   13, 0x08,
-    6369,   13,   13,   13, 0x08,
-    6382, 6378,   13,   13, 0x08,
-    6405, 6401,   13,   13, 0x08,
-    6430,   13,   13,   13, 0x08,
-    6454,   13,   13,   13, 0x08,
-    6482,   13,   13,   13, 0x08,
-    6501, 6497,   13,   13, 0x08,
-    6544, 6526,   13,   13, 0x08,
-    6566,   13,   13,   13, 0x08,
-    6601,   13,   13,   13, 0x08,
-    6646, 6637,   13,   13, 0x08,
-    6690, 6673,   13,   13, 0x08,
-    6727,   13,   13,   13, 0x08,
-    6740,   13,   13,   13, 0x08,
-    6755,   13,   13,   13, 0x08,
-    6777, 6766,   13,   13, 0x08,
+    3316,   13,   13,   13, 0x08,
+    3346,   13,   13,   13, 0x08,
+    3387,   13,   13,   13, 0x08,
+    3421,   13,   13,   13, 0x08,
+    3448,   13,   13,   13, 0x08,
+    3477,   13,   13,   13, 0x08,
+    3504,   13,   13,   13, 0x08,
+    3531,   13,   13,   13, 0x08,
+    3565,   13,   13,   13, 0x08,
+    3593,   13,   13,   13, 0x08,
+    3626,   13,   13,   13, 0x08,
+    3660,   13,   13,   13, 0x08,
+    3692,   13,   13,   13, 0x08,
+    3722,   13,   13,   13, 0x08,
+    3762,   13,   13,   13, 0x08,
+    3800,   13,   13,   13, 0x08,
+    3838,   13,   13,   13, 0x08,
+    3874,   13,   13,   13, 0x08,
+    3910,   13,   13,   13, 0x08,
+    3943,   13,   13,   13, 0x08,
+    3976,   13,   13,   13, 0x08,
+    4009,   13,   13,   13, 0x08,
+    4043,   13,   13,   13, 0x08,
+    4077,   13,   13,   13, 0x08,
+    4116,   13,   13,   13, 0x08,
+    4156,   13,   13,   13, 0x08,
+    4193,   13,   13,   13, 0x08,
+    4231,   13,   13,   13, 0x08,
+    4270,   13,   13,   13, 0x08,
+    4310,   13,   13,   13, 0x08,
+    4337,   13,   13,   13, 0x08,
+    4364,   13,   13,   13, 0x08,
+    4391,   13,   13,   13, 0x08,
+    4417,   13,   13,   13, 0x08,
+    4450,   13,   13,   13, 0x08,
+    4480, 1503,   13,   13, 0x08,
+    4514,   13,   13,   13, 0x08,
+    4544,   13,   13,   13, 0x08,
+    4575, 1328,   13,   13, 0x08,
+    4610,   13,   13,   13, 0x08,
+    4637,   13,   13,   13, 0x08,
+    4661,   13,   13,   13, 0x08,
+    4678,   13,   13,   13, 0x08,
+    4700,   13,   13,   13, 0x08,
+    4712,   13,   13,   13, 0x08,
+    4732, 4722,   13,   13, 0x08,
+    4757,   13,   13,   13, 0x08,
+    4776,   13,   13,   13, 0x08,
+    4792,   13,   13,   13, 0x08,
+    4813, 1503,   13,   13, 0x08,
+    4833,   13,   13,   13, 0x08,
+    4847,   13,   13,   13, 0x08,
+    4860, 1328,   13,   13, 0x08,
+    4889, 1328,   13,   13, 0x08,
+    4916, 1328,   13,   13, 0x08,
+    4937,   13,   13,   13, 0x08,
+    4963,   13,   13,   13, 0x08,
+    4990,   13,   13,   13, 0x08,
+    5017,   13,   13,   13, 0x08,
+    5041,   13,   13,   13, 0x08,
+    5075,   13,   13,   13, 0x08,
+    5102,   13,   13,   13, 0x08,
+    5143, 5127,   13,   13, 0x08,
+    5187, 5183,   13,   13, 0x08,
+    5209,   13,   13,   13, 0x08,
+    5237,   13,   13,   13, 0x08,
+    5256, 5253,   13,   13, 0x08,
+    5288,   13,   13,   13, 0x08,
+    5305,   28,   13,   13, 0x08,
+    5334,   13,   13,   13, 0x08,
+    5350, 5347,   13,   13, 0x08,
+    5372,   13,   13,   13, 0x08,
+    5382,   13,   13,   13, 0x08,
+    5394, 2691,   13,   13, 0x08,
+    5427, 2691,   13,   13, 0x08,
+    5450, 2691,   13,   13, 0x08,
+    5481,   13,   13,   13, 0x08,
+    5491,   13,   13,   13, 0x08,
+    5500,   13,   13,   13, 0x08,
+    5510,   13,   13,   13, 0x08,
+    5521, 2691,   13,   13, 0x08,
+    5564, 5561,   13,   13, 0x08,
+    5587, 2691,   13,   13, 0x08,
+    5612,   13,   13,   13, 0x08,
+    5628, 5621,   13,   13, 0x08,
+    5657,   13,   13,   13, 0x08,
+    5680,   13,   13,   13, 0x08,
+    5696,   13,   13,   13, 0x08,
+    5712, 5709,   13,   13, 0x08,
+    5733,   13,   13,   13, 0x08,
+    5745,   13,   13,   13, 0x08,
+    5765,   13,   13,   13, 0x08,
+    5784, 5779,   13,   13, 0x08,
+    5818, 5814,   13,   13, 0x08,
+    5835,   13,   13,   13, 0x08,
+    5853,   13,   13,   13, 0x08,
+    5873,   13,   13,   13, 0x08,
+    5895, 5892,   13,   13, 0x08,
+    5931,   13,   13,   13, 0x08,
+    5946,   13,   13,   13, 0x08,
+    5968, 5959,   13,   13, 0x08,
+    5997,   13,   13,   13, 0x08,
+    6014,   13,   13,   13, 0x08,
+    6024,   13,   13,   13, 0x08,
+    6048,   13, 6044,   13, 0x08,
+    6056,   13,   13,   13, 0x08,
+    6066,   13,   13,   13, 0x08,
+    6083,   13,   13,   13, 0x08,
+    6099,   13,   13,   13, 0x08,
+    6117, 5183,   13,   13, 0x08,
+    6132,   13,   13,   13, 0x08,
+    6154, 6150,   13,   13, 0x08,
+    6174,   13,   13,   13, 0x08,
+    6197, 6189,   13,   13, 0x08,
+    6227, 6150,   13,   13, 0x08,
+    6255,   13, 6247,   13, 0x08,
+    6272, 6267,   13,   13, 0x08,
+    6303, 6297,   13,   13, 0x08,
+    6324,   13,   13,   13, 0x08,
+    6338,   13, 6247,   13, 0x08,
+    6355, 2691,   13,   13, 0x08,
+    6387,   13,   13,   13, 0x08,
+    6400,   13,   13,   13, 0x08,
+    6413, 6409,   13,   13, 0x08,
+    6436, 6432,   13,   13, 0x08,
+    6461,   13,   13,   13, 0x08,
+    6485,   13,   13,   13, 0x08,
+    6513,   13,   13,   13, 0x08,
+    6532, 6528,   13,   13, 0x08,
+    6575, 6557,   13,   13, 0x08,
+    6597,   13,   13,   13, 0x08,
+    6632,   13,   13,   13, 0x08,
+    6677, 6668,   13,   13, 0x08,
+    6721, 6704,   13,   13, 0x08,
+    6758,   13,   13,   13, 0x08,
+    6771,   13,   13,   13, 0x08,
+    6786,   13,   13,   13, 0x08,
+    6808, 6797,   13,   13, 0x08,
+    6839, 2691,   13,   13, 0x08,
+    6869,   13,   13,   13, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_PlayerWindow[] = {
     "PlayerWindow\0\0sgcrossfade()\0e\0"
-    "keyPress(QKeyEvent*)\0"
+    "keyPress(QKeyEvent*)\0w,h\0"
+    "resizeVideoWindow(int,int)\0"
     "on_actionSmallmode_triggered()\0"
     "on_actionAudio_Converter_triggered()\0"
     "updatevideovindow()\0on_toolButtonplaylist_clicked()\0"
@@ -475,6 +479,8 @@ static const char qt_meta_stringdata_PlayerWindow[] = {
     "qualityMap,title\0playYTUrl(QMap<int,QString>,QString)\0"
     "addingfile()\0removingfile()\0ShowStop()\0"
     "img,pixmap\0image2Pixmap(QImage&,QPixmap&)\0"
+    "mousePressEvent(QMouseEvent*)\0"
+    "on_toolButtonFblike_clicked()\0"
 };
 
 const QMetaObject PlayerWindow::staticMetaObject = {
@@ -508,247 +514,250 @@ int PlayerWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: sgcrossfade(); break;
         case 1: keyPress((*reinterpret_cast< QKeyEvent*(*)>(_a[1]))); break;
-        case 2: on_actionSmallmode_triggered(); break;
-        case 3: on_actionAudio_Converter_triggered(); break;
-        case 4: updatevideovindow(); break;
-        case 5: on_toolButtonplaylist_clicked(); break;
-        case 6: on_actionDefault_zoom_triggered(); break;
-        case 7: on_actionChange_framerate_triggered(); break;
-        case 8: on_actionDefault_triggered(); break;
-        case 9: on_actionIncrease_Video_quality_triggered(); break;
-        case 10: on_actionMove_Down_triggered(); break;
-        case 11: on_actionMove_Up_triggered(); break;
-        case 12: on_actionMove_Right_triggered(); break;
-        case 13: on_actionMove_Left_triggered(); break;
-        case 14: on_actionDecrease_Zoom_triggered(); break;
-        case 15: on_actionIncrease_Zoom_triggered(); break;
-        case 16: on_toolButtonSpeed_clicked(); break;
-        case 17: on_actionAudio_extrctor_triggered(); break;
-        case 18: on_actionSide_view_triggered(); break;
-        case 19: on_actionTwins_triggered(); break;
-        case 20: on_actionAdd_Folder_to_pl_triggered(); break;
-        case 21: on_actionAdd_File_to_pl_triggered(); break;
-        case 22: on_actionEdit_Playlist_triggered(); break;
-        case 23: on_actionSave_cover_art_triggered(); break;
-        case 24: on_actionFolder_triggered(); break;
-        case 25: on_toolButton_playnext_clicked(); break;
-        case 26: on_toolButton_playpre_clicked(); break;
-        case 27: on_toolButton_shuffle_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 28: on_toolButton_loop_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 29: on_toolButtonfs_clicked(); break;
-        case 30: on_actionMix_and_save_triggered(); break;
-        case 31: on_actionAbout_Qt_triggered(); break;
-        case 32: on_action_Help_triggered(); break;
-        case 33: on_cbEnableAEq_clicked(); break;
-        case 34: on_actionShowpl_triggered(); break;
-        case 35: on_actionMedia_cutter_triggered(); break;
-        case 36: on_actionEnable_Closed_Captions_triggered(); break;
-        case 37: on_action_About_triggered(); break;
-        case 38: on_actionOpen_containing_folder_triggered(); break;
-        case 39: on_action_Load_pl_triggered(); break;
-        case 40: on_eq0_actionTriggered((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 41: on_actionPlay_Previous_File_triggered(); break;
-        case 42: on_actionPlay_Next_File_triggered(); break;
-        case 43: on_action_Save_as_playlist_triggered(); break;
-        case 44: on_actionURL_triggered(); break;
-        case 45: on_eq3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 46: on_cbEnableAEq_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 47: on_actionWinamp_Dsp_triggered(); break;
-        case 48: on_actionNegative_triggered(); break;
-        case 49: on_actionVolume_Normalization_triggered(); break;
-        case 50: on_action_Options_triggered(); break;
-        case 51: on_sliderSeek_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 52: on_action_Media_Info_triggered(); break;
-        case 53: on_sliderVolume_actionTriggered((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 54: on_actionSelected_item_s_triggered(); break;
-        case 55: on_actionAdd_Folder_triggered(); break;
-        case 56: on_actionRemove_all_triggered(); break;
-        case 57: on_actionAdd_file_triggered(); break;
-        case 58: on_actionFullscreen_triggered(); break;
-        case 59: on_action_AV_Set_Delay_triggered(); break;
-        case 60: on_action_st_Set_Delay_triggered(); break;
-        case 61: on_actionDelay_Decrease_triggered(); break;
-        case 62: on_actionDelay_Increaser_triggered(); break;
-        case 63: on_action_st_Move_Down_triggered(); break;
-        case 64: on_action_st_Move_Up_triggered(); break;
-        case 65: on_actionStUnload_triggered(); break;
-        case 66: on_actionSize_Decrease_triggered(); break;
-        case 67: on_actionSize_Increase_triggered(); break;
-        case 68: on_action_Load_st_triggered(); break;
-        case 69: on_action_Equalizer_triggered(); break;
-        case 70: toggle_bottomdock_visibility(); break;
-        case 71: on_actionVideoEqualizer_triggered(); break;
-        case 72: on_comboBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 73: on_btnAEReset_clicked(); break;
-        case 74: setequlizerbandvalue((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 75: on_gamma_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 76: on_Saturation_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 77: on_Hue_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 78: on_brightness_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 79: on_contrast_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 80: animate_ae_slider((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 81: contextMenuEvent((*reinterpret_cast< QContextMenuEvent*(*)>(_a[1]))); break;
-        case 82: on_btnVEReset_clicked(); break;
-        case 83: on_actionToggle_subtitle_visibility_triggered(); break;
-        case 84: on_action_Open_Screenshot_folder_triggered(); break;
-        case 85: on_actionStart_stop_Screenshot_triggered(); break;
-        case 86: on_actionScreen_shot_triggered(); break;
-        case 87: on_actionToggle_Frame_drop_triggered(); break;
-        case 88: on_actionToggle_OSD_triggered(); break;
-        case 89: on_actionFrame_step_triggered(); break;
-        case 90: on_actionStay_on_top_triggered(); break;
-        case 91: on_action_Crop_triggered(); break;
-        case 92: on_actionStep2_fm_triggered(); break;
-        case 93: on_actionStep1_fm_triggered(); break;
-        case 94: on_action_Palette_triggered(); break;
-        case 95: on_actionVisualize_motion_vectors_triggered(); break;
-        case 96: on_actionMatrixview_triggered(); break;
-        case 97: on_action_Blur_triggered(); break;
-        case 98: on_actionAdd_noise_triggered(); break;
-        case 99: on_actionPainting_triggered(); break;
-        case 100: on_actionOld_Black_and_white_triggered(); break;
-        case 101: on_actionSwap_U_and_V_triggered(); break;
-        case 102: on_action50_50_triggered(); break;
-        case 103: on_action_Mirror_triggered(); break;
-        case 104: on_action_flip_triggered(); break;
-        case 105: on_action_Tile_triggered(); break;
-        case 106: on_action_Remove_logo_triggered(); break;
-        case 107: on_action_Delay_triggered(); break;
-        case 108: on_actionScale_Tempo_triggered(); break;
-        case 109: on_action_ExtraStereo_triggered(); break;
-        case 110: on_actionSurroundAf_triggered(); break;
-        case 111: on_action_Karaoke_triggered(); break;
-        case 112: on_actionLoad_external_file_triggered(); break;
-        case 113: on_action_Decrease_volume_triggered(); break;
-        case 114: on_action_Increase_volume_triggered(); break;
-        case 115: on_actionDecrease_Delay_triggered(); break;
-        case 116: on_actionIncrease_Delay_triggered(); break;
-        case 117: on_actionDecrease_10_triggered(); break;
-        case 118: on_actionIncrease_10_triggered(); break;
-        case 119: on_actionHalve_speed_triggered(); break;
-        case 120: on_actionDouble_speed_triggered(); break;
-        case 121: on_actionNormal_Speed_triggered(); break;
-        case 122: on_actionRewind_10_minutes_triggered(); break;
-        case 123: on_actionForward_10_minutes_triggered(); break;
-        case 124: on_actionRewind_1_minute_triggered(); break;
-        case 125: on_actionForward_1_minute_triggered(); break;
-        case 126: on_actionRewind_10_seconds_triggered(); break;
-        case 127: on_actionForward_10_seconds_triggered(); break;
-        case 128: on_action_File_triggered(); break;
-        case 129: on_action_Stop_triggered(); break;
-        case 130: on_action_Exit_triggered(); break;
-        case 131: on_actionMute_triggered(); break;
-        case 132: on_action_Play_Pause_triggered(); break;
-        case 133: on_toolButtonVolume_clicked(); break;
-        case 134: on_sliderVolume_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 135: on_toolButtonRewind_clicked(); break;
-        case 136: on_toolButtonForward_clicked(); break;
-        case 137: on_sliderSeek_actionTriggered((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 138: on_cmdLine_returnPressed(); break;
-        case 139: on_btnSaveLog_clicked(); break;
-        case 140: setupLogWindow(); break;
-        case 141: setupPlaylistWindow(); break;
-        case 142: setupMyUi(); break;
-        case 143: resetUi(); break;
-        case 144: initMPlayer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 145: startingPlayback(); break;
-        case 146: updateSeekbar(); break;
-        case 147: updateFrameDisplay(); break;
-        case 148: setMutebtnIcon((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 149: togglePause(); break;
-        case 150: toggleMute(); break;
-        case 151: changesubAlignment((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 152: change_framedrop((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 153: change_osd((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 154: changeSubTitles((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 155: changeAudioTrack((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 156: changeVideoTrack((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 157: changeChannel((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 158: changeSamplingFrequency((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 159: changeStereoMode((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 160: changeRotation((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 161: settingChanged((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
-        case 162: rubberBandval((*reinterpret_cast< QRect*(*)>(_a[1]))); break;
-        case 163: changeAspectRatio((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 164: lengthChanged(); break;
-        case 165: foundSubtitletrack((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 166: updatemetadisp(); break;
-        case 167: mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
-        case 168: hidestatus(); break;
-        case 169: playThisfile((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 170: addfile(); break;
-        case 171: addFolder(); break;
-        case 172: dragEnterEvent((*reinterpret_cast< QDragEnterEvent*(*)>(_a[1]))); break;
-        case 173: dropEvent((*reinterpret_cast< QDropEvent*(*)>(_a[1]))); break;
-        case 174: dragMoveEvent((*reinterpret_cast< QDragMoveEvent*(*)>(_a[1]))); break;
-        case 175: cleanMp(); break;
-        case 176: paused(); break;
-        case 177: playing(); break;
-        case 178: stopping(); break;
-        case 179: showCtxmenuPlaylist((*reinterpret_cast< QContextMenuEvent*(*)>(_a[1]))); break;
-        case 180: addFolderTopl((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 181: wheelEvent((*reinterpret_cast< QWheelEvent*(*)>(_a[1]))); break;
-        case 182: setEof(); break;
-        case 183: showSeekpos((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QPoint*(*)>(_a[2]))); break;
-        case 184: checkForNextPlayback(); break;
-        case 185: crossfadePlay(); break;
-        case 186: hidebusypg(); break;
-        case 187: showtooltip((*reinterpret_cast< QPoint*(*)>(_a[1]))); break;
-        case 188: hideframe(); break;
-        case 189: loadMPlayerConfig(); break;
-        case 190: setcmbIndex(); break;
-        case 191: addRecentFileAndPlay((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 192: playurl((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 193: createShortcuts(); break;
-        case 194: setmousewheelrole(); break;
-        case 195: toggleFullscreen(); break;
-        case 196: mouseDoubleClickEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
-        case 197: saveCoverArt(); break;
-        case 198: removelavf(); break;
-        case 199: winExplorer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 200: enableChannels(); break;
-        case 201: setAqua(); break;
-        case 202: disableStylesheet(); break;
-        case 203: { int _r = getEh();
+        case 2: resizeVideoWindow((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 3: on_actionSmallmode_triggered(); break;
+        case 4: on_actionAudio_Converter_triggered(); break;
+        case 5: updatevideovindow(); break;
+        case 6: on_toolButtonplaylist_clicked(); break;
+        case 7: on_actionDefault_zoom_triggered(); break;
+        case 8: on_actionChange_framerate_triggered(); break;
+        case 9: on_actionDefault_triggered(); break;
+        case 10: on_actionIncrease_Video_quality_triggered(); break;
+        case 11: on_actionMove_Down_triggered(); break;
+        case 12: on_actionMove_Up_triggered(); break;
+        case 13: on_actionMove_Right_triggered(); break;
+        case 14: on_actionMove_Left_triggered(); break;
+        case 15: on_actionDecrease_Zoom_triggered(); break;
+        case 16: on_actionIncrease_Zoom_triggered(); break;
+        case 17: on_toolButtonSpeed_clicked(); break;
+        case 18: on_actionAudio_extrctor_triggered(); break;
+        case 19: on_actionSide_view_triggered(); break;
+        case 20: on_actionTwins_triggered(); break;
+        case 21: on_actionAdd_Folder_to_pl_triggered(); break;
+        case 22: on_actionAdd_File_to_pl_triggered(); break;
+        case 23: on_actionEdit_Playlist_triggered(); break;
+        case 24: on_actionSave_cover_art_triggered(); break;
+        case 25: on_actionFolder_triggered(); break;
+        case 26: on_toolButton_playnext_clicked(); break;
+        case 27: on_toolButton_playpre_clicked(); break;
+        case 28: on_toolButton_shuffle_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 29: on_toolButton_loop_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 30: on_toolButtonfs_clicked(); break;
+        case 31: on_actionMix_and_save_triggered(); break;
+        case 32: on_actionAbout_Qt_triggered(); break;
+        case 33: on_action_Help_triggered(); break;
+        case 34: on_cbEnableAEq_clicked(); break;
+        case 35: on_actionShowpl_triggered(); break;
+        case 36: on_actionMedia_cutter_triggered(); break;
+        case 37: on_actionEnable_Closed_Captions_triggered(); break;
+        case 38: on_action_About_triggered(); break;
+        case 39: on_actionOpen_containing_folder_triggered(); break;
+        case 40: on_action_Load_pl_triggered(); break;
+        case 41: on_eq0_actionTriggered((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 42: on_actionPlay_Previous_File_triggered(); break;
+        case 43: on_actionPlay_Next_File_triggered(); break;
+        case 44: on_action_Save_as_playlist_triggered(); break;
+        case 45: on_actionURL_triggered(); break;
+        case 46: on_eq3_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 47: on_cbEnableAEq_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 48: on_actionWinamp_Dsp_triggered(); break;
+        case 49: on_actionNegative_triggered(); break;
+        case 50: on_actionVolume_Normalization_triggered(); break;
+        case 51: on_action_Options_triggered(); break;
+        case 52: on_sliderSeek_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 53: on_action_Media_Info_triggered(); break;
+        case 54: on_sliderVolume_actionTriggered((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 55: on_actionSelected_item_s_triggered(); break;
+        case 56: on_actionAdd_Folder_triggered(); break;
+        case 57: on_actionRemove_all_triggered(); break;
+        case 58: on_actionAdd_file_triggered(); break;
+        case 59: on_actionFullscreen_triggered(); break;
+        case 60: on_action_AV_Set_Delay_triggered(); break;
+        case 61: on_action_st_Set_Delay_triggered(); break;
+        case 62: on_actionDelay_Decrease_triggered(); break;
+        case 63: on_actionDelay_Increaser_triggered(); break;
+        case 64: on_action_st_Move_Down_triggered(); break;
+        case 65: on_action_st_Move_Up_triggered(); break;
+        case 66: on_actionStUnload_triggered(); break;
+        case 67: on_actionSize_Decrease_triggered(); break;
+        case 68: on_actionSize_Increase_triggered(); break;
+        case 69: on_action_Load_st_triggered(); break;
+        case 70: on_action_Equalizer_triggered(); break;
+        case 71: toggle_bottomdock_visibility(); break;
+        case 72: on_actionVideoEqualizer_triggered(); break;
+        case 73: on_comboBox_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 74: on_btnAEReset_clicked(); break;
+        case 75: setequlizerbandvalue((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 76: on_gamma_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 77: on_Saturation_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 78: on_Hue_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 79: on_brightness_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 80: on_contrast_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 81: animate_ae_slider((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 82: contextMenuEvent((*reinterpret_cast< QContextMenuEvent*(*)>(_a[1]))); break;
+        case 83: on_btnVEReset_clicked(); break;
+        case 84: on_actionToggle_subtitle_visibility_triggered(); break;
+        case 85: on_action_Open_Screenshot_folder_triggered(); break;
+        case 86: on_actionStart_stop_Screenshot_triggered(); break;
+        case 87: on_actionScreen_shot_triggered(); break;
+        case 88: on_actionToggle_Frame_drop_triggered(); break;
+        case 89: on_actionToggle_OSD_triggered(); break;
+        case 90: on_actionFrame_step_triggered(); break;
+        case 91: on_actionStay_on_top_triggered(); break;
+        case 92: on_action_Crop_triggered(); break;
+        case 93: on_actionStep2_fm_triggered(); break;
+        case 94: on_actionStep1_fm_triggered(); break;
+        case 95: on_action_Palette_triggered(); break;
+        case 96: on_actionVisualize_motion_vectors_triggered(); break;
+        case 97: on_actionMatrixview_triggered(); break;
+        case 98: on_action_Blur_triggered(); break;
+        case 99: on_actionAdd_noise_triggered(); break;
+        case 100: on_actionPainting_triggered(); break;
+        case 101: on_actionOld_Black_and_white_triggered(); break;
+        case 102: on_actionSwap_U_and_V_triggered(); break;
+        case 103: on_action50_50_triggered(); break;
+        case 104: on_action_Mirror_triggered(); break;
+        case 105: on_action_flip_triggered(); break;
+        case 106: on_action_Tile_triggered(); break;
+        case 107: on_action_Remove_logo_triggered(); break;
+        case 108: on_action_Delay_triggered(); break;
+        case 109: on_actionScale_Tempo_triggered(); break;
+        case 110: on_action_ExtraStereo_triggered(); break;
+        case 111: on_actionSurroundAf_triggered(); break;
+        case 112: on_action_Karaoke_triggered(); break;
+        case 113: on_actionLoad_external_file_triggered(); break;
+        case 114: on_action_Decrease_volume_triggered(); break;
+        case 115: on_action_Increase_volume_triggered(); break;
+        case 116: on_actionDecrease_Delay_triggered(); break;
+        case 117: on_actionIncrease_Delay_triggered(); break;
+        case 118: on_actionDecrease_10_triggered(); break;
+        case 119: on_actionIncrease_10_triggered(); break;
+        case 120: on_actionHalve_speed_triggered(); break;
+        case 121: on_actionDouble_speed_triggered(); break;
+        case 122: on_actionNormal_Speed_triggered(); break;
+        case 123: on_actionRewind_10_minutes_triggered(); break;
+        case 124: on_actionForward_10_minutes_triggered(); break;
+        case 125: on_actionRewind_1_minute_triggered(); break;
+        case 126: on_actionForward_1_minute_triggered(); break;
+        case 127: on_actionRewind_10_seconds_triggered(); break;
+        case 128: on_actionForward_10_seconds_triggered(); break;
+        case 129: on_action_File_triggered(); break;
+        case 130: on_action_Stop_triggered(); break;
+        case 131: on_action_Exit_triggered(); break;
+        case 132: on_actionMute_triggered(); break;
+        case 133: on_action_Play_Pause_triggered(); break;
+        case 134: on_toolButtonVolume_clicked(); break;
+        case 135: on_sliderVolume_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 136: on_toolButtonRewind_clicked(); break;
+        case 137: on_toolButtonForward_clicked(); break;
+        case 138: on_sliderSeek_actionTriggered((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 139: on_cmdLine_returnPressed(); break;
+        case 140: on_btnSaveLog_clicked(); break;
+        case 141: setupLogWindow(); break;
+        case 142: setupPlaylistWindow(); break;
+        case 143: setupMyUi(); break;
+        case 144: resetUi(); break;
+        case 145: initMPlayer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 146: startingPlayback(); break;
+        case 147: updateSeekbar(); break;
+        case 148: updateFrameDisplay(); break;
+        case 149: setMutebtnIcon((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 150: togglePause(); break;
+        case 151: toggleMute(); break;
+        case 152: changesubAlignment((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 153: change_framedrop((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 154: change_osd((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 155: changeSubTitles((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 156: changeAudioTrack((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 157: changeVideoTrack((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 158: changeChannel((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 159: changeSamplingFrequency((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 160: changeStereoMode((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 161: changeRotation((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 162: settingChanged((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
+        case 163: rubberBandval((*reinterpret_cast< QRect*(*)>(_a[1]))); break;
+        case 164: changeAspectRatio((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 165: lengthChanged(); break;
+        case 166: foundSubtitletrack((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 167: updatemetadisp(); break;
+        case 168: mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 169: hidestatus(); break;
+        case 170: playThisfile((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 171: addfile(); break;
+        case 172: addFolder(); break;
+        case 173: dragEnterEvent((*reinterpret_cast< QDragEnterEvent*(*)>(_a[1]))); break;
+        case 174: dropEvent((*reinterpret_cast< QDropEvent*(*)>(_a[1]))); break;
+        case 175: dragMoveEvent((*reinterpret_cast< QDragMoveEvent*(*)>(_a[1]))); break;
+        case 176: cleanMp(); break;
+        case 177: paused(); break;
+        case 178: playing(); break;
+        case 179: stopping(); break;
+        case 180: showCtxmenuPlaylist((*reinterpret_cast< QContextMenuEvent*(*)>(_a[1]))); break;
+        case 181: addFolderTopl((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 182: wheelEvent((*reinterpret_cast< QWheelEvent*(*)>(_a[1]))); break;
+        case 183: setEof(); break;
+        case 184: showSeekpos((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QPoint*(*)>(_a[2]))); break;
+        case 185: checkForNextPlayback(); break;
+        case 186: crossfadePlay(); break;
+        case 187: hidebusypg(); break;
+        case 188: showtooltip((*reinterpret_cast< QPoint*(*)>(_a[1]))); break;
+        case 189: hideframe(); break;
+        case 190: loadMPlayerConfig(); break;
+        case 191: setcmbIndex(); break;
+        case 192: addRecentFileAndPlay((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 193: playurl((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 194: createShortcuts(); break;
+        case 195: setmousewheelrole(); break;
+        case 196: toggleFullscreen(); break;
+        case 197: mouseDoubleClickEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 198: saveCoverArt(); break;
+        case 199: removelavf(); break;
+        case 200: winExplorer((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 201: enableChannels(); break;
+        case 202: setAqua(); break;
+        case 203: disableStylesheet(); break;
+        case 204: { int _r = getEh();
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 204: readCmd(); break;
-        case 205: connectTosever(); break;
-        case 206: writeSettings(); break;
-        case 207: readSettingsGeo(); break;
-        case 208: setfbvis((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 209: completeRestart(); break;
-        case 210: getMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 211: clearingList(); break;
-        case 212: playNextAfterFinish((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 213: showMsgBox((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 214: { QString _r = getFilter();
+        case 205: readCmd(); break;
+        case 206: connectTosever(); break;
+        case 207: writeSettings(); break;
+        case 208: readSettingsGeo(); break;
+        case 209: setfbvis((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 210: completeRestart(); break;
+        case 211: getMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 212: clearingList(); break;
+        case 213: playNextAfterFinish((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 214: showMsgBox((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 215: { QString _r = getFilter();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 215: showPictureFlow((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 216: resizeVideo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 217: useidxnplay(); break;
-        case 218: { QString _r = getaudioFilter();
+        case 216: showPictureFlow((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 217: resizeVideo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 218: useidxnplay(); break;
+        case 219: { QString _r = getaudioFilter();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = _r; }  break;
-        case 219: showctxmenu((*reinterpret_cast< QContextMenuEvent*(*)>(_a[1]))); break;
-        case 220: pfdblClick(); break;
-        case 221: showpg(); break;
-        case 222: showerror((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 223: playlistVisibility((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 224: startingPlaybackframe(); break;
-        case 225: startProgressiveStreaming(); break;
-        case 226: wgetDownload(); break;
-        case 227: streamingDuration((*reinterpret_cast< float(*)>(_a[1]))); break;
-        case 228: searchYT((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 229: on_actionCopy_Audio_CD_triggered(); break;
-        case 230: on_actionInternet_Radio_triggered(); break;
-        case 231: playSCUrl((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 232: playYTUrl((*reinterpret_cast< const QMap<int,QString>(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 233: addingfile(); break;
-        case 234: removingfile(); break;
-        case 235: ShowStop(); break;
-        case 236: image2Pixmap((*reinterpret_cast< QImage(*)>(_a[1])),(*reinterpret_cast< QPixmap(*)>(_a[2]))); break;
+        case 220: showctxmenu((*reinterpret_cast< QContextMenuEvent*(*)>(_a[1]))); break;
+        case 221: pfdblClick(); break;
+        case 222: showpg(); break;
+        case 223: showerror((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 224: playlistVisibility((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 225: startingPlaybackframe(); break;
+        case 226: startProgressiveStreaming(); break;
+        case 227: wgetDownload(); break;
+        case 228: streamingDuration((*reinterpret_cast< float(*)>(_a[1]))); break;
+        case 229: searchYT((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 230: on_actionCopy_Audio_CD_triggered(); break;
+        case 231: on_actionInternet_Radio_triggered(); break;
+        case 232: playSCUrl((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 233: playYTUrl((*reinterpret_cast< const QMap<int,QString>(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 234: addingfile(); break;
+        case 235: removingfile(); break;
+        case 236: ShowStop(); break;
+        case 237: image2Pixmap((*reinterpret_cast< QImage(*)>(_a[1])),(*reinterpret_cast< QPixmap(*)>(_a[2]))); break;
+        case 238: mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 239: on_toolButtonFblike_clicked(); break;
         default: ;
         }
-        _id -= 237;
+        _id -= 240;
     }
     return _id;
 }

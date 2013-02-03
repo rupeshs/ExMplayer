@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'playerwindow.ui'
 **
-** Created: Sun Feb 3 10:09:57 2013
+** Created: Sun Feb 3 16:33:56 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -286,6 +286,7 @@ public:
     QLabel *labToolbarSpace;
     QLabel *labVD;
     QLabel *labAD;
+    QToolButton *toolButtonFblike;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
     QMenu *menu_Open;
@@ -341,7 +342,7 @@ public:
     {
         if (PlayerWindow->objectName().isEmpty())
             PlayerWindow->setObjectName(QString::fromUtf8("PlayerWindow"));
-        PlayerWindow->resize(813, 609);
+        PlayerWindow->resize(824, 421);
         PlayerWindow->setMinimumSize(QSize(450, 145));
         PlayerWindow->setMouseTracking(true);
         PlayerWindow->setFocusPolicy(Qt::StrongFocus);
@@ -886,7 +887,9 @@ public:
         sizePolicy.setHeightForWidth(lcdCurPos->sizePolicy().hasHeightForWidth());
         lcdCurPos->setSizePolicy(sizePolicy);
         lcdCurPos->setMaximumSize(QSize(71, 21));
-        lcdCurPos->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 255);"));
+        lcdCurPos->setStyleSheet(QString::fromUtf8("QLCDNumber{\n"
+"color: rgb(0, 0, 255);\n"
+"}"));
         lcdCurPos->setFrameShape(QFrame::Box);
         lcdCurPos->setFrameShadow(QFrame::Plain);
         lcdCurPos->setLineWidth(0);
@@ -900,7 +903,10 @@ public:
         sizePolicy.setHeightForWidth(lcdDuration->sizePolicy().hasHeightForWidth());
         lcdDuration->setSizePolicy(sizePolicy);
         lcdDuration->setMaximumSize(QSize(71, 21));
-        lcdDuration->setStyleSheet(QString::fromUtf8("color: rgb(112, 112, 84);"));
+        lcdDuration->setStyleSheet(QString::fromUtf8("QLCDNumber\n"
+"{\n"
+"color: rgb(112, 112, 84);\n"
+"}"));
         lcdDuration->setFrameShape(QFrame::Box);
         lcdDuration->setFrameShadow(QFrame::Plain);
         lcdDuration->setLineWidth(0);
@@ -939,7 +945,9 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(labelSpeed->sizePolicy().hasHeightForWidth());
         labelSpeed->setSizePolicy(sizePolicy1);
-        labelSpeed->setStyleSheet(QString::fromUtf8("color: grey;"));
+        labelSpeed->setStyleSheet(QString::fromUtf8("QLabel{\n"
+"color: grey;\n"
+"}"));
         labelCpuAudio = new QLabel(centralWidget);
         labelCpuAudio->setObjectName(QString::fromUtf8("labelCpuAudio"));
         labelCpuAudio->setGeometry(QRect(130, 240, 17, 16));
@@ -1610,12 +1618,23 @@ public:
         labVD = new QLabel(centralWidget);
         labVD->setObjectName(QString::fromUtf8("labVD"));
         labVD->setGeometry(QRect(290, 240, 21, 16));
-        labVD->setStyleSheet(QString::fromUtf8("color: grey;"));
+        labVD->setStyleSheet(QString::fromUtf8("QLabel{\n"
+"color: grey;\n"
+"}"));
         labAD = new QLabel(centralWidget);
         labAD->setObjectName(QString::fromUtf8("labAD"));
         labAD->setGeometry(QRect(320, 240, 21, 16));
-        labAD->setStyleSheet(QString::fromUtf8("font: 75 7pt \"MS Shell Dlg 2\";\n"
-"color: grey;"));
+        labAD->setStyleSheet(QString::fromUtf8("QLabel{font: 75 7pt \"MS Shell Dlg 2\";\n"
+"color: grey;\n"
+"}"));
+        toolButtonFblike = new QToolButton(centralWidget);
+        toolButtonFblike->setObjectName(QString::fromUtf8("toolButtonFblike"));
+        toolButtonFblike->setGeometry(QRect(240, 60, 22, 22));
+        toolButtonFblike->setMaximumSize(QSize(22, 22));
+        QIcon icon45;
+        icon45.addFile(QString::fromUtf8(":/images/like_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        toolButtonFblike->setIcon(icon45);
+        toolButtonFblike->setAutoExclusive(false);
         PlayerWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(PlayerWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
@@ -1629,7 +1648,7 @@ public:
         PlayerWindow->setStatusBar(statusBar);
         menuBar = new QMenuBar(PlayerWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 813, 20));
+        menuBar->setGeometry(QRect(0, 0, 824, 20));
         menuBar->setStyleSheet(QString::fromUtf8(""));
         menuBar->setNativeMenuBar(false);
         menu_Open = new QMenu(menuBar);
@@ -1667,16 +1686,16 @@ public:
         menuVideo_Track->setObjectName(QString::fromUtf8("menuVideo_Track"));
         menuOSD = new QMenu(menu_Video);
         menuOSD->setObjectName(QString::fromUtf8("menuOSD"));
-        QIcon icon45;
-        icon45.addFile(QString::fromUtf8(":/images/osd.png"), QSize(), QIcon::Normal, QIcon::Off);
-        menuOSD->setIcon(icon45);
+        QIcon icon46;
+        icon46.addFile(QString::fromUtf8(":/images/osd.png"), QSize(), QIcon::Normal, QIcon::Off);
+        menuOSD->setIcon(icon46);
         menuFrame_drop = new QMenu(menu_Video);
         menuFrame_drop->setObjectName(QString::fromUtf8("menuFrame_drop"));
         menuZoom = new QMenu(menu_Video);
         menuZoom->setObjectName(QString::fromUtf8("menuZoom"));
-        QIcon icon46;
-        icon46.addFile(QString::fromUtf8(":/images/zoom.png"), QSize(), QIcon::Normal, QIcon::Off);
-        menuZoom->setIcon(icon46);
+        QIcon icon47;
+        icon47.addFile(QString::fromUtf8(":/images/zoom.png"), QSize(), QIcon::Normal, QIcon::Off);
+        menuZoom->setIcon(icon47);
         menuFrame_rate_fps = new QMenu(menu_Video);
         menuFrame_rate_fps->setObjectName(QString::fromUtf8("menuFrame_rate_fps"));
         menu_Subtitles = new QMenu(menuBar);
@@ -2471,6 +2490,10 @@ public:
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Audio bitrate</span></p></body></html>", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         labAD->setText(QApplication::translate("PlayerWindow", "wxh", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        toolButtonFblike->setToolTip(QApplication::translate("PlayerWindow", "Like ExMplayer", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        toolButtonFblike->setText(QApplication::translate("PlayerWindow", "Like", 0, QApplication::UnicodeUTF8));
         menu_Open->setTitle(QApplication::translate("PlayerWindow", "&Open", 0, QApplication::UnicodeUTF8));
         menuPlay->setTitle(QApplication::translate("PlayerWindow", "&Playback", 0, QApplication::UnicodeUTF8));
         menuSpeed->setTitle(QApplication::translate("PlayerWindow", "S&peed", 0, QApplication::UnicodeUTF8));

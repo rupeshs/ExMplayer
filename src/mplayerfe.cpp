@@ -492,7 +492,7 @@ void mplayerfe::readmpconsole()
 
             this->usercommand("osd_show_text \""+ fn+"\" 2000 1");
 
-            _started=true;
+
             idlist.removeDuplicates();
             cmd=QString("get_time_length\n");
             mProcess->write(cmd.toAscii());
@@ -501,13 +501,7 @@ void mplayerfe::readmpconsole()
                 fldDlg->close();
             }
 
-               qDebug()<<"<---- emit startingplayback() ----->";
-               if  (_hasvideo)
-                  qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
-               if(_bgotdimension && _hasvideo)
-                  emit startingplayback();
-               if  (_hasaudio &&!_hasvideo)
-                  emit startingplayback();
+
 
 
         }
@@ -623,6 +617,16 @@ void mplayerfe::readmpconsole()
         {
             emit resizeVideoWindow(_videowidth,_videoheight);
         }
+
+        qDebug()<<"<---- emit startingplayback() ----->";
+        if  (_hasvideo)
+            qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
+        if(_bgotdimension && _hasvideo)
+            emit startingplayback();
+        if  (_hasaudio &&!_hasvideo)
+            emit startingplayback();
+        _started=true;
+
 
     }
     else

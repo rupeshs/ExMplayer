@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'playerwindow.h'
 **
-** Created: Sun Feb 3 10:28:26 2013
+** Created: Sun Feb 3 14:12:46 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_PlayerWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-     238,   14, // methods
+     240,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -271,6 +271,8 @@ static const uint qt_meta_data_PlayerWindow[] = {
     6771,   13,   13,   13, 0x08,
     6786,   13,   13,   13, 0x08,
     6808, 6797,   13,   13, 0x08,
+    6839, 2691,   13,   13, 0x08,
+    6869,   13,   13,   13, 0x08,
 
        0        // eod
 };
@@ -477,6 +479,8 @@ static const char qt_meta_stringdata_PlayerWindow[] = {
     "qualityMap,title\0playYTUrl(QMap<int,QString>,QString)\0"
     "addingfile()\0removingfile()\0ShowStop()\0"
     "img,pixmap\0image2Pixmap(QImage&,QPixmap&)\0"
+    "mousePressEvent(QMouseEvent*)\0"
+    "on_toolButtonFblike_clicked()\0"
 };
 
 const QMetaObject PlayerWindow::staticMetaObject = {
@@ -749,9 +753,11 @@ int PlayerWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 235: removingfile(); break;
         case 236: ShowStop(); break;
         case 237: image2Pixmap((*reinterpret_cast< QImage(*)>(_a[1])),(*reinterpret_cast< QPixmap(*)>(_a[2]))); break;
+        case 238: mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
+        case 239: on_toolButtonFblike_clicked(); break;
         default: ;
         }
-        _id -= 238;
+        _id -= 240;
     }
     return _id;
 }
