@@ -1,16 +1,18 @@
 MPlayer/MEncoder Win32 binary Builds by Redxii <redxii@users.sourceforge.net> for SMPlayer
+Report bugs to http://smplayer.sf.net/
 
 The included subfont.ttf is DejaVu Serif,
 Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream Vera is
 a trademark of Bitstream, Inc.
 DejaVu changes are in public domain.
 
-Some libraries are from Gianluigi Tiesi  [sherpya@netfarm.it] Mplayer for Windows: pthreadsGC2-static-2.9.x & libregif-mingw32-4.1.7. For information about included libraries please look at:
+Some libraries are from Gianluigi Tiesi [sherpya@netfarm.it] Mplayer for Windows:
+libSDL-mingw32-1.2.15-gcc46.tar.bz2
+
+For information about included libraries please look at:
 http://oss.netfarm.it/mplayer-win32.php
 
--- Report bugs to http://smplayer.sf.net/
 
---
 The bottom of this file has a list of keyboard shortcuts to control MPlayer.
 A complete list of command line parameters is in mplayer.html. More
 documentation is in the docs/ directory. Start reading at index.html or

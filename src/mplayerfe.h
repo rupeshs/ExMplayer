@@ -273,6 +273,7 @@ public slots:
    bool _isRestarting;
    int _videowidth;
    bool bedlstart;
+
    QString _filepath;
    QStringList metainfovalue;
    QStringList metainfoname;
@@ -346,8 +347,10 @@ public slots:
    bool isnet;
    QPointer<fontLoadDialog> fldDlg;
    bool _hideFontDlg;
+   bool _bgotdimension;
    void removeOption(QString option,bool addseek);
    QString colorToRGB(unsigned int color) ;
+
 
 };
 

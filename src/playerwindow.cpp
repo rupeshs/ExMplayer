@@ -275,7 +275,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(hidepg()),piv,SLOT(stopAnimation()));
     QObject::connect(mp,SIGNAL(showerrortext(QString)),this,SLOT(showerror(QString)));
     QObject::connect(mp,SIGNAL(showvideoui()),videoWin->mplayerlayer,SLOT(show()));
-    QObject::connect(mp,SIGNAL(resizeVideoWindow(int,int)),this,SLOT(resizeVideoWindow(int,int)));
+    //QObject::connect(mp,SIGNAL(resizeVideoWindow(int,int)),this,SLOT(resizeVideoWindow(int,int)));
     //QObject::connect(mp,SIGNAL(eof()),this,SLOT(resetUi()));
     //QObject::connect(mp,SIGNAL(showmsgBox(QString)),this,SLOT(showMsgBox(QString)));
 
@@ -355,7 +355,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
 void  PlayerWindow::setupMyUi()
 {
 
-    //
+
     ui->actionInternet_Radio->setVisible(false);
     ui->actionCopy_Audio_CD->setVisible(false);
 
@@ -520,7 +520,7 @@ void  PlayerWindow::setupMyUi()
     pi->setColor(QColor(qRgb(0,0,255) ));
     piv = new QProgressIndicator(videoWin);
 
-    // testlab =new QLabel(videoWin,0);
+    //testlab =new QLabel(videoWin,0);
     //testlab->setText("ffffffffffffffffff");
     //testlab->show();
     //videoWin->setAspect(1.0);
@@ -905,7 +905,7 @@ void PlayerWindow::startingPlayback()
                 mp->togglefullscreen();
             }
             else{
-               // this->resize(mp->videowidth(),eh);
+                this->resize(mp->videowidth(),eh);
             }
 
             ui->actionLoad_external_file->setDisabled(false);

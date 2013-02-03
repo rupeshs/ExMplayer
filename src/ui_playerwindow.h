@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'playerwindow.ui'
 **
-** Created: Sat Feb 2 15:05:08 2013
+** Created: Sun Feb 3 10:09:57 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -900,12 +900,12 @@ public:
         sizePolicy.setHeightForWidth(lcdDuration->sizePolicy().hasHeightForWidth());
         lcdDuration->setSizePolicy(sizePolicy);
         lcdDuration->setMaximumSize(QSize(71, 21));
-        lcdDuration->setStyleSheet(QString::fromUtf8("color: rgb(79, 111, 255);"));
+        lcdDuration->setStyleSheet(QString::fromUtf8("color: rgb(112, 112, 84);"));
         lcdDuration->setFrameShape(QFrame::Box);
         lcdDuration->setFrameShadow(QFrame::Plain);
         lcdDuration->setLineWidth(0);
         lcdDuration->setMidLineWidth(3);
-        lcdDuration->setSmallDecimalPoint(true);
+        lcdDuration->setSmallDecimalPoint(false);
         lcdDuration->setNumDigits(8);
         lcdDuration->setMode(QLCDNumber::Dec);
         lcdDuration->setSegmentStyle(QLCDNumber::Flat);

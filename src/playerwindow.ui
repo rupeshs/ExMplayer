@@ -125,7 +125,7 @@
      <string>Duration</string>
     </property>
     <property name="styleSheet">
-     <string notr="true">color: rgb(79, 111, 255);</string>
+     <string notr="true">color: rgb(112, 112, 84);</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::Box</enum>
@@ -140,7 +140,7 @@
      <number>3</number>
     </property>
     <property name="smallDecimalPoint">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="numDigits">
      <number>8</number>

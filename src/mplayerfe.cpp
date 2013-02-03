@@ -62,6 +62,7 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     _wparent=wparent;
 
     isurl=false;
+    _bgotdimension=false;
     mPath= qApp->applicationDirPath()+ "/mplayer/mplayer.exe";
     mutelock=true;
 
@@ -477,7 +478,7 @@ void mplayerfe::readmpconsole()
     if (!_started)
     {
         if(str.contains("Starting playback",Qt::CaseInsensitive))
-        {//qDebug()<<"111111111111111111122222222"<<this->hasaudio();
+        {
             if(isurl)
             {//this->usercommand("quit");
                 // qDebug()  <<"Sdfdf";
@@ -500,7 +501,14 @@ void mplayerfe::readmpconsole()
                 fldDlg->close();
             }
 
-               emit startingplayback();
+               qDebug()<<"<---- emit startingplayback() ----->";
+               if  (_hasvideo)
+                  qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
+               if(_bgotdimension && _hasvideo)
+                  emit startingplayback();
+               if  (_hasaudio &&!_hasvideo)
+                  emit startingplayback();
+
 
         }
         _state=this->PARSING;
@@ -596,7 +604,9 @@ void mplayerfe::readmpconsole()
             _videowidth=tmpstr.toInt();
             _video_width=QString::number(tmpstr.toInt());
             _hasvideo=true;
-            qDebug()<<"Video width:"<<_video_width;
+
+            qDebug()<<"Got Video width:"<<_video_width;
+            _bgotdimension=true;
             show_message("Found video stream",1000) ;
             emit showvideoui();
             emit hidepg();
