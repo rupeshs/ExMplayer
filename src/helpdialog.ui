@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>helpDialog</class>
+ <widget class="QDialog" name="helpDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>330</width>
+    <height>426</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ExMplayer- Help</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="0">
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item row="0" column="0">
+      <widget class="QListWidget" name="listWidgetContent">
+       <property name="maximumSize">
+        <size>
+         <width>181</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QListView {
+     show-decoration-selected: 1; /* make the selection span the entire width of the view */
+ }
+
+ QListView::item:alternate {
+     background: #EEEEEE;
+ }
+
+ QListView::item:selected {
+  background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 100), stop:1 rgba(255, 255, 255, 200));
+
+
+ 
+ }
+
+
+
+ QListView::item:selected:active {
+    background: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 75), stop:1 rgba(255, 255, 255, 200));
+	color: rgb(0, 0, 255);
+border:1px lightblue;
+ }
+
+ QListView::item:hover {
+     background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 50), stop:1 rgba(255, 255, 255, 200));
+ }
+
+</string>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>Player</string>
+        </property>
+        <property name="icon">
+         <iconset resource="ExMplayer.qrc">
+          <normaloff>:/images/player.png</normaloff>:/images/player.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Audio</string>
+        </property>
+        <property name="icon">
+         <iconset resource="ExMplayer.qrc">
+          <normaloff>:/images/audio.png</normaloff>:/images/audio.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Video</string>
+        </property>
+        <property name="icon">
+         <iconset resource="ExMplayer.qrc">
+          <normaloff>:/images/video.png</normaloff>:/images/video.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Subtitles</string>
+        </property>
+        <property name="icon">
+         <iconset resource="ExMplayer.qrc">
+          <normaloff>:/images/subtitle.png</normaloff>:/images/subtitle.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Network Streaming</string>
+        </property>
+        <property name="icon">
+         <iconset resource="ExMplayer.qrc">
+          <normaloff>:/images/Internet.png</normaloff>:/images/Internet.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Keyboard</string>
+        </property>
+        <property name="icon">
+         <iconset resource="ExMplayer.qrc">
+          <normaloff>:/images/keyboard.png</normaloff>:/images/keyboard.png</iconset>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Mouse</string>
+        </property>
+        <property name="icon">
+         <iconset resource="ExMplayer.qrc">
+          <normaloff>:/images/mouse.png</normaloff>:/images/mouse.png</iconset>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QTextEdit" name="textEditHelp">
+       <property name="documentTitle">
+        <string/>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="ExMplayer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>helpDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>258</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>82</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,0 +1,33 @@
+#include <winver.h>
+
+#define EXMPLAYER_FILEVERSION 1,1,0,0
+#define EXMPLAYER_PRODVERSION "1.1.0.0\0"
+
+VS_VERSION_INFO     VERSIONINFO
+FILEVERSION         EXMPLAYER_FILEVERSION
+PRODUCTVERSION      EXMPLAYER_FILEVERSION
+FILEOS              VOS_NT_WINDOWS32
+FILETYPE            VFT_APP
+{
+  BLOCK "StringFileInfo"
+  {
+    BLOCK "000004b0"
+    {
+      VALUE "CompanyName", "Rupesh Sreeraman\0"
+      VALUE "FileDescription", "ExMPlayer\0"
+      VALUE "FileVersion", EXMPLAYER_PRODVERSION
+      VALUE "InternalName", "exmplayer\0"
+      VALUE "LegalCopyright", "Copyright (c) Rupesh Sreeraman\0"
+      VALUE "OriginalFilename", "exmplayer.exe\0"
+      VALUE "ProductName", "ExMplayer\0"
+      VALUE "ProductVersion", EXMPLAYER_PRODVERSION
+    }
+  }
+  BLOCK "VarFileInfo"
+  {
+    VALUE "Translation", 0, 0x04b0
+  }
+}
+
+
+IDI_ICON1 ICON  DISCARDABLE  "ExMplayer.ico"

@@ -1,0 +1,4427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PlayerWindow</class>
+ <widget class="QMainWindow" name="PlayerWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>813</width>
+    <height>609</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>450</width>
+    <height>145</height>
+   </size>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>ExMplayer</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="ExMplayer.qrc">
+    <normaloff>:/images/ExMplayer.png</normaloff>:/images/ExMplayer.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="dockOptions">
+   <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks</set>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <widget class="QLCDNumber" name="lcdCurPos">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>240</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>71</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Current position </string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 255);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="midLineWidth">
+     <number>0</number>
+    </property>
+    <property name="smallDecimalPoint">
+     <bool>true</bool>
+    </property>
+    <property name="numDigits">
+     <number>8</number>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Flat</enum>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="lcdDuration">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>240</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>71</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="toolTip">
+     <string>Duration</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(79, 111, 255);</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>0</number>
+    </property>
+    <property name="midLineWidth">
+     <number>3</number>
+    </property>
+    <property name="smallDecimalPoint">
+     <bool>true</bool>
+    </property>
+    <property name="numDigits">
+     <number>8</number>
+    </property>
+    <property name="mode">
+     <enum>QLCDNumber::Dec</enum>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Flat</enum>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBarBusy">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>240</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>81</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>81</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar { 
+border: 2px solid lightblue;
+border-radius: 5px;
+
+}
+
+QProgressBar::chunk {
+background-color:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 150), stop:1 rgba(255, 255, 255, 100));
+width: 20px;
+}</string>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
+    </property>
+    <property name="format">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelStatus">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>240</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Ready&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelSpeed">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>240</y>
+      <width>28</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="toolTip">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Playback speed as a factor of original speed&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: grey;</string>
+    </property>
+    <property name="text">
+     <string>1.00x</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelCpuAudio">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>240</y>
+      <width>17</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Audio codec CPU usage in percent</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 255);</string>
+    </property>
+    <property name="text">
+     <string>0%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelFrameCount">
+    <property name="geometry">
+     <rect>
+      <x>58</x>
+      <y>240</y>
+      <width>16</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Frames played/decoded</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 255);
+</string>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelAVdelay">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>240</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string> Audio-Video(A-V) difference in seconds (delay)</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 255);</string>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelCpuVideo">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>240</y>
+      <width>17</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Video codec CPU usage in percent&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 255);</string>
+    </property>
+    <property name="text">
+     <string>0%</string>
+    </property>
+   </widget>
+   <widget class="rphSlider" name="sliderSeek">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>210</y>
+      <width>84</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="minimum">
+     <number>0</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="rphSlider" name="sliderVolume">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>210</y>
+      <width>84</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>91</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="cursor">
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="toolTip">
+     <string>Volume</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="minimum">
+     <number>0</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonRewind">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Rewind</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/slower.png</normaloff>:/images/slower.png</iconset>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::MenuButtonPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonForward">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Forward</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/faster.png</normaloff>:/images/faster.png</iconset>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::MenuButtonPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonVolume">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>60</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Mute &lt;/span&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;On\Off&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>:/vol100</normaloff>:/vol100</iconset>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="rphLabelEx" name="label_display">
+    <property name="geometry">
+     <rect>
+      <x>9</x>
+      <y>112</y>
+      <width>43</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>21</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(0, 0, 255);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>0</y>
+      <width>191</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">/* Style the tab using the tab sub-control. Note that
+     it reads QTabBar _not_ QTabWidget */
+
+ QTabBar::tab {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #E1E1E1, stop: 0.4 #DDDDDD,
+                                 stop: 0.5 #D8D8D8, stop: 1.0 #D3D3D3);
+     border: 2px solid #C4C4C3;
+     border-bottom-color: #C2C7CB; /* same as the pane color */
+     border-top-left-radius: 4px;
+     border-top-right-radius: 4px;
+     min-width: 8ex;
+     padding: 2px;
+ }
+
+ QTabBar::tab:selected, QTabBar::tab:hover {
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                 stop: 0 #fafafa, stop: 0.4 #f4f4f4,
+                                 stop: 0.5 #e7e7e7, stop: 1.0 #fafafa);
+ }
+
+ QTabBar::tab:selected {
+     border-color: lightblue;
+     border-bottom-color: #C2C7CB; /* same as pane color */
+ }
+
+ QTabBar::tab:!selected {
+     margin-top: 2px; /* make non-selected tabs look smaller */
+ }
+</string>
+    </property>
+    <property name="tabPosition">
+     <enum>QTabWidget::North</enum>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="tabWidgetPage1">
+     <attribute name="title">
+      <string>Video equalizer</string>
+     </attribute>
+     <widget class="QFrame" name="page_ve">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>421</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame{background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 0), stop:1 rgba(255, 255, 255, 0))}</string>
+      </property>
+      <widget class="QWidget" name="gridLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>291</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <item row="1" column="4">
+         <widget class="rphSlider" name="gamma">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-100</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="rphSlider" name="contrast">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-100</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="rphSlider" name="brightness">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-100</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="rphSlider" name="Hue">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-100</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="rphSlider" name="Saturation">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-100</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_8">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="label_9">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_10">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_7">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>140</y>
+         <width>42</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="text">
+        <string>Contrast</string>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>140</y>
+         <width>50</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+       </property>
+       <property name="text">
+        <string>Brightness</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>140</y>
+         <width>21</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+       </property>
+       <property name="text">
+        <string>Hue</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>140</y>
+         <width>50</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+       </property>
+       <property name="text">
+        <string>Saturation</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>140</y>
+         <width>35</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+       </property>
+       <property name="text">
+        <string>Gamma</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnVEReset">
+       <property name="geometry">
+        <rect>
+         <x>320</x>
+         <y>80</y>
+         <width>84</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tabWidgetPage2">
+     <attribute name="title">
+      <string>Audio equalizer</string>
+     </attribute>
+     <widget class="QFrame" name="page_ae">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>521</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QPushButton" name="btnAEReset">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>70</y>
+         <width>84</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+      <widget class="QWidget" name="gridLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>384</width>
+         <height>141</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_11">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QLabel" name="label_12">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="label_13">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4">
+         <widget class="QLabel" name="label_14">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="label_15">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="5">
+         <widget class="QLabel" name="label_16">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="6">
+         <widget class="QLabel" name="label_17">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="7">
+         <widget class="QLabel" name="label_18">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="8">
+         <widget class="QLabel" name="label_19">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_20">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>31Hz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="label_21">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>62Hz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QLabel" name="label_22">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>125Hz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QLabel" name="label_23">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>250Hz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="4">
+         <widget class="QLabel" name="label_24">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>500Hz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5">
+         <widget class="QLabel" name="label_25">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>1KHz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="6">
+         <widget class="QLabel" name="label_26">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>2KHz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="7">
+         <widget class="QLabel" name="label_27">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>4KHz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="8">
+         <widget class="QLabel" name="label_28">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>8KHz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="9">
+         <widget class="QLabel" name="label_29">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>16KHz</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="9">
+         <widget class="QLabel" name="label_30">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="rphSlider" name="eq0">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="rphSlider" name="eq1">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="rphSlider" name="eq2">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="rphSlider" name="eq3">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="rphSlider" name="eq4">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="5">
+         <widget class="rphSlider" name="eq5">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="6">
+         <widget class="rphSlider" name="eq6">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="7">
+         <widget class="rphSlider" name="eq7">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="8">
+         <widget class="rphSlider" name="eq8">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="9">
+         <widget class="rphSlider" name="eq9">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-12</number>
+          </property>
+          <property name="maximum">
+           <number>12</number>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+          <property name="tickInterval">
+           <number>2</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QComboBox" name="comboBox">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>130</y>
+         <width>111</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <item>
+        <property name="text">
+         <string>Classical</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Club</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dance</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Flat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Fullbass</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>FullbassTreble</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Fulltreble</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Headphones</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LargeHall</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Live</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Party</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pop</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Reggae</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Rock</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Ska</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Soft</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SoftRock</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Techno</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Custom</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QCheckBox" name="cbEnableAEq">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>10</y>
+         <width>70</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Enable</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QToolButton" name="toolButtonfs">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Fullscreen</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/fullscreen.png</normaloff>:/images/fullscreen.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonLpl">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Load/save playlist</string>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/playlist.png</normaloff>:/images/playlist.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::MenuButtonPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonAdd">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Add files to playlist</string>
+    </property>
+    <property name="text">
+     <string>+</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/addfile.png</normaloff>:/images/addfile.png</iconset>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonRemove">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>20</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Remove files</string>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/removefile.png</normaloff>:/images/removefile.png</iconset>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_loop">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Loop playlist&lt;/span&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt; On/Off&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/loop.png</normaloff>:/images/loop.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_shuffle">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Shuffle &lt;/span&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;On/Off&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/shuffle.png</normaloff>:/images/shuffle.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_playpre">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Play previous file</string>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/previous.png</normaloff>:/images/previous.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_playnext">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>20</y>
+      <width>31</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Play next file</string>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>16</width>
+      <height>16</height>
+     </size>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonSpeed">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Normal speed</string>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/normalspeed.png</normaloff>:/images/normalspeed.png</iconset>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::MenuButtonPopup</enum>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonplaylist">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Playlist</string>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+    <property name="icon">
+     <iconset resource="ExMplayer.qrc">
+      <normaloff>:/images/playlist.png</normaloff>:/images/playlist.png</iconset>
+    </property>
+    <property name="popupMode">
+     <enum>QToolButton::MenuButtonPopup</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labToolbarSpace">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>210</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labVD">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>240</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt;Width x Height&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: grey;</string>
+    </property>
+    <property name="text">
+     <string>wxh</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labAD">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>240</y>
+      <width>21</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Sample Frequency Mono/Stereo&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Audio bitrate&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 7pt &quot;MS Shell Dlg 2&quot;;
+color: grey;</string>
+    </property>
+    <property name="text">
+     <string>wxh</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>813</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>false</bool>
+   </property>
+   <widget class="QMenu" name="menu_Open">
+    <property name="title">
+     <string>&amp;Open</string>
+    </property>
+    <property name="separatorsCollapsible">
+     <bool>false</bool>
+    </property>
+    <addaction name="action_File"/>
+    <addaction name="actionFolder"/>
+    <addaction name="actionInternet_Radio"/>
+    <addaction name="actionURL"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_File_to_pl"/>
+    <addaction name="actionAdd_Folder_to_pl"/>
+    <addaction name="actionEdit_Playlist"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpen_containing_folder"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave_cover_art"/>
+    <addaction name="separator"/>
+    <addaction name="action_Exit"/>
+   </widget>
+   <widget class="QMenu" name="menuPlay">
+    <property name="title">
+     <string>&amp;Playback</string>
+    </property>
+    <widget class="QMenu" name="menuSpeed">
+     <property name="tearOffEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>S&amp;peed</string>
+     </property>
+     <addaction name="actionNormal_Speed"/>
+     <addaction name="separator"/>
+     <addaction name="actionIncrease_10"/>
+     <addaction name="actionDecrease_10"/>
+     <addaction name="separator"/>
+     <addaction name="actionDouble_speed"/>
+     <addaction name="actionHalve_speed"/>
+    </widget>
+    <widget class="QMenu" name="menuFa_mily_Friendly_mode">
+     <property name="toolTip">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;You can cut out any violence, profanity, Jar-Jar Binks .. from a movie  according to your own personal preferences.Aside from this, there are  other uses, like automatically skipping over commercials in video files you watch.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="title">
+      <string>Fa&amp;mily-Friendly mode</string>
+     </property>
+     <addaction name="actionStep1_fm"/>
+     <addaction name="actionStep2_fm"/>
+    </widget>
+    <addaction name="action_Play_Pause"/>
+    <addaction name="action_Stop"/>
+    <addaction name="separator"/>
+    <addaction name="actionForward_10_seconds"/>
+    <addaction name="actionRewind_10_seconds"/>
+    <addaction name="actionForward_1_minute"/>
+    <addaction name="actionRewind_1_minute"/>
+    <addaction name="actionForward_10_minutes"/>
+    <addaction name="actionRewind_10_minutes"/>
+    <addaction name="separator"/>
+    <addaction name="actionPlay_Next_File"/>
+    <addaction name="actionPlay_Previous_File"/>
+    <addaction name="separator"/>
+    <addaction name="menuSpeed"/>
+    <addaction name="menuFa_mily_Friendly_mode"/>
+   </widget>
+   <widget class="QMenu" name="menu_Audio">
+    <property name="title">
+     <string>&amp;Audio</string>
+    </property>
+    <widget class="QMenu" name="menuAudio_Track">
+     <property name="title">
+      <string>Audio &amp;Track</string>
+     </property>
+     <addaction name="actionAudioDisable"/>
+    </widget>
+    <widget class="QMenu" name="menuC_hannels">
+     <property name="title">
+      <string>C&amp;hannels</string>
+     </property>
+     <addaction name="actionStereo"/>
+     <addaction name="actionSurround"/>
+     <addaction name="actionFull_5_1"/>
+     <addaction name="actionFull_7_1"/>
+    </widget>
+    <widget class="QMenu" name="menu_Filters">
+     <property name="title">
+      <string>&amp;Filters</string>
+     </property>
+     <widget class="QMenu" name="menu_Resample">
+      <property name="tearOffEnabled">
+       <bool>true</bool>
+      </property>
+      <property name="title">
+       <string>&amp;Resample</string>
+      </property>
+      <addaction name="action8000"/>
+      <addaction name="action11025"/>
+      <addaction name="action12000"/>
+      <addaction name="action16000"/>
+      <addaction name="action22100"/>
+      <addaction name="action24000"/>
+      <addaction name="action32000"/>
+      <addaction name="action44100"/>
+      <addaction name="action48000"/>
+      <addaction name="action96000"/>
+      <addaction name="action192000"/>
+     </widget>
+     <addaction name="action_Delay"/>
+     <addaction name="action_ExtraStereo"/>
+     <addaction name="action_Karaoke"/>
+     <addaction name="menu_Resample"/>
+     <addaction name="actionScale_Tempo"/>
+     <addaction name="actionSurroundAf"/>
+     <addaction name="actionVolume_Normalization"/>
+     <addaction name="actionWinamp_Dsp"/>
+    </widget>
+    <addaction name="menuAudio_Track"/>
+    <addaction name="separator"/>
+    <addaction name="actionLoad_external_file"/>
+    <addaction name="actionMix_and_save"/>
+    <addaction name="separator"/>
+    <addaction name="menuC_hannels"/>
+    <addaction name="menu_Filters"/>
+    <addaction name="action_Equalizer"/>
+    <addaction name="separator"/>
+    <addaction name="action_Increase_volume"/>
+    <addaction name="action_Decrease_volume"/>
+    <addaction name="separator"/>
+    <addaction name="actionMute"/>
+    <addaction name="separator"/>
+    <addaction name="actionIncrease_Delay"/>
+    <addaction name="actionDecrease_Delay"/>
+    <addaction name="action_AV_Set_Delay"/>
+   </widget>
+   <widget class="QMenu" name="menu_Video">
+    <property name="title">
+     <string>&amp;Video</string>
+    </property>
+    <widget class="QMenu" name="menu_Filters_2">
+     <property name="tearOffEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>&amp;Filters</string>
+     </property>
+     <widget class="QMenu" name="menu_Rotate">
+      <property name="title">
+       <string>&amp;Rotate</string>
+      </property>
+      <addaction name="action_RotateDisable"/>
+      <addaction name="actionRotate_0"/>
+      <addaction name="actionRotate_1"/>
+      <addaction name="actionRotate_2"/>
+      <addaction name="actionRotate_3"/>
+     </widget>
+     <addaction name="action_Remove_logo"/>
+     <addaction name="action_Tile"/>
+     <addaction name="action_flip"/>
+     <addaction name="action_Mirror"/>
+     <addaction name="action50_50"/>
+     <addaction name="menu_Rotate"/>
+     <addaction name="actionSwap_U_and_V"/>
+     <addaction name="actionOld_Black_and_white"/>
+     <addaction name="actionPainting"/>
+     <addaction name="actionAdd_noise"/>
+     <addaction name="action_Blur"/>
+     <addaction name="actionMatrixview"/>
+     <addaction name="actionVisualize_motion_vectors"/>
+     <addaction name="action_Palette"/>
+     <addaction name="actionNegative"/>
+     <addaction name="actionTwins"/>
+     <addaction name="actionSide_view"/>
+    </widget>
+    <widget class="QMenu" name="menuA_spect_ratio">
+     <property name="tearOffEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>Aspect &amp;ratio</string>
+     </property>
+     <addaction name="action_ar_Auto"/>
+     <addaction name="action1_1"/>
+     <addaction name="action2_21_1"/>
+     <addaction name="action3_2"/>
+     <addaction name="action4_3"/>
+     <addaction name="action5_4"/>
+     <addaction name="action14_9"/>
+     <addaction name="action14_10"/>
+     <addaction name="action16_9"/>
+     <addaction name="action16_10"/>
+     <addaction name="action_ar_Custom"/>
+     <addaction name="separator"/>
+     <addaction name="action_ar_Disable"/>
+    </widget>
+    <widget class="QMenu" name="menuVideo_Track">
+     <property name="title">
+      <string>Video &amp; Track</string>
+     </property>
+     <addaction name="actionVideoDisable"/>
+    </widget>
+    <widget class="QMenu" name="menuOSD">
+     <property name="title">
+      <string>&amp;OSD</string>
+     </property>
+     <property name="icon">
+      <iconset resource="ExMplayer.qrc">
+       <normaloff>:/images/osd.png</normaloff>:/images/osd.png</iconset>
+     </property>
+     <addaction name="action_osd0"/>
+     <addaction name="action_osd1"/>
+     <addaction name="action_osd2"/>
+     <addaction name="action_osd3"/>
+    </widget>
+    <widget class="QMenu" name="menuFrame_drop">
+     <property name="title">
+      <string>Frame &amp;drop</string>
+     </property>
+     <addaction name="action_fd_Disable"/>
+     <addaction name="actionSoft"/>
+     <addaction name="actionHard"/>
+    </widget>
+    <widget class="QMenu" name="menuZoom">
+     <property name="title">
+      <string>Zoom</string>
+     </property>
+     <property name="icon">
+      <iconset resource="ExMplayer.qrc">
+       <normaloff>:/images/zoom.png</normaloff>:/images/zoom.png</iconset>
+     </property>
+     <addaction name="actionIncrease_Zoom"/>
+     <addaction name="actionDecrease_Zoom"/>
+     <addaction name="actionDefault_zoom"/>
+     <addaction name="separator"/>
+     <addaction name="actionMove_Left"/>
+     <addaction name="actionMove_Right"/>
+     <addaction name="actionMove_Up"/>
+     <addaction name="actionMove_Down"/>
+    </widget>
+    <widget class="QMenu" name="menuFrame_rate_fps">
+     <property name="title">
+      <string>Frame rate (fps)</string>
+     </property>
+     <addaction name="actionChange_framerate"/>
+     <addaction name="actionDefault"/>
+    </widget>
+    <addaction name="menuVideo_Track"/>
+    <addaction name="separator"/>
+    <addaction name="menu_Filters_2"/>
+    <addaction name="action_Crop"/>
+    <addaction name="menuA_spect_ratio"/>
+    <addaction name="menuZoom"/>
+    <addaction name="actionVideoEqualizer"/>
+    <addaction name="actionIncrease_Video_quality"/>
+    <addaction name="menuFrame_rate_fps"/>
+    <addaction name="separator"/>
+    <addaction name="menuOSD"/>
+    <addaction name="actionToggle_OSD"/>
+    <addaction name="separator"/>
+    <addaction name="menuFrame_drop"/>
+    <addaction name="actionToggle_Frame_drop"/>
+    <addaction name="separator"/>
+    <addaction name="actionStay_on_top"/>
+    <addaction name="separator"/>
+    <addaction name="actionFrame_step"/>
+    <addaction name="separator"/>
+    <addaction name="actionScreen_shot"/>
+    <addaction name="actionStart_stop_Screenshot"/>
+    <addaction name="action_Open_Screenshot_folder"/>
+    <addaction name="separator"/>
+    <addaction name="actionFullscreen"/>
+   </widget>
+   <widget class="QMenu" name="menu_Subtitles">
+    <property name="title">
+     <string>&amp;Subtitles</string>
+    </property>
+    <widget class="QMenu" name="menuSelect">
+     <property name="tearOffEnabled">
+      <bool>true</bool>
+     </property>
+     <property name="title">
+      <string>Select</string>
+     </property>
+     <addaction name="actionStNone"/>
+    </widget>
+    <addaction name="menuSelect"/>
+    <addaction name="separator"/>
+    <addaction name="action_Load_st"/>
+    <addaction name="actionStUnload"/>
+    <addaction name="separator"/>
+    <addaction name="actionToggle_subtitle_visibility"/>
+    <addaction name="separator"/>
+    <addaction name="action_st_Move_Up"/>
+    <addaction name="action_st_Move_Down"/>
+    <addaction name="separator"/>
+    <addaction name="actionSize_Increase"/>
+    <addaction name="actionSize_Decrease"/>
+    <addaction name="separator"/>
+    <addaction name="actionDelay_Increaser"/>
+    <addaction name="actionDelay_Decrease"/>
+    <addaction name="action_st_Set_Delay"/>
+    <addaction name="separator"/>
+    <addaction name="actionEnable_Closed_Captions"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_Help"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout_Qt"/>
+    <addaction name="action_About"/>
+   </widget>
+   <widget class="QMenu" name="menuPlaylist">
+    <property name="title">
+     <string>Play&amp;list</string>
+    </property>
+    <widget class="QMenu" name="menuAdd">
+     <property name="title">
+      <string>&amp;Add</string>
+     </property>
+     <property name="icon">
+      <iconset resource="ExMplayer.qrc">
+       <normaloff>:/images/addfile.png</normaloff>:/images/addfile.png</iconset>
+     </property>
+     <addaction name="actionAdd_file"/>
+     <addaction name="actionAdd_Folder"/>
+    </widget>
+    <widget class="QMenu" name="menu_Remove">
+     <property name="title">
+      <string>&amp;Remove</string>
+     </property>
+     <property name="icon">
+      <iconset resource="ExMplayer.qrc">
+       <normaloff>:/images/removefile.png</normaloff>:/images/removefile.png</iconset>
+     </property>
+     <addaction name="actionSelected_item_s"/>
+     <addaction name="actionRemove_all"/>
+    </widget>
+    <addaction name="menuAdd"/>
+    <addaction name="menu_Remove"/>
+    <addaction name="action_Load_pl"/>
+    <addaction name="action_Save_as_playlist"/>
+    <addaction name="actionShowpl"/>
+   </widget>
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
+     <string>&amp;Tools</string>
+    </property>
+    <addaction name="action_Options"/>
+    <addaction name="actionMedia_cutter"/>
+    <addaction name="actionAudio_extrctor"/>
+    <addaction name="actionAudio_Converter"/>
+    <addaction name="actionCopy_Audio_CD"/>
+   </widget>
+   <widget class="QMenu" name="menu_View">
+    <property name="title">
+     <string>V&amp;iew</string>
+    </property>
+    <addaction name="action_Media_Info"/>
+    <addaction name="actionSmallmode"/>
+   </widget>
+   <addaction name="menu_Open"/>
+   <addaction name="menuPlay"/>
+   <addaction name="menu_Audio"/>
+   <addaction name="menu_Video"/>
+   <addaction name="menu_Subtitles"/>
+   <addaction name="menu_View"/>
+   <addaction name="menuPlaylist"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <widget class="QDockWidget" name="dockBrowser">
+   <property name="minimumSize">
+    <size>
+     <width>79</width>
+     <height>130</height>
+    </size>
+   </property>
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::TopDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Flow Browser</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>4</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3"/>
+  </widget>
+  <widget class="dockPlayList" name="dock_Playlist">
+   <property name="minimumSize">
+    <size>
+     <width>79</width>
+     <height>37</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Playlist</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <widget class="QFrame" name="frame_playlist">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>40</y>
+       <width>101</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_6">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_5"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QToolBar" name="toolBarPlaylist">
+   <property name="acceptDrops">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::BottomToolBarArea</set>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>BottomToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QDockWidget" name="dock_Filter">
+   <property name="allowedAreas">
+    <set>Qt::BottomDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Equalizer</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2"/>
+  </widget>
+  <widget class="QToolBar" name="toolBarStatus">
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>BottomToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="toolBarSeek">
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>28</width>
+     <height>28</height>
+    </size>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>BottomToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+  </widget>
+  <widget class="QToolBar" name="toolBarSeekBar">
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="floatable">
+    <bool>false</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>BottomToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>true</bool>
+   </attribute>
+  </widget>
+  <widget class="QDockWidget" name="dock_log">
+   <property name="minimumSize">
+    <size>
+     <width>289</width>
+     <height>400</height>
+    </size>
+   </property>
+   <property name="floating">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>MPlayer Log</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QFrame" name="frame_log">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMaximumSize</enum>
+          </property>
+         </layout>
+        </item>
+        <item row="1" column="0" rowspan="2" colspan="2">
+         <widget class="QTextEdit" name="mpconsole">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLineEdit" name="cmdLine">
+          <property name="toolTip">
+           <string>Enter MPlayer command</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="maxLength">
+           <number>32766</number>
+          </property>
+          <property name="placeholderText">
+           <string>Enter command</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QToolButton" name="btnSaveLog">
+          <property name="statusTip">
+           <string>Save log to a file</string>
+          </property>
+          <property name="text">
+           <string>Save As...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="action_Exit">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/exit.png</normaloff>:/images/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="action_Play_Pause">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/play.png</normaloff>:/images/play.png</iconset>
+   </property>
+   <property name="text">
+    <string>P&amp;lay/Pause</string>
+   </property>
+  </action>
+  <action name="action_Stop">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Stop</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Stop&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="action_File">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/audiofile.png</normaloff>:/images/audiofile.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;File...</string>
+   </property>
+   <property name="priority">
+    <enum>QAction::HighPriority</enum>
+   </property>
+  </action>
+  <action name="actionMute">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/mute.png</normaloff>:/images/mute.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Mute</string>
+   </property>
+   <property name="shortcut">
+    <string>M</string>
+   </property>
+  </action>
+  <action name="actionForward_10_seconds">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/f10s.png</normaloff>:/images/f10s.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Forward 10 seconds</string>
+   </property>
+  </action>
+  <action name="actionRewind_10_seconds">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/r10s.png</normaloff>:/images/r10s.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Rewind 10 seconds</string>
+   </property>
+   <property name="shortcut">
+    <string>Left</string>
+   </property>
+  </action>
+  <action name="actionForward_1_minute">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/f1m.png</normaloff>:/images/f1m.png</iconset>
+   </property>
+   <property name="text">
+    <string>F&amp;orward 1 minute</string>
+   </property>
+   <property name="shortcut">
+    <string>Up</string>
+   </property>
+  </action>
+  <action name="actionRewind_1_minute">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/r1min.png</normaloff>:/images/r1min.png</iconset>
+   </property>
+   <property name="text">
+    <string>R&amp;ewind 1 minute</string>
+   </property>
+   <property name="shortcut">
+    <string>Down</string>
+   </property>
+  </action>
+  <action name="actionForward_10_minutes">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/f10m.png</normaloff>:/images/f10m.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fo&amp;rward 10 minutes</string>
+   </property>
+   <property name="shortcut">
+    <string>PgUp</string>
+   </property>
+  </action>
+  <action name="actionRewind_10_minutes">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/r10m.png</normaloff>:/images/r10m.png</iconset>
+   </property>
+   <property name="text">
+    <string>Re&amp;wind 10 minutes</string>
+   </property>
+   <property name="shortcut">
+    <string>PgDown</string>
+   </property>
+  </action>
+  <action name="actionNormal_Speed">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/normalspeed.png</normaloff>:/images/normalspeed.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Normal Speed</string>
+   </property>
+   <property name="shortcut">
+    <string>Backspace</string>
+   </property>
+  </action>
+  <action name="actionIncrease_10">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/addfile.png</normaloff>:/images/addfile.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Increase 10%</string>
+   </property>
+   <property name="shortcut">
+    <string>]</string>
+   </property>
+  </action>
+  <action name="actionDecrease_10">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/removefile.png</normaloff>:/images/removefile.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Decrease 10%</string>
+   </property>
+   <property name="shortcut">
+    <string>[</string>
+   </property>
+  </action>
+  <action name="actionDouble_speed">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/doublespeed.png</normaloff>:/images/doublespeed.png</iconset>
+   </property>
+   <property name="text">
+    <string>D&amp;ouble speed</string>
+   </property>
+   <property name="shortcut">
+    <string>}</string>
+   </property>
+  </action>
+  <action name="actionHalve_speed">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/halfspeed.png</normaloff>:/images/halfspeed.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Halve speed</string>
+   </property>
+   <property name="shortcut">
+    <string>{</string>
+   </property>
+  </action>
+  <action name="action_Increase_volume">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/addfile.png</normaloff>:/images/addfile.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Increase volume</string>
+   </property>
+   <property name="shortcut">
+    <string>+</string>
+   </property>
+  </action>
+  <action name="action_Decrease_volume">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/removefile.png</normaloff>:/images/removefile.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Decrease volume</string>
+   </property>
+   <property name="shortcut">
+    <string>-</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Delay">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/ad_up.png</normaloff>:/images/ad_up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Increase D&amp;elay</string>
+   </property>
+   <property name="shortcut">
+    <string>*</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Delay">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/ad_down.png</normaloff>:/images/ad_down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Decrease De&amp;lay</string>
+   </property>
+   <property name="shortcut">
+    <string>/</string>
+   </property>
+  </action>
+  <action name="actionAudioDisable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>D&amp;isable</string>
+   </property>
+  </action>
+  <action name="actionLoad_external_file">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Load a external audio file</string>
+   </property>
+  </action>
+  <action name="actionStereo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>S&amp;tereo</string>
+   </property>
+  </action>
+  <action name="actionSurround">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>S&amp;urround</string>
+   </property>
+  </action>
+  <action name="actionFull_5_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string> 5.1Su&amp;rround</string>
+   </property>
+  </action>
+  <action name="action_Karaoke">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Karaoke</string>
+   </property>
+  </action>
+  <action name="action8000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>8000</string>
+   </property>
+  </action>
+  <action name="action11025">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>11025</string>
+   </property>
+  </action>
+  <action name="action12000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>12000</string>
+   </property>
+  </action>
+  <action name="action16000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>16000</string>
+   </property>
+  </action>
+  <action name="action22100">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>22100</string>
+   </property>
+  </action>
+  <action name="action24000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>24000</string>
+   </property>
+  </action>
+  <action name="action32000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>32000</string>
+   </property>
+  </action>
+  <action name="action44100">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>44100</string>
+   </property>
+  </action>
+  <action name="action48000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>48000</string>
+   </property>
+  </action>
+  <action name="action96000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>96000</string>
+   </property>
+  </action>
+  <action name="action192000">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>192000</string>
+   </property>
+  </action>
+  <action name="actionSurroundAf">
+   <property name="text">
+    <string>&amp;Surround</string>
+   </property>
+  </action>
+  <action name="action_ExtraStereo">
+   <property name="text">
+    <string>&amp;ExtraStereo</string>
+   </property>
+  </action>
+  <action name="actionScale_Tempo">
+   <property name="text">
+    <string>Scale&amp;Tempo</string>
+   </property>
+  </action>
+  <action name="action_Delay">
+   <property name="text">
+    <string>&amp;Delay</string>
+   </property>
+  </action>
+  <action name="actionStereomode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>S&amp;tereo</string>
+   </property>
+  </action>
+  <action name="actionLeft_channel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Left channel</string>
+   </property>
+  </action>
+  <action name="actionRight_channel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Right channel</string>
+   </property>
+  </action>
+  <action name="action_Remove_logo">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Remove &amp;logo</string>
+   </property>
+  </action>
+  <action name="action_Tile">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>T&amp;ile</string>
+   </property>
+  </action>
+  <action name="action_flip">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Flip</string>
+   </property>
+  </action>
+  <action name="action_Mirror">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Mirror</string>
+   </property>
+  </action>
+  <action name="action50_50">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>50:50</string>
+   </property>
+  </action>
+  <action name="actionRotate_0">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Rotate by 90 degrees &amp;clockwise and flip</string>
+   </property>
+  </action>
+  <action name="actionRotate_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Rotate by 90 degrees c&amp;lockwise</string>
+   </property>
+  </action>
+  <action name="actionRotate_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Rotate by 90 degrees c&amp;ounterclockwise</string>
+   </property>
+  </action>
+  <action name="actionRotate_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Rotate by 90 degrees co&amp;unterclockwise and flip</string>
+   </property>
+  </action>
+  <action name="action_RotateDisable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Disable</string>
+   </property>
+  </action>
+  <action name="actionSwap_U_and_V">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>S&amp;wap U and V</string>
+   </property>
+  </action>
+  <action name="actionOld_Black_and_white">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Black and white with noise</string>
+   </property>
+  </action>
+  <action name="actionPainting">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>P&amp;ortrait</string>
+   </property>
+  </action>
+  <action name="actionAdd_noise">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Add &amp;Noise</string>
+   </property>
+  </action>
+  <action name="action_Blur">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Blur</string>
+   </property>
+  </action>
+  <action name="actionMatrixview">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Matrix Vi&amp;ew</string>
+   </property>
+  </action>
+  <action name="actionVisualize_motion_vectors">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Visualize motion &amp;vectors</string>
+   </property>
+  </action>
+  <action name="action_Palette">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Palette</string>
+   </property>
+  </action>
+  <action name="actionStep1_fm">
+   <property name="text">
+    <string>Step1:Mar&amp;k positions</string>
+   </property>
+  </action>
+  <action name="actionStep2_fm">
+   <property name="text">
+    <string>Step2:S&amp;tart Family-Friendly mode</string>
+   </property>
+  </action>
+  <action name="action_ar_Auto">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>A&amp;uto</string>
+   </property>
+  </action>
+  <action name="action1_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;1:1</string>
+   </property>
+  </action>
+  <action name="action4_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;4:3</string>
+   </property>
+  </action>
+  <action name="action16_9">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>16:&amp;9</string>
+   </property>
+  </action>
+  <action name="action16_10">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1&amp;6:10</string>
+   </property>
+  </action>
+  <action name="action2_21_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;2.35:1</string>
+   </property>
+  </action>
+  <action name="action5_4">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;5:4</string>
+   </property>
+  </action>
+  <action name="action_ar_Custom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Custom</string>
+   </property>
+  </action>
+  <action name="action_ar_Disable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Disable</string>
+   </property>
+  </action>
+  <action name="action3_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;3:2</string>
+   </property>
+  </action>
+  <action name="action14_9">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>14:9</string>
+   </property>
+  </action>
+  <action name="action14_10">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>14:10</string>
+   </property>
+  </action>
+  <action name="action_Crop">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Crop</string>
+   </property>
+  </action>
+  <action name="actionVideoDisable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable</string>
+   </property>
+  </action>
+  <action name="action_osd0">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Disable</string>
+   </property>
+  </action>
+  <action name="action_osd1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Volume + &amp;Seek</string>
+   </property>
+  </action>
+  <action name="action_osd2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Volume + Seek+&amp;Timer</string>
+   </property>
+  </action>
+  <action name="action_osd3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Volume + Seek+Timer+Tota&amp;l time</string>
+   </property>
+  </action>
+  <action name="actionToggle_OSD">
+   <property name="text">
+    <string>Toggle O&amp;SD</string>
+   </property>
+   <property name="shortcut">
+    <string>O</string>
+   </property>
+  </action>
+  <action name="action_fd_Disable">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Disable</string>
+   </property>
+  </action>
+  <action name="actionSoft">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Soft</string>
+   </property>
+  </action>
+  <action name="actionHard">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Hard</string>
+   </property>
+  </action>
+  <action name="actionToggle_Frame_drop">
+   <property name="text">
+    <string>Toggle Frame drop</string>
+   </property>
+   <property name="shortcut">
+    <string>D</string>
+   </property>
+  </action>
+  <action name="actionStay_on_top">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/top.png</normaloff>:/images/top.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stay on &amp;top </string>
+   </property>
+   <property name="shortcut">
+    <string>T</string>
+   </property>
+  </action>
+  <action name="actionScreen_shot">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/camera.png</normaloff>:/images/camera.png</iconset>
+   </property>
+   <property name="text">
+    <string>Screen&amp;shot</string>
+   </property>
+   <property name="shortcut">
+    <string>C</string>
+   </property>
+  </action>
+  <action name="actionStart_stop_Screenshot">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/camera.png</normaloff>:/images/camera.png</iconset>
+   </property>
+   <property name="text">
+    <string>St&amp;art/stop Screenshot</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+C</string>
+   </property>
+  </action>
+  <action name="action_Open_Screenshot_folder">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Open Screenshot folder</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+   <property name="shortcutContext">
+    <enum>Qt::WidgetShortcut</enum>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionFrame_step">
+   <property name="text">
+    <string>Frame ste&amp;p</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/ExMplayer.png</normaloff>:/images/ExMplayer.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="action_Load_st">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Load</string>
+   </property>
+  </action>
+  <action name="actionToggle_subtitle_visibility">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Toggle subtitle &amp;visibility</string>
+   </property>
+  </action>
+  <action name="action_Equalizer">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/equalizer.png</normaloff>:/images/equalizer.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Equalizer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionVideoEqualizer">
+   <property name="text">
+    <string>&amp;Equalizer</string>
+   </property>
+   <property name="shortcut">
+    <string>Shift+E</string>
+   </property>
+  </action>
+  <action name="actionStNone">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable</string>
+   </property>
+  </action>
+  <action name="actionStUnload">
+   <property name="text">
+    <string>&amp;Unload</string>
+   </property>
+  </action>
+  <action name="actionSize_Increase">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/sub_zoom in.png</normaloff>:/images/sub_zoom in.png</iconset>
+   </property>
+   <property name="text">
+    <string>Size &amp;Increase</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionSize_Decrease">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/sub_zoom out.png</normaloff>:/images/sub_zoom out.png</iconset>
+   </property>
+   <property name="text">
+    <string>Size &amp;Decrease</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="action_sa_Top">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string> &amp;Top </string>
+   </property>
+  </action>
+  <action name="action_sa_Center">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Center</string>
+   </property>
+  </action>
+  <action name="action_sa_Bottom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Bottom</string>
+   </property>
+  </action>
+  <action name="action_st_Move_Up">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/sub_up.png</normaloff>:/images/sub_up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move &amp;Up</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Up</string>
+   </property>
+  </action>
+  <action name="action_st_Move_Down">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/sub_down.png</normaloff>:/images/sub_down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Move &amp;Down</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Down</string>
+   </property>
+  </action>
+  <action name="actionDelay_Increaser">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/addfile.png</normaloff>:/images/addfile.png</iconset>
+   </property>
+   <property name="text">
+    <string>D&amp;elay Increase</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+*</string>
+   </property>
+  </action>
+  <action name="actionDelay_Decrease">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/removefile.png</normaloff>:/images/removefile.png</iconset>
+   </property>
+   <property name="text">
+    <string>De&amp;lay Decrease</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+/</string>
+   </property>
+  </action>
+  <action name="action_st_Set_Delay">
+   <property name="text">
+    <string>Set &amp;Delay</string>
+   </property>
+  </action>
+  <action name="action_AV_Set_Delay">
+   <property name="text">
+    <string>Set &amp;Delay</string>
+   </property>
+  </action>
+  <action name="actionFullscreen">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fullscreen.png</normaloff>:/images/fullscreen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fullscreen</string>
+   </property>
+   <property name="shortcut">
+    <string>F</string>
+   </property>
+  </action>
+  <action name="actionAdd_file">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/audiofile.png</normaloff>:/images/audiofile.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add file</string>
+   </property>
+  </action>
+  <action name="actionAdd_Folder">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Folder</string>
+   </property>
+  </action>
+  <action name="actionSelected_item_s">
+   <property name="text">
+    <string>RemoveSelected item(s)</string>
+   </property>
+  </action>
+  <action name="actionRemove_all">
+   <property name="text">
+    <string>Remove all</string>
+   </property>
+  </action>
+  <action name="action_Load_pl">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Load playlist...</string>
+   </property>
+  </action>
+  <action name="action_Save_as_playlist">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/filesave .png</normaloff>:/images/filesave .png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save as playlist</string>
+   </property>
+  </action>
+  <action name="action_Media_Info">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/info.png</normaloff>:/images/info.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Media Info..</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
+  <action name="action_Options">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/options.png</normaloff>:/images/options.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Options</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionVolume_Normalization">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Volume Normalization</string>
+   </property>
+  </action>
+  <action name="actionNegative">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Negative</string>
+   </property>
+  </action>
+  <action name="actionWinamp_Dsp">
+   <property name="text">
+    <string>Winamp Dsp</string>
+   </property>
+  </action>
+  <action name="actionURL">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/net.png</normaloff>:/images/net.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;URL..</string>
+   </property>
+  </action>
+  <action name="actionPlay_Next_File">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/next.png</normaloff>:/images/next.png</iconset>
+   </property>
+   <property name="text">
+    <string>Play Next File</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Play&lt;/span&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt; Next&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; File&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="shortcut">
+    <string>N</string>
+   </property>
+  </action>
+  <action name="actionPlay_Previous_File">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/previous.png</normaloff>:/images/previous.png</iconset>
+   </property>
+   <property name="text">
+    <string>Play Previous File</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Play&lt;/span&gt;&lt;span style=&quot; font-size:8pt; font-weight:600;&quot;&gt; Previous&lt;/span&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; File&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="shortcut">
+    <string>P</string>
+   </property>
+  </action>
+  <action name="actionOpen_containing_folder">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open containing folder...</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
+   </property>
+  </action>
+  <action name="actionEnable_Closed_Captions">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable Closed Captions</string>
+   </property>
+   <property name="toolTip">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Display DVD Closed Caption (CC) subtitles.Closed captions are special ASCII subtitles for the hearing impaired encoded in the VOB userdata.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </action>
+  <action name="actionMedia_cutter">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/mediacutter.png</normaloff>:/images/mediacutter.png</iconset>
+   </property>
+   <property name="text">
+    <string>Media cutter</string>
+   </property>
+  </action>
+  <action name="actionShowpl">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/playlist.png</normaloff>:/images/playlist.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show/hide</string>
+   </property>
+   <property name="toolTip">
+    <string>Show/hide Playlist</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionFull_7_1">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>7.1Surround</string>
+   </property>
+  </action>
+  <action name="action_Help">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/help.png</normaloff>:/images/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Help</string>
+   </property>
+  </action>
+  <action name="actionAbout_Qt">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/qt_logo.png</normaloff>:/images/qt_logo.png</iconset>
+   </property>
+   <property name="text">
+    <string>About Qt</string>
+   </property>
+  </action>
+  <action name="actionMix_and_save">
+   <property name="text">
+    <string>Mix and save</string>
+   </property>
+  </action>
+  <action name="actionFolder">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Folde&amp;r...</string>
+   </property>
+  </action>
+  <action name="actionSave_cover_art">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/filesave .png</normaloff>:/images/filesave .png</iconset>
+   </property>
+   <property name="text">
+    <string>Save cover art...</string>
+   </property>
+  </action>
+  <action name="actionEdit_Playlist">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/playlist.png</normaloff>:/images/playlist.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Edit Playlist...</string>
+   </property>
+   <property name="toolTip">
+    <string>E&amp;dit Playlist</string>
+   </property>
+  </action>
+  <action name="actionAdd_File_to_pl">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/audiofile.png</normaloff>:/images/audiofile.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add F&amp;ile(s) to playlist...</string>
+   </property>
+  </action>
+  <action name="actionAdd_Folder_to_pl">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add F&amp;older to playlist...</string>
+   </property>
+   <property name="toolTip">
+    <string>Add Folder</string>
+   </property>
+  </action>
+  <action name="actionTwins">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Twins</string>
+   </property>
+  </action>
+  <action name="actionSide_view">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Side view</string>
+   </property>
+  </action>
+  <action name="actionAudio_extrctor">
+   <property name="text">
+    <string>Audio Extractor</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Zoom">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/zoom_in.png</normaloff>:/images/zoom_in.png</iconset>
+   </property>
+   <property name="text">
+    <string>Increase Zoom</string>
+   </property>
+  </action>
+  <action name="actionDecrease_Zoom">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/zoom_out.png</normaloff>:/images/zoom_out.png</iconset>
+   </property>
+   <property name="text">
+    <string>Decrease Zoom</string>
+   </property>
+  </action>
+  <action name="actionMove_Left">
+   <property name="text">
+    <string>Move Left</string>
+   </property>
+  </action>
+  <action name="actionMove_Right">
+   <property name="text">
+    <string>Move Right</string>
+   </property>
+  </action>
+  <action name="actionMove_Up">
+   <property name="text">
+    <string>Move Up</string>
+   </property>
+  </action>
+  <action name="actionMove_Down">
+   <property name="text">
+    <string>Move Down</string>
+   </property>
+  </action>
+  <action name="actionIncrease_Video_quality">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Increase Video quality</string>
+   </property>
+  </action>
+  <action name="actionChange_framerate">
+   <property name="text">
+    <string>Change frame rate</string>
+   </property>
+  </action>
+  <action name="actionDefault">
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </action>
+  <action name="actionDefault_zoom">
+   <property name="text">
+    <string>Default</string>
+   </property>
+  </action>
+  <action name="actionAudio_Converter">
+   <property name="text">
+    <string>Audio Converter</string>
+   </property>
+  </action>
+  <action name="actionSmallmode">
+   <property name="text">
+    <string>Small Mode</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionCopy_Audio_CD">
+   <property name="text">
+    <string>Copy Audio CD</string>
+   </property>
+  </action>
+  <action name="actionInternet_Radio">
+   <property name="text">
+    <string>Internet Radio</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>rphSlider</class>
+   <extends>QSlider</extends>
+   <header>rphslider.h</header>
+  </customwidget>
+  <customwidget>
+   <class>rphLabelEx</class>
+   <extends>QLabel</extends>
+   <header>rphlabelex.h</header>
+  </customwidget>
+  <customwidget>
+   <class>dockPlayList</class>
+   <extends>QDockWidget</extends>
+   <header>dockplaylist.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="ExMplayer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>eq0</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_11</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>94</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq8</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_19</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>412</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>412</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq1</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_15</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>148</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>148</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq2</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_12</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq3</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_13</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>224</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>228</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq9</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_30</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>448</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>452</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq7</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_18</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>376</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>376</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq6</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_17</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>340</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>340</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq5</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_16</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>304</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>304</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>brightness</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_7</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>194</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Hue</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_8</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>248</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>eq4</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_14</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>264</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>268</x>
+     <y>201</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>contrast</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_3</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>140</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>140</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Saturation</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_9</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>302</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>302</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>gamma</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>label_10</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>317</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

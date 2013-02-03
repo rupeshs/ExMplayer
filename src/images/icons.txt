@@ -1,0 +1,118 @@
+                            Icons
+===================================================================
+                          playlist
+===================================================================
+1.playing.png
+2.playok.png
+===================================================================
+                       playlist-toolbar
+===================================================================
+3.addfile.png
+4.removefile.png
+5.playlist.png
+
+===================================================================
+                           About dlg
+===================================================================
+6.rupesh.png
+7.rphMPFE.ico
+8.rphMPFE.png
+
+===================================================================
+                          Video window
+===================================================================
+bg removed-1.0.6
+9.backanim.gif
+===================================================================
+                          Toolbar play
+===================================================================
+10.play.png
+11.pause.png
+12.stop.png
+13.faster.png
+14.slower.png
+15fullscreen.png
+16.vol25.png
+17.vol50.png
+18.vol75.png
+19.vol100.png
+20.mute.png
+===================================================================
+                          Skin
+===================================================================
+21.wood.png
+22.woodbg.png
+===================================================================
+                        Flow browser
+===================================================================
+23.back.png
+24.back_hover.png
+  back_press.png
+25.folder.png
+26.audiofile.png
+27.videofile.png
+===================================================================
+                        Help
+==================================================================
+28.sh1.png
+29.sh2.png
+30.sh3.png
+31.flow.png
+32.rphMPFE_sh.png
+===================================================================
+                        Helpdlg 
+===================================================================
+33.player.png
+34.audio.png
+35.video.png
+36.subtitles.png
+37.internet.png
+38.keyboard.png
+37.mouse.png
+38.help.png
+===================================================================
+                        MENU
+===================================================================
+help
+39-help.png
+40qt_logo.png
+41qbout
+tools
+42.options.png
+43.mediacutter.png
+playlist
+44.fileopen.png
+45filesave.png
+view
+46.info.png
+subtitles
+47.sub_up.png
+48.sub_down.png
+49.sub_zoom_in.png
+50.sub_zoom_out.png
+video
+51.camera.png
+52.osd.png
+53.top.png
+audio
+54.ad_up.png
+55ad_down.png
+playback
+56.next.png
+57.previous.png
+58.normalspeed.png
+59.f10s.png
+60.f1m.png
+61.f10m.png
+62.r10s.png
+63.r1m.png
+64.r10m.png
+65.doublespeed.png
+66.halfspeed.png
+open
+67.exit.png
+68.cancel.png
+69.ok.png
+70.reset.png
+71.loop.png
+72.shuffle.png
