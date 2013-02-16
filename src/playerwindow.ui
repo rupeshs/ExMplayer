@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>824</width>
-    <height>421</height>
+    <height>693</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -129,7 +129,7 @@ color: rgb(0, 0, 255);
     <property name="styleSheet">
      <string notr="true">QLCDNumber
 {
-color: rgb(112, 112, 84);
+	color: rgb(50, 50, 50);
 }</string>
     </property>
     <property name="frameShape">

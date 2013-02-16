@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fontloaddialog.ui'
 **
-** Created: Sun Jan 27 21:25:13 2013
+** Created: Sun Feb 10 12:58:35 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -32,7 +32,7 @@ public:
         if (fontLoadDialog->objectName().isEmpty())
             fontLoadDialog->setObjectName(QString::fromUtf8("fontLoadDialog"));
         fontLoadDialog->resize(179, 59);
-        fontLoadDialog->setStyleSheet(QString::fromUtf8("background-color: rgb(228, 240, 255);"));
+        fontLoadDialog->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 250, 255);"));
         label_3 = new QLabel(fontLoadDialog);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(10, 10, 171, 16));

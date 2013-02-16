@@ -247,7 +247,9 @@ void mplayerfe::play(QString File,int volume)
 }
 void mplayerfe::readmpconsole()
 {
+
     QString str= mProcess->readAllStandardOutput();
+
     QStringList lines;
 
     if (!_started)
@@ -476,9 +478,36 @@ void mplayerfe::readmpconsole()
 
 
     if (!_started)
-    {
+    { if(str.contains("ID_VIDEO_WIDTH"))
+        {   tmpstr= parsevalue("ID_VIDEO_WIDTH","=",str);
+            _videowidth=tmpstr.toInt();
+            _video_width=QString::number(tmpstr.toInt());
+            _hasvideo=true;
+
+            qDebug()<<"Got Video width:"<<_video_width;
+            _bgotdimension=true;
+            show_message("Found video stream",1000) ;
+            emit showvideoui();
+            emit hidepg();
+        }
+
+
+
+        if(str.contains("ID_VIDEO_HEIGHT"))
+        {    tmpstr= parsevalue("ID_VIDEO_HEIGHT","=",str);
+            _videoheight=tmpstr.toInt();
+            _video_height=QString::number(tmpstr.toInt());
+        }
+
         if(str.contains("Starting playback",Qt::CaseInsensitive))
-        {
+        {qDebug()<<"<---- emit startingplayback() ----->";
+            if  (_hasvideo)
+                qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
+            if(_bgotdimension && _hasvideo)
+                emit startingplayback();
+            if  (_hasaudio &&!_hasvideo)
+                emit startingplayback();
+            _started=true;
             if(isurl)
             {//this->usercommand("quit");
                 // qDebug()  <<"Sdfdf";
@@ -593,39 +622,13 @@ void mplayerfe::readmpconsole()
         { tmpstr= parsevalue("ID_SEEKABLE","=",str);
             _isseekable =(bool)tmpstr.toInt();
         }
-        if(str.contains("ID_VIDEO_WIDTH"))
-        {   tmpstr= parsevalue("ID_VIDEO_WIDTH","=",str);
-            _videowidth=tmpstr.toInt();
-            _video_width=QString::number(tmpstr.toInt());
-            _hasvideo=true;
 
-            qDebug()<<"Got Video width:"<<_video_width;
-            _bgotdimension=true;
-            show_message("Found video stream",1000) ;
-            emit showvideoui();
-            emit hidepg();
-        }
-
-
-
-        if(str.contains("ID_VIDEO_HEIGHT"))
-        { tmpstr= parsevalue("ID_VIDEO_HEIGHT","=",str);
-            _videoheight=tmpstr.toInt();
-            _video_height=QString::number(tmpstr.toInt());
-        }
         if (_video_width>0 && _video_height>0)
         {
             emit resizeVideoWindow(_videowidth,_videoheight);
         }
 
-        qDebug()<<"<---- emit startingplayback() ----->";
-        if  (_hasvideo)
-            qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
-        if(_bgotdimension && _hasvideo)
-            emit startingplayback();
-        if  (_hasaudio &&!_hasvideo)
-            emit startingplayback();
-        _started=true;
+
 
 
     }

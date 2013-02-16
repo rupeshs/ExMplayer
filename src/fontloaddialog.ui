@@ -14,7 +14,7 @@
    <string>Scan fonts</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(228, 240, 255);</string>
+   <string notr="true">background-color: rgb(255, 250, 255);</string>
   </property>
   <widget class="QLabel" name="label_3">
    <property name="geometry">

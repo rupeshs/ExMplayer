@@ -34,7 +34,7 @@ rphMPFEhelp::rphMPFEhelp()
                   this->addImage(":/images/rphMPFE_sh.png")+
                   this->addLine("")+
                   this->addLine("")+
-                  this->addLine("              ExMplayer is GUI front-end for MPlayer with flow view and tool like media cutter.It can play audio,video,dvd files(.vob),vcd files(.mpg,.dat) etc and supports network streaming.It supports subtitles,subtitle decoding is done by using ass library.It can play any media formats without any external codecs.It is programmed and developed by Rupesh.S(rupesh.rupeshs@gmail.com).")+
+                  this->addLine("              ExMplayer is a GUI front-end for MPlayer with thumbnail view.Supports audio,video,dvd files(.vob),vcd files(.mpg,.dat) and network streaming.Subtitle decoding is done by using ass library.ExMplayer has inbuilt audio and video codecs.")+
                   this->addHeading("Features")+
                   this->addLine("Using MPlayer svn r32848")+
                   this->addLine("161 audio & 357 video codecs")+

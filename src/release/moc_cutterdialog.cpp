@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cutterdialog.h'
 **
-** Created: Sun Feb 3 12:06:11 2013
+** Created: Sun Feb 10 13:00:12 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

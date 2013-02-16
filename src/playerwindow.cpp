@@ -35,6 +35,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     QString cmd;
     ui->setupUi(this);
 
+
     this->disableStylesheet();
     settings=new QSettings(qApp->applicationDirPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
 
@@ -56,7 +57,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     settings=new QSettings(qApp->applicationDirPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
     myconfig=new config();
     desktop=qApp->desktop();
-    readSettingsGeo();
+
     this->ui->dockBrowser->setVisible(false);
     //shortcuts
     createShortcuts();
@@ -101,6 +102,8 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
             }
         }
     }
+     readSettingsGeo();
+
 
 
 }
@@ -2416,12 +2419,17 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
         }
     }
     if (e->buttons() & Qt::LeftButton) {
-        if(e->y()<videoWin->height()+ this->menuBar()->height()){
+        if (mp){
+        if (mp->hasvideo())
+            {if(e->y()<videoWin->height()+ this->menuBar()->height()){
 
-            move(e->globalPos() - dragPosition);
+                    move(e->globalPos() - dragPosition);
+                }
+                e->accept();
+            }
         }
-             e->accept();
-         }
+
+    }
 
 }
 void PlayerWindow::hidestatus()
@@ -3031,37 +3039,40 @@ void PlayerWindow::on_action_Media_Info_triggered()
 
         midlg->resize(250,0);
         if (mp->hasvideo())
-        { //midlg->resize(250,470);
-            QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
+        { midlg->resize(250,470);
+            /*QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
             animation->setDuration(300);
             animation->setStartValue(QSize(250, 0));
             animation->setEndValue(QSize(250, 470));
-            animation->setEasingCurve(QEasingCurve::OutBounce);
+
             midlg->show();
-            animation->start();
+            animation->start();*/
+            midlg->show();
         }
         else if (!mp->hasvideo())
         { if (!hascover)
-            { // midlg->resize(250,400);
-                QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
+            { midlg->resize(250,400);
+                /*QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
                 animation->setDuration(300);
                 animation->setStartValue(QSize(250, 0));
                 animation->setEndValue(QSize(250, 400));
-                animation->setEasingCurve(QEasingCurve::OutBounce);
+                //animation->setEasingCurve(QEasingCurve::InCurve);
                 midlg->show();
-                animation->start();
+                animation->start();*/
+                midlg->show();
 
             }
 
             else
-            {//midlg->resize(500,550);
-                QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
+            {midlg->resize(500,550);
+                /*QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
                 animation->setDuration(300);
                 animation->setStartValue(QSize(500, 0));
                 animation->setEndValue(QSize(500, 550));
-                animation->setEasingCurve(QEasingCurve::OutBounce);
+               // animation->setEasingCurve(QEasingCurve::InCurve);
                 midlg->show();
-                animation->start();
+                animation->start();*/
+                midlg->show();
 
             }
         }
@@ -3779,15 +3790,38 @@ void PlayerWindow::writeSettings()
 
 }
 void PlayerWindow::readSettingsGeo()
-{    QSize sz;
+{
+     QSize sz;
      settings->beginGroup("MainWindow");
-      sz=settings->value("size", QSize(600, 500)).toSize();
-       resize(sz);
-        move(settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint());
+     sz=settings->value("size", QSize(600, 500)).toSize();
+     resize(sz);
+
+     QPoint po=settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint();
+     move(settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint());
+
+     settings->endGroup();
 
 
+     /*
+          QPropertyAnimation *anim1 = new QPropertyAnimation(this, "pos");
+          anim1->setDuration(200);
+          anim1->setStartValue(QPoint(po.x()+sz.width()/2,po.y()+sz.height()/2));
+          anim1->setEasingCurve(QEasingCurve::Linear);
+          anim1->setEndValue(QPoint(po.x(),po.y()));
+      //anim1->start();
+          QPropertyAnimation *anim2 = new QPropertyAnimation(this, "size");
+          anim2->setDuration(200);
+          anim2->setStartValue(QSize(0, 0));
+          anim2->setEasingCurve(QEasingCurve::Linear);
+          anim2->setEndValue(QSize(sz.width(),sz.height()));
 
-         settings->endGroup();
+
+          QParallelAnimationGroup *group = new QParallelAnimationGroup;
+          group->addAnimation(anim1);
+          group->addAnimation(anim2);
+
+          group->start();*/
+           //450/145
 }
 void PlayerWindow::completeRestart()
 {

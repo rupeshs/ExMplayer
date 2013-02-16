@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'playerwindow.ui'
 **
-** Created: Sun Feb 3 16:33:56 2013
+** Created: Sun Feb 10 17:46:02 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -342,7 +342,7 @@ public:
     {
         if (PlayerWindow->objectName().isEmpty())
             PlayerWindow->setObjectName(QString::fromUtf8("PlayerWindow"));
-        PlayerWindow->resize(824, 421);
+        PlayerWindow->resize(824, 693);
         PlayerWindow->setMinimumSize(QSize(450, 145));
         PlayerWindow->setMouseTracking(true);
         PlayerWindow->setFocusPolicy(Qt::StrongFocus);
@@ -905,7 +905,7 @@ public:
         lcdDuration->setMaximumSize(QSize(71, 21));
         lcdDuration->setStyleSheet(QString::fromUtf8("QLCDNumber\n"
 "{\n"
-"color: rgb(112, 112, 84);\n"
+"	color: rgb(50, 50, 50);\n"
 "}"));
         lcdDuration->setFrameShape(QFrame::Box);
         lcdDuration->setFrameShadow(QFrame::Plain);
