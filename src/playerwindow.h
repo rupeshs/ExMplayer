@@ -78,6 +78,11 @@ protected:
     void keyPressEvent ( QKeyEvent * e );
     void closeEvent(QCloseEvent *event);
     void showEvent ( QShowEvent * event );
+#ifdef Q_OS_WIN
+    /* Disable screensaver by event */
+    virtual bool winEvent ( MSG * m, long * result );
+#endif
+
 private:
 
     Ui::PlayerWindow *ui;
@@ -419,7 +424,6 @@ private slots:
     void wgetDownload();
     void streamingDuration(float dur);
     void searchYT(QString searchTerm, int engine);
-
     void on_actionCopy_Audio_CD_triggered();
     void on_actionInternet_Radio_triggered();
     void playSCUrl(QString url,QString url2);

@@ -74,6 +74,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     setupLogWindow();
 
     //file
+    bstop=true;
     fileType=0;
     lavf=true;
     useidx=false;
@@ -2593,7 +2594,7 @@ void PlayerWindow::on_actionSelected_item_s_triggered()
 }
 void PlayerWindow::cleanMp()
 {
-    winscreensaver->restore();
+    winscreensaver->enable();
 }
 void PlayerWindow::paused()
 {ui->action_Play_Pause->setIcon(QIcon(":/images/play.png"));
@@ -4527,3 +4528,21 @@ void PlayerWindow::on_toolButtonFblike_clicked()
 {
     QDesktopServices::openUrl(QUrl("https://www.facebook.com/exmplayer"));
 }
+
+#ifdef Q_OS_WIN
+/* Disable screensaver by event */
+bool PlayerWindow::winEvent ( MSG * m, long * result ) {
+    //qDebug("BaseGui::winEvent");
+    if (m->message==WM_SYSCOMMAND) {
+        if ((m->wParam & 0xFFF0)==SC_SCREENSAVE || (m->wParam & 0xFFF0)==SC_MONITORPOWER) {
+
+            return true;
+            } else {
+
+             return false;
+            }
+        }
+
+    return false;
+}
+#endif
