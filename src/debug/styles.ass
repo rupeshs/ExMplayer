@@ -1,7 +1,0 @@
-[Script Info]
-ScriptType: v4.00+
-Collisions: Normal
-
-[V4+ Styles]
-Format: Name, Fontname, Fontsize, PrimaryColour, BackColour, OutlineColour, Bold, Italic, Alignment, BorderStyle, Outline, Shadow, MarginL, MarginR, MarginV
-Style: Default,Arial,20,&H00ffffff,&H00000000,&H00000000,-1,0,2,1,1,2,20,20,8
