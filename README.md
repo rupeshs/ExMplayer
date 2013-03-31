@@ -1,5 +1,5 @@
-ExMplayer-MPlayer GUI with thumbnail seeking
-============================================
+ExMplayer
+=========
+MPlayer Gui with thumbnail seeking.
 
-ExMplayer(Extended MPlayer) is a GUI front-end for MPlayer.
 
