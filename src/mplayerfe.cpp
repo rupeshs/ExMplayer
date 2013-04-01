@@ -58,7 +58,8 @@ static QRegExp rx_gin("Generating Index:.* (\\d+)");
 static QRegExp rx_cache("Cache not filling!");
 static QRegExp rx_audioinfo("^[AUDIO:].*(\\d+).*Hz.*(\\d+).*ch.*(\\d+).*(\\d+).*kbit.*");
 mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
-{   isnet=false;
+{
+    isnet=false;
     _wparent=wparent;
 
     isurl=false;
