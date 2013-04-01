@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'preferencedialog.ui'
 **
-** Created: Mon Apr 1 18:21:04 2013
+** Created: Sun Mar 31 23:13:36 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

@@ -258,7 +258,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(starting()),ui->mpconsole,SLOT(clear()));
     QObject::connect(mp,SIGNAL(lineavailable(QString)),ui->mpconsole,SLOT(append(QString)));
     QObject::connect(mp,SIGNAL(startingplayback()),this,SLOT(startingPlayback()));
-   // QObject::connect(mp,SIGNAL(show_message(QString,int)),ui->statusBar,SLOT(showMessage(QString,int)));
+    //QObject::connect(mp,SIGNAL(show_message(QString,int)),ui->statusBar,SLOT(showMessage(QString,int)));
     QObject::connect(mp,SIGNAL(restarting()),ui->mpconsole,SLOT(clear()));
     QObject::connect(mp,SIGNAL(settingChanged(QString,QString,QString)),this,SLOT(settingChanged(QString,QString,QString)));
     QObject::connect(mp,SIGNAL(lengthChanged()),this,SLOT(lengthChanged()));
@@ -348,6 +348,8 @@ void PlayerWindow::initMPlayer(QString file,int type)
     //ui->progressBarBusy->show();
 
     ui->labelStatus->setText(tr("Opening..."));
+
+
 
     iseof=false;
     bplay=false;
@@ -523,6 +525,7 @@ void  PlayerWindow::setupMyUi()
     pi = new QProgressIndicator(this);
     pi->setColor(QColor(qRgb(0,0,255) ));
     piv = new QProgressIndicator(videoWin);
+
 
     //testlab =new QLabel(videoWin,0);
     //testlab->setText("ffffffffffffffffff");
@@ -842,6 +845,7 @@ void PlayerWindow::startingPlayback()
 
     if(mp->isRestarting()==false)
     {
+        this->setWindowTitle( mp->getMediaTitle()+" - ExMplayer");
         //hide progress indicator
         pi->stopAnimation();
         pi->hide();
@@ -1291,8 +1295,8 @@ void PlayerWindow::updateSeekbar()
     }
     if (mp->state()==mp->PAUSED)
         ui->labelStatus->setText("Paused.");
-    if (mp->state()==mp->BUFFERING)
-        ui->labelStatus->setText("Buffering...");
+
+
 
 }
 void PlayerWindow::updateFrameDisplay()
@@ -2830,26 +2834,16 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
 void PlayerWindow::checkForNextPlayback()
 {
 
-
-    if (mp)
-    {//qDebug()<<mp->state();
-
-        /*if(bplay)
-        {  coreTimer->stop();
-           crossfadePlay();
-         }*/
-        /*if( mp->state()==4)
-          { qDebug()<<"equal........";
-            coreTimer->stop();
-            myplaylist->playNextFile();
-            if (mp->hasvideo())
-              videoWin->showeof(true);
-          }*/
-        /*else
-          { //qDebug()<<mp->state();
-            bplay=false;
-          }*/
+    if (mp->state()==mp->BUFFERING){
+        QString cacheFill="Buffering...["+QString::number(mp->getBufferFill())+"%]";
+        ui->labelStatus->setText(cacheFill);
     }
+    if (mp->state()==mp->CONNECTING)
+        ui->labelStatus->setText("Connecting...");
+    if (mp->state()==mp->RESOLVING)
+        ui->labelStatus->setText("Resolving host...");
+
+
 }
 void PlayerWindow::crossfadePlay()
 {
@@ -3938,7 +3932,7 @@ void PlayerWindow::on_actionFolder_triggered()
 }
 void PlayerWindow::showMsgBox(QString msg)
 {
-    ui->labelStatus->setText(ui->labelStatus->text()+" No Audio Stream No video Stream");
+    //ui->labelStatus->setText(ui->labelStatus->text()+" No Audio Stream No video Stream");
     //if(myplaylist->tab->rowCount()==1)
     //{qDebug()<<"++++++++++++++++++++++";
     //if(!settings->value("Playlist/Loop","0").toBool())
