@@ -219,9 +219,6 @@ void mplayerfe::play(QString File,int volume)
                 edl.remove() ;
 
             }
-
-
-
         }
     }
     //Starting mplayer
@@ -830,10 +827,11 @@ void mplayerfe::loadsubtitles(QString subfile)
     // cmd="sub_select 0\n";
     //mProcess->write(cmd.toAscii());
 }
-#ifdef Q_OS_WIN
+
 // This function has been copied (and modified a little bit) from Scribus (program under GPL license):
 // http://docs.scribus.net/devel/util_8cpp-source.html#l00112
 QString mplayerfe::shortPathName(QString long_path) {
+#ifdef Q_OS_WIN
     if ((QSysInfo::WindowsVersion >= QSysInfo::WV_NT) && (QFile::exists(long_path))) {
         QString short_path = long_path;
 
@@ -849,8 +847,10 @@ QString mplayerfe::shortPathName(QString long_path) {
     } else {
         return long_path;
     }
-}
 #endif
+     return long_path;
+}
+
 void mplayerfe::toggle_subtitle_visibility()
 {
     bsubtvisible=! bsubtvisible;

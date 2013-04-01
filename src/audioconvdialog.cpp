@@ -20,7 +20,7 @@
 #include "ui_audioconvdialog.h"
 #include "QFileDialog.h"
 #include "filefilters.h"
-#include "rphFile.h"
+#include "rphfile.h"
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QDropEvent>
@@ -47,8 +47,8 @@ audioconvDialog::audioconvDialog(QWidget *parent) :
 
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
- //mainLayout->setMargin(30);
- mainLayout->setVerticalSpacing(30);
+    //mainLayout->setMargin(30);
+    mainLayout->setVerticalSpacing(30);
 
     mainLayout->addWidget(ui->groupBox, 0, 0);
     mainLayout->addWidget(ui->btnConv, 0, 1);

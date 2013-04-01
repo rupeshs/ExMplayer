@@ -2354,10 +2354,6 @@ void  PlayerWindow::updatemetadisp()
     if( basicmetainfo.count()>0)
     {//ui->label_display->drawCustomText(mp->metainfo.at(metadispcount),9);
 
-        /*if (faderWidget)
-          faderWidget->close();
-      faderWidget = new FaderWidget(ui->label_display);
-      faderWidget->start();*/
         //qDebug()<<mp->metainfo.at(metadispcount);
         if (metadispcount <basicmetainfo.count())
         {

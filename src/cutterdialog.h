@@ -21,7 +21,7 @@
 
 #include <QDialog>
 #include "mplayerfe.h"
-#include <Qtcore>
+#include <QtCore>
 #include "helpDialog.h"
 #include "rphmpfehelp.h"
 namespace Ui {
@@ -33,7 +33,7 @@ class cutterDialog : public QDialog {
 public:
     cutterDialog(QWidget *parent ,mplayerfe *mpf);
     ~cutterDialog();
-    void setMp(mplayerfe *mpf){mp=mpf;};
+    void setMp(mplayerfe *mpf){mp=mpf;}
     QString shortPathName(QString long_path);
 protected:
     void changeEvent(QEvent *e);

@@ -32,7 +32,7 @@ public:
 public slots:
      void setMiText(QString tex);
      void setbtnSaveEnable(bool val);
-     void setTitle(QString tit){  _title=tit;};
+     void setTitle(QString tit){  _title=tit;}
 
 protected:
     void changeEvent(QEvent *e);
@@ -47,7 +47,7 @@ private slots:
     void on_btncov_clicked();
     void on_pushButton_3_clicked();
     void on_pushButton_clicked();
-    void on_buttonBox_accepted();
+
 
 };
 

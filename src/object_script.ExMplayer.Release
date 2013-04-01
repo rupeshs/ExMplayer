@@ -37,7 +37,6 @@ INPUT(
 ./release\seekview.o
 ./release\myprocess.o
 ./release\glassstyle.o
-./release\myborder.o
 ./release\fontloaddialog.o
 ./release\moc_qtsingleapplication.o
 ./release\moc_qtlocalpeer.o
@@ -63,7 +62,6 @@ INPUT(
 ./release\moc_audioconvdialog.o
 ./release\moc_seekview.o
 ./release\moc_glassstyle.o
-./release\moc_myborder.o
 ./release\moc_fontloaddialog.o
 ./release\qrc_ExMplayer.o
 );

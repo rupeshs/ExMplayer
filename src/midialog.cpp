@@ -53,10 +53,7 @@ void miDialog::setMiText(QString tex)
     ui->textEdit->setText(tex);
 }
 
-void miDialog::on_buttonBox_accepted()
-{
 
-}
 void miDialog::setbtnSaveEnable(bool val)
 {
     ui->btncov->setEnabled(val);

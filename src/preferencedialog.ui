@@ -18,7 +18,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>570</width>
+    <width>600</width>
     <height>325</height>
    </size>
   </property>
@@ -49,39 +49,12 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>161</width>
-     <height>261</height>
+     <width>181</width>
+     <height>291</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QListView {
-     show-decoration-selected: 1; /* make the selection span the entire width of the view */
- }
-
- QListView::item:alternate {
-     background: #EEEEEE;
- }
-
- QListView::item:selected {
-  background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 100), stop:1 rgba(255, 255, 255, 200));
-
-
- 
- }
-
-
-
- QListView::item:selected:active {
-    background: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 75), stop:1 rgba(255, 255, 255, 200));
-	color: rgb(0, 0, 255);
-border:1px lightblue;
- }
-
- QListView::item:hover {
-     background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 50), stop:1 rgba(255, 255, 255, 200));
- }
-
-</string>
+    <string notr="true"/>
    </property>
    <property name="iconSize">
     <size>
@@ -168,14 +141,14 @@ border:1px lightblue;
   <widget class="QStackedWidget" name="stackedWidget">
    <property name="geometry">
     <rect>
-     <x>180</x>
+     <x>190</x>
      <y>10</y>
      <width>371</width>
      <height>271</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_2">
     <widget class="QGroupBox" name="groupBox">
@@ -493,7 +466,7 @@ border:1px lightblue;
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>351</width>
+       <width>234</width>
        <height>56</height>
       </rect>
      </property>
@@ -726,14 +699,14 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>0</x>
        <y>140</y>
-       <width>211</width>
-       <height>79</height>
+       <width>221</width>
+       <height>91</height>
       </rect>
      </property>
      <property name="title">
       <string>Alignment</string>
      </property>
-     <layout class="QFormLayout" name="formLayout">
+     <layout class="QGridLayout" name="gridLayout_7">
       <item row="0" column="0">
        <widget class="QLabel" name="label_7">
         <property name="text">
@@ -1177,7 +1150,7 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt; Copyright © 2000-2013 the FFmpeg developers.&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;MPlayer is copyrighted to MPlayer Team&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;FFmpeg Copyright © 2000-2010 by Fabrice Bellard and&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;FFmpeg Copyright © 2000-2013 the FFmpeg developers and&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;is licensed under the GPL&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Visit : &lt;/span&gt;&lt;a href=&quot;http://rphmpfe.sourceforge.net&quot;&gt;&lt;span style=&quot; font-size:8pt; text-decoration: underline; color:#0000ff;&quot;&gt;http://exmplayer.sourceforge.net&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

@@ -29,7 +29,7 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 #include <QPaintEvent>
-#include <rphLabelEx.h>
+#include <rphlabelex.h>
 
 
 class rphLabelEx;

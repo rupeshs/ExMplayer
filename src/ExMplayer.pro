@@ -47,7 +47,6 @@ SOURCES += main.cpp \
     seekview.cpp \
     myprocess.cpp \
     glassstyle.cpp \
-    myborder.cpp \
     fontloaddialog.cpp
 HEADERS += playerwindow.h \
     mplayerfe.h \
@@ -85,7 +84,6 @@ HEADERS += playerwindow.h \
     seekview.h \
     myprocess.h \
     glassstyle.h \
-    myborder.h \
     fontloaddialog.h
 FORMS += playerwindow.ui \
     preferencedialog.ui \

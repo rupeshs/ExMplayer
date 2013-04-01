@@ -17,9 +17,10 @@
 */
 #include "audioextdialog.h"
 #include "ui_audioextdialog.h"
-#include "rphFile.h"
+#include "rphfile.h"
 #include <QDesktopServices>
 #include "playerwindow.h"
+
 audioextDialog::audioextDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::audioextDialog)

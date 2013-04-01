@@ -17,10 +17,10 @@
 */
 #include "winampdspdialog.h"
 #include "ui_winampdspdialog.h"
-#include<Qtcore>
+#include<QtCore>
 #include<QFileDialog>
 #include <QSettings>
-#include "rphFile.h"
+#include "rphfile.h"
 WinampDspDialog::WinampDspDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::WinampDspDialog)

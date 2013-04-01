@@ -1,3 +1,0 @@
-directx
-singleapplication
-libqxt

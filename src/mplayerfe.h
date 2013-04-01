@@ -17,7 +17,7 @@
 */
 #ifndef MPLAYERFE_H
 #define MPLAYERFE_H
-#include <Qtcore>
+#include <QtCore>
 #include <QtGui>
 #include <QDebug>
 

@@ -17,7 +17,7 @@
 */
 #ifndef RPHMPFEHELP_H
 #define RPHMPFEHELP_H
-#include <Qtcore>
+#include <QtCore>
 class rphMPFEhelp
 {
 public:
@@ -32,11 +32,11 @@ public:
     QString mousehlpstr;
     QString helpcutterstr;
 private:
-    QString addTitle(QString str) {return QString("<p><h1><center><SPAN STYLE=\"color: blue\">"+str+"</SPAN></center></h1></p>");};
-    QString addHeading(QString str){return QString("<p><h2>"+str+"</h2></p>");}
-    QString addLine(QString str){return QString("<p><h3>"+str+"</h3></p>");}
+    QString addTitle(QString str) {return QString("<p><h1><center><SPAN STYLE=\"color: blue\">"+str+"</SPAN></center></h1></p>");}
+    QString addHeading(QString str){return QString("<p><h3>"+str+"</h3></p>");}
+    QString addLine(QString str){return QString("<p>"+str+"</p>");}
     QString addWarningLine(QString str){return QString("<p><h4><SPAN STYLE=\"color: red\">"+str+"</SPAN></h4></p>");}
-    QString addImage(QString str){return QString("<p><center><img src="+str+"</img></center></p>");};
+    QString addImage(QString str){return QString("<p><center><img src="+str+"</img></center></p>");}
 
 };
 

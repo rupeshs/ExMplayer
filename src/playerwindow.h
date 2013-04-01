@@ -27,7 +27,7 @@
 #include "equalizertypes.h"
 #include "playlist.h"
 #include "pictureflow.h"
-#include "faderwidget.h"
+
 #include <QCompleter>
 #include "QProgressIndicator.h"
 #include "preferencedialog.h"
@@ -45,7 +45,7 @@
 #include <qlocalsocket.h>
 #include <QLocalSocket>
 #include <QLocalServer>
-#include "rphFile.h"
+#include "rphfile.h"
 #include "audioextdialog.h"
 #include "mplayerwindow.h"
 #include "audioconvdialog.h"
@@ -121,7 +121,6 @@ private:
     QPointer<QTimer> frameTimer;
     QPointer<QTimer> disptimer;
     QPointer<QTimer> hidetimer;
-    QPointer<FaderWidget> faderWidget;
     QPointer<QActionGroup> actiongroupSubtitleAlignment;
     QPointer<QActionGroup> actiongroupSubtitleTrack;
     QPointer<QActionGroup> actiongroupAudioTrack;

@@ -20,7 +20,7 @@
 #define MIXDIALOG_H
 
 #include <QDialog>
-#include <Qtcore>
+#include <QtCore>
 #include <QFileInfo>
 #include <QProcess>
 #include <QMessageBox>

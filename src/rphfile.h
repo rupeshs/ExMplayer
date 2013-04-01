@@ -18,7 +18,7 @@
 
 #ifndef RPHFILE_H
 #define RPHFILE_H
-#include <Qtcore>
+#include <QtCore>
 class rphFile
 {
 public:
