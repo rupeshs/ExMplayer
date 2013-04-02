@@ -54,6 +54,8 @@
 #include "radiodialog.h"
 #include "seekview.h"
 
+#define FULLSCREENCTRL_WIDTH_PERCENTAGE  .70
+#define FULLSCREENCTRLHEIGHT  70
 
 namespace Ui {
     class PlayerWindow;
@@ -186,8 +188,16 @@ private:
     QString albumtext;
     QString yeartext;
     QLabel *labanim;
-     SeekView *mpseekView;
-     double currentFilePos;
+    SeekView *mpseekView;
+    double currentFilePos;
+    QPointer<QToolBar>fullScreenControls;
+    QAction *fullscreenSeekAction;
+    long leftSide;
+    long fullScreenControlWidth;
+    QAction *toolButtonForwardAction;
+
+    QPointer<QLCDNumber> lcdCurPosFullSc;
+    QPointer<QLCDNumber> lcdDurationFullSc;
 
 signals:
     void sgcrossfade();
@@ -435,6 +445,7 @@ private slots:
 
 
     void on_toolButtonFblike_clicked();
+    void on_sliderSeekFullScreen_actionTriggered(int action);
 };
 
 #endif // PLAYERWINDOW_H

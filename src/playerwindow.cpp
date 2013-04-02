@@ -36,10 +36,11 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
+
     this->disableStylesheet();
     settings=new QSettings(qApp->applicationDirPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
 
-    if (settings->value("Skin/style","aqua").toString()=="wood")
+     if (settings->value("Skin/style","aqua").toString()=="wood")
         QApplication::setStyle(new NorwegianWoodStyle);
     else if(settings->value("Skin/style","aqua").toString()=="aqua")
         emit setAqua();
@@ -104,7 +105,6 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
         }
     }
      readSettingsGeo();
-
 
 
 }
@@ -458,6 +458,7 @@ void  PlayerWindow::setupMyUi()
     QObject::connect(ui->sliderSeek,SIGNAL(showtooltip(QPoint *)),this,SLOT(showtooltip(QPoint *)));
     QObject::connect(ui->sliderSeek,SIGNAL(hoverValue(QString,QPoint*)),this,SLOT(showSeekpos(QString,QPoint*)));
 
+
     QObject::connect(ui->dock_Playlist,SIGNAL(sgcontextMenuEvent(QContextMenuEvent*)),this,SLOT(showCtxmenuPlaylist(QContextMenuEvent*)));
     QObject::connect(ui->dock_Playlist,SIGNAL(sgdropEvent(QDropEvent*)),this,SLOT(dropEvent(QDropEvent*)));
     // QObject::connect(ui->dockBrowser,SIGNAL(visibilityChanged(bool)),this,SLOT(setfbvis(bool)));
@@ -571,24 +572,24 @@ void  PlayerWindow::setupMyUi()
     ///////////////////////////////////////////////////////////////////
     //seekbar-toolbar
 
-    ui->toolBarSeekBar->addSeparator();
+    //ui->toolBarSeekBar->addSeparator();
     ui->toolBarSeekBar->addWidget(ui->toolButtonRewind);
     //ui->toolBarSeekBar->addSeparator();
     //ui->toolBarSeekBar->addAction(ui->actionRewind_10_seconds);
     ui->toolBarSeekBar->addWidget(ui->sliderSeek);
     // ui->toolBarSeekBar->addAction(ui->actionForward_10_seconds);
     // ui->toolBarSeekBar->addSeparator();
-    ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
-    ui->toolBarSeekBar->addSeparator();
+    toolButtonForwardAction=ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
+    //ui->toolBarSeekBar->addSeparator();
     ui->toolBarSeekBar->addAction(ui->actionFullscreen);
-    ui->toolBarSeekBar->addSeparator();
+    //ui->toolBarSeekBar->addSeparator();
     //////////////////////////////////////////////////////////////////
     //btns-toolbar
-    ui->toolBarSeek->addSeparator();
+    //ui->toolBarSeek->addSeparator();
     ui->toolBarSeek->addAction(ui->action_Play_Pause);
 
     ui->toolBarSeek->addAction(ui->action_Stop);
-    ui->toolBarSeek->addSeparator();
+    //ui->toolBarSeek->addSeparator();
     ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
 
     ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
@@ -596,12 +597,12 @@ void  PlayerWindow::setupMyUi()
     ui->toolBarSeek->addWidget(ui->toolButtonVolume);
     ui->toolBarSeek->addWidget(ui->sliderVolume);
 
-    ui->toolBarSeek->addSeparator();
+    //ui->toolBarSeek->addSeparator();
 
     ui->toolBarSeek->addAction(ui->action_Equalizer);
-    ui->toolBarSeek->addSeparator();
+    //ui->toolBarSeek->addSeparator();
     ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
-    ui->toolBarSeek->addSeparator();
+    //ui->toolBarSeek->addSeparator();
    ui->toolBarSeek->addWidget(ui->toolButtonFblike);
 
     // ui->toolBarSeek->addWidget(youtubeBox);
@@ -746,6 +747,10 @@ void  PlayerWindow::setupMyUi()
 
     mpseekView=new SeekView(this);
     mpseekView->hide();
+
+
+
+
 }
 void PlayerWindow::resetUi()
 {
@@ -777,8 +782,10 @@ void PlayerWindow::resetUi()
     ui->toolButtonRewind->setEnabled(false);
     ui->action_Stop->setEnabled(false);
     ui->sliderSeek->setValue(0);
+    //ui->sliderSeekFullScreen->setValue(0);
     ui->actionSave_cover_art->setEnabled(false);
     ui->sliderSeek->setEnabled(  false);
+   // ui->sliderSeekFullScreen->setEnabled(false);
     ui->labelAVdelay->setText("--");
     ui->labelCpuAudio->setText("--");
     ui->labelCpuVideo->setText("--");
@@ -851,8 +858,6 @@ void PlayerWindow::startingPlayback()
         pi->hide();
         piv->stopAnimation();
         piv->hide();
-        //Indicate status
-        ui->statusBar->showMessage(tr("Starting Playback..."),1000);
 
         //clear video window
         videoWin->clearText();
@@ -863,6 +868,7 @@ void PlayerWindow::startingPlayback()
         //setup seek slider
         if (mp->isseekable())
         {  ui->sliderSeek->setEnabled(true);
+
             //setup toolbar buttons
             ui->toolButtonForward->setEnabled(true);
             ui->toolButtonRewind->setEnabled(true);
@@ -1231,8 +1237,11 @@ void PlayerWindow::updateSeekbar()
         windowTimer->stop();
     }
     if(!ui->sliderSeek->isEnabled())
-    {if (mp->isseekable())
+    {if (mp->isseekable()){
             ui->sliderSeek->setEnabled(true);
+            //ui->sliderSeekFullScreen->setEnabled(true);
+        }
+
 
     }
     if (!ui->menu_Audio->isEnabled())
@@ -1276,7 +1285,14 @@ void PlayerWindow::updateSeekbar()
         else
             {*/
             ui->sliderSeek->setValue((mp->curpos()/mp->duration())*100);
+            //ui->sliderSeekFullScreen->setValue((mp->curpos()/mp->duration())*100);
             ui->lcdCurPos->display(mp->tcurpos().toString());
+            if (isfullscreen){
+                lcdCurPosFullSc->display(mp->tcurpos().toString());
+                lcdDurationFullSc->display(mp->tduration().toString());
+
+                }
+
 
         }
 
@@ -1322,6 +1338,7 @@ void PlayerWindow::on_sliderSeek_actionTriggered(int action)
 {
     this->playerTimer->stop();
     mp->goturl(ui->sliderSeek->value());
+
     this->playerTimer->start();
 
 }
@@ -2412,10 +2429,21 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
         else
         {
             this->unsetCursor();
-            ui->toolBarSeek->show();
-            ui->toolBarStatus->show();
-            ui->toolBarSeekBar->show();
-            ui->statusBar->show();
+
+            //fullScreenControls->removeAction(fullscreenSeekAction);
+            //ui->toolBarSeekBar->addWidget(ui->sliderSeek);
+            //ui->toolBarSeek->show();
+            //ui->toolBarStatus->show();
+            //ui->toolBarSeekBar->show();
+            //ui->statusBar->show();
+            if (fullScreenControls->y()==desktop->screen()->height()){
+            QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
+            animation->setDuration(300);
+            animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
+            animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
+            animation->start();
+            }
+
             hidetimer->stop();
         }
     }
@@ -2443,6 +2471,11 @@ void PlayerWindow::hidestatus()
         ui->toolBarSeek->hide();
         ui->toolBarStatus->hide();
         ui->statusBar->hide();
+        QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
+        animation->setDuration(300);
+        animation->setStartValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
+        animation->setEndValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
+        animation->start();
         this->setCursor(Qt::BlankCursor);
         hidetimer->stop();
     }
@@ -2668,8 +2701,7 @@ void PlayerWindow::setEof()
     //myplaylist->playNextFile();
 }
 void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
-{  //mediaduration=mp->duration();
-    //mediaposition=mp->curpos();
+{
 
     float p=(pos.toInt()/100.0)*mp->duration();
     QTime _duration(0,0,0,0);
@@ -2677,24 +2709,13 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
 
     if(lab)
     {if( mp->hasvideo())
-        {  /*lab->setStyleSheet("color: rgb(255, 255, 255);"
-                            "background-color: rgb(0, 0, 0);"
-                            "border: 4px solid dark;opacity: 100;font: 100 9pt \"MS Shell Dlg 2\";"
-                            "border-color: rgb(255, 255, 255);");
-            lab->setAlignment(Qt::AlignLeft	);
-            lab->resize(120,90);*/
+        {
             mpseekView->resize(128,105);
-            mpseekView->move(pt->x()-12,ui->toolBarSeekBar->y()-104);
-            //            QRect r=mpseekView->geometry();
-            //            r.adjust(0,0,0,0);
-            //            mpseekView->setGeometry(r);
-
-            //            QPropertyAnimation *animation = new QPropertyAnimation(mpseekView, "geometry");
-            //            animation->setDuration(150);
-            //            // animation->setStartValue(QRect(0,ui->toolBarSeekBar->y()-99,128,98));
-            //            animation->setEndValue(QRect(pt->x()-5,ui->toolBarSeekBar->y()-99,128,98));
-            //            animation->setEasingCurve(QEasingCurve::OutSine);
-            //            animation->start();
+            //mpseekView->move(pt->x()-26,fullScreenControls->y()-104);
+            if(! isfullscreen)
+              mpseekView->move(pt->x()-16,+ui->toolBarSeekBar->y()-104);
+            else
+                mpseekView->move(pt->x()+ui->sliderSeek->x()+150,fullScreenControls->y()-104);
 
             mpseekView->show();
         }
@@ -2702,29 +2723,26 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
         {
             lab->setStyleSheet("image: url(:/images/tooltip.png);"
                                "border-radius: 1px;"
-
+                               "color:white;"
                                "font:80 8pt \"MS Shell Dlg 2\";");
 
 
             lab->setAlignment(Qt::AlignCenter);
             lab->resize(60,24);
+            //lab->move(pt->x()+23,ui->toolBarSeek->y()-48);
+            if(! isfullscreen)
+              lab->move(pt->x()+15,ui->sliderSeek->y()-2);
+            else
+                lab->move(pt->x()+ui->sliderSeek->x()+170,fullScreenControls->y()-20);
 
-            lab->move(pt->x()+23,ui->toolBarSeek->y()-48);
-            //            QPropertyAnimation *animation = new QPropertyAnimation(lab, "opacity");
-            //            animation->setDuration(3000);
-            //            animation->setStartValue(0.0);
-            //            animation->setEndValue(1.0);
-            //            animation->start();
+
             lab->show();
         }
-
-
-        //qDebug()<<"hasvideo"<<mp->hasvideo();
         if (mp->hasvideo())
 
         {
             if (!fr)
-            {//qDebug()<<"sekkbbbb";
+            {
 
                 fr=new mplayerfe(this,this);
                 fr->hideFontDlg();
@@ -2750,6 +2768,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
                 fr->goturl(pos.toInt());
             }
         }
+
         if (mp->hasvideo())
         {if (fr)
             {if( fr->isstarted())
@@ -2782,11 +2801,13 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
     {
         lab=new QLabel(_duration.toString(),this);
         QPixmap pixmap(":/images/tooltip.png");
-        // lab->setPixmap(pixmap);
         lab->setMask(pixmap.mask());
+
         connect(ui->sliderSeek,SIGNAL(hidetooltip()),this,SLOT(hideframe()));
+
         if (mp->hasvideo())
-        {  fr=new mplayerfe(this,this);
+        {
+            fr=new mplayerfe(this,this);
             fr->hideFontDlg();
             QObject::connect(fr,SIGNAL(startingplayback()),this,SLOT(startingPlaybackframe()));
 
@@ -2801,35 +2822,19 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             fr->setaspect(false);
             fr->play(this->currentFile,0);
             fr->setOSDlevel(0);
-            //            lab->setStyleSheet("color: rgb(255, 255, 255);"
-            //                               "background-color: rgb(0, 0, 0);"
-            //                               "border-radius: 8px;"
-            //                               " border: 10px solid dark;opacity: 100;font: 75 8pt \"MS Shell Dlg 2\";"
-            //                               "border-color: rgb(255, 255, 255);");
-            //            lab->setAlignment(Qt::AlignLeft	);
-            //            //lab->resize(120,90);
-            //lab->move(pt->x()-20,0);
 
         }
         else
         {
-            /* lab->setStyleSheet("background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(210, 240, 255, 250), stop:1 rgba(255, 255, 255, 220));"
-                               "border-radius: 8px;"
-                               "border: 1px solid lightblue;"
-                               "font:80 8pt \"MS Shell Dlg 2\";");*/
-
-
             lab->setAlignment(Qt::AlignCenter);
             lab->resize(60,24);
-            lab->move(pt->x()+30,ui->statusBar->y()-30);
+            //lab->move(pt->x()+30,ui->statusBar->y()-30);
             lab->setLineWidth(2);
             //lab->setFrameShadow(QFrame::Raised);
             lab->show();
         }
     }
-    //lab->setFrameShape(QFrame::Box);
 
-    //ui->sliderSeek->setToolTip(_duration.toString());
 }
 void PlayerWindow::checkForNextPlayback()
 {
@@ -2842,6 +2847,8 @@ void PlayerWindow::checkForNextPlayback()
         ui->labelStatus->setText("Connecting...");
     if (mp->state()==mp->RESOLVING)
         ui->labelStatus->setText("Resolving host...");
+    if (mp->state()==mp->CRASHED)
+        ui->labelStatus->setText("Whoops...Failed!");
 
 
 }
@@ -3357,7 +3364,8 @@ void PlayerWindow::on_action_Save_as_playlist_triggered()
 
 }
 void PlayerWindow::toggleFullscreen()
-{//qDebug()<<"toggle"<<mp->isfullscreen();
+{
+    //qDebug()<<"toggle"<<mp->isfullscreen();
     this->isFullScreen();
     if(this->isFullScreen())
     {if (mp)
@@ -3380,6 +3388,16 @@ void PlayerWindow::toggleFullscreen()
         ui->toolBarSeekBar->show();
         ui->statusBar->show();
         this->unsetCursor();
+        ui->toolBarSeekBar->removeAction(ui->actionFullscreen);
+        ui->toolBarSeekBar->removeAction(toolButtonForwardAction);
+        ui->toolBarSeekBar->addWidget(ui->sliderSeek);
+        ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
+        ui->toolBarSeekBar->addAction(ui->actionFullscreen);
+        ui->toolBarSeekBar->update();
+        ui->sliderSeek->setGeometry(0,0,ui->sliderSeek->width(),30);
+
+
+
         //ui->toolButtonfs->hide();
 
         if (bfilvis)
@@ -3400,6 +3418,65 @@ void PlayerWindow::toggleFullscreen()
 
 
         this->setWindowFlags(Qt::WindowStaysOnTopHint);
+        qDebug()<<"Screen Height :"<<desktop->screen()->height();
+        qDebug()<<"Screen Width :"<<desktop->screen()->width();
+
+        if(fullScreenControls<=0)
+          { fullScreenControls=new QToolBar(this);
+            glassStyle *st=new glassStyle;
+           fullScreenControls->setStyle(st);
+           lcdCurPosFullSc=new QLCDNumber(this);
+
+           lcdDurationFullSc=new QLCDNumber(this);
+           lcdCurPosFullSc->setSegmentStyle(ui->lcdCurPos->segmentStyle());
+           lcdDurationFullSc->setSegmentStyle(ui->lcdDuration->segmentStyle());
+           lcdCurPosFullSc->setNumDigits(8);
+           lcdDurationFullSc->setNumDigits(8);
+           lcdCurPosFullSc->setMaximumSize(ui->lcdCurPos->maximumSize());
+           lcdDurationFullSc->setMaximumSize(ui->lcdDuration->maximumSize());
+           lcdCurPosFullSc->setFrameShape(ui->lcdCurPos->frameShape());
+           lcdDurationFullSc->setFrameShape(ui->lcdDuration->frameShape());
+           lcdCurPosFullSc->setLineWidth(ui->lcdCurPos->lineWidth());
+           lcdDurationFullSc->setLineWidth(ui->lcdDuration->lineWidth());
+
+
+           lcdCurPosFullSc->display("00:00:00");
+           lcdDurationFullSc->display("00:00:00");
+           lcdCurPosFullSc->setStyleSheet(ui->lcdCurPos->styleSheet());
+           lcdDurationFullSc->setStyleSheet(ui->lcdDuration->styleSheet());
+
+           }
+        fullScreenControlWidth=(long)desktop->screen()->width()*FULLSCREENCTRL_WIDTH_PERCENTAGE;
+
+        leftSide=(desktop->screen()->width()/2)-(fullScreenControlWidth/2);
+        if(fullScreenControls)
+        {
+
+         fullScreenControls->setMovable(false);
+        fullScreenControls->setGeometry(leftSide,desktop->screen()->height()-FULLSCREENCTRLHEIGHT,fullScreenControlWidth,70);
+        fullScreenControls->addAction(ui->action_Play_Pause);
+        fullScreenControls->addAction(ui->action_Stop);
+        //this->layout()->removeWidget(ui->lcdCurPosFs);
+        fullScreenControls->addWidget(lcdCurPosFullSc);
+        fullscreenSeekAction=fullScreenControls->addWidget(ui->sliderSeek);
+        fullScreenControls->addWidget(lcdDurationFullSc);
+        fullScreenControls->show();
+
+        QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
+         animation->setDuration(300);
+         animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
+         animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
+         animation->start();
+        }
+
+
+
+
+        ui->toolBarSeek->hide();
+        ui->menuBar->hide();
+        ui->toolBarStatus->hide();
+        ui->toolBarSeekBar->hide();
+        ui->statusBar->hide();
         //splash.setWindowFlags(Qt::WindowStaysOnTopHint);
 
         //this->resize(desktop->width(),desktop->height());
@@ -3579,7 +3656,7 @@ void PlayerWindow::on_action_Help_triggered()
     mainhlpDlg->show();
 }
 void PlayerWindow::setAqua()
-{  qApp->setStyle("windowsxp");
+{   qApp->setStyle("windowsxp");
     qApp->setStyle(new glassStyle);
     // QApplication::setPalette(QApplication::style()->standardPalette());
 
@@ -3647,7 +3724,9 @@ void PlayerWindow::setAqua()
                                                     "     margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
                                                     "     border-radius: 2px;\n"
                                                     "}"));
+
     // ui->sliderSeek->setStyleSheet(ui->sliderVolume->styleSheet());
+
 
     //this->setStyleSheet(QString::fromUtf8());
 
@@ -4536,3 +4615,11 @@ bool PlayerWindow::winEvent ( MSG * m, long * result ) {
     return false;
 }
 #endif
+
+void PlayerWindow::on_sliderSeekFullScreen_actionTriggered(int action)
+{
+    //this->playerTimer->stop();
+    //mp->goturl(ui->sliderSeekFullScreen ->value());
+
+    //this->playerTimer->start();
+}

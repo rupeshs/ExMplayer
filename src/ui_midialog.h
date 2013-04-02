@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'midialog.ui'
 **
-** Created: Sun Mar 31 23:13:36 2013
+** Created: Tue Apr 2 16:39:58 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

@@ -2588,6 +2588,10 @@ void mplayerfe::mplayerConsole(QByteArray ba)
     }
    }
 
+    if (mplayerOutputLine.contains("MPlayer crashed",Qt::CaseInsensitive))
+       { _state=CRASHED;
+        qDebug()<<"MPlayer crashed!!!";
+        }
     //************************************************************************
     //SIGNAL 11
     if ( mplayerOutputLine.contains("ID_SIGNAL=11",Qt::CaseInsensitive)){
@@ -2598,6 +2602,10 @@ void mplayerfe::mplayerConsole(QByteArray ba)
         }
         else{
             //MPlayer crashed
+            if (mplayerOutputLine.contains("MPlayer crashed",Qt::CaseInsensitive))
+               { _state=CRASHED;
+                qDebug()<<"MPlayer crashed";
+                }
         }
 
     }

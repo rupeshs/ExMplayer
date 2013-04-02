@@ -52,7 +52,9 @@ public:
         BUFFERING,
         PLAYING,
         PAUSED,
-        STOPPED};
+        STOPPED,
+        CRASHED
+       };
 
     QStringList idlist;
     QStringList metainfo;
