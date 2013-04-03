@@ -18,10 +18,10 @@
 
 #ifndef GLASSSTYLE_H
 #define GLASSSTYLE_H
-#include <QWindowsXPStyle>
+#include <QProxyStyle>
 
 
-class glassStyle : public  QWindowsXPStyle
+class glassStyle : public  QProxyStyle
  {
      Q_OBJECT
  private:

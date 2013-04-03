@@ -18,7 +18,7 @@
 
 #include "playerwindow.h"
 #include "ui_playerwindow.h"
-#include "QDesktopWidget.h"
+#include <QDesktopWidget>
 
 QDesktopWidget *desktop;
 QDesktopServices *mycomputer;
@@ -40,7 +40,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     this->disableStylesheet();
     settings=new QSettings(qApp->applicationDirPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
 
-     if (settings->value("Skin/style","aqua").toString()=="wood")
+    if (settings->value("Skin/style","aqua").toString()=="wood")
         QApplication::setStyle(new NorwegianWoodStyle);
     else if(settings->value("Skin/style","aqua").toString()=="aqua")
         emit setAqua();
@@ -104,7 +104,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
             }
         }
     }
-     readSettingsGeo();
+    readSettingsGeo();
 
 
 }
@@ -115,7 +115,9 @@ PlayerWindow::~PlayerWindow()
     delete mp;
     delete myplaylist;
     delete ui;
+#ifdef Q_OS_WIN
     delete winscreensaver;
+#endif
 
 }
 
@@ -438,8 +440,10 @@ void  PlayerWindow::setupMyUi()
     tmpypos=0;
     xpos=0;
     ypos=0;
+#ifdef Q_OS_WIN
     winscreensaver =new WinScreenSaver();
     winscreensaver->disable();
+#endif
     //ui->menu_Alignment->setVisible(false);
     //ui->label_11->setSuffix(" dB");
     hascover=false;
@@ -603,7 +607,7 @@ void  PlayerWindow::setupMyUi()
     //ui->toolBarSeek->addSeparator();
     ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
     //ui->toolBarSeek->addSeparator();
-   ui->toolBarSeek->addWidget(ui->toolButtonFblike);
+    ui->toolBarSeek->addWidget(ui->toolButtonFblike);
 
     // ui->toolBarSeek->addWidget(youtubeBox);
     ui->actionPlay_Previous_File->setVisible(false);
@@ -785,7 +789,7 @@ void PlayerWindow::resetUi()
     //ui->sliderSeekFullScreen->setValue(0);
     ui->actionSave_cover_art->setEnabled(false);
     ui->sliderSeek->setEnabled(  false);
-   // ui->sliderSeekFullScreen->setEnabled(false);
+    // ui->sliderSeekFullScreen->setEnabled(false);
     ui->labelAVdelay->setText("--");
     ui->labelCpuAudio->setText("--");
     ui->labelCpuVideo->setText("--");
@@ -902,7 +906,7 @@ void PlayerWindow::startingPlayback()
         if( mp->hasvideo()){
             //set up width and height
 
-                qDebug()<<"Resizing video window...."<<mp->videowidth()<<" "<<mp->videoheight();
+            qDebug()<<"Resizing video window...."<<mp->videowidth()<<" "<<mp->videoheight();
 
             videoWin->mplayerlayer->show();
 
@@ -1219,8 +1223,8 @@ void PlayerWindow::startingPlayback()
         }
     }
 
-          //qDebug()<<"-------Audio :"<<mp->hasaudio()<<"Video :"<<mp->hasvideo();
-     playerTimer->start(1000);
+    //qDebug()<<"-------Audio :"<<mp->hasaudio()<<"Video :"<<mp->hasvideo();
+    playerTimer->start(1000);
     mutex.unlock();
     //youtubeBox->lineEdit->setText("");
     // youtubeBox->lineEdit->setText(Title);
@@ -1291,7 +1295,7 @@ void PlayerWindow::updateSeekbar()
                 lcdCurPosFullSc->display(mp->tcurpos().toString());
                 lcdDurationFullSc->display(mp->tduration().toString());
 
-                }
+            }
 
 
         }
@@ -1734,7 +1738,7 @@ void PlayerWindow::on_action_Remove_logo_triggered()
             msgBox.exec();
         }
         else
-        { mp->removeLogo(&QRect(),false);
+        { mp->removeLogo(NULL,false);
             ui->action_Crop->setEnabled(true);
         }
     }
@@ -1922,7 +1926,7 @@ void PlayerWindow::on_action_Crop_triggered()
         else
         {   ui->action_Remove_logo->setEnabled(true);
 
-            mp->crop(&QRect(),false);
+            mp->crop(NULL,false);
         }
     }
 }
@@ -2437,11 +2441,11 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
             //ui->toolBarSeekBar->show();
             //ui->statusBar->show();
             if (fullScreenControls->y()==desktop->screen()->height()){
-            QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
-            animation->setDuration(300);
-            animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
-            animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
-            animation->start();
+                QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
+                animation->setDuration(300);
+                animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
+                animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
+                animation->start();
             }
 
             hidetimer->stop();
@@ -2449,7 +2453,7 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
     }
     if (e->buttons() & Qt::LeftButton) {
         if (mp){
-        if (mp->hasvideo())
+            if (mp->hasvideo())
             {if(e->y()<videoWin->height()+ this->menuBar()->height()){
 
                     move(e->globalPos() - dragPosition);
@@ -2627,7 +2631,9 @@ void PlayerWindow::on_actionSelected_item_s_triggered()
 }
 void PlayerWindow::cleanMp()
 {
+#ifdef Q_OS_WIN
     winscreensaver->enable();
+#endif
 }
 void PlayerWindow::paused()
 {ui->action_Play_Pause->setIcon(QIcon(":/images/play.png"));
@@ -2713,7 +2719,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             mpseekView->resize(128,105);
             //mpseekView->move(pt->x()-26,fullScreenControls->y()-104);
             if(! isfullscreen)
-              mpseekView->move(pt->x()-16,+ui->toolBarSeekBar->y()-104);
+                mpseekView->move(pt->x()-16,+ui->toolBarSeekBar->y()-104);
             else
                 mpseekView->move(pt->x()+ui->sliderSeek->x()+150,fullScreenControls->y()-104);
 
@@ -2731,7 +2737,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             lab->resize(60,24);
             //lab->move(pt->x()+23,ui->toolBarSeek->y()-48);
             if(! isfullscreen)
-              lab->move(pt->x()+15,ui->sliderSeek->y()-2);
+                lab->move(pt->x()+15,ui->sliderSeek->y()-2);
             else
                 lab->move(pt->x()+ui->sliderSeek->x()+170,fullScreenControls->y()-20);
 
@@ -3422,51 +3428,51 @@ void PlayerWindow::toggleFullscreen()
         qDebug()<<"Screen Width :"<<desktop->screen()->width();
 
         if(fullScreenControls<=0)
-          { fullScreenControls=new QToolBar(this);
+        { fullScreenControls=new QToolBar(this);
             glassStyle *st=new glassStyle;
-           fullScreenControls->setStyle(st);
-           lcdCurPosFullSc=new QLCDNumber(this);
+            fullScreenControls->setStyle(st);
+            lcdCurPosFullSc=new QLCDNumber(this);
 
-           lcdDurationFullSc=new QLCDNumber(this);
-           lcdCurPosFullSc->setSegmentStyle(ui->lcdCurPos->segmentStyle());
-           lcdDurationFullSc->setSegmentStyle(ui->lcdDuration->segmentStyle());
-           lcdCurPosFullSc->setNumDigits(8);
-           lcdDurationFullSc->setNumDigits(8);
-           lcdCurPosFullSc->setMaximumSize(ui->lcdCurPos->maximumSize());
-           lcdDurationFullSc->setMaximumSize(ui->lcdDuration->maximumSize());
-           lcdCurPosFullSc->setFrameShape(ui->lcdCurPos->frameShape());
-           lcdDurationFullSc->setFrameShape(ui->lcdDuration->frameShape());
-           lcdCurPosFullSc->setLineWidth(ui->lcdCurPos->lineWidth());
-           lcdDurationFullSc->setLineWidth(ui->lcdDuration->lineWidth());
+            lcdDurationFullSc=new QLCDNumber(this);
+            lcdCurPosFullSc->setSegmentStyle(ui->lcdCurPos->segmentStyle());
+            lcdDurationFullSc->setSegmentStyle(ui->lcdDuration->segmentStyle());
+            lcdCurPosFullSc->setNumDigits(8);
+            lcdDurationFullSc->setNumDigits(8);
+            lcdCurPosFullSc->setMaximumSize(ui->lcdCurPos->maximumSize());
+            lcdDurationFullSc->setMaximumSize(ui->lcdDuration->maximumSize());
+            lcdCurPosFullSc->setFrameShape(ui->lcdCurPos->frameShape());
+            lcdDurationFullSc->setFrameShape(ui->lcdDuration->frameShape());
+            lcdCurPosFullSc->setLineWidth(ui->lcdCurPos->lineWidth());
+            lcdDurationFullSc->setLineWidth(ui->lcdDuration->lineWidth());
 
 
-           lcdCurPosFullSc->display("00:00:00");
-           lcdDurationFullSc->display("00:00:00");
-           lcdCurPosFullSc->setStyleSheet(ui->lcdCurPos->styleSheet());
-           lcdDurationFullSc->setStyleSheet(ui->lcdDuration->styleSheet());
+            lcdCurPosFullSc->display("00:00:00");
+            lcdDurationFullSc->display("00:00:00");
+            lcdCurPosFullSc->setStyleSheet(ui->lcdCurPos->styleSheet());
+            lcdDurationFullSc->setStyleSheet(ui->lcdDuration->styleSheet());
 
-           }
+        }
         fullScreenControlWidth=(long)desktop->screen()->width()*FULLSCREENCTRL_WIDTH_PERCENTAGE;
 
         leftSide=(desktop->screen()->width()/2)-(fullScreenControlWidth/2);
         if(fullScreenControls)
         {
 
-         fullScreenControls->setMovable(false);
-        fullScreenControls->setGeometry(leftSide,desktop->screen()->height()-FULLSCREENCTRLHEIGHT,fullScreenControlWidth,70);
-        fullScreenControls->addAction(ui->action_Play_Pause);
-        fullScreenControls->addAction(ui->action_Stop);
-        //this->layout()->removeWidget(ui->lcdCurPosFs);
-        fullScreenControls->addWidget(lcdCurPosFullSc);
-        fullscreenSeekAction=fullScreenControls->addWidget(ui->sliderSeek);
-        fullScreenControls->addWidget(lcdDurationFullSc);
-        fullScreenControls->show();
+            fullScreenControls->setMovable(false);
+            fullScreenControls->setGeometry(leftSide,desktop->screen()->height()-FULLSCREENCTRLHEIGHT,fullScreenControlWidth,70);
+            fullScreenControls->addAction(ui->action_Play_Pause);
+            fullScreenControls->addAction(ui->action_Stop);
+            //this->layout()->removeWidget(ui->lcdCurPosFs);
+            fullScreenControls->addWidget(lcdCurPosFullSc);
+            fullscreenSeekAction=fullScreenControls->addWidget(ui->sliderSeek);
+            fullScreenControls->addWidget(lcdDurationFullSc);
+            fullScreenControls->show();
 
-        QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
-         animation->setDuration(300);
-         animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
-         animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
-         animation->start();
+            QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
+            animation->setDuration(300);
+            animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
+            animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
+            animation->start();
         }
 
 
@@ -3656,7 +3662,7 @@ void PlayerWindow::on_action_Help_triggered()
     mainhlpDlg->show();
 }
 void PlayerWindow::setAqua()
-{   qApp->setStyle("windowsxp");
+{   //qApp->setStyle("windowsxp");
     qApp->setStyle(new glassStyle);
     // QApplication::setPalette(QApplication::style()->standardPalette());
 
@@ -3861,18 +3867,18 @@ void PlayerWindow::writeSettings()
 }
 void PlayerWindow::readSettingsGeo()
 {
-     QSize sz;
-     settings->beginGroup("MainWindow");
-     sz=settings->value("size", QSize(600, 500)).toSize();
-     resize(sz);
+    QSize sz;
+    settings->beginGroup("MainWindow");
+    sz=settings->value("size", QSize(600, 500)).toSize();
+    resize(sz);
 
-     QPoint po=settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint();
-     move(settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint());
+    QPoint po=settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint();
+    move(settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint());
 
-     settings->endGroup();
+    settings->endGroup();
 
 
-     /*
+    /*
           QPropertyAnimation *anim1 = new QPropertyAnimation(this, "pos");
           anim1->setDuration(200);
           anim1->setStartValue(QPoint(po.x()+sz.width()/2,po.y()+sz.height()/2));
@@ -3891,7 +3897,7 @@ void PlayerWindow::readSettingsGeo()
           group->addAnimation(anim2);
 
           group->start();*/
-           //450/145
+    //450/145
 }
 void PlayerWindow::completeRestart()
 {
@@ -4580,18 +4586,18 @@ void PlayerWindow::resizeVideoWindow(int w,int h)
 {
 
     videoWin->setAspect((float)w/h);
-     this->resize(w,h);
+    this->resize(w,h);
 }
- void PlayerWindow::mousePressEvent(QMouseEvent *event)
- {
+void PlayerWindow::mousePressEvent(QMouseEvent *event)
+{
 
-     if (event->button() == Qt::LeftButton) {
-         if(event->y()<videoWin->height()+this->menuBar()->height()){
-              dragPosition = event->globalPos() - frameGeometry().topLeft();
-              }
-             event->accept();
-          }
- }
+    if (event->button() == Qt::LeftButton) {
+        if(event->y()<videoWin->height()+this->menuBar()->height()){
+            dragPosition = event->globalPos() - frameGeometry().topLeft();
+        }
+        event->accept();
+    }
+}
 
 void PlayerWindow::on_toolButtonFblike_clicked()
 {
@@ -4606,11 +4612,11 @@ bool PlayerWindow::winEvent ( MSG * m, long * result ) {
         if ((m->wParam & 0xFFF0)==SC_SCREENSAVE || (m->wParam & 0xFFF0)==SC_MONITORPOWER) {
 
             return true;
-            } else {
+        } else {
 
-             return false;
-            }
+            return false;
         }
+    }
 
     return false;
 }

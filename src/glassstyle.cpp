@@ -111,7 +111,7 @@ int glassStyle::pixelMetric( PixelMetric metric, const QStyleOption* option, con
     default:
         break;
     }
-    return QWindowsXPStyle::pixelMetric( metric, option, widget );
+    return QProxyStyle::pixelMetric( metric, option, widget );
 
 }
 QSize glassStyle::sizeFromContents( ContentsType type, const QStyleOption* option,
@@ -146,14 +146,14 @@ QSize glassStyle::sizeFromContents( ContentsType type, const QStyleOption* optio
         break;
     }
 
-    return QWindowsXPStyle::sizeFromContents( type, option, contentsSize, widget );
+    return QProxyStyle::sizeFromContents( type, option, contentsSize, widget );
 }
 void  glassStyle::polish( QWidget* widget )
 {
     if ( qobject_cast<QMainWindow*>( widget ) )
         widget->setAttribute( Qt::WA_StyledBackground );
 
-    QWindowsXPStyle::polish( widget );
+    QProxyStyle::polish( widget );
 }
 
 void glassStyle::unpolish( QWidget* widget )
@@ -161,7 +161,7 @@ void glassStyle::unpolish( QWidget* widget )
     if ( qobject_cast<QMainWindow*>( widget ) )
         widget->setAttribute( Qt::WA_StyledBackground, false );
 
-    QWindowsXPStyle::unpolish( widget );
+    QProxyStyle::unpolish( widget );
 
 }
 void glassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* option,
@@ -426,7 +426,7 @@ void glassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
     default: break;
 
     }
-    QWindowsXPStyle::drawPrimitive( element, option, painter, widget );
+    QProxyStyle::drawPrimitive( element, option, painter, widget );
 }
 
 
@@ -654,7 +654,7 @@ void glassStyle::drawControl( ControlElement element, const QStyleOption* option
         return;
     }
     }
-    QWindowsXPStyle::drawControl( element, option, painter, widget );
+    QProxyStyle::drawControl( element, option, painter, widget );
 
     //QWindowsStyle::drawPrimitive(element, option, painter, widget);
 
@@ -753,5 +753,5 @@ void glassStyle::drawComplexControl( ComplexControl control, const QStyleOptionC
     }
 
 
-    QWindowsXPStyle::drawComplexControl( control, option, painter, widget );
+    QProxyStyle::drawComplexControl( control, option, painter, widget );
 }

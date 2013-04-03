@@ -29,7 +29,6 @@ SOURCES += main.cpp \
     audioextdialog.cpp \
     shortcutgetter.cpp \
     midialog.cpp \
-    screensaver.cpp \
     assstyles.cpp \
     colorutils.cpp \
     aboutdialog.cpp \
@@ -66,7 +65,6 @@ HEADERS += playerwindow.h \
     audioextdialog.h \
     shortcutgetter.h \
     midialog.h \
-    screensaver.h \
     colorutils.h \
     assstyles.h \
     aboutdialog.h \
@@ -98,11 +96,17 @@ FORMS += playerwindow.ui \
     audioconvdialog.ui \
     seekview.ui \
     fontloaddialog.ui
+win32 {
+
 INCLUDEPATH += directx
+
+HEADERS += screensaver.h
+SOURCES += screensaver.cpp
 LIBS += -ldsound \
     -lddraw
 contains(TEMPLATE,vcapp):LIBS += ole32.lib \
     user32.lib
 else:LIBS += libole32
+}
 RESOURCES += ExMplayer.qrc
 RC_FILE = ExMplayer.rc

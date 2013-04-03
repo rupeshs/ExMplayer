@@ -22,7 +22,7 @@
 #include <QDialog>
 #include "mplayerfe.h"
 #include <QtCore>
-#include "helpDialog.h"
+#include "helpdialog.h"
 #include "rphmpfehelp.h"
 namespace Ui {
     class cutterDialog;

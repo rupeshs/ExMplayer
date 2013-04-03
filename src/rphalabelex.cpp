@@ -21,7 +21,7 @@
 #include <QStyleOption>
 #include <QRubberBand>
 #include <QMutex>
-#include <qDebug>
+#include <qdebug.h>
 rphLabelEx::rphLabelEx(QWidget  *parent) :
         QLabel(parent)
 {

@@ -34,7 +34,11 @@
 #include "urldialog.h"
 #include "QRecentFilesMenu.h"
 #include "midialog.h"
+#if defined(Q_OS_WIN) || defined(Q_OS_OS2)
+#ifdef Q_OS_WIN
 #include "screensaver.h"
+#endif
+#endif
 #include "aboutdialog.h"
 #include "cutterdialog.h"
 #include "norwegianwoodstyle.h"
@@ -58,7 +62,7 @@
 #define FULLSCREENCTRLHEIGHT  70
 
 namespace Ui {
-    class PlayerWindow;
+class PlayerWindow;
 }
 
 class PlayerWindow : public QMainWindow {
@@ -101,7 +105,9 @@ private:
     //QPointer<ripDialog> auripdlg;
     //QPointer<seekview> mpseekview;
     //QPixmap *pixCover;
+#ifdef Q_OS_WIN
     WinScreenSaver* winscreensaver;
+#endif
     QLabel *labstr;
     QLabel *testlab;
     QPointer<QLabel> lab;
@@ -420,7 +426,7 @@ private slots:
     void showMsgBox(QString msg);
     QString getFilter();
     void showPictureFlow(QString path);
-    void resizeVideo(int w,int hei);  
+    void resizeVideo(int w,int hei);
     void useidxnplay();
     QString  getaudioFilter();
     void showctxmenu(QContextMenuEvent *event);
@@ -428,7 +434,7 @@ private slots:
     void showpg();
     void showerror(QString tex);
     void playlistVisibility(bool vis);
-    void startingPlaybackframe();    
+    void startingPlaybackframe();
     void  startProgressiveStreaming();
     void wgetDownload();
     void streamingDuration(float dur);
