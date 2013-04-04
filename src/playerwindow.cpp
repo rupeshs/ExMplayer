@@ -2719,9 +2719,9 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             mpseekView->resize(128,105);
             //mpseekView->move(pt->x()-26,fullScreenControls->y()-104);
             if(! isfullscreen)
-                mpseekView->move(pt->x()-16,+ui->toolBarSeekBar->y()-104);
+                mpseekView->move(pt->x()-64+ui->sliderSeek->x(),ui->toolBarSeekBar->y()-105);
             else
-                mpseekView->move(pt->x()+ui->sliderSeek->x()+150,fullScreenControls->y()-104);
+                mpseekView->move(pt->x()-64+ui->sliderSeek->x()+fullScreenControls->x(),fullScreenControls->y()-105);
 
             mpseekView->show();
         }
@@ -2735,11 +2735,13 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
 
             lab->setAlignment(Qt::AlignCenter);
             lab->resize(60,24);
+            //qDebug()<<"x :"<<ui->sliderSeek->x();
+            // qDebug()<<" rect x:"<<pt->x()-30+ui->sliderSeek->x();
             //lab->move(pt->x()+23,ui->toolBarSeek->y()-48);
             if(! isfullscreen)
-                lab->move(pt->x()+15,ui->sliderSeek->y()-2);
+                lab->move(pt->x()-30+ui->sliderSeek->x(),ui->sliderSeek->y()-2);
             else
-                lab->move(pt->x()+ui->sliderSeek->x()+170,fullScreenControls->y()-20);
+                lab->move(pt->x()-30+ui->sliderSeek->x()+fullScreenControls->x(),fullScreenControls->y()-25);
 
 
             lab->show();
