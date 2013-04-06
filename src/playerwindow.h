@@ -57,6 +57,7 @@
 #include "glassstyle.h"
 #include "radiodialog.h"
 #include "seekview.h"
+#include "rphslider.h"
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -197,13 +198,16 @@ private:
     SeekView *mpseekView;
     double currentFilePos;
     QPointer<QToolBar>fullScreenControls;
-    QAction *fullscreenSeekAction;
+
     long leftSide;
+
     long fullScreenControlWidth;
     QAction *toolButtonForwardAction;
-
     QPointer<QLCDNumber> lcdCurPosFullSc;
     QPointer<QLCDNumber> lcdDurationFullSc;
+    QPointer<rphSlider> sliderSeekFullSc;
+    QPointer<rphSlider> sliderVolumeFullSc;
+
 
 signals:
     void sgcrossfade();
@@ -451,7 +455,8 @@ private slots:
 
 
     void on_toolButtonFblike_clicked();
-    void on_sliderSeekFullScreen_actionTriggered(int action);
+
+    void on_sliderSeekFullSc_actionTriggered(int action);
 };
 
 #endif // PLAYERWINDOW_H

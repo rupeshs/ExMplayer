@@ -199,6 +199,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
 
     QMutex mutex;
     mutex.lock();
+    ui->mpconsole->clear();
     videoWin->mplayerlayer->hide();
     windowTimer->setInterval(1);
     windowTimer->start();
@@ -214,22 +215,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
         picflow->close() ;
         delete  picflow;
     }
-    /*if(!isstreaming)
-    {if (isdownloading)
-        {
-            isdownloading=false;
-            wget->close();
-        }
-    }*/
     videoWin->showErrorText("");
-
-    //videoWin->setShowVideo(false);
-    //videoWin->setShowText(true);
-    //videoWin->show();
-    //this->setCentralWidget(videoWin);
-    //mp->setVideoWinid((long int)videoWin->winId());
-
-
     videoWin->showeof(false);
 
     mp=new mplayerfe(this,this);
@@ -251,7 +237,9 @@ void PlayerWindow::initMPlayer(QString file,int type)
     mp->setColorkey(5);
     mp->setVideoWinid((long int)videoWin->videoLayer()->winId());
     mp->wmpsettings(settings);
+#ifdef Q_OS_WIN
     mp->setaudiodriver(settings->value("Audio/DevNo","0").toInt());
+#endif
 
     QObject::connect(mp,SIGNAL(streamingDuration(float)),this,SLOT(streamingDuration(float)));
     QObject::connect(mp,SIGNAL(download()),this,SLOT(wgetDownload()));
@@ -261,7 +249,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(lineavailable(QString)),ui->mpconsole,SLOT(append(QString)));
     QObject::connect(mp,SIGNAL(startingplayback()),this,SLOT(startingPlayback()));
     //QObject::connect(mp,SIGNAL(show_message(QString,int)),ui->statusBar,SLOT(showMessage(QString,int)));
-    QObject::connect(mp,SIGNAL(restarting()),ui->mpconsole,SLOT(clear()));
+    //QObject::connect(mp,SIGNAL(restarting()),ui->mpconsole,SLOT(clear()));
     QObject::connect(mp,SIGNAL(settingChanged(QString,QString,QString)),this,SLOT(settingChanged(QString,QString,QString)));
     QObject::connect(mp,SIGNAL(lengthChanged()),this,SLOT(lengthChanged()));
     QObject::connect(mp,SIGNAL(foundSubtitletrack(QStringList)),this,SLOT(foundSubtitletrack(QStringList)));
@@ -752,6 +740,8 @@ void  PlayerWindow::setupMyUi()
     mpseekView=new SeekView(this);
     mpseekView->hide();
 
+
+
     long height=ui->menuBar->height()+ui->toolBarSeek->height()+ui->toolBarStatus->height()+ui->toolBarSeekBar->height();
     qDebug()<<height;
 
@@ -792,6 +782,10 @@ void PlayerWindow::resetUi()
     //ui->sliderSeekFullScreen->setValue(0);
     ui->actionSave_cover_art->setEnabled(false);
     ui->sliderSeek->setEnabled(  false);
+    if(sliderSeekFullSc){
+        sliderSeekFullSc->setEnabled(false);
+        sliderSeekFullSc->setValue(0);
+    }
     // ui->sliderSeekFullScreen->setEnabled(false);
     ui->labelAVdelay->setText("--");
     ui->labelCpuAudio->setText("--");
@@ -800,7 +794,9 @@ void PlayerWindow::resetUi()
     ui->labelSpeed->setText("--");
     ui->lcdDuration->display("--:--:--");
     ui->lcdCurPos->display("--:--:--");
-    ui->sliderSeek->setEnabled(false);
+
+    if(sliderSeekFullSc)
+        sliderSeekFullSc->setEnabled(false);
     ui->labelSpeed->hide();
     ui->labelCpuAudio->hide();
     ui->labelCpuVideo->hide();
@@ -875,6 +871,8 @@ void PlayerWindow::startingPlayback()
         //setup seek slider
         if (mp->isseekable())
         {  ui->sliderSeek->setEnabled(true);
+            if(sliderSeekFullSc)
+                sliderSeekFullSc->setEnabled(true);
 
             //setup toolbar buttons
             ui->toolButtonForward->setEnabled(true);
@@ -1246,7 +1244,8 @@ void PlayerWindow::updateSeekbar()
     if(!ui->sliderSeek->isEnabled())
     {if (mp->isseekable()){
             ui->sliderSeek->setEnabled(true);
-            //ui->sliderSeekFullScreen->setEnabled(true);
+            if(sliderSeekFullSc)
+                sliderSeekFullSc->setEnabled(true);
         }
 
 
@@ -1268,36 +1267,13 @@ void PlayerWindow::updateSeekbar()
     if(mp)
     {
         if( mp->isstarted()){
-            /*if (isdownloading)
-             { mp->initMediaInfo();
-
-                float totallen=mp->getStreamingDuration();
-              if   (streamingDur>0)
-                {
-                  QTime _tcurpos=QTime();
-
-                  _tcurpos=_tcurpos.addSecs((int)streamingDur);
-                  ui->lcdDuration->display(_tcurpos.toString());
-                  ui->lcdCurPos->display(mp->tcurpos().toString());
-                  //mp->curpos()*(totallen/streamingDur)
-                 // if (mp->curpos()==totallen-1)
-                 // {
-                    //  ui->action_Play_Pause->trigger();
-                  //}
-                  ui->sliderSeek->setValue((mp->curpos()/totallen)*100);
-
-              }
-
-  }
-        else
-            {*/
             ui->sliderSeek->setValue((mp->curpos()/mp->duration())*100);
-            //ui->sliderSeekFullScreen->setValue((mp->curpos()/mp->duration())*100);
+            if(sliderSeekFullSc)
+                sliderSeekFullSc->setValue((mp->curpos()/mp->duration())*100);
             ui->lcdCurPos->display(mp->tcurpos().toString());
             if (isfullscreen){
                 lcdCurPosFullSc->display(mp->tcurpos().toString());
                 lcdDurationFullSc->display(mp->tduration().toString());
-
             }
 
 
@@ -1345,7 +1321,6 @@ void PlayerWindow::on_sliderSeek_actionTriggered(int action)
 {
     this->playerTimer->stop();
     mp->goturl(ui->sliderSeek->value());
-
     this->playerTimer->start();
 
 }
@@ -1358,15 +1333,20 @@ void PlayerWindow::on_toolButtonRewind_clicked()
     ui->actionRewind_10_seconds->trigger();
 }
 void PlayerWindow::on_sliderVolume_valueChanged(int value)
-{if(mp)
-    {
+{
+    if(mp)
         mp->setVolume(value);
-    }
+    if (sliderVolumeFullSc)
+        sliderVolumeFullSc->setValue(value);
+
     if(!starting)
-    {settings->beginGroup("Audio");
+    {   settings->beginGroup("Audio");
         settings->setValue("Mute",QString::number(0));
         settings->endGroup();
     }
+
+    if (sliderVolumeFullSc)
+        ui->sliderVolume->setValue(value);
 
     setMutebtnIcon(value);
     settings->beginGroup("Audio");
@@ -2409,26 +2389,31 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
     { ypos=e->y();
         xpos=e->x();
 
-        if(e->y()<(desktop->height() - (ui->toolBarSeek->height()+ui->toolBarSeekBar->height()+ui->toolBarStatus->height()+ui->statusBar->height())))
-        {
+        if(e->y()<(desktop->height() - fullScreenControls->height()))
+          {
             if (!hidetimer->isActive())
                 hidetimer->start();
 
             this->unsetCursor();
-        }
+            fullScreenControls->hide();
+         }
         else
         {
-            this->unsetCursor();
 
-            if (fullScreenControls->y()==desktop->screen()->height()){
+            this->unsetCursor();
+fullScreenControls->show();
+
+            /*if (fullScreenControls->y()==desktop->screen()->height()){
                 QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
                 animation->setDuration(300);
                 animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
                 animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
                 animation->start();
-            }
+            }*/
+
 
             hidetimer->stop();
+
         }
     }
 
@@ -2442,7 +2427,7 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
                 if(!isfullscreen){
                     if (ui->action_Remove_logo->isChecked()==false)
                         move(e->globalPos() - dragPosition);
-                    }
+                }
 
             }
             qDebug()<<"checked "<<ui->action_Crop->isChecked();
@@ -2458,19 +2443,20 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
 }
 void PlayerWindow::hidestatus()
 {
-    qDebug()<<"check pos"<<ypos;
 
-    if (ypos<desktop->height() - (ui->toolBarSeek->height()+ui->toolBarSeekBar->height()+ui->toolBarStatus->height()+ui->statusBar->height()))
+
+    if (ypos<desktop->height() - fullScreenControls->height())
     {
-        ui->toolBarSeekBar->hide();
-        ui->toolBarSeek->hide();
-        ui->toolBarStatus->hide();
-        ui->statusBar->hide();
-        QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
+        //ui->toolBarSeekBar->hide();
+      //  ui->toolBarSeek->hide();
+       // ui->toolBarStatus->hide();
+        //ui->statusBar->hide();
+       /* QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
         animation->setDuration(300);
         animation->setStartValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
         animation->setEndValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
-        animation->start();
+        animation->start();*/
+        fullScreenControls->hide();
         this->setCursor(Qt::BlankCursor);
         hidetimer->stop();
     }
@@ -2659,9 +2645,14 @@ void  PlayerWindow::wheelEvent ( QWheelEvent * event )
     {if (event->delta()>0){
 
             ui->sliderVolume->setValue( ui->sliderVolume->value()+5);
+            if (sliderVolumeFullSc)
+                sliderVolumeFullSc->setValue( ui->sliderVolume->value()+5);
+
         }
         else{
             ui->sliderVolume->setValue( ui->sliderVolume->value()-5);
+            if (sliderVolumeFullSc)
+                sliderVolumeFullSc->setValue( ui->sliderVolume->value()-5);
 
         }
     }
@@ -2711,7 +2702,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             if(! isfullscreen)
                 mpseekView->move(pt->x()-64+ui->sliderSeek->x(),ui->toolBarSeekBar->y()-105);
             else
-                mpseekView->move(pt->x()-64+ui->sliderSeek->x()+fullScreenControls->x(),fullScreenControls->y()-105);
+                mpseekView->move(pt->x()-64+sliderSeekFullSc->x()+fullScreenControls->x(),fullScreenControls->y()-105);
 
             mpseekView->show();
         }
@@ -2729,7 +2720,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             if(! isfullscreen)
                 lab->move(pt->x()-30+ui->sliderSeek->x(),ui->toolBarSeekBar->y()-ui->toolBarSeekBar->height()/2);
             else
-                lab->move(pt->x()-30+ui->sliderSeek->x()+fullScreenControls->x(),fullScreenControls->y()-25);
+                lab->move(pt->x()-30+sliderSeekFullSc->x()+fullScreenControls->x(),fullScreenControls->y()-25);
 
             lab->show();
         }
@@ -3383,13 +3374,6 @@ void PlayerWindow::toggleFullscreen()
         ui->toolBarSeekBar->show();
         ui->statusBar->show();
         this->unsetCursor();
-        ui->toolBarSeekBar->removeAction(ui->actionFullscreen);
-        ui->toolBarSeekBar->removeAction(toolButtonForwardAction);
-        ui->toolBarSeekBar->addWidget(ui->sliderSeek);
-        ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
-        ui->toolBarSeekBar->addAction(ui->actionFullscreen);
-        ui->toolBarSeekBar->update();
-        ui->sliderSeek->setGeometry(0,0,ui->sliderSeek->width(),30);
 
 
 
@@ -3407,11 +3391,7 @@ void PlayerWindow::toggleFullscreen()
         delete hidetimer;
     }
     else
-    {   //ui->toolButtonfs->show();
-        //QPixmap pixmap("/:images/sh4.png");
-        //QSplashScreen splash(pixmap);
-
-
+    {
         this->setWindowFlags(Qt::WindowStaysOnTopHint);
         qDebug()<<"Screen Height :"<<desktop->screen()->height();
         qDebug()<<"Screen Width :"<<desktop->screen()->width();
@@ -3435,11 +3415,41 @@ void PlayerWindow::toggleFullscreen()
             lcdCurPosFullSc->setLineWidth(ui->lcdCurPos->lineWidth());
             lcdDurationFullSc->setLineWidth(ui->lcdDuration->lineWidth());
 
+            sliderVolumeFullSc=new rphSlider(this);
+            sliderVolumeFullSc->setTracking(true);
+            sliderVolumeFullSc->setMouseTracking(true);
+            sliderVolumeFullSc->setMinimum(0);
+            sliderVolumeFullSc->setMaximum(100);
+            sliderVolumeFullSc->setMaximumWidth(65);
+            sliderVolumeFullSc->setMaximumHeight(ui->sliderVolume->height());
+            sliderVolumeFullSc->setOrientation(Qt::Horizontal);
+            sliderVolumeFullSc->setStyleSheet(ui->sliderVolume->styleSheet());
+            sliderVolumeFullSc->setValue(ui->sliderVolume->value());
+            QObject::connect(sliderVolumeFullSc,SIGNAL(valueChanged(int)),this,SLOT(on_sliderVolume_valueChanged(int)));
+
+
+            sliderSeekFullSc=new rphSlider(this);
+            sliderSeekFullSc->setTracking(true);
+            sliderSeekFullSc->setMouseTracking(true);
+            sliderSeekFullSc->setMaximumHeight(ui->sliderSeek->height());
+            sliderSeekFullSc->setOrientation(Qt::Horizontal);
+            sliderSeekFullSc->setMinimum(0);
+            sliderSeekFullSc->setMaximum(100);
+            sliderSeekFullSc->setEnabled(ui->sliderSeek->isEnabled());
+            sliderSeekFullSc->setStyleSheet(ui->sliderSeek->styleSheet());
+            sliderSeekFullSc->setValue(ui->sliderSeek->value());
+            QObject::connect(sliderSeekFullSc,SIGNAL(actionTriggered(int)),this,SLOT(on_sliderSeekFullSc_actionTriggered(int)));
+
+            QObject::connect(sliderSeekFullSc,SIGNAL(showtooltip(QPoint *)),this,SLOT(showtooltip(QPoint *)));
+            QObject::connect(sliderSeekFullSc,SIGNAL(hoverValue(QString,QPoint*)),this,SLOT(showSeekpos(QString,QPoint*)));
 
             lcdCurPosFullSc->display("00:00:00");
             lcdDurationFullSc->display("00:00:00");
             lcdCurPosFullSc->setStyleSheet(ui->lcdCurPos->styleSheet());
             lcdDurationFullSc->setStyleSheet(ui->lcdDuration->styleSheet());
+
+            connect(sliderSeekFullSc,SIGNAL(hidetooltip()),this,SLOT(hideframe()));
+
 
         }
         fullScreenControlWidth=(long)desktop->screen()->width()*FULLSCREENCTRL_WIDTH_PERCENTAGE;
@@ -3448,18 +3458,26 @@ void PlayerWindow::toggleFullscreen()
         if(fullScreenControls)
         {
 
+
             fullScreenControls->setMovable(false);
             fullScreenControls->setGeometry(leftSide,desktop->screen()->height()-FULLSCREENCTRLHEIGHT,fullScreenControlWidth,70);
             fullScreenControls->addAction(ui->action_Play_Pause);
             fullScreenControls->addAction(ui->action_Stop);
-            //this->layout()->removeWidget(ui->lcdCurPosFs);
+            fullScreenControls->addWidget(sliderVolumeFullSc);
             fullScreenControls->addWidget(lcdCurPosFullSc);
-            fullscreenSeekAction=fullScreenControls->addWidget(ui->sliderSeek);
+            fullScreenControls->addWidget(sliderSeekFullSc);
             fullScreenControls->addWidget(lcdDurationFullSc);
+            fullScreenControls->addAction(ui->actionFullscreen);
             fullScreenControls->show();
+            sliderSeekFullSc->setEnabled(ui->sliderSeek->isEnabled());
+            sliderSeekFullSc->setValue(ui->sliderSeek->value());
+            sliderVolumeFullSc->setValue(ui->sliderVolume->value());
+
+
+
 
             QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
-            animation->setDuration(300);
+            animation->setDuration(60);
             animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
             animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
             animation->start();
@@ -3506,7 +3524,7 @@ void PlayerWindow::toggleFullscreen()
         if (ui->dock_Filter->isVisible())
             ui->dock_Filter->hide();
 
-        hidetimer->start(2000);
+        hidetimer->start(3000);
         isfullscreen=true;
     }
     mp->togglefullscreen();
@@ -4583,9 +4601,9 @@ void PlayerWindow::resizeVideoWindow(int w,int h)
 void PlayerWindow::mousePressEvent(QMouseEvent *event)
 {
 
-   if (event->button() == Qt::LeftButton) {
+    if (event->button() == Qt::LeftButton) {
 
-       if(event->y()<videoWin->height()+this->menuBar()->height()){
+        if(event->y()<videoWin->height()+this->menuBar()->height()){
             dragPosition = event->globalPos() - frameGeometry().topLeft();
         }
         event->accept();
@@ -4616,10 +4634,12 @@ bool PlayerWindow::winEvent ( MSG * m, long * result ) {
 }
 #endif
 
-void PlayerWindow::on_sliderSeekFullScreen_actionTriggered(int action)
-{
-    //this->playerTimer->stop();
-    //mp->goturl(ui->sliderSeekFullScreen ->value());
 
-    //this->playerTimer->start();
+void PlayerWindow::on_sliderSeekFullSc_actionTriggered(int action)
+{
+
+    this->playerTimer->stop();
+    mp->goturl(sliderSeekFullSc->value());
+    this->playerTimer->start();
+
 }

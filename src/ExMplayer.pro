@@ -8,8 +8,10 @@ TEMPLATE  = app
 
 INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
-HEADERS += qtsingleapplication.h qtlocalpeer.h
+SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp \
+    advancedinfodialog.cpp
+HEADERS += qtsingleapplication.h qtlocalpeer.h \
+    advancedinfodialog.h
 
 SOURCES += main.cpp \
     playerwindow.cpp \
@@ -95,7 +97,8 @@ FORMS += playerwindow.ui \
     mixdialog.ui \
     audioconvdialog.ui \
     seekview.ui \
-    fontloaddialog.ui
+    fontloaddialog.ui \
+    advancedinfodialog.ui
 win32 {
 
 INCLUDEPATH += directx
