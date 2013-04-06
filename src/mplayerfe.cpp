@@ -66,7 +66,12 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
 
     isurl=false;
     _bgotdimension=false;
+#ifdef Q_OS_WIN
     mPath= qApp->applicationDirPath()+ "/mplayer/mplayer.exe";
+#endif
+#ifdef Q_OS_LINUX
+    mPath= qApp->applicationDirPath()+ "/usr/bin/mplayer";
+# endif
     mutelock=true;
 
     qDebug()<<"Checking for MPlayer binary...";

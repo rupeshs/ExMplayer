@@ -58,7 +58,7 @@
 #include "radiodialog.h"
 #include "seekview.h"
 
-#define FULLSCREENCTRL_WIDTH_PERCENTAGE  .70
+#define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
 
 namespace Ui {

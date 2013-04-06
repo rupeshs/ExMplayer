@@ -30,7 +30,7 @@
 #include <QMenuBar>
 #include <QToolBar>
 #include <QLayout>
-glassStyle::glassStyle()
+GlassStyle::GlassStyle()
 {
 
     m_colorBackgroundBegin = qRgb( 158, 190, 245 );
@@ -78,7 +78,7 @@ glassStyle::glassStyle()
 
 
 }
-int glassStyle::pixelMetric( PixelMetric metric, const QStyleOption* option, const QWidget* widget ) const
+int GlassStyle::pixelMetric( PixelMetric metric, const QStyleOption* option, const QWidget* widget ) const
 {
     switch ( metric ) {
     case PM_LayoutVerticalSpacing:
@@ -114,7 +114,7 @@ int glassStyle::pixelMetric( PixelMetric metric, const QStyleOption* option, con
     return QProxyStyle::pixelMetric( metric, option, widget );
 
 }
-QSize glassStyle::sizeFromContents( ContentsType type, const QStyleOption* option,
+QSize GlassStyle::sizeFromContents( ContentsType type, const QStyleOption* option,
                                     const QSize& contentsSize, const QWidget* widget ) const
 {
     switch ( type ) {
@@ -148,7 +148,7 @@ QSize glassStyle::sizeFromContents( ContentsType type, const QStyleOption* optio
 
     return QProxyStyle::sizeFromContents( type, option, contentsSize, widget );
 }
-void  glassStyle::polish( QWidget* widget )
+void  GlassStyle::polish( QWidget* widget )
 {
     if ( qobject_cast<QMainWindow*>( widget ) )
         widget->setAttribute( Qt::WA_StyledBackground );
@@ -156,7 +156,7 @@ void  glassStyle::polish( QWidget* widget )
     QProxyStyle::polish( widget );
 }
 
-void glassStyle::unpolish( QWidget* widget )
+void GlassStyle::unpolish( QWidget* widget )
 {
     if ( qobject_cast<QMainWindow*>( widget ) )
         widget->setAttribute( Qt::WA_StyledBackground, false );
@@ -164,33 +164,23 @@ void glassStyle::unpolish( QWidget* widget )
     QProxyStyle::unpolish( widget );
 
 }
-void glassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* option,
+void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* option,
                                 QPainter* painter, const QWidget* widget ) const
 {
 
+
     switch ( element ) {
-
-
     case PE_Widget:
-    {//qDebug()<<"option->state";
+    {
 
         if ( qobject_cast<const QMainWindow*>( widget ) ) {
             QRect rect=option->rect;
-            if ( QToolBar*  toolBar = widget->findChild<QToolBar*>() ) {
 
-                // rect =  menuBar->rect();
-                // int x1,x2,y1,y2;
-                //toolBar->geometry().getCoords(&x1,&y1,&x2,&y2);
-                //qDebug()<< "height "<<y1<<" y2"<<toolBar->y()- toolBar->height();
-                //rect.setRect(0,y1/1.5,toolBar->width(),toolBar->height());
-                //qDebug()<<toolBar->geometry();
-                //qDebug()<<toolBar->rect();
-                //rect=toolBar->geometry();
-                //QRect buttonRect = subControlRect( control, option, SC_ToolButton, widget );
-                // qDebug()<<rect;
+            if (QToolBar*  toolBar = widget->findChild<QToolBar*>()) {
+
+
                 QRect rect =  toolBar ->geometry();
 
-                //rect.adjust(0,-toolBar->height()-8,0,-toolBar->height()-1);
                 QLinearGradient gradient(rect.topLeft(), rect.bottomLeft());
                 gradient.setColorAt( 0.0, m_colorBarBegin );
                 gradient.setColorAt( 0.5, m_colorBarMiddle );
@@ -298,7 +288,8 @@ void glassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
 
 
     case PE_FrameStatusBar:
-    {QRect rect = option->rect;
+    {
+        QRect rect = option->rect;
         bool vertical = false;
         //rect.setRight( toolBar->childrenRect().right() + 2 );
         //painter->save();
@@ -369,9 +360,6 @@ void glassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
         }
         return;
 
-
-
-
     case PE_IndicatorToolBarSeparator:
         painter->setPen( m_colorSeparator );
         if ( option->state & State_Horizontal )
@@ -430,7 +418,7 @@ void glassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
 }
 
 
-void glassStyle::drawControl( ControlElement element, const QStyleOption* option,
+void GlassStyle::drawControl( ControlElement element, const QStyleOption* option,
                               QPainter* painter, const QWidget* widget ) const
 { switch ( element ) {
 
@@ -440,15 +428,11 @@ void glassStyle::drawControl( ControlElement element, const QStyleOption* option
     case CE_DockWidgetTitle: {
 
         QLinearGradient gradient( option->rect.topLeft(), option->rect.bottomLeft() );
-        gradient.setColorAt( 0.0, m_colorBarBegin );
-        //gradient.setColorAt( 0.5, QColor(29,186,255,140) );
-        gradient.setColorAt( 1.0, m_colorBarEnd);
-        painter->fillRect( option->rect, gradient );
-        // QLinearGradient gradient2( option->rect.topLeft(), option->rect.bottomLeft() /2);
 
-        // gradient2.setColorAt( 0.0,QColor(255,255,255,130) );
-        //gradient2.setColorAt( 1.0, QColor(255,255,255,130) );
-        // painter->fillRect( option->rect, gradient2 );
+        gradient.setColorAt( 0.0, m_colorBarBegin );
+        gradient.setColorAt( 1.0, m_colorBarEnd);
+
+        painter->fillRect( option->rect, gradient );
 
         if ( const QStyleOptionDockWidget* optionDockWidget = qstyleoption_cast<const QStyleOptionDockWidget*>( option ) ) {
             QRect rect = option->rect.adjusted( 6, 0, -4, 0 );
@@ -494,16 +478,11 @@ void glassStyle::drawControl( ControlElement element, const QStyleOption* option
         }
         return;
 
-    case CE_MenuEmptyArea:
-        painter->fillRect( option->rect, m_colorMenuBackground );
-        return;
-
     case CE_MenuItem: {
         if (
                 //menu select
                 option->state & QStyle::State_Selected && option->state & QStyle::State_Enabled ) {
             painter->setPen(QColor(29,186,255,200) );
-
 
             QLinearGradient gradient (option->rect.topLeft(), option->rect.bottomLeft() );
 
@@ -630,11 +609,6 @@ void glassStyle::drawControl( ControlElement element, const QStyleOption* option
         gradient.setColorAt( 1.0,QColor(255,255,255,200));
         painter->fillRect( rect, gradient );
 
-        /*gradient.setColorAt( 0.0, QColor(255,255,255,200) );
-         gradient.setColorAt( 0.4, QColor(255,255,255,200) );
-         gradient.setColorAt( 0.5,QColor(240,240,240,100)  );
-         gradient.setColorAt( 0.6,QColor(240,240,240,100)  );
-         gradient.setColorAt( 1.0,QColor(25,25,20,10) );*/
         gradient.setColorAt( 0.0, QColor(255,255,255,150) );
         gradient.setColorAt( 0.4, QColor(255,255,255,150) );
         gradient.setColorAt( 0.6,QColor(240,240,240,250)  );
@@ -650,18 +624,17 @@ void glassStyle::drawControl( ControlElement element, const QStyleOption* option
         //painter->drawLine( rect.topRight() + QPoint( 0, 2 ), rect.bottomRight() - QPoint( 0, 2 ) );
         painter->setPen( m_colorBorderLight );
         painter->drawPoint( rect.bottomRight() - QPoint( 1, 1 ) );
-        //painter->restore();
+
         return;
     }
     }
     QProxyStyle::drawControl( element, option, painter, widget );
 
-    //QWindowsStyle::drawPrimitive(element, option, painter, widget);
-
 }
-void glassStyle::drawComplexControl( ComplexControl control, const QStyleOptionComplex* option,
+void GlassStyle::drawComplexControl( ComplexControl control, const QStyleOptionComplex* option,
                                      QPainter* painter, const QWidget* widget ) const
 {
+
     switch ( control ) {
 
     case CC_ToolButton: {
@@ -669,20 +642,7 @@ void glassStyle::drawComplexControl( ComplexControl control, const QStyleOptionC
         if ( widget && ( toolBar = qobject_cast<QToolBar*>( widget->parentWidget() ) ) ) {
             if ( const QStyleOptionToolButton* optionToolButton = qstyleoption_cast<const QStyleOptionToolButton*>( option ) ) {
                 QRect buttonRect = subControlRect( control, option, SC_ToolButton, widget );
-                // menubarheight=  buttonRect.height();
 
-                //                    QRect rect=buttonRect ;
-                //                    QLinearGradient gradient = QLinearGradient( rect.topLeft(), rect.bottomLeft() );
-
-                //                    //rect2.setHeight(rect.height()/2);
-
-                //                    gradient.setColorAt( 0.0, QColor(255,255,255,150) );
-                //                    gradient.setColorAt( 0.4, QColor(255,255,255,150) );
-                //                    gradient.setColorAt( 0.6,QColor(240,240,240,250)  );
-                //                    gradient.setColorAt( 1.0,QColor(255,255,255,255) );
-
-                //                    painter->setBrush( gradient );
-                //                    painter->drawRect( rect );
                 QStyle::State buttonState = option->state & ~State_Sunken;
                 if ( option->state & State_Sunken ) {
                     if ( optionToolButton->activeSubControls & SC_ToolButton )
@@ -735,12 +695,15 @@ void glassStyle::drawComplexControl( ComplexControl control, const QStyleOptionC
                             optionMenu.state |= State_Sunken;
                     }
                     drawPrimitive( PE_IndicatorButtonDropDown, &optionMenu, painter, widget );
-                } else if ( optionToolButton->features & QStyleOptionToolButton::HasMenu ) {
+                }
+                else if ( optionToolButton->features & QStyleOptionToolButton::HasMenu ) {
+
                     int size = pixelMetric( PM_MenuButtonIndicator, option, widget );
                     QRect rect = optionToolButton->rect;
                     QStyleOptionToolButton optionArrow = *optionToolButton;
                     optionArrow.rect = QRect( rect.right() + 4 - size, rect.height() - size + 4, size - 5, size - 5 );
                     drawPrimitive( PE_IndicatorArrowDown, &optionArrow, painter, widget );
+
                 }
                 return;
             }
