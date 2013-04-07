@@ -57,6 +57,8 @@ static QRegExp rx_screenshot(".*screenshot '(.*)'");
 static QRegExp rx_gin("Generating Index:.* (\\d+)");
 static QRegExp rx_cache("Cache not filling!");
 static QRegExp rx_audioinfo("^[AUDIO:].*(\\d+).*Hz.*(\\d+).*ch.*(\\d+).*(\\d+).*kbit.*");
+static QRegExp rx_bufferfill("^Cache fill:.*([0-9,.]+)% .*");
+
 mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
 {
     isnet=false;
@@ -64,7 +66,12 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
 
     isurl=false;
     _bgotdimension=false;
+#ifdef Q_OS_WIN
     mPath= qApp->applicationDirPath()+ "/mplayer/mplayer.exe";
+#endif
+#ifdef Q_OS_LINUX
+    mPath= qApp->applicationDirPath()+ "/usr/bin/mplayer";
+# endif
     mutelock=true;
 
     qDebug()<<"Checking for MPlayer binary...";
@@ -74,9 +81,14 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
 
     }
 
-    mProcess = new QProcess(parent);
+   /* mProcess = new QProcess(parent);
     QObject::connect(mProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(readmpconsole()));
     QObject::connect(mProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
+*/
+    mProcess=new MyProcess(parent);
+    QObject::connect(mProcess,SIGNAL(lineAvailable(QByteArray)),this,SLOT(mplayerConsole(QByteArray)));
+    QObject::connect(mProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
+
 
     qDebug()<<"Starting mplayer process...";
     wdlg=new WinampDspDialog(wparent);
@@ -95,7 +107,9 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     ckey=colorToRGB(5);
 
     keepaspect=true;
+
     _priority="abovenormal";
+
     foundsub =false;
     init();
     _silent=true;
@@ -136,7 +150,12 @@ void mplayerfe::play(QString File,int volume)
 
     //FrontEnd options
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifdef Q_OS_WIN
     argfrontEnd<<"-slave"<<"-identify"<<"-noquiet"<<"-priority"<<_priority;
+#endif
+#ifdef Q_OS_LINUX
+    argfrontEnd<<"-slave"<<"-identify"<<"-noquiet";
+# endif
 
     //Mp3 file smooth seeking
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -225,12 +244,14 @@ void mplayerfe::play(QString File,int volume)
     //Starting mplayer
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     qDebug()<<"Starting mplayer...";
-    qDebug()<<"ARG"<<arguments;
+
     _filepath=File;
 
     //arguments<<argfrontEnd<<argDemuxerOpt<<argAudioOpt<<argVideoOpt<<argSubOpt<<argvideofilters<<argao<<shortPathName(File);
-    mProcess->start( mPath, arguments);
-    emit starting();
+    //mProcess->start( mPath, arguments);
+     startMplayer();
+
+     emit starting();
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -248,37 +269,37 @@ void mplayerfe::readmpconsole()
 
     QString str= mProcess->readAllStandardOutput();
 
-    QStringList lines;
+   QStringList lines;
 
-    if (!_started)
-        lines=str.split("\r\n",QString::SkipEmptyParts);
-    else
-        lines=str.split("\r",QString::SkipEmptyParts);
+   // if (!_started)
+    //    lines=str.split("\r\n",QString::SkipEmptyParts);
+    //else
+        //lines=str.split("\r",QString::SkipEmptyParts);
+//
 
-
-    if (lines.filter("AUDIO").count()>0) _hasaudio=true;
-    if (lines.filter("VIDEO").count()>0) _hasvideo=true;
-    for(int i=0;i<lines.count();i++)
+    //if (lines.filter("AUDIO").count()>0) _hasaudio=true;
+    //if (lines.filter("VIDEO").count()>0) _hasvideo=true;
+   for(int i=0;i<lines.count();i++)
     {
-        QString tmp;
+       QString tmp;
         tmp=lines.at(i);
         if(!_started)
         {  emit lineavailable (tmp);
-            if( tmp.contains("Connecting to server"))
-            {//isurl=true;
-                //emit  download();
-                isnet=true;
+//            if( tmp.contains("Connecting to server"))
+//            {//isurl=true;
+//                //emit  download();
+//                isnet=true;
 
-                emit show_message(QString("Connecting to server..."),2000) ;
-            }
-            else if( tmp.contains("Resolving"))
-            {
-                emit show_message(QString("Resolving"),2000) ;
-            }
-            else if( tmp.contains("Cache fill"))
-            {
-                emit show_message(QString("Buffering"),2000) ;
-            }
+//                emit show_message(QString("Connecting to server..."),2000) ;
+//            }
+//            else if( tmp.contains("Resolving"))
+//            {
+//                emit show_message(QString("Resolving"),2000) ;
+//            }
+//            else if( tmp.contains("Cache fill"))
+//            {
+//                emit show_message(QString("Buffering"),2000) ;
+//            }
             /*if (this->filepath().contains("mp3",Qt::CaseInsensitive)){
        if( tmp.contains("Header missing"))
        {qDebug()<<"Header missing";
@@ -286,197 +307,199 @@ void mplayerfe::readmpconsole()
           restart();
        }
      }*/
-            if( tmp.contains("Scanning file"))
-            {if(!_hideFontDlg)
-                {
-                    if (!fldDlg)
-                    {fldDlg=new fontLoadDialog(_wparent);
-                        fldDlg->setModal(true);
-                        fldDlg->setGeometry(_wparent->width()/2-fldDlg->width()/2,_wparent->height()/2-fldDlg->height()/2,fldDlg->width(),fldDlg->height());
-                        fldDlg->show();
-                        qDebug()<<"++++++++++++++++++++"<<_hideFontDlg;
-                        emit show_message("Please wait...Scanning font files...",4000) ;
-                    }
-                }
+//            if( tmp.contains("Scanning file"))
+//            {if(!_hideFontDlg)
+//                {
+//                    if (!fldDlg)
+//                    {fldDlg=new fontLoadDialog(_wparent);
+//                        fldDlg->setModal(true);
+//                        fldDlg->setGeometry(_wparent->width()/2-fldDlg->width()/2,_wparent->height()/2-fldDlg->height()/2,fldDlg->width(),fldDlg->height());
+//                        fldDlg->show();
+//                        qDebug()<<"++++++++++++++++++++"<<_hideFontDlg;
+//                        emit show_message("Please wait...Scanning font files...",4000) ;
+//                    }
+//                }
 
-            }
+//            }
 
-            if(rx_audioinfo.indexIn(tmp) >-1)
-            {
-                //qDebug()<<"lllllllll0000"+rx_audioinfo.cap(1);
-                 _audio_rate=QString::number(rx_audioinfo.cap(1).toInt()/1000);
-                 _audio_nch=rx_audioinfo.cap(2);
-                _audio_bitrate=rx_audioinfo.cap(4);
-                //qDebug()<<"lllllllll0000"+rx_audioinfo.cap(2);
-                //qDebug()<<"lllllllll0000"+rx_audioinfo.cap(4);
-            }
-            if (rx_gin.indexIn(tmp) >-1 )
-            { if( rx_gin.cap(1).toInt()>1)
-                {
-                    emit showpg();
-                }
-                emit show_message("Generating Index: "+QString::number(rx_gin.cap(1).toInt())+"%",2000);
-            }
-            if(tmp.contains("ID_"))
-                idlist<<tmp;
-            if (tmp.contains("ac3"))
-            {
-                emit foundac3();
-            }
+//            if(rx_audioinfo.indexIn(tmp) >-1)
+//            {
+//                //qDebug()<<"lllllllll0000"+rx_audioinfo.cap(1);
+//                 _audio_rate=QString::number(rx_audioinfo.cap(1).toInt()/1000);
+//                 _audio_nch=rx_audioinfo.cap(2);
+//                _audio_bitrate=rx_audioinfo.cap(4);
+//                //qDebug()<<"lllllllll0000"+rx_audioinfo.cap(2);
+//                //qDebug()<<"lllllllll0000"+rx_audioinfo.cap(4);
+//            }
+//            if (rx_gin.indexIn(tmp) >-1 )
+//            { if( rx_gin.cap(1).toInt()>1)
+//                {
+//                    emit showpg();
+//                }
+//                emit show_message("Generating Index: "+QString::number(rx_gin.cap(1).toInt())+"%",2000);
+//            }
+//            if(tmp.contains("ID_"))
+//                idlist<<tmp;
+//            if (tmp.contains("ac3"))
+//            {
+//                emit foundac3();
+//            }
         }
-        else{if(_hasvideo)
-            {if (!_isRestarting)
-                { //qDebug()<< "listSubtitleTrack";
-                    if (tmp.contains("ID_SUBTITLE_ID"))
-                    { //qDebug()<<"bastard subbbbbbbbbbbbbbbbbbbbbbbbb";
-                        if (!internalrestart)
-                        {
-                            listSubtitleTrack<< parsevalue("ID_SUBTITLE_ID","=",tmp);
-                            listSubtitleTrack.removeDuplicates();
-                            //qDebug()<<listSubtitleTrack;
-                            // listSubtitleTrack.clear();
-                            emit foundSubtitletrack(listSubtitleTrack);
-                        }
-                        //qDebug()<< listSubtitleTrack;
-                    }
-                }
+        else{
 
-            }
-            if (!(tmp.contains(QLatin1String("A:"))||tmp.contains("V:")))
-            { emit lineavailable (tmp);
-                // qDebug()<<"tmp";
-                if (this->mutelock)
-                {
-                    if (!this->bmute)
-                    {if(!mutelock)
-                        {this->mProcess->write("mute\n");
-                            mutelock=true;
+//            if(_hasvideo)
+//            {if (!_isRestarting)
+//                { //qDebug()<< "listSubtitleTrack";
+//                    if (tmp.contains("ID_SUBTITLE_ID"))
+//                    { //qDebug()<<"bastard subbbbbbbbbbbbbbbbbbbbbbbbb";
+//                        if (!internalrestart)
+//                        {
+//                            listSubtitleTrack<< parsevalue("ID_SUBTITLE_ID","=",tmp);
+//                            listSubtitleTrack.removeDuplicates();
+//                            //qDebug()<<listSubtitleTrack;
+//                            // listSubtitleTrack.clear();
+//                            emit foundSubtitletrack(listSubtitleTrack);
+//                        }
+//                        //qDebug()<< listSubtitleTrack;
+//                    }
+//                }
 
-                        }
-                    }
-                }
+//            }
+//            if (!(tmp.contains(QLatin1String("A:"))||tmp.contains("V:")))
+//            { emit lineavailable (tmp);
+//                // qDebug()<<"tmp";
+//                if (this->mutelock)
+//                {
+//                    if (!this->bmute)
+//                    {if(!mutelock)
+//                        {this->mProcess->write("mute\n");
+//                            mutelock=true;
 
-            }
-            if(rx_screenshot.indexIn(tmp)>-1)
-            {//qDebug()<<"screenshot";
-                //qDebug()<<rx_screenshot.cap(1);
-                this->usercommand("osd_show_text \"Screenshot is saved as " + rx_screenshot.cap(1) + "\" 2000 1");
-            }
-            if(rx_pos.indexIn(tmp)>-1){
-                _curpos=rx_pos.cap(1).toFloat();
+//                        }
+//                    }
+//                }
 
-                _tcurpos=QTime();
-                _tcurpos=_tcurpos.addSecs(_curpos);
-                // tmpcurpos=_curpos;
+//            }
+//            if(rx_screenshot.indexIn(tmp)>-1)
+//            {//qDebug()<<"screenshot";
+//                //qDebug()<<rx_screenshot.cap(1);
+//                this->usercommand("osd_show_text \"Screenshot is saved as " + rx_screenshot.cap(1) + "\" 2000 1");
+//            }
+//            if(rx_pos.indexIn(tmp)>-1){
+//                _curpos=rx_pos.cap(1).toFloat();
 
-            }
+//                _tcurpos=QTime();
+//                _tcurpos=_tcurpos.addSecs(_curpos);
+//                // tmpcurpos=_curpos;
 
-            if(rx_speed.indexIn(tmp)>-1)
-                _currentspeed =rx_speed.cap(1);
-            else
-                _currentspeed="1.00x";
-            if(rx_audiocpu_usage0.indexIn(tmp)>-1)
-                _audio_cpu_usage= rx_audiocpu_usage0.cap(1);
-            if(_hasvideo)
-            {if(rx_audiocpu_usage1.indexIn(tmp)>-1)
-                { _audio_cpu_usage= rx_audiocpu_usage1.cap(1);
+//            }
 
-                }
-                if(rx_videocpu_usage.indexIn(tmp)>-1)
-                    _video_cpu_usage=rx_videocpu_usage.cap(1);
-                if(rx_frame.indexIn(tmp)>-1)
-                    _framecount=rx_frame.cap(1);
-                if(rx_delay.indexIn(tmp)>-1)
-                    _avdelay=rx_delay.cap(1);
-            }
-            if(str.contains("ANS_LENGTH",Qt::CaseInsensitive))
-            {
-                tmpstr=parsevalue("ANS_LENGTH=","=",str);
+//            if(rx_speed.indexIn(tmp)>-1)
+//                _currentspeed =rx_speed.cap(1);
+//            else
+//                _currentspeed="1.00x";
+//            if(rx_audiocpu_usage0.indexIn(tmp)>-1)
+//                _audio_cpu_usage= rx_audiocpu_usage0.cap(1);
+//            if(_hasvideo)
+//            {if(rx_audiocpu_usage1.indexIn(tmp)>-1)
+//                { _audio_cpu_usage= rx_audiocpu_usage1.cap(1);
 
-                _duration=tmpstr.toFloat();
+//                }
+//                if(rx_videocpu_usage.indexIn(tmp)>-1)
+//                    _video_cpu_usage=rx_videocpu_usage.cap(1);
+//                if(rx_frame.indexIn(tmp)>-1)
+//                    _framecount=rx_frame.cap(1);
+//                if(rx_delay.indexIn(tmp)>-1)
+//                    _avdelay=rx_delay.cap(1);
+//            }
+//            if(str.contains("ANS_LENGTH",Qt::CaseInsensitive))
+//            {
+//                tmpstr=parsevalue("ANS_LENGTH=","=",str);
 
-                _tduration=QTime();
-                _tduration=  _tduration.addSecs(_duration);
-                emit lengthChanged();
-                //qDebug()<<"duration" <<_tduration;
-            }
+//                _duration=tmpstr.toFloat();
+
+//                _tduration=QTime();
+//                _tduration=  _tduration.addSecs(_duration);
+//                emit lengthChanged();
+//                //qDebug()<<"duration" <<_tduration;
+//            }
 
         }
     }
-    if ( str.contains("Cache not",Qt::CaseInsensitive))
-    {    cachefill=true;
-        qDebug()<<"cache...........";
-    }
+//    if ( str.contains("Cache not",Qt::CaseInsensitive))
+//    {    cachefill=true;
+//        qDebug()<<"cache...........";
+//    }
 
-    if ( str.contains("Position",Qt::CaseInsensitive))
-    {
+//    if ( str.contains("Position",Qt::CaseInsensitive))
+//    {
 
-        if (!this->bmute)
-        {if(!mutelock)
-            {this->mProcess->write("mute\n");
-                mutelock=true;
+//        if (!this->bmute)
+//        {if(!mutelock)
+//            {this->mProcess->write("mute\n");
+//                mutelock=true;
 
-            }
-        }
+//            }
+//        }
 
-    }
-    if ( str.contains("ID_SIGNAL=11",Qt::CaseInsensitive))
-    {
-        if (_filepath.contains("av",Qt::CaseInsensitive)){
-            //qDebug()<<"ghgfhgh";
-            emit useidx();
-        }
+//    }
+//    if ( str.contains("ID_SIGNAL=11",Qt::CaseInsensitive))
+//    {
+//        if (_filepath.contains("av",Qt::CaseInsensitive)){
+//            //qDebug()<<"ghgfhgh";
+//            emit useidx();
+//        }
 
-    }
+//    }
 
 
-    if ( str.contains("ID_EXIT=EOF",Qt::CaseInsensitive))
-    {if (!_hasvideo&&!_hasaudio)
-        {_isRestarting=false;
-            if (_filepath.contains("mp3",Qt::CaseInsensitive)){
-                if (uselavf)
-                    emit removelavf();
-                else
-                {  _state=STOPPED;
-                    emit showerrortext("Oops!!!! No audio,Video.");
-                    //emit showmsgBox("Cann't play this file...\n""Not found any audio or video stream.");
-                    //QMessageBox::information(_wparent,qApp->applicationName(),tr("Cann't play this file...\n""Not found any audio or video stream."),QMessageBox::Ok,QMessageBox::NoButton);
-                    //emit playNextFile();
-                    //  _state=STOPPED ;
-                    ///bstop=true;
-                    // emit stopping();
-                }
-            }
-            else
+//    if ( str.contains("ID_EXIT=EOF",Qt::CaseInsensitive))
+//    {if (!_hasvideo&&!_hasaudio)
+//        {_isRestarting=false;
+//            if (_filepath.contains("mp3",Qt::CaseInsensitive)){
+//                if (uselavf)
+//                    emit removelavf();
+//                else
+//                {  _state=STOPPED;
+//                    emit showerrortext("Oops!!!! No audio,Video.");
+//                    //emit showmsgBox("Cann't play this file...\n""Not found any audio or video stream.");
+//                    //QMessageBox::information(_wparent,qApp->applicationName(),tr("Cann't play this file...\n""Not found any audio or video stream."),QMessageBox::Ok,QMessageBox::NoButton);
+//                    //emit playNextFile();
+//                    //  _state=STOPPED ;
+//                    ///bstop=true;
+//                    // emit stopping();
+//                }
+//            }
+//            else
 
-            {   //_state=STOPPED;
-                emit showerrortext("Oops!!!! No audio,Video.");
-                //emit showmsgBox("Cann't play this file...\n""Not found any audio or video stream.");
-                //QMessageBox::information(_wparent,qApp->applicationName(),tr("Cann't play this file...\n""Not found any audio or video stream."),QMessageBox::Ok,QMessageBox::NoButton);
-                //emit playNextFile();
-                //_state=STOPPED ;
-                //  bstop=true;
-                //emit stopping();
-            }
-        }
-        emit eof();
-        //emit processFinished(0,bstopping);
-        //_state=this->STOPPED;
+//            {   //_state=STOPPED;
+//                emit showerrortext("Oops!!!! No audio,Video.");
+//                //emit showmsgBox("Cann't play this file...\n""Not found any audio or video stream.");
+//                //QMessageBox::information(_wparent,qApp->applicationName(),tr("Cann't play this file...\n""Not found any audio or video stream."),QMessageBox::Ok,QMessageBox::NoButton);
+//                //emit playNextFile();
+//                //_state=STOPPED ;
+//                //  bstop=true;
+//                //emit stopping();
+//            }
+//        }
+//        emit eof();
+//        //emit processFinished(0,bstopping);
+//        //_state=this->STOPPED;
 
-        emit this->show_endmessage("End of playback(EOF)");
-    }
-    if ( str.contains("ID_EXIT=QUIT",Qt::CaseInsensitive))
-    {qDebug()<<"stopped......";
-        bstop=true;
-        _state=STOPPED;
-        bstopping=true;
-        emit stopping();
+//        emit this->show_endmessage("End of playback(EOF)");
+//    }
+//    if ( str.contains("ID_EXIT=QUIT",Qt::CaseInsensitive))
+//    {qDebug()<<"stopped......";
+//        bstop=true;
+//        _state=STOPPED;
+//        bstopping=true;
+//        emit stopping();
 
-    }
+//    }
 
 
     if (!_started)
-    { if(str.contains("ID_VIDEO_WIDTH"))
+    {/* if(str.contains("ID_VIDEO_WIDTH"))
         {   tmpstr= parsevalue("ID_VIDEO_WIDTH","=",str);
             _videowidth=tmpstr.toInt();
             _video_width=QString::number(tmpstr.toInt());
@@ -495,44 +518,44 @@ void mplayerfe::readmpconsole()
         {    tmpstr= parsevalue("ID_VIDEO_HEIGHT","=",str);
             _videoheight=tmpstr.toInt();
             _video_height=QString::number(tmpstr.toInt());
-        }
+        }*/
 
-        if(str.contains("Starting playback",Qt::CaseInsensitive))
-        {qDebug()<<"<---- emit startingplayback() ----->";
-            if  (_hasvideo)
-                qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
-            if(_bgotdimension && _hasvideo)
-                emit startingplayback();
-            if  (_hasaudio &&!_hasvideo)
-                emit startingplayback();
-            _started=true;
-            if(isurl)
-            {//this->usercommand("quit");
-                // qDebug()  <<"Sdfdf";
-                //emit  progressiveStreaming();
-                // this->play(qApp->applicationDirPath()+ "/thetrain01(www.songs.pk).mp3",_curvolume);
-            }
+//        if(str.contains("Starting playback",Qt::CaseInsensitive))
+//        {qDebug()<<"<---- emit startingplayback() ----->";
+//            if  (_hasvideo)
+//                qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
+//            if(_bgotdimension && _hasvideo)
+//                emit startingplayback();
+//            if  (_hasaudio &&!_hasvideo)
+//                emit startingplayback();
+//            _started=true;
+//            if(isurl)
+//            {//this->usercommand("quit");
+//                // qDebug()  <<"Sdfdf";
+//                //emit  progressiveStreaming();
+//                // this->play(qApp->applicationDirPath()+ "/thetrain01(www.songs.pk).mp3",_curvolume);
+//            }
 
-            QString fn;
-            QFileInfo fi(this->filepath());
-            fn = fi.baseName();
+//            QString fn;
+//            QFileInfo fi(this->filepath());
+//            fn = fi.baseName();
 
-            this->usercommand("osd_show_text \""+ fn+"\" 2000 1");
-
-
-            idlist.removeDuplicates();
-            cmd=QString("get_time_length\n");
-            mProcess->write(cmd.toAscii());
-            if(fldDlg)
-            {
-                fldDlg->close();
-            }
+//            this->usercommand("osd_show_text \""+ fn+"\" 2000 1");
 
 
+//            idlist.removeDuplicates();
+//            cmd=QString("get_time_length\n");
+//            mProcess->write(cmd.toAscii());
+//            if(fldDlg)
+//            {
+//                fldDlg->close();
+//            }
 
 
-        }
-        _state=this->PARSING;
+
+
+//        }
+        //_state=this->PARSING;
         if(str.contains("AUDIO:"))
         {metainfo << "AUDIO: "+ parsevalue("AUDIO:",":",str);
 
@@ -541,109 +564,110 @@ void mplayerfe::readmpconsole()
             metainfo << "VIDEO: "+ parsevalue("VIDEO:",":",str);
 
         //qDebug()<<"Parsing...";
-        metainfoname=lines.filter("ID_CLIP_INFO_NAME");
-        metainfovalue=lines.filter("ID_CLIP_INFO_VALUE");
+//        metainfoname=lines.filter("ID_CLIP_INFO_NAME");
+//        metainfovalue=lines.filter("ID_CLIP_INFO_VALUE");
 
-        if(metainfoname.count()==metainfovalue.count())
-        {for(int i=0;i<metainfoname.count();i++)
-                metainfo<< parsevalue("ID_CLIP_INFO_NAME","=",metainfoname.at(i))+" : "+  parsevalue("ID_CLIP_INFO_VALUE","=",metainfovalue.at(i));
-        }
-        listTemp.clear();
+//        if(metainfoname.count()==metainfovalue.count())
+//        {for(int i=0;i<metainfoname.count();i++)
+//                metainfo<< parsevalue("ID_CLIP_INFO_NAME","=",metainfoname.at(i))+" : "+  parsevalue("ID_CLIP_INFO_VALUE","=",metainfovalue.at(i));
+//        }
+//        listTemp.clear();
 
-        listTemp=lines.filter("ID_SUBTITLE_ID");
-        if (!internalrestart)
-        {for(int i=0;i<listTemp.count();i++){
-                {listSubtitleTrack<< parsevalue("ID_SUBTITLE_ID","=",listTemp.at(i));
-                    ///emit foundSubtitletrack(listSubtitleTrack);
-                }
-            }
-        }
-        listTemp.clear();
-        listTemp=lines.filter("ID_AUDIO_ID");
+//        listTemp=lines.filter("ID_SUBTITLE_ID");
+//        if (!internalrestart)
+//        {for(int i=0;i<listTemp.count();i++){
+//                {listSubtitleTrack<< parsevalue("ID_SUBTITLE_ID","=",listTemp.at(i));
+//                    ///emit foundSubtitletrack(listSubtitleTrack);
+//                }
+//            }
+//        }
+       // listTemp.clear();
+//        listTemp=lines.filter("ID_AUDIO_ID");
 
-        for(int i=0;i<listTemp.count();i++){
-            listAudioTrack<< parsevalue("ID_AUDIO_ID","=",listTemp.at(i));
-        }
-        listTemp.clear();
-        listTemp=lines.filter("ID_VIDEO_ID");
+//        for(int i=0;i<listTemp.count();i++){
+//            listAudioTrack<< parsevalue("ID_AUDIO_ID","=",listTemp.at(i));
+//        }
+//        listTemp.clear();
+//        listTemp=lines.filter("ID_VIDEO_ID");
 
 
-        for(int i=0;i<listTemp.count();i++){
-            listVideoTrack<< parsevalue("ID_VIDEO_ID","=",listTemp.at(i));
-        }
-        //qDebug()<<listVideoTrack;
-        if(str.contains("ID_LENGTH",Qt::CaseInsensitive))
-        {//qDebug()<<"zzzzzzzzzzzzzzzzzzzzzzzzzz";
-            tmpstr=parsevalue("ID_LENGTH=","=",str);
-            _duration=tmpstr.toFloat();
-            emit gotduration(_duration);
-            _tduration=  _tduration.addSecs(_duration);
-            if (isurl)
-            {
-                emit streamingDuration(_duration);
-            }
+//        for(int i=0;i<listTemp.count();i++){
+//            listVideoTrack<< parsevalue("ID_VIDEO_ID","=",listTemp.at(i));
+//        }
+//        //qDebug()<<listVideoTrack;
+//        if(str.contains("ID_LENGTH",Qt::CaseInsensitive))
+//        {//qDebug()<<"zzzzzzzzzzzzzzzzzzzzzzzzzz";
+//            tmpstr=parsevalue("ID_LENGTH=","=",str);
+//            _duration=tmpstr.toFloat();
+//            emit gotduration(_duration);
+//            _tduration=  _tduration.addSecs(_duration);
+//            if (isurl)
+//            {
+//                emit streamingDuration(_duration);
+//            }
 
-            //cmd=QString("get_time_length\n");
-            //mProcess->write(cmd.toAscii());
-        }
-        if(str.contains("ID_CLIP_INFO_N=",Qt::CaseInsensitive))
-            _metainfocount=parsevalue("ID_CLIP_INFO_N=","=",str).toInt();
+//            //cmd=QString("get_time_length\n");
+//            //mProcess->write(cmd.toAscii());
+//        }
+        //if(str.contains("ID_CLIP_INFO_N=",Qt::CaseInsensitive))
+        //    _metainfocount=parsevalue("ID_CLIP_INFO_N=","=",str).toInt();
 
         if(str.contains("ID_AUDIO_CODEC"))
         {metainfo <<"AUDIO_CODEC: "+ parsevalue("ID_AUDIO_CODEC","=",str);
         }
-
         if(str.contains("ID_VIDEO_CODEC",Qt::CaseInsensitive))
             metainfo <<"VIDEO_CODEC: "+ parsevalue("ID_VIDEO_CODEC","=",str);
-        if(str.contains("ID_AUDIO_ID"))
-        {
-            show_message("Found audio stream",1000);
-            //qDebug()<<isurl;
 
-        }
+//        if(str.contains("ID_AUDIO_ID"))
+//        {
+//            show_message("Found audio stream",1000);
+//            //qDebug()<<isurl;
+
+//        }
+
+
+
+
+//        if(str.contains("Video: no video")){
+//         _hasvideo=false;
+
+//        }
+
+//        if  ( _hasvideo&& _hasaudio)
+//        {
+//            emit foundAudioandVideo();
+//        }
+//        if(str.contains("ID_SEEKABLE"))
+//        { tmpstr= parsevalue("ID_SEEKABLE","=",str);
+//            _isseekable =(bool)tmpstr.toInt();
+//        }
+
+//        if (_video_width>0 && _video_height>0)
+//        {
+//            emit resizeVideoWindow(_videowidth,_videoheight);
+//        }
+
+
         //if(str.contains("ID_VIDEO_ID"))
         //    _hasvideo=true;
-
-
-
-
-        if(str.contains("Video: no video")){
-         _hasvideo=false;
-
-        }
-
-        if  ( _hasvideo&& _hasaudio)
-        {
-            emit foundAudioandVideo();
-        }
-        if(str.contains("ID_SEEKABLE"))
-        { tmpstr= parsevalue("ID_SEEKABLE","=",str);
-            _isseekable =(bool)tmpstr.toInt();
-        }
-
-        if (_video_width>0 && _video_height>0)
-        {
-            emit resizeVideoWindow(_videowidth,_videoheight);
-        }
-
 
 
 
     }
     else
     {
-        if(str.contains("A:",Qt::CaseInsensitive)){
-            _state=this->PLAYING;
-            if (!bstop)
-                emit playing();
-            _isRestarting=false;
+//        if(str.contains("A:",Qt::CaseInsensitive)){
+//            _state=this->PLAYING;
+//            if (!bstop)
+//                emit playing();
+//            _isRestarting=false;
 
-            if(str.contains("ID_PAUSED",Qt::CaseInsensitive)){
-                _state=this->PAUSED;
-                emit paused();
+//            if(str.contains("ID_PAUSED",Qt::CaseInsensitive)){
+//                _state=this->PAUSED;
+//                emit paused();
 
-            }
-        }
+//            }
+//        }
     }
 }
 QString mplayerfe::parsestatusline(QString serstr, QString str)
@@ -653,11 +677,12 @@ QString mplayerfe::parsestatusline(QString serstr, QString str)
 QString mplayerfe::parsevalue( QString serstr,QString sep,QString str)
 {
     QString tmp;
-
     tmp=str.mid(str.indexOf(serstr));
     tmp=tmp.left(tmp.indexOf("\n"));
 
-    return tmp.mid(tmp.indexOf(sep)+1);
+    qDebug()<<"Parsed ->"<<tmp.mid(tmp.indexOf(sep)+1);
+
+    return tmp.mid(tmp.indexOf(sep)+1).trimmed();
 }
 void mplayerfe::goturl(int per)
 {
@@ -918,8 +943,7 @@ void  mplayerfe::fastRestart(QStringList extraOption)
     arguments<<extraOption;
     arguments<<"-ss"<<QString::number(_curpos);
     mProcess->close();
-    mProcess->start(mPath, arguments);
-    qDebug()<<arguments;
+    startMplayer();
 
 }
 ///////////////////////////////////////////////////////////////'
@@ -967,7 +991,6 @@ void mplayerfe::restart()
         {
             arguments.removeAt(i);
             arguments.insert(i,equlizerstr);
-            // qDebug()<<"ffffffffffffffffffffffffff"<<i;
             break;
         }
     }
@@ -977,9 +1000,9 @@ void mplayerfe::restart()
     // equlizerstr=QString("equalizer=")+val+",volume";
 
     //arguments <<"-af-add"<<equlizerstr;
-    mProcess->start(mPath, arguments);
+    startMplayer();
     qDebug()<<_curvolume;
-    qDebug()<<"ewstart"<<arguments;
+    qDebug()<<"restart"<<arguments;
     if(!bsubtvisible)
     {cmd="sub_visibility\n";
         mProcess->write(cmd.toAscii());
@@ -1008,7 +1031,8 @@ void mplayerfe::loadExternalFile(QString File)
     emit restarting();
     stop();
     mProcess->close();
-    mProcess->start(mPath, arguments);
+
+    startMplayer();
     qDebug()<<arguments;
     emit show_message("Loading external Audio file",2000);
 }
@@ -2112,4 +2136,546 @@ QString mplayerfe::colorToRGB(unsigned int color) {
 void mplayerfe::setInitSeekPos(double pos)
 {
     argfrontEnd<<"-ss"<<QString::number(pos);
+}
+void  mplayerfe::startMplayer()
+{
+    QString strArgument;
+    mProcess->clearArguments();
+    mProcess->addArgument(mPath);
+    commandLine ="";
+    commandLine.append(mPath);
+    commandLine.append(" ");
+
+    foreach (strArgument, arguments) {
+        commandLine+=strArgument+" ";
+        mProcess->addArgument(strArgument);
+    }
+
+    qDebug()<<commandLine;
+    mProcess->start();
+}
+void mplayerfe::mplayerConsole(QByteArray ba)
+{
+
+    QString mplayerOutputLine(ba);
+
+    if(!_started){
+     if (!_isRestarting){
+        //ExMplayer log
+        emit lineavailable (mplayerOutputLine);
+        }
+
+    //Network playback
+    if( mplayerOutputLine.contains("Connecting to server")){
+
+        isnet=true;
+        _state=CONNECTING;
+        emit show_message(QString("Connecting to server..."),2000) ;
+
+    }
+    else if( mplayerOutputLine.contains("Resolving")){
+        _state=RESOLVING;
+        emit show_message(QString("Resolving"),2000) ;
+    }
+    else if( mplayerOutputLine.contains("Cache fill")){
+
+        if(rx_bufferfill.indexIn(mplayerOutputLine)>-1){
+
+            _bufferfill=(int)rx_bufferfill.cap(1).toFloat();
+            qDebug()<<"Buffering "<<_bufferfill;
+        }
+        _state=BUFFERING;
+        emit show_message(QString("Buffering"),2000) ;
+
+    }
+
+    //Scanning font files
+    if( mplayerOutputLine.contains("Scanning file")){
+        if(!_hideFontDlg){
+
+            if (!fldDlg){
+
+                fldDlg=new fontLoadDialog(_wparent);
+                fldDlg->setModal(true);
+                fldDlg->setGeometry(_wparent->width()/2-fldDlg->width()/2,_wparent->height()/2-fldDlg->height()/2,fldDlg->width(),fldDlg->height());
+                fldDlg->show();
+                emit show_message("Please wait...Scanning font files...",4000) ;
+
+            }
+        }
+    }
+    if(!_isRestarting){
+
+
+    //Check for Generating Index
+    if (rx_gin.indexIn(mplayerOutputLine) >-1 ){
+
+    if( rx_gin.cap(1).toInt()>1)
+            emit showpg();
+        emit show_message("Generating Index: "+QString::number(rx_gin.cap(1).toInt())+"%",2000);
+    }
+
+    //ID list
+    if(mplayerOutputLine.contains("ID_")){
+
+        idlist<<mplayerOutputLine;
+        qDebug()<<mplayerOutputLine;
+    }
+
+    //Check for ac3
+    if (mplayerOutputLine.contains("ac3"))
+        emit foundac3();
+
+
+    //Stream duration
+    if(mplayerOutputLine.contains("ID_LENGTH",Qt::CaseInsensitive)){
+
+        tmpstr=parsevalue("ID_LENGTH=","=",mplayerOutputLine);
+        _duration=tmpstr.toFloat();
+        emit gotduration(_duration);
+        _tduration=  _tduration.addSecs(_duration);
+        if (isurl)
+            emit streamingDuration(_duration);
+
+        qDebug()<<ba;
+
+    }
+
+    //Stream duration-a recheck
+    if(mplayerOutputLine.contains("ANS_LENGTH",Qt::CaseInsensitive)){
+
+        tmpstr=parsevalue("ANS_LENGTH=","=",mplayerOutputLine);
+        _duration=tmpstr.toFloat();
+        _tduration=QTime();
+        _tduration=  _tduration.addSecs(_duration);
+        emit lengthChanged();
+
+        qDebug()<<ba;
+
+    }
+
+
+
+    //Check for subtitles
+    if (!internalrestart){
+        if(mplayerOutputLine.contains("ID_SUBTITLE_ID",Qt::CaseInsensitive))
+            listSubtitleTrack<< parsevalue("ID_SUBTITLE_ID","=",mplayerOutputLine);
+    }
+
+    //Check for Audio Tracks
+    if(mplayerOutputLine.contains("ID_AUDIO_ID",Qt::CaseInsensitive)){
+        listAudioTrack<< parsevalue("ID_AUDIO_ID","=",mplayerOutputLine);
+    }
+
+    //Check for Video Tracks
+    if(mplayerOutputLine.contains("ID_VIDEO_ID",Qt::CaseInsensitive)){
+        listVideoTrack<< parsevalue("ID_VIDEO_ID","=",mplayerOutputLine);
+    }
+
+    //Check for audio codec used
+    if(mplayerOutputLine.contains("Selected audio codec:",Qt::CaseInsensitive)){
+        mapCodecs["audio"] =parsevalue("Selected audio codec",":",mplayerOutputLine) ;
+    }
+
+    //Check for video codec  used
+    if(mplayerOutputLine.contains("Selected video codec",Qt::CaseInsensitive)){
+        mapCodecs["video"] =parsevalue("Selected video codec",":",mplayerOutputLine) ;
+    }
+
+    //Check for audio device used
+    if(mplayerOutputLine.contains("AO:",Qt::CaseInsensitive)){
+        mapDevices["audio"] =parsevalue("AO",":",mplayerOutputLine) ;
+    }
+
+    //Check for Audio
+    if(mplayerOutputLine.contains("ID_AUDIO_ID")){
+        show_message("Found audio stream",1000);
+    }
+
+    //Check for Video
+    if(mplayerOutputLine.contains("ID_VIDEO_ID")){
+        show_message("Found video stream",1000);
+    }
+
+    //Check for no video
+    if(mplayerOutputLine.contains("Video: no video")){
+        _hasvideo=false;
+    }
+
+    //Emit video,audio found
+    if  ( _hasvideo&& _hasaudio){
+        emit foundAudioandVideo();
+    }
+
+    //Check for Seekable
+    if(mplayerOutputLine.contains("ID_SEEKABLE")){
+        tmpstr= parsevalue("ID_SEEKABLE","=",mplayerOutputLine);
+        _isseekable =(bool)tmpstr.toInt();
+        qDebug()<<"Seekable :"<<_isseekable;
+    }
+
+    //*******************************************************************
+    //Title
+    if(mplayerOutputLine.contains("Title:"))
+        mapMetaInfo["title"]=parsevalue("Title",":",mplayerOutputLine) ;
+    //Artist
+    if(mplayerOutputLine.contains("Artist:"))
+        mapMetaInfo["artist"]=parsevalue("Artist",":",mplayerOutputLine) ;
+    //Album
+    if(mplayerOutputLine.contains("Album:"))
+        mapMetaInfo["album"]=parsevalue("Album",":",mplayerOutputLine) ;
+    //Year
+    if(mplayerOutputLine.contains("Year:"))
+        mapMetaInfo["year"]=parsevalue("Year",":",mplayerOutputLine) ;
+    //Comment
+    if(mplayerOutputLine.contains("Comment:"))
+        mapMetaInfo["comment"]=parsevalue("Comment",":",mplayerOutputLine) ;
+    //Track
+    if(mplayerOutputLine.contains("Track:"))
+        mapMetaInfo["track"]=parsevalue("Track",":",mplayerOutputLine) ;
+    //Track
+    if(mplayerOutputLine.contains("Genre:"))
+        mapMetaInfo["genre"]=parsevalue("Genre",":",mplayerOutputLine) ;
+
+    //*******************************************************************
+
+    //MetaInfo count
+    if(mplayerOutputLine.contains("ID_CLIP_INFO_N=",Qt::CaseInsensitive))
+        _metainfocount=parsevalue("ID_CLIP_INFO_N=","=",mplayerOutputLine).toInt();
+  }
+
+    //Check for Video Width
+
+    if(mplayerOutputLine.contains("ID_VIDEO_WIDTH")){
+
+        QString tmpstr= parsevalue("ID_VIDEO_WIDTH","=",mplayerOutputLine);
+
+        _videowidth=tmpstr.toInt();
+        _video_width=QString::number(tmpstr.toInt());
+
+        if (_videowidth>0){
+
+            _hasvideo=true;
+            _bgotdimension=true;
+            emit showvideoui();
+            emit hidepg();
+
+            show_message("Found video stream",1000);
+            qDebug()<<"Got Video width:"<<_video_width;
+        }
+
+    }
+
+    //Check for Video Height
+
+    if(mplayerOutputLine.contains("ID_VIDEO_HEIGHT")){
+
+        tmpstr= parsevalue("ID_VIDEO_HEIGHT","=",mplayerOutputLine);
+        _videoheight=tmpstr.toInt();
+        _video_height=QString::number(tmpstr.toInt());
+
+        qDebug()<<"Got Video height:"<<_video_height;
+
+    }
+
+    //Audio Properties
+    if(rx_audioinfo.indexIn(mplayerOutputLine) >-1){
+
+        _audio_rate=QString::number(rx_audioinfo.cap(1).toInt()/1000);
+        _audio_nch=rx_audioinfo.cap(2);
+        _audio_bitrate=rx_audioinfo.cap(4);
+
+        qDebug()<<"Audio rate:"<<_audio_rate;
+        qDebug()<<"Audio nch:"<<_audio_nch;
+        qDebug()<<"Audio bitrate:"<<_audio_bitrate;
+
+        _hasaudio=true;
+
+    }
+    if(mplayerOutputLine.contains("Starting playback",Qt::CaseInsensitive)){
+
+  qDebug()<<"IS RESTART"<<_hasvideo;
+        QString fn;
+
+        QFileInfo fi(this->filepath());
+        fn = fi.baseName();
+        QString title=mapMetaInfo["title"];
+        QString artist=mapMetaInfo["artist"];
+        if( artist!="")
+                _friendlyTitle=artist+" - "+title;
+        else
+            _friendlyTitle=title;
+        if(artist==""&&title=="")
+         _friendlyTitle=fn;
+
+
+
+        qDebug()<<"<---- emit startingplayback() ----->";
+
+        if  (_hasvideo)
+            qDebug()<<"Video Width :"<<_video_width<<"Video Height :"<<_videoheight;
+
+        if(_bgotdimension && _hasvideo)
+            emit startingplayback();
+        if  (_hasaudio &&!_hasvideo)
+            emit startingplayback();
+
+        _started=true;
+
+        if(!_isRestarting){
+            //Show file name at startup
+         this->usercommand("osd_show_text \""+ fn+"\" 2000 1");
+         idlist.removeDuplicates();
+
+        metainfoname=idlist.filter("ID_CLIP_INFO_NAME");
+        metainfovalue=idlist.filter("ID_CLIP_INFO_VALUE");
+
+        if(metainfoname.count()==metainfovalue.count()){
+        for(int i=0;i<metainfoname.count();i++)
+                metainfo<< parsevalue("ID_CLIP_INFO_NAME","=",metainfoname.at(i))+" : "+  parsevalue("ID_CLIP_INFO_VALUE","=",metainfovalue.at(i));
+        }
+
+        //Recheck length
+        cmd=QString("get_time_length\n");
+        mProcess->write(cmd.toAscii());
+
+        //Resize video
+        if (_video_width>0 && _video_height>0){
+            emit resizeVideoWindow(_videowidth,_videoheight);
+        }
+
+        if(fldDlg){
+            fldDlg->close();
+        }
+
+        }
+
+        qDebug()<<"==================================================";
+        qDebug()<<"Meta Info"<< mapMetaInfo;
+        qDebug()<<"===================================================";
+        qDebug()<<"Audio tracks:" << listAudioTrack;
+        qDebug()<<"===================================================";
+        qDebug()<<"Video tracks:" << listVideoTrack;
+        qDebug()<<"===================================================";
+        qDebug()<<"Subtitle tracks:"<< listSubtitleTrack;
+        qDebug()<<"===================================================";
+        qDebug()<<"Codec(s) used:"<< mapCodecs;
+        qDebug()<<"===================================================";
+        qDebug()<<"Device(s) used:"<< mapDevices;
+        qDebug()<<"===================================================";
+
+
+
+    }
+
+  }
+ else{
+    //************************************************************************
+      //Check for video device used
+      if(mplayerOutputLine.contains("VO:",Qt::CaseInsensitive)){
+            mapDevices["video"] =parsevalue("VO",":",mplayerOutputLine) ;
+      }
+    //Check for Cache filling
+    if ( mplayerOutputLine.contains("Cache not",Qt::CaseInsensitive)){
+
+        cachefill=true;
+        qDebug()<<mplayerOutputLine;
+    }
+
+    //Mute while seeking
+    if (mplayerOutputLine.contains("Position",Qt::CaseInsensitive)){
+
+        if (!this->bmute){
+
+            if(!mutelock){
+                this->mProcess->write("mute\n");
+                mutelock=true;
+
+            }
+        }
+
+    }
+
+    //Check the state of mplayer
+    if(mplayerOutputLine.contains("A:",Qt::CaseInsensitive)){
+
+        //Playing >
+        _state=PLAYING;
+        if (!bstop)
+            emit playing();
+        _isRestarting=false;
+
+
+    }
+    else{
+
+        if( !_isRestarting){
+        //ExMplayer log
+        emit lineavailable (mplayerOutputLine);
+        }
+
+        //Paused ||
+        if(mplayerOutputLine.contains("ID_PAUSED",Qt::CaseInsensitive)){
+
+            _state=PAUSED;
+            emit paused();
+
+        }
+    }
+
+    //Get status of MPlayer parameters
+
+    //Screenshot
+    if(rx_screenshot.indexIn(mplayerOutputLine)>-1){
+           this->usercommand("osd_show_text \"Screenshot is saved as " + rx_screenshot.cap(1) + "\" 2000 1");
+    }
+
+    //Position
+    if(rx_pos.indexIn(mplayerOutputLine)>-1){
+
+        _curpos=rx_pos.cap(1).toFloat();
+        _tcurpos=QTime();
+        _tcurpos=_tcurpos.addSecs(_curpos);
+
+
+    }
+
+    //Playback speed
+    if(rx_speed.indexIn(mplayerOutputLine)>-1)
+        _currentspeed =rx_speed.cap(1);
+    else
+        _currentspeed="1.00x";
+
+    //Audio cpu usage
+    if(rx_audiocpu_usage0.indexIn(mplayerOutputLine)>-1)
+        _audio_cpu_usage= rx_audiocpu_usage0.cap(1);
+
+    if(_hasvideo){
+
+        //Audio cpu usage
+        if(rx_audiocpu_usage1.indexIn(mplayerOutputLine)>-1)
+         _audio_cpu_usage= rx_audiocpu_usage1.cap(1);
+
+        //Video cpu usage
+        if(rx_videocpu_usage.indexIn(mplayerOutputLine)>-1)
+            _video_cpu_usage=rx_videocpu_usage.cap(1);
+
+        //Frames decoded
+        if(rx_frame.indexIn(mplayerOutputLine)>-1)
+            _framecount=rx_frame.cap(1);
+
+        //A-V delay
+        if(rx_delay.indexIn(mplayerOutputLine)>-1)
+            _avdelay=rx_delay.cap(1);
+    }
+
+    //Subtitles
+    if(_started){
+
+        if(_hasvideo){
+
+            if (!_isRestarting){
+
+                if (mplayerOutputLine.contains("ID_SUBTITLE_ID")){
+
+                    if (!internalrestart){
+
+                        listSubtitleTrack<< parsevalue("ID_SUBTITLE_ID","=",mplayerOutputLine);
+                        listSubtitleTrack.removeDuplicates();
+                        // listSubtitleTrack.clear();
+                        emit foundSubtitletrack(listSubtitleTrack);
+
+                    }
+
+                    qDebug()<<"Subtitles " <<listSubtitleTrack;
+
+                }
+            }
+
+        }
+
+
+        if (!(mplayerOutputLine.contains(QLatin1String("A:"))||mplayerOutputLine.contains("V:"))){
+
+            if (this->mutelock){
+                if (!this->bmute){
+                    if(!mutelock){
+                        this->mProcess->write("mute\n");
+                        mutelock=true;
+
+                    }
+                }
+            }
+        }
+
+
+    }
+   }
+
+    if (mplayerOutputLine.contains("MPlayer crashed",Qt::CaseInsensitive))
+       { _state=CRASHED;
+        qDebug()<<"MPlayer crashed!!!";
+        }
+    if(! _isRestarting)
+   {
+    //************************************************************************
+    //SIGNAL 11
+
+    if ( mplayerOutputLine.contains("ID_SIGNAL=11",Qt::CaseInsensitive)){
+
+        //- avi Index rebuild
+        if (_filepath.contains("avi",Qt::CaseInsensitive)){
+            emit useidx();
+        }
+        else{
+            //MPlayer crashed
+            if (mplayerOutputLine.contains("MPlayer crashed",Qt::CaseInsensitive))
+               { _state=CRASHED;
+                qDebug()<<"MPlayer crashed";
+                }
+        }
+
+    }
+
+    //Handle Quit message
+
+    if ( mplayerOutputLine.contains("ID_EXIT=QUIT",Qt::CaseInsensitive))
+    {
+
+        //Stopped []
+        bstop=true;
+        _state=STOPPED;
+        bstopping=true;
+        emit stopping();
+
+        qDebug()<<"stopped......";
+    }
+
+    //Handle EOF
+    if ( mplayerOutputLine.contains("ID_EXIT=EOF",Qt::CaseInsensitive)){
+
+        if (!_hasvideo&&!_hasaudio){
+
+            _isRestarting=false;
+
+            if (_filepath.contains("mp3",Qt::CaseInsensitive)){
+
+                if (uselavf)
+                    emit removelavf();
+                else{
+                    _state=STOPPED;
+                    emit showerrortext("Oops!!!! No audio,Video.");
+                }
+            }
+            else
+                emit showerrortext("Oops!!!! No audio,Video.");
+
+        }
+        emit eof();
+        emit this->show_endmessage("End of playback(EOF)");
+
+        qDebug()<<"End of playback(EOF)";
+    }
+    }
+
 }

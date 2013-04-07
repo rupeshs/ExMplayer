@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <fontloaddialog.h>
 #include <QPointer>
+#include <myprocess.h>
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif
@@ -45,7 +46,15 @@ public:
     mplayerfe(QObject *parent = 0,QWidget* wparent=0);
    ~mplayerfe();
 
-    enum mpstate{PARSING=0,BUFFERING,PLAYING,PAUSED,STOPPED};
+    enum State{
+        CONNECTING=0,
+        RESOLVING,
+        BUFFERING,
+        PLAYING,
+        PAUSED,
+        STOPPED,
+        CRASHED
+       };
 
     QStringList idlist;
     QStringList metainfo;
@@ -55,17 +64,23 @@ public:
     QStringList argao;
     QStringList argSubOpt;
     QString mPath;
-    QProcess *mProcess;
+    MyProcess *mProcess;
     QTimer *timer;
     QString tmpstr;
     QString audioFile;
     bool bstop;
+    QString commandLine;
 
     //---------------------------------------------
     QStringList listTemp;
     QStringList listVideoTrack;
     QStringList listAudioTrack;
     QStringList listSubtitleTrack;
+
+    QMap<QString, QString> mapCodecs;
+    QMap<QString, QString> mapDevices;
+    QMap<QString, QString> mapMetaInfo;
+
     //-----------------------------------------------
     QString getAudioRate(){return _audio_rate;}
     QString getAudioNch(){return _audio_nch;}
@@ -85,6 +100,7 @@ public:
     bool hasvideo(){ return _hasvideo; }
     float  duration(){ return _duration; }
     QTime  tduration(){ return _tduration;}
+    QString getMediaTitle(){return _friendlyTitle;}
     QString currentspeed(){ return _currentspeed;}
     QString video_cpu_usage(){ return _video_cpu_usage;}
     QString audio_cpu_usage(){ return _audio_cpu_usage;}
@@ -92,9 +108,10 @@ public:
     QString avdelay(){return _avdelay;}
     float curpos(){ return _curpos; }
     QTime tcurpos(){ return _tcurpos;}
-    float metainfocount(){ return _metainfocount;}
-    mpstate state(){return _state;}
+    int metainfocount(){ return _metainfocount;}
+    State state(){return _state;}
     bool isstarted(){return _started;}
+    int getBufferFill(){return _bufferfill;}
 signals:
     void starting();
     void startingplayback();
@@ -126,7 +143,7 @@ signals:
     void showvideoui();
     void resizeVideoWindow(int wid,int height);
 public slots:
-
+    void startMplayer();
     void play(QString File,int volume);
     void pause();
     void stop();
@@ -235,6 +252,7 @@ public slots:
      void hideFontDlg(){_hideFontDlg=true;}
      void setInitSeekPos(double pos);
      QString shortPathName(QString long_path);
+     void mplayerConsole(QByteArray ba);
     //void setcrossfading(int sec,bool enable);
 
  private:
@@ -250,6 +268,7 @@ public slots:
    bool _started;
    float _duration;
    float _curpos;
+   int _bufferfill;
    float tmpcurpos;
    QTime _tduration;
    QTime _tcurpos;
@@ -263,7 +282,7 @@ public slots:
    QString _framecount;
    QString _avdelay;
    bool _isseekable;
-   mpstate _state;
+   State _state;
    long int  _videowinid;
    bool bpause;
    bool bmute;
@@ -345,9 +364,10 @@ public slots:
    bool isurl;
    bool cachefill;
    bool isnet;
-   QPointer<fontLoadDialog> fldDlg;
+   QString _friendlyTitle;
    bool _hideFontDlg;
    bool _bgotdimension;
+   QPointer<fontLoadDialog> fldDlg;
    void removeOption(QString option,bool addseek);
    QString colorToRGB(unsigned int color) ;
 

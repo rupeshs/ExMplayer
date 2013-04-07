@@ -21,7 +21,7 @@
 #include <QStyleOption>
 #include <QRubberBand>
 #include <QMutex>
-#include <qDebug>
+#include <qdebug.h>
 rphLabelEx::rphLabelEx(QWidget  *parent) :
         QLabel(parent)
 {
@@ -107,7 +107,7 @@ void rphLabelEx::paintEvent ( QPaintEvent * event )
 
     if (_showeof)
     {painter.setPen(Qt::white);
-     painter.setFont(QFont("Arial", 18));
+     painter.setFont(QFont("Arial", 16));
      painter.drawText(rect(), Qt::AlignCenter, "End of playback");
 
  }

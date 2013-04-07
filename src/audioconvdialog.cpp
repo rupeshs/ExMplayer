@@ -18,7 +18,7 @@
 
 #include "audioconvdialog.h"
 #include "ui_audioconvdialog.h"
-#include "QFileDialog.h"
+#include <QFileDialog>
 #include "filefilters.h"
 #include "rphfile.h"
 #include <QDesktopServices>

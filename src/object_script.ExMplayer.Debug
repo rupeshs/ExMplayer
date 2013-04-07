@@ -1,6 +1,4 @@
 INPUT(
-./debug\qtsingleapplication.o
-./debug\qtlocalpeer.o
 ./debug\main.o
 ./debug\playerwindow.o
 ./debug\mplayerfe.o
@@ -19,7 +17,6 @@ INPUT(
 ./debug\audioextdialog.o
 ./debug\shortcutgetter.o
 ./debug\midialog.o
-./debug\screensaver.o
 ./debug\assstyles.o
 ./debug\colorutils.o
 ./debug\aboutdialog.o
@@ -38,8 +35,10 @@ INPUT(
 ./debug\myprocess.o
 ./debug\glassstyle.o
 ./debug\fontloaddialog.o
-./debug\moc_qtsingleapplication.o
-./debug\moc_qtlocalpeer.o
+./debug\advancedinfodialog.o
+./debug\qtsingleapplication.o
+./debug\qtlocalpeer.o
+./debug\screensaver.o
 ./debug\moc_playerwindow.o
 ./debug\moc_mplayerfe.o
 ./debug\moc_rphlabelex.o
@@ -53,6 +52,7 @@ INPUT(
 ./debug\moc_urldialog.o
 ./debug\moc_QRecentFilesMenu.o
 ./debug\moc_audioextdialog.o
+./debug\moc_shortcutgetter.o
 ./debug\moc_midialog.o
 ./debug\moc_aboutdialog.o
 ./debug\moc_helpdialog.o
@@ -61,7 +61,11 @@ INPUT(
 ./debug\moc_mixdialog.o
 ./debug\moc_audioconvdialog.o
 ./debug\moc_seekview.o
+./debug\moc_myprocess.o
 ./debug\moc_glassstyle.o
 ./debug\moc_fontloaddialog.o
+./debug\moc_advancedinfodialog.o
+./debug\moc_qtsingleapplication.o
+./debug\moc_qtlocalpeer.o
 ./debug\qrc_ExMplayer.o
 );

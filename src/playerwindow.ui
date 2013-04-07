@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>450</width>
-    <height>145</height>
+    <height>150</height>
    </size>
   </property>
   <property name="mouseTracking">
@@ -2547,6 +2547,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="action_Media_Info"/>
     <addaction name="actionSmallmode"/>
+    <addaction name="actionAdvanced_Info"/>
    </widget>
    <addaction name="menu_Open"/>
    <addaction name="menuPlay"/>
@@ -4196,6 +4197,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionInternet_Radio">
    <property name="text">
     <string>Internet Radio</string>
+   </property>
+  </action>
+  <action name="actionAdvanced_Info">
+   <property name="text">
+    <string>Advanced Info</string>
    </property>
   </action>
  </widget>

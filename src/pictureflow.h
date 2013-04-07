@@ -28,7 +28,7 @@
 #define PICTUREFLOW_H
 
 #include <qwidget.h>
-#include <QLabel.h>
+#include <QLabel>
 #include <QPoint>
 #include <QProcess>
 #include <QPushButton>

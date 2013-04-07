@@ -27,14 +27,17 @@
 #include "equalizertypes.h"
 #include "playlist.h"
 #include "pictureflow.h"
-
 #include <QCompleter>
 #include "QProgressIndicator.h"
 #include "preferencedialog.h"
 #include "urldialog.h"
 #include "QRecentFilesMenu.h"
 #include "midialog.h"
+#if defined(Q_OS_WIN) || defined(Q_OS_OS2)
+#ifdef Q_OS_WIN
 #include "screensaver.h"
+#endif
+#endif
 #include "aboutdialog.h"
 #include "cutterdialog.h"
 #include "norwegianwoodstyle.h"
@@ -53,10 +56,15 @@
 #include "glassstyle.h"
 #include "radiodialog.h"
 #include "seekview.h"
+#include "rphslider.h"
+#include <QResizeEvent>
+#include "advancedinfodialog.h"
 
+#define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
+#define FULLSCREENCTRLHEIGHT  70
 
 namespace Ui {
-    class PlayerWindow;
+class PlayerWindow;
 }
 
 class PlayerWindow : public QMainWindow {
@@ -99,7 +107,9 @@ private:
     //QPointer<ripDialog> auripdlg;
     //QPointer<seekview> mpseekview;
     //QPixmap *pixCover;
+#ifdef Q_OS_WIN
     WinScreenSaver* winscreensaver;
+#endif
     QLabel *labstr;
     QLabel *testlab;
     QPointer<QLabel> lab;
@@ -186,8 +196,20 @@ private:
     QString albumtext;
     QString yeartext;
     QLabel *labanim;
-     SeekView *mpseekView;
-     double currentFilePos;
+    SeekView *mpseekView;
+    double currentFilePos;
+
+    QPointer<QToolBar>fullScreenControls;
+    long leftSide;
+    long fullScreenControlWidth;
+    QAction *toolButtonForwardAction;
+    QPointer<QLCDNumber> lcdCurPosFullSc;
+    QPointer<QLCDNumber> lcdDurationFullSc;
+    QPointer<rphSlider> sliderSeekFullSc;
+    QPointer<rphSlider> sliderVolumeFullSc;
+
+    QPointer<AdvancedInfoDialog> advInfoDlg;
+
 
 signals:
     void sgcrossfade();
@@ -410,7 +432,7 @@ private slots:
     void showMsgBox(QString msg);
     QString getFilter();
     void showPictureFlow(QString path);
-    void resizeVideo(int w,int hei);  
+    void resizeVideo(int w,int hei);
     void useidxnplay();
     QString  getaudioFilter();
     void showctxmenu(QContextMenuEvent *event);
@@ -418,7 +440,7 @@ private slots:
     void showpg();
     void showerror(QString tex);
     void playlistVisibility(bool vis);
-    void startingPlaybackframe();    
+    void startingPlaybackframe();
     void  startProgressiveStreaming();
     void wgetDownload();
     void streamingDuration(float dur);
@@ -432,9 +454,10 @@ private slots:
     void ShowStop();
     void image2Pixmap(QImage &img,QPixmap &pixmap);
     void mousePressEvent(QMouseEvent *event);
-
-
     void on_toolButtonFblike_clicked();
+    void on_sliderSeekFullSc_actionTriggered(int action);
+    void resizeEvent ( QResizeEvent * event );
+    void on_actionAdvanced_Info_triggered();
 };
 
 #endif // PLAYERWINDOW_H

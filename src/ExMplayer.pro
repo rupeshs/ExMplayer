@@ -6,10 +6,6 @@ QT       += network xml
 TARGET    = ExMplayer
 TEMPLATE  = app
 
-INCLUDEPATH += qtsingleapplication
-DEPENDPATH += qtsingleapplication
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
-HEADERS += qtsingleapplication.h qtlocalpeer.h
 
 SOURCES += main.cpp \
     playerwindow.cpp \
@@ -29,7 +25,6 @@ SOURCES += main.cpp \
     audioextdialog.cpp \
     shortcutgetter.cpp \
     midialog.cpp \
-    screensaver.cpp \
     assstyles.cpp \
     colorutils.cpp \
     aboutdialog.cpp \
@@ -47,7 +42,8 @@ SOURCES += main.cpp \
     seekview.cpp \
     myprocess.cpp \
     glassstyle.cpp \
-    fontloaddialog.cpp
+    fontloaddialog.cpp\
+    advancedinfodialog.cpp
 HEADERS += playerwindow.h \
     mplayerfe.h \
     rphlabelex.h \
@@ -66,7 +62,6 @@ HEADERS += playerwindow.h \
     audioextdialog.h \
     shortcutgetter.h \
     midialog.h \
-    screensaver.h \
     colorutils.h \
     assstyles.h \
     aboutdialog.h \
@@ -84,7 +79,8 @@ HEADERS += playerwindow.h \
     seekview.h \
     myprocess.h \
     glassstyle.h \
-    fontloaddialog.h
+    fontloaddialog.h\
+    advancedinfodialog.h
 FORMS += playerwindow.ui \
     preferencedialog.ui \
     winampdspdialog.ui \
@@ -97,12 +93,27 @@ FORMS += playerwindow.ui \
     mixdialog.ui \
     audioconvdialog.ui \
     seekview.ui \
-    fontloaddialog.ui
+    fontloaddialog.ui \
+    advancedinfodialog.ui
+
+INCLUDEPATH += qtsingleapplication
+DEPENDPATH += qtsingleapplication
+SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
+HEADERS += qtsingleapplication.h qtlocalpeer.h
+
+
+
+win32 {
+
 INCLUDEPATH += directx
+
+HEADERS += screensaver.h
+SOURCES += screensaver.cpp
 LIBS += -ldsound \
     -lddraw
 contains(TEMPLATE,vcapp):LIBS += ole32.lib \
     user32.lib
 else:LIBS += libole32
+}
 RESOURCES += ExMplayer.qrc
 RC_FILE = ExMplayer.rc

@@ -18,23 +18,24 @@
 
 #ifndef GLASSSTYLE_H
 #define GLASSSTYLE_H
-#include <QWindowsXPStyle>
+#include <QProxyStyle>
+#include <qdebug.h>
 
-
-class glassStyle : public  QWindowsXPStyle
+class GlassStyle : public  QProxyStyle
  {
      Q_OBJECT
  private:
 
  public:
-    glassStyle();
-    ~glassStyle() {}
+     GlassStyle();
+    ~GlassStyle() {}
 
 
      // toolbar, tab, toolbox
      QColor m_colorBarBegin;
      QColor m_colorBarMiddle;
      QColor m_colorBarEnd;
+
      // toolbar shadow, tab, toolbox tab
      QColor m_colorBorder;
      QColor m_colorBorderLight;

@@ -15,13 +15,21 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#define DIRECTSOUND_VERSION 5
+
 #include "preferencedialog.h"
 #include "ui_preferencedialog.h"
 
-#include <dsound.h>
 
+#if defined(Q_OS_WIN) || defined(Q_OS_OS2)
+#ifdef Q_OS_WIN
+#define DIRECTSOUND_VERSION 5
+#include <dsound.h>
 #include <windows.h>
+
+#endif
+#endif
+
+
 #include <QDebug>
 #include <QXmlStreamWriter>
 #include <QFile>
@@ -36,8 +44,9 @@
 
 int sound_devices;
 
-QStringList AudioDriverLst;
 
+QStringList AudioDriverLst;
+#ifdef Q_OS_WIN
 BOOL CALLBACK DirectSoundEnum(LPGUID guid, LPCSTR desc, LPCSTR module, LPVOID context)
 {       QString s;
         s= desc;
@@ -46,6 +55,7 @@ BOOL CALLBACK DirectSoundEnum(LPGUID guid, LPCSTR desc, LPCSTR module, LPVOID co
 
         return TRUE;
 }
+#endif
 preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
     QDialog(parent),
     ui(new Ui::preferenceDialog)
@@ -56,17 +66,25 @@ preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
     resetsc=false;
 
     ui->setupUi(this);
-     ui-> groupBox_17->setVisible(false);
+    ui-> groupBox_17->setVisible(false);
+#ifdef Q_OS_WIN
     if (DirectSoundEnumerateA(DirectSoundEnum, NULL) != DS_OK){
-           qDebug( "Error: can't list the audio devices\n");
+        qDebug( "Error: can't list the audio devices\n");
 
 
     }
-for (int i=0;i<AudioDriverLst.count();i++)
- {
-    ui->cmbAO->addItem(AudioDriverLst.at(i));
 
- }
+    for (int i=0;i<AudioDriverLst.count();i++)
+    {
+        ui->cmbAO->addItem(AudioDriverLst.at(i));
+
+    }
+
+#endif
+#ifdef Q_OS_LINUX
+    ui->comboBox->setEnabled(false);
+#endif
+
 ui->stackedWidget->setCurrentIndex(0);
 on_listWidget_currentRowChanged(0);
 
