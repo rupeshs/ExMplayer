@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'playerwindow.ui'
 **
-** Created: Thu Apr 4 23:45:13 2013
+** Created: Sun Apr 7 08:44:28 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -343,7 +343,7 @@ public:
         if (PlayerWindow->objectName().isEmpty())
             PlayerWindow->setObjectName(QString::fromUtf8("PlayerWindow"));
         PlayerWindow->resize(824, 693);
-        PlayerWindow->setMinimumSize(QSize(450, 145));
+        PlayerWindow->setMinimumSize(QSize(450, 150));
         PlayerWindow->setMouseTracking(true);
         PlayerWindow->setFocusPolicy(Qt::StrongFocus);
         PlayerWindow->setAcceptDrops(true);

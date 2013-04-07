@@ -1043,8 +1043,14 @@ void PlayerWindow::startingPlayback()
         }
         if( !mp->hasvideo()&&mp->hasaudio()){
             if (this->width()>450 ||this->height()>145)
-            {this->resize(450,145);
+               {
+                this->resize(450,145);
+                qDebug()<<"Offset height -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
+                 this->resize(450,this->height()+(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y());
+                qDebug()<<"Adjusted offset -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
+
             }
+
             //#ifdef Q_OS_WIN
             //this->resize(450,145);
             ui->actionAudioDisable->setEnabled(false);
@@ -2390,18 +2396,18 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
         xpos=e->x();
 
         if(e->y()<(desktop->height() - fullScreenControls->height()))
-          {
+        {
             if (!hidetimer->isActive())
                 hidetimer->start();
 
             this->unsetCursor();
             fullScreenControls->hide();
-         }
+        }
         else
         {
 
             this->unsetCursor();
-fullScreenControls->show();
+            fullScreenControls->show();
 
             /*if (fullScreenControls->y()==desktop->screen()->height()){
                 QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
@@ -2448,10 +2454,10 @@ void PlayerWindow::hidestatus()
     if (ypos<desktop->height() - fullScreenControls->height())
     {
         //ui->toolBarSeekBar->hide();
-      //  ui->toolBarSeek->hide();
-       // ui->toolBarStatus->hide();
+        //  ui->toolBarSeek->hide();
+        // ui->toolBarStatus->hide();
         //ui->statusBar->hide();
-       /* QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
+        /* QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
         animation->setDuration(300);
         animation->setStartValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
         animation->setEndValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
@@ -2817,7 +2823,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             //lab->move(pt->x()+30,ui->statusBar->y()-30);
             lab->setLineWidth(2);
             //lab->setFrameShadow(QFrame::Raised);
-            lab->show();
+           // lab->show();
         }
     }
 
@@ -3351,18 +3357,18 @@ void PlayerWindow::on_action_Save_as_playlist_triggered()
 }
 void PlayerWindow::toggleFullscreen()
 {
-    //qDebug()<<"toggle"<<mp->isfullscreen();
-    this->isFullScreen();
-    if(this->isFullScreen())
-    {if (mp)
-        {if (mp->hasvideo())
-            {
-                mp->usercommand("osd_show_text \"\" 1 1");
 
-            }
+    this->isFullScreen();
+
+    if(this->isFullScreen()){
+        if (mp){
+            if (mp->hasvideo())
+                mp->usercommand("osd_show_text \"\" 1 1");
         }
+
         if (!ui->actionStay_on_top->isChecked())
             this->setWindowFlags(!Qt::WindowStaysOnTopHint);
+
         ui->actionFullscreen->setIcon(QIcon(":/images/fullscreen.png"));
         ui->actionFullscreen->setToolTip("Show fullscreen");
         isfullscreen=false;
@@ -3374,10 +3380,6 @@ void PlayerWindow::toggleFullscreen()
         ui->toolBarSeekBar->show();
         ui->statusBar->show();
         this->unsetCursor();
-
-
-
-        //ui->toolButtonfs->hide();
 
         if (bfilvis)
             ui->dock_Filter->show();
@@ -3473,9 +3475,6 @@ void PlayerWindow::toggleFullscreen()
             sliderSeekFullSc->setValue(ui->sliderSeek->value());
             sliderVolumeFullSc->setValue(ui->sliderVolume->value());
 
-
-
-
             QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
             animation->setDuration(60);
             animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
@@ -3483,18 +3482,13 @@ void PlayerWindow::toggleFullscreen()
             animation->start();
         }
 
-
-
-
         ui->toolBarSeek->hide();
         ui->menuBar->hide();
         ui->toolBarStatus->hide();
         ui->toolBarSeekBar->hide();
         ui->statusBar->hide();
-        //splash.setWindowFlags(Qt::WindowStaysOnTopHint);
-
-        //this->resize(desktop->width(),desktop->height());
         this->showFullScreen();
+
         ui->actionFullscreen->setIcon(QIcon(":/images/fullscreen_exit.png"));
         ui->actionFullscreen->setToolTip("Exit fullscreen");
         if (mp)
@@ -4641,5 +4635,23 @@ void PlayerWindow::on_sliderSeekFullSc_actionTriggered(int action)
     this->playerTimer->stop();
     mp->goturl(sliderSeekFullSc->value());
     this->playerTimer->start();
+
+}
+void PlayerWindow::resizeEvent ( QResizeEvent * event )
+{
+    if (ui->menuBar->height()==ui->toolBarSeekBar->y()){
+        if(mp){
+            if(mp->hasaudio()&&!mp->hasvideo()){
+              setMinimumSize(450,this->height());
+              qDebug()<<"resize to 450"<<this->height();
+            }
+            else
+            {
+                setMinimumSize(450,this->height());
+            }
+        }
+    }
+
+
 
 }

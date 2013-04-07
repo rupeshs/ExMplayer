@@ -58,6 +58,7 @@
 #include "radiodialog.h"
 #include "seekview.h"
 #include "rphslider.h"
+#include <QResizeEvent>
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -452,11 +453,9 @@ private slots:
     void ShowStop();
     void image2Pixmap(QImage &img,QPixmap &pixmap);
     void mousePressEvent(QMouseEvent *event);
-
-
     void on_toolButtonFblike_clicked();
-
     void on_sliderSeekFullSc_actionTriggered(int action);
+    void resizeEvent ( QResizeEvent * event );
 };
 
 #endif // PLAYERWINDOW_H
