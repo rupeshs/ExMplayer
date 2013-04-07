@@ -6,12 +6,6 @@ QT       += network xml
 TARGET    = ExMplayer
 TEMPLATE  = app
 
-INCLUDEPATH += qtsingleapplication
-DEPENDPATH += qtsingleapplication
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp \
-    advancedinfodialog.cpp
-HEADERS += qtsingleapplication.h qtlocalpeer.h \
-    advancedinfodialog.h
 
 SOURCES += main.cpp \
     playerwindow.cpp \
@@ -48,7 +42,8 @@ SOURCES += main.cpp \
     seekview.cpp \
     myprocess.cpp \
     glassstyle.cpp \
-    fontloaddialog.cpp
+    fontloaddialog.cpp\
+    advancedinfodialog.cpp
 HEADERS += playerwindow.h \
     mplayerfe.h \
     rphlabelex.h \
@@ -84,7 +79,8 @@ HEADERS += playerwindow.h \
     seekview.h \
     myprocess.h \
     glassstyle.h \
-    fontloaddialog.h
+    fontloaddialog.h\
+    advancedinfodialog.h
 FORMS += playerwindow.ui \
     preferencedialog.ui \
     winampdspdialog.ui \
@@ -99,6 +95,14 @@ FORMS += playerwindow.ui \
     seekview.ui \
     fontloaddialog.ui \
     advancedinfodialog.ui
+
+INCLUDEPATH += qtsingleapplication
+DEPENDPATH += qtsingleapplication
+SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
+HEADERS += qtsingleapplication.h qtlocalpeer.h
+
+
+
 win32 {
 
 INCLUDEPATH += directx

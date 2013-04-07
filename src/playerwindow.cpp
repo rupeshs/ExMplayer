@@ -18,6 +18,7 @@
 
 #include "playerwindow.h"
 #include "ui_playerwindow.h"
+
 #include <QDesktopWidget>
 
 QDesktopWidget *desktop;
@@ -4654,4 +4655,11 @@ void PlayerWindow::resizeEvent ( QResizeEvent * event )
 
 
 
+}
+
+void PlayerWindow::on_actionAdvanced_Info_triggered()
+{
+   advInfoDlg=new AdvancedInfoDialog(this);
+   advInfoDlg->setMPlayer(mp);
+   advInfoDlg->show();
 }

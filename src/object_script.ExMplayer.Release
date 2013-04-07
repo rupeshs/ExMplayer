@@ -1,6 +1,4 @@
 INPUT(
-./release\qtsingleapplication.o
-./release\qtlocalpeer.o
 ./release\main.o
 ./release\playerwindow.o
 ./release\mplayerfe.o
@@ -19,7 +17,6 @@ INPUT(
 ./release\audioextdialog.o
 ./release\shortcutgetter.o
 ./release\midialog.o
-./release\screensaver.o
 ./release\assstyles.o
 ./release\colorutils.o
 ./release\aboutdialog.o
@@ -38,8 +35,10 @@ INPUT(
 ./release\myprocess.o
 ./release\glassstyle.o
 ./release\fontloaddialog.o
-./release\moc_qtsingleapplication.o
-./release\moc_qtlocalpeer.o
+./release\advancedinfodialog.o
+./release\qtsingleapplication.o
+./release\qtlocalpeer.o
+./release\screensaver.o
 ./release\moc_playerwindow.o
 ./release\moc_mplayerfe.o
 ./release\moc_rphlabelex.o
@@ -53,6 +52,7 @@ INPUT(
 ./release\moc_urldialog.o
 ./release\moc_QRecentFilesMenu.o
 ./release\moc_audioextdialog.o
+./release\moc_shortcutgetter.o
 ./release\moc_midialog.o
 ./release\moc_aboutdialog.o
 ./release\moc_helpdialog.o
@@ -61,7 +61,11 @@ INPUT(
 ./release\moc_mixdialog.o
 ./release\moc_audioconvdialog.o
 ./release\moc_seekview.o
+./release\moc_myprocess.o
 ./release\moc_glassstyle.o
 ./release\moc_fontloaddialog.o
+./release\moc_advancedinfodialog.o
+./release\moc_qtsingleapplication.o
+./release\moc_qtlocalpeer.o
 ./release\qrc_ExMplayer.o
 );

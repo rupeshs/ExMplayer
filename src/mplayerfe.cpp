@@ -107,7 +107,9 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     ckey=colorToRGB(5);
 
     keepaspect=true;
+
     _priority="abovenormal";
+
     foundsub =false;
     init();
     _silent=true;
@@ -148,7 +150,12 @@ void mplayerfe::play(QString File,int volume)
 
     //FrontEnd options
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#ifdef Q_OS_WIN
     argfrontEnd<<"-slave"<<"-identify"<<"-noquiet"<<"-priority"<<_priority;
+#endif
+#ifdef Q_OS_LINUX
+    argfrontEnd<<"-slave"<<"-identify"<<"-noquiet";
+# endif
 
     //Mp3 file smooth seeking
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

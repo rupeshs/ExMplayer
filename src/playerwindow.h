@@ -27,7 +27,6 @@
 #include "equalizertypes.h"
 #include "playlist.h"
 #include "pictureflow.h"
-
 #include <QCompleter>
 #include "QProgressIndicator.h"
 #include "preferencedialog.h"
@@ -59,6 +58,7 @@
 #include "seekview.h"
 #include "rphslider.h"
 #include <QResizeEvent>
+#include "advancedinfodialog.h"
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -198,16 +198,17 @@ private:
     QLabel *labanim;
     SeekView *mpseekView;
     double currentFilePos;
+
     QPointer<QToolBar>fullScreenControls;
-
     long leftSide;
-
     long fullScreenControlWidth;
     QAction *toolButtonForwardAction;
     QPointer<QLCDNumber> lcdCurPosFullSc;
     QPointer<QLCDNumber> lcdDurationFullSc;
     QPointer<rphSlider> sliderSeekFullSc;
     QPointer<rphSlider> sliderVolumeFullSc;
+
+    QPointer<AdvancedInfoDialog> advInfoDlg;
 
 
 signals:
@@ -456,6 +457,7 @@ private slots:
     void on_toolButtonFblike_clicked();
     void on_sliderSeekFullSc_actionTriggered(int action);
     void resizeEvent ( QResizeEvent * event );
+    void on_actionAdvanced_Info_triggered();
 };
 
 #endif // PLAYERWINDOW_H

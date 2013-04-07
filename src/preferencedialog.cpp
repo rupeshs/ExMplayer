@@ -79,7 +79,12 @@ preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
         ui->cmbAO->addItem(AudioDriverLst.at(i));
 
     }
+
 #endif
+#ifdef Q_OS_LINUX
+    ui->comboBox->setEnabled(false);
+#endif
+
 ui->stackedWidget->setCurrentIndex(0);
 on_listWidget_currentRowChanged(0);
 
