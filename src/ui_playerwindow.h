@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'playerwindow.ui'
 **
-** Created: Sun Mar 31 23:00:55 2013
+** Created: Sun Apr 7 17:28:37 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -199,6 +199,7 @@ public:
     QAction *actionSmallmode;
     QAction *actionCopy_Audio_CD;
     QAction *actionInternet_Radio;
+    QAction *actionAdvanced_Info;
     QWidget *centralWidget;
     QLCDNumber *lcdCurPos;
     QLCDNumber *lcdDuration;
@@ -343,7 +344,7 @@ public:
         if (PlayerWindow->objectName().isEmpty())
             PlayerWindow->setObjectName(QString::fromUtf8("PlayerWindow"));
         PlayerWindow->resize(824, 693);
-        PlayerWindow->setMinimumSize(QSize(450, 145));
+        PlayerWindow->setMinimumSize(QSize(450, 150));
         PlayerWindow->setMouseTracking(true);
         PlayerWindow->setFocusPolicy(Qt::StrongFocus);
         PlayerWindow->setAcceptDrops(true);
@@ -875,6 +876,8 @@ public:
         actionCopy_Audio_CD->setObjectName(QString::fromUtf8("actionCopy_Audio_CD"));
         actionInternet_Radio = new QAction(PlayerWindow);
         actionInternet_Radio->setObjectName(QString::fromUtf8("actionInternet_Radio"));
+        actionAdvanced_Info = new QAction(PlayerWindow);
+        actionAdvanced_Info->setObjectName(QString::fromUtf8("actionAdvanced_Info"));
         centralWidget = new QWidget(PlayerWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         centralWidget->setMouseTracking(true);
@@ -2048,6 +2051,7 @@ public:
         menu_Tools->addAction(actionCopy_Audio_CD);
         menu_View->addAction(action_Media_Info);
         menu_View->addAction(actionSmallmode);
+        menu_View->addAction(actionAdvanced_Info);
 
         retranslateUi(PlayerWindow);
         QObject::connect(eq0, SIGNAL(valueChanged(int)), label_11, SLOT(setNum(int)));
@@ -2307,6 +2311,7 @@ public:
         actionSmallmode->setText(QApplication::translate("PlayerWindow", "Small Mode", 0, QApplication::UnicodeUTF8));
         actionCopy_Audio_CD->setText(QApplication::translate("PlayerWindow", "Copy Audio CD", 0, QApplication::UnicodeUTF8));
         actionInternet_Radio->setText(QApplication::translate("PlayerWindow", "Internet Radio", 0, QApplication::UnicodeUTF8));
+        actionAdvanced_Info->setText(QApplication::translate("PlayerWindow", "Advanced Info", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         lcdCurPos->setToolTip(QApplication::translate("PlayerWindow", "Current position ", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
