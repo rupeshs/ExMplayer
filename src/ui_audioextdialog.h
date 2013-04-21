@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'audioextdialog.ui'
 **
-** Created: Sun Mar 31 23:00:55 2013
+** Created: Sun Apr 21 22:20:17 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -18,6 +18,7 @@
 #include <QtGui/QFormLayout>
 #include <QtGui/QGridLayout>
 #include <QtGui/QGroupBox>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
@@ -31,8 +32,9 @@ class Ui_audioextDialog
 {
 public:
     QGroupBox *groupBox;
-    QLineEdit *lineEdit;
+    QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
+    QLineEdit *lineEdit;
     QPushButton *pex;
     QWidget *layoutWidget;
     QFormLayout *formLayout;
@@ -48,27 +50,35 @@ public:
     {
         if (audioextDialog->objectName().isEmpty())
             audioextDialog->setObjectName(QString::fromUtf8("audioextDialog"));
-        audioextDialog->resize(503, 113);
-        audioextDialog->setMinimumSize(QSize(503, 113));
-        audioextDialog->setMaximumSize(QSize(503, 113));
+        audioextDialog->resize(550, 113);
+        audioextDialog->setMinimumSize(QSize(550, 113));
+        audioextDialog->setMaximumSize(QSize(550, 113));
         audioextDialog->setFocusPolicy(Qt::StrongFocus);
         audioextDialog->setAcceptDrops(true);
         groupBox = new QGroupBox(audioextDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(0, 10, 491, 51));
-        lineEdit = new QLineEdit(groupBox);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(130, 20, 251, 20));
-        lineEdit->setReadOnly(true);
+        groupBox->setGeometry(QRect(10, 10, 521, 63));
+        horizontalLayout = new QHBoxLayout(groupBox);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         pushButton = new QPushButton(groupBox);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(10, 20, 101, 23));
+
+        horizontalLayout->addWidget(pushButton);
+
+        lineEdit = new QLineEdit(groupBox);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setReadOnly(true);
+
+        horizontalLayout->addWidget(lineEdit);
+
         pex = new QPushButton(groupBox);
         pex->setObjectName(QString::fromUtf8("pex"));
-        pex->setGeometry(QRect(400, 20, 75, 23));
+
+        horizontalLayout->addWidget(pex);
+
         layoutWidget = new QWidget(audioextDialog);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 80, 151, 16));
+        layoutWidget->setGeometry(QRect(10, 80, 151, 19));
         formLayout = new QFormLayout(layoutWidget);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
@@ -85,7 +95,7 @@ public:
 
         layoutWidget_2 = new QWidget(audioextDialog);
         layoutWidget_2->setObjectName(QString::fromUtf8("layoutWidget_2"));
-        layoutWidget_2->setGeometry(QRect(220, 80, 272, 26));
+        layoutWidget_2->setGeometry(QRect(220, 80, 318, 29));
         gridLayout = new QGridLayout(layoutWidget_2);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);

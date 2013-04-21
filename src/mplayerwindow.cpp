@@ -67,16 +67,17 @@ Screen::~Screen() {
 
 void Screen::paintEvent( QPaintEvent * e ) {
 
+    //e->ignore();
 	//qDebug("Screen::paintEvent");
+          QPainter painter(this);
+   painter.eraseRect( e->rect() );
 
-        QPainter painter(this);
-
-        painter.setRenderHints(QPainter::NonCosmeticDefaultPen|QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform);
-
-
-        painter.eraseRect( e->rect() );
-
+    painter.setRenderHints(QPainter::NonCosmeticDefaultPen|QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform);
 rphLabelEx::paintEvent(e);
+//
+
+
+
 
         //painter.fillRect( e->rect(), QColor(255,0,0) );
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'cutterdialog.ui'
 **
-** Created: Sun Mar 31 23:00:55 2013
+** Created: Sun Apr 21 22:16:26 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -65,16 +65,16 @@ public:
     {
         if (cutterDialog->objectName().isEmpty())
             cutterDialog->setObjectName(QString::fromUtf8("cutterDialog"));
-        cutterDialog->resize(550, 194);
-        cutterDialog->setMinimumSize(QSize(550, 194));
-        cutterDialog->setMaximumSize(QSize(550, 194));
+        cutterDialog->resize(600, 194);
+        cutterDialog->setMinimumSize(QSize(600, 194));
+        cutterDialog->setMaximumSize(QSize(600, 194));
         label = new QLabel(cutterDialog);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(10, 10, 51, 71));
         label->setPixmap(QPixmap(QString::fromUtf8(":/images/mediacutter.png")));
         layoutWidget = new QWidget(cutterDialog);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(70, 20, 271, 85));
+        layoutWidget->setGeometry(QRect(70, 20, 271, 95));
         gridLayout = new QGridLayout(layoutWidget);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
@@ -136,12 +136,13 @@ public:
 
         layoutWidget1 = new QWidget(cutterDialog);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(20, 130, 334, 26));
+        layoutWidget1->setGeometry(QRect(20, 140, 399, 29));
         horizontalLayout = new QHBoxLayout(layoutWidget1);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         pushButtonof = new QPushButton(layoutWidget1);
         pushButtonof->setObjectName(QString::fromUtf8("pushButtonof"));
+        pushButtonof->setMinimumSize(QSize(124, 0));
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/images/fileopen.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButtonof->setIcon(icon2);
@@ -169,7 +170,7 @@ public:
 
         layoutWidget2 = new QWidget(cutterDialog);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(10, 170, 211, 16));
+        layoutWidget2->setGeometry(QRect(10, 170, 211, 19));
         formLayout = new QFormLayout(layoutWidget2);
         formLayout->setObjectName(QString::fromUtf8("formLayout"));
         formLayout->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
@@ -191,14 +192,14 @@ public:
         progressBar->setTextVisible(false);
         groupBox = new QGroupBox(cutterDialog);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(350, 10, 191, 151));
+        groupBox->setGeometry(QRect(350, 0, 191, 151));
         vid = new QLabel(groupBox);
         vid->setObjectName(QString::fromUtf8("vid"));
-        vid->setGeometry(QRect(10, 20, 171, 91));
+        vid->setGeometry(QRect(20, 20, 171, 91));
         vid->setStyleSheet(QString::fromUtf8("background-color: rgb(1, 0, 0);"));
         seek = new rphSlider(groupBox);
         seek->setObjectName(QString::fromUtf8("seek"));
-        seek->setGeometry(QRect(20, 120, 121, 16));
+        seek->setGeometry(QRect(20, 115, 121, 21));
         seek->setOrientation(Qt::Horizontal);
         toolButtonStop = new QToolButton(groupBox);
         toolButtonStop->setObjectName(QString::fromUtf8("toolButtonStop"));

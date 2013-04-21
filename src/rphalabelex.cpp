@@ -92,9 +92,10 @@ void rphLabelEx::mouseReleaseEvent(QMouseEvent *event)
 void rphLabelEx::paintEvent ( QPaintEvent * event )
 {
 
-    QLabel::paintEvent(event);
+  QLabel::paintEvent(event);
 
-    QPainter painter(this);
+   QPainter painter(this);
+
     painter.setRenderHints(QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform);
     painter.setPen(Qt::blue);
     painter.setFont(QFont( painter.font().family(), _fontsize));
@@ -106,13 +107,15 @@ void rphLabelEx::paintEvent ( QPaintEvent * event )
    }
 
     if (_showeof)
-    {painter.setPen(Qt::white);
+    {
+        painter.setPen(Qt::white);
      painter.setFont(QFont("Arial", 16));
      painter.drawText(rect(), Qt::AlignCenter, "End of playback");
 
  }
     if (!_errtext.isEmpty())
-    {painter.setPen(Qt::red);
+    {
+        painter.setPen(Qt::red);
      painter.setFont(QFont("Arial", 15));
      painter.drawText(rect(), Qt::AlignCenter, _errtext);
 

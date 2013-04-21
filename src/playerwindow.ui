@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>824</width>
-    <height>693</height>
+    <width>879</width>
+    <height>689</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -516,10 +516,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>0</y>
-      <width>191</width>
-      <height>31</height>
+      <x>-40</x>
+      <y>140</y>
+      <width>601</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="mouseTracking">
@@ -572,8 +572,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>421</width>
-        <height>171</height>
+        <width>451</width>
+        <height>191</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -582,9 +582,9 @@ p, li { white-space: pre-wrap; }
       <widget class="QWidget" name="gridLayoutWidget">
        <property name="geometry">
         <rect>
-         <x>20</x>
+         <x>30</x>
          <y>20</y>
-         <width>291</width>
+         <width>331</width>
          <height>121</height>
         </rect>
        </property>
@@ -613,25 +613,6 @@ p, li { white-space: pre-wrap; }
         </item>
         <item row="1" column="0">
          <widget class="rphSlider" name="contrast">
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="minimum">
-           <number>-100</number>
-          </property>
-          <property name="maximum">
-           <number>100</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="tickPosition">
-           <enum>QSlider::TicksBelow</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="rphSlider" name="brightness">
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -782,119 +763,120 @@ p, li { white-space: pre-wrap; }
           </property>
          </widget>
         </item>
+        <item row="1" column="1">
+         <widget class="rphSlider" name="brightness">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="minimum">
+           <number>-100</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="tickPosition">
+           <enum>QSlider::TicksBelow</enum>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
-      <widget class="QLabel" name="label">
+      <widget class="QWidget" name="layoutWidget">
        <property name="geometry">
         <rect>
-         <x>30</x>
+         <x>40</x>
          <y>140</y>
-         <width>42</width>
-         <height>13</height>
+         <width>308</width>
+         <height>19</height>
         </rect>
        </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="text">
-        <string>Contrast</string>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_2">
-       <property name="geometry">
-        <rect>
-         <x>90</x>
-         <y>140</y>
-         <width>50</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
-       </property>
-       <property name="text">
-        <string>Brightness</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_6">
-       <property name="geometry">
-        <rect>
-         <x>150</x>
-         <y>140</y>
-         <width>21</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
-       </property>
-       <property name="text">
-        <string>Hue</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_4">
-       <property name="geometry">
-        <rect>
-         <x>200</x>
-         <y>140</y>
-         <width>50</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
-       </property>
-       <property name="text">
-        <string>Saturation</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::AutoText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_5">
-       <property name="geometry">
-        <rect>
-         <x>260</x>
-         <y>140</y>
-         <width>35</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
-       </property>
-       <property name="text">
-        <string>Gamma</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="text">
+           <string>Contrast</string>
+          </property>
+          <property name="scaledContents">
+           <bool>true</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="text">
+           <string>Brightness</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="text">
+           <string>Hue</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="text">
+           <string>Saturation</string>
+          </property>
+          <property name="textFormat">
+           <enum>Qt::AutoText</enum>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="styleSheet">
+           <string notr="true">background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));</string>
+          </property>
+          <property name="text">
+           <string>Gamma</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QPushButton" name="btnVEReset">
        <property name="geometry">
         <rect>
-         <x>320</x>
+         <x>360</x>
          <y>80</y>
          <width>84</width>
-         <height>21</height>
+         <height>26</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -915,8 +897,8 @@ p, li { white-space: pre-wrap; }
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>521</width>
-        <height>171</height>
+        <width>581</width>
+        <height>201</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -931,10 +913,10 @@ p, li { white-space: pre-wrap; }
       <widget class="QPushButton" name="btnAEReset">
        <property name="geometry">
         <rect>
-         <x>390</x>
+         <x>450</x>
          <y>70</y>
          <width>84</width>
-         <height>21</height>
+         <height>26</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -949,7 +931,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>384</width>
+         <width>433</width>
          <height>141</height>
         </rect>
        </property>
@@ -1627,10 +1609,10 @@ p, li { white-space: pre-wrap; }
       <widget class="QComboBox" name="comboBox">
        <property name="geometry">
         <rect>
-         <x>390</x>
-         <y>130</y>
-         <width>111</width>
-         <height>21</height>
+         <x>450</x>
+         <y>120</y>
+         <width>121</width>
+         <height>26</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -1735,7 +1717,7 @@ p, li { white-space: pre-wrap; }
       <widget class="QCheckBox" name="cbEnableAEq">
        <property name="geometry">
         <rect>
-         <x>390</x>
+         <x>450</x>
          <y>10</y>
          <width>70</width>
          <height>17</height>
@@ -2171,8 +2153,8 @@ color: grey;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>824</width>
-     <height>20</height>
+     <width>879</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -2590,7 +2572,7 @@ p, li { white-space: pre-wrap; }
    <property name="minimumSize">
     <size>
      <width>79</width>
-     <height>37</height>
+     <height>41</height>
     </size>
    </property>
    <property name="focusPolicy">

@@ -59,10 +59,10 @@ font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
   <widget class="QLabel" name="timedisp">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>27</x>
      <y>80</y>
-     <width>46</width>
-     <height>13</height>
+     <width>61</width>
+     <height>14</height>
     </rect>
    </property>
    <property name="styleSheet">

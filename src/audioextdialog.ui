@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>503</width>
+    <width>550</width>
     <height>113</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>503</width>
+    <width>550</width>
     <height>113</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>503</width>
+    <width>550</width>
     <height>113</height>
    </size>
   </property>
@@ -34,54 +34,38 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>10</x>
      <y>10</y>
-     <width>491</width>
-     <height>51</height>
+     <width>521</width>
+     <height>63</height>
     </rect>
    </property>
    <property name="title">
     <string>Select File</string>
    </property>
-   <widget class="QLineEdit" name="lineEdit">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>20</y>
-      <width>251</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>101</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Open Video File...</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pex">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>20</y>
-      <width>75</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&amp;Extract</string>
-    </property>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Open Video File...</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pex">
+      <property name="text">
+       <string>&amp;Extract</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -89,7 +73,7 @@
      <x>10</x>
      <y>80</y>
      <width>151</width>
-     <height>16</height>
+     <height>19</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -117,8 +101,8 @@
     <rect>
      <x>220</x>
      <y>80</y>
-     <width>272</width>
-     <height>26</height>
+     <width>318</width>
+     <height>29</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">

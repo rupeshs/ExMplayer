@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
+    <width>600</width>
     <height>194</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>550</width>
+    <width>600</width>
     <height>194</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>550</width>
+    <width>600</width>
     <height>194</height>
    </size>
   </property>
@@ -47,7 +47,7 @@
      <x>70</x>
      <y>20</y>
      <width>271</width>
-     <height>85</height>
+     <height>95</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -140,14 +140,20 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>130</y>
-     <width>334</width>
-     <height>26</height>
+     <y>140</y>
+     <width>399</width>
+     <height>29</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <widget class="QPushButton" name="pushButtonof">
+      <property name="minimumSize">
+       <size>
+        <width>124</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="text">
        <string>&amp;Open output</string>
       </property>
@@ -193,7 +199,7 @@
      <x>10</x>
      <y>170</y>
      <width>211</width>
-     <height>16</height>
+     <height>19</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout">
@@ -236,7 +242,7 @@
    <property name="geometry">
     <rect>
      <x>350</x>
-     <y>10</y>
+     <y>0</y>
      <width>191</width>
      <height>151</height>
     </rect>
@@ -247,7 +253,7 @@
    <widget class="QLabel" name="vid">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>20</y>
       <width>171</width>
       <height>91</height>
@@ -264,9 +270,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>120</y>
+      <y>115</y>
       <width>121</width>
-      <height>16</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="orientation">

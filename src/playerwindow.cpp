@@ -356,30 +356,14 @@ void  PlayerWindow::setupMyUi()
     ui->actionInternet_Radio->setVisible(false);
     ui->actionCopy_Audio_CD->setVisible(false);
 
-
     windowTimer = new QTimer(this);
     QObject::connect(windowTimer, SIGNAL(timeout()), this,SLOT(updatevideovindow()));
-    //////////////////////////////////////////////
 
 
-    //QSettings settings1("/smtube.ini", QSettings::IniFormat);
-
-    // youTubeDialog = new YTDialog(0, &settings1);
-    //youTubeDialog = YTDialog::instance();
-    //connect(youTubeDialog, SIGNAL(gotUrls(QMap<int,QString>,QString)), this, SLOT(playYTUrl(QMap<int,QString>,QString)));
-
-    //shoutcastDialog = SCDialog::instance();
-
-    //connect(shoutcastDialog, SIGNAL(gotUrls(QString,QString)), this, SLOT(playSCUrl(QString,QString)));
-    ////////////////////////////////////////////////
-    //mpwindow=new MplayerWindow(videoWin,0);
-    //mpwindow->setColorKey(QColor(0, 1, 0, 255));
-    //this->setCentralWidget(mpwindow);
     videoWin=new  MplayerWindow(this,0);
     videoWin->setAlignment(Qt::AlignCenter);
     videoWin->allowVideoMovement(true);
     movie = new QMovie(":/images/backanim.gif");
-
     this->videoWin->setMovie(movie);
     movie->start();
     videoWin->mplayerlayer->hide();
@@ -1044,10 +1028,10 @@ void PlayerWindow::startingPlayback()
         }
         if( !mp->hasvideo()&&mp->hasaudio()){
             if (this->width()>450 ||this->height()>145)
-               {
+            {
                 this->resize(450,145);
                 qDebug()<<"Offset height -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
-                 this->resize(450,this->height()+(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y());
+                this->resize(450,this->height()+(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y());
                 qDebug()<<"Adjusted offset -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
 
             }
@@ -2248,7 +2232,7 @@ void PlayerWindow::toggle_bottomdock_visibility()
             {ui->dock_Filter->show();
                 ui->dock_Filter->setFloating(true);
                 ui->dock_Filter->setAllowedAreas(Qt::NoDockWidgetArea);
-                ui->dock_Filter->resize(530,220);
+                ui->dock_Filter->resize(606,256);
             }
         }
         else
@@ -2257,7 +2241,7 @@ void PlayerWindow::toggle_bottomdock_visibility()
             {ui->dock_Filter->show();
                 ui->dock_Filter->setAllowedAreas(Qt::BottomDockWidgetArea);
                 ui->dock_Filter->setFloating(true);
-                ui->dock_Filter->resize(530,220);
+                ui->dock_Filter->resize(606,256);
 
             }
         }
@@ -2268,7 +2252,6 @@ void PlayerWindow::toggle_bottomdock_visibility()
 void PlayerWindow::on_action_Equalizer_triggered()
 {
     toggle_bottomdock_visibility();
-
     ui->tabWidget->setCurrentIndex(1);
 
 }
@@ -2824,7 +2807,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             //lab->move(pt->x()+30,ui->statusBar->y()-30);
             lab->setLineWidth(2);
             //lab->setFrameShadow(QFrame::Raised);
-           // lab->show();
+            // lab->show();
         }
     }
 
@@ -3589,7 +3572,15 @@ void PlayerWindow::winExplorer(QString opt,QString path)
 #ifdef Q_OS_WIN
     path=path.replace("/","\\");
     QProcess::execute("explorer.exe "+opt+path);
+#elif defined Q_OS_LINUX
+    QString lpath = QDir::toNativeSeparators(path);
+    // lpath.left(lpath.length()- lpath.lastIndexOf(QDir::separator () );
+    //qDebug()<<lpath.left(lpath.length()-lpath.lastIndexOf("/")+1);
+    QDir d = QFileInfo(lpath).absoluteDir();
+    QDesktopServices::openUrl(QUrl(d.absolutePath()));
 #endif
+
+
 }
 
 void PlayerWindow::on_actionOpen_containing_folder_triggered()
@@ -3597,6 +3588,8 @@ void PlayerWindow::on_actionOpen_containing_folder_triggered()
     if (fileType!=1||fileType!=3)
     {if (currentFile!="")
             this->winExplorer(QString("/select,"),currentFile);
+
+
     }
 
 
@@ -4643,8 +4636,8 @@ void PlayerWindow::resizeEvent ( QResizeEvent * event )
     if (ui->menuBar->height()==ui->toolBarSeekBar->y()){
         if(mp){
             if(mp->hasaudio()&&!mp->hasvideo()){
-              setMinimumSize(450,this->height());
-              qDebug()<<"resize to 450"<<this->height();
+                setMinimumSize(450,this->height());
+                qDebug()<<"resize to 450"<<this->height();
             }
             else
             {
@@ -4659,7 +4652,7 @@ void PlayerWindow::resizeEvent ( QResizeEvent * event )
 
 void PlayerWindow::on_actionAdvanced_Info_triggered()
 {
-   advInfoDlg=new AdvancedInfoDialog(this);
-   advInfoDlg->setMPlayer(mp);
-   advInfoDlg->show();
+    advInfoDlg=new AdvancedInfoDialog(this);
+    advInfoDlg->setMPlayer(mp);
+    advInfoDlg->show();
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'seekview.ui'
 **
-** Created: Sun Mar 31 23:00:55 2013
+** Created: Sun Apr 21 18:46:18 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -47,7 +47,7 @@ public:
         frameView->setAlignment(Qt::AlignCenter);
         timedisp = new QLabel(SeekView);
         timedisp->setObjectName(QString::fromUtf8("timedisp"));
-        timedisp->setGeometry(QRect(40, 80, 46, 13));
+        timedisp->setGeometry(QRect(27, 80, 61, 14));
         timedisp->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);\n"
 "background-color: rgb(9, 9, 9);\n"
 "font: 75 8pt \"MS Shell Dlg 2\";\n"

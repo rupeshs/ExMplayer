@@ -70,12 +70,12 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     mPath= qApp->applicationDirPath()+ "/mplayer/mplayer.exe";
 #endif
 #ifdef Q_OS_LINUX
-    mPath= qApp->applicationDirPath()+ "/usr/bin/mplayer";
+    mPath="/usr/bin/mplayer";
 # endif
     mutelock=true;
 
     qDebug()<<"Checking for MPlayer binary...";
-    if (!QFile(qApp->applicationDirPath()+ "/mplayer/mplayer.exe").exists())
+    if (!QFile(mPath).exists())
     {
         QMessageBox::critical(wparent,qApp->applicationName(),tr("MPlayer not found!"),QMessageBox::Ok,QMessageBox::Cancel);
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'urldialog.ui'
 **
-** Created: Sun Mar 31 23:00:55 2013
+** Created: Sun Apr 21 23:26:28 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,7 +40,7 @@ public:
         UrlDialog->setMaximumSize(QSize(456, 105));
         buttonBox = new QDialogButtonBox(UrlDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(280, 70, 151, 32));
+        buttonBox->setGeometry(QRect(260, 70, 171, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         label = new QLabel(UrlDialog);
@@ -48,7 +48,7 @@ public:
         label->setGeometry(QRect(20, 10, 61, 41));
         comboBox = new QComboBox(UrlDialog);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setGeometry(QRect(90, 30, 341, 22));
+        comboBox->setGeometry(QRect(90, 30, 341, 26));
         comboBox->setEditable(true);
         lineEdit = new QLineEdit(UrlDialog);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));

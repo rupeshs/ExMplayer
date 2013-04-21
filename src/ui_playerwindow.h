@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'playerwindow.ui'
 **
-** Created: Sun Apr 7 17:28:37 2013
+** Created: Sun Apr 21 23:06:57 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,6 +19,7 @@
 #include <QtGui/QDockWidget>
 #include <QtGui/QFrame>
 #include <QtGui/QGridLayout>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLCDNumber>
 #include <QtGui/QLabel>
@@ -223,7 +224,6 @@ public:
     QGridLayout *gridLayout_3;
     rphSlider *gamma;
     rphSlider *contrast;
-    rphSlider *brightness;
     rphSlider *Hue;
     rphSlider *Saturation;
     QLabel *label_3;
@@ -231,6 +231,9 @@ public:
     QLabel *label_9;
     QLabel *label_10;
     QLabel *label_7;
+    rphSlider *brightness;
+    QWidget *layoutWidget;
+    QHBoxLayout *horizontalLayout;
     QLabel *label;
     QLabel *label_2;
     QLabel *label_6;
@@ -343,7 +346,7 @@ public:
     {
         if (PlayerWindow->objectName().isEmpty())
             PlayerWindow->setObjectName(QString::fromUtf8("PlayerWindow"));
-        PlayerWindow->resize(824, 693);
+        PlayerWindow->resize(879, 689);
         PlayerWindow->setMinimumSize(QSize(450, 150));
         PlayerWindow->setMouseTracking(true);
         PlayerWindow->setFocusPolicy(Qt::StrongFocus);
@@ -1024,7 +1027,7 @@ public:
         label_display->setWordWrap(true);
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(390, 0, 191, 31));
+        tabWidget->setGeometry(QRect(-40, 140, 601, 251));
         tabWidget->setMouseTracking(true);
         tabWidget->setStyleSheet(QString::fromUtf8("/* Style the tab using the tab sub-control. Note that\n"
 "     it reads QTabBar _not_ QTabWidget */\n"
@@ -1062,11 +1065,11 @@ public:
         tabWidgetPage1->setObjectName(QString::fromUtf8("tabWidgetPage1"));
         page_ve = new QFrame(tabWidgetPage1);
         page_ve->setObjectName(QString::fromUtf8("page_ve"));
-        page_ve->setGeometry(QRect(10, 10, 421, 171));
+        page_ve->setGeometry(QRect(10, 10, 451, 191));
         page_ve->setStyleSheet(QString::fromUtf8("QFrame{background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 0), stop:1 rgba(255, 255, 255, 0))}"));
         gridLayoutWidget = new QWidget(page_ve);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(20, 20, 291, 121));
+        gridLayoutWidget->setGeometry(QRect(30, 20, 331, 121));
         gridLayout_3 = new QGridLayout(gridLayoutWidget);
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -1092,16 +1095,6 @@ public:
         contrast->setTickPosition(QSlider::TicksBelow);
 
         gridLayout_3->addWidget(contrast, 1, 0, 1, 1);
-
-        brightness = new rphSlider(gridLayoutWidget);
-        brightness->setObjectName(QString::fromUtf8("brightness"));
-        brightness->setStyleSheet(QString::fromUtf8(""));
-        brightness->setMinimum(-100);
-        brightness->setMaximum(100);
-        brightness->setOrientation(Qt::Vertical);
-        brightness->setTickPosition(QSlider::TicksBelow);
-
-        gridLayout_3->addWidget(brightness, 1, 1, 1, 1);
 
         Hue = new rphSlider(gridLayoutWidget);
         Hue->setObjectName(QString::fromUtf8("Hue"));
@@ -1168,54 +1161,82 @@ public:
 
         gridLayout_3->addWidget(label_7, 0, 1, 1, 1);
 
-        label = new QLabel(page_ve);
+        brightness = new rphSlider(gridLayoutWidget);
+        brightness->setObjectName(QString::fromUtf8("brightness"));
+        brightness->setStyleSheet(QString::fromUtf8(""));
+        brightness->setMinimum(-100);
+        brightness->setMaximum(100);
+        brightness->setOrientation(Qt::Vertical);
+        brightness->setTickPosition(QSlider::TicksBelow);
+
+        gridLayout_3->addWidget(brightness, 1, 1, 1, 1);
+
+        layoutWidget = new QWidget(page_ve);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(40, 140, 308, 19));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(layoutWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(30, 140, 42, 13));
         label->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));"));
         label->setFrameShape(QFrame::NoFrame);
         label->setFrameShadow(QFrame::Plain);
         label->setScaledContents(true);
         label->setAlignment(Qt::AlignCenter);
-        label_2 = new QLabel(page_ve);
+
+        horizontalLayout->addWidget(label);
+
+        label_2 = new QLabel(layoutWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(90, 140, 50, 13));
         label_2->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));"));
-        label_6 = new QLabel(page_ve);
+
+        horizontalLayout->addWidget(label_2);
+
+        label_6 = new QLabel(layoutWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(150, 140, 21, 13));
         label_6->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));"));
         label_6->setAlignment(Qt::AlignCenter);
-        label_4 = new QLabel(page_ve);
+
+        horizontalLayout->addWidget(label_6);
+
+        label_4 = new QLabel(layoutWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(200, 140, 50, 13));
         label_4->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));"));
         label_4->setTextFormat(Qt::AutoText);
         label_4->setAlignment(Qt::AlignCenter);
-        label_5 = new QLabel(page_ve);
+
+        horizontalLayout->addWidget(label_4);
+
+        label_5 = new QLabel(layoutWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(260, 140, 35, 13));
         label_5->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 248, 0, 0), stop:1 rgba(255, 255, 255, 0));"));
         label_5->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout->addWidget(label_5);
+
         btnVEReset = new QPushButton(page_ve);
         btnVEReset->setObjectName(QString::fromUtf8("btnVEReset"));
-        btnVEReset->setGeometry(QRect(320, 80, 84, 21));
+        btnVEReset->setGeometry(QRect(360, 80, 84, 26));
         btnVEReset->setStyleSheet(QString::fromUtf8(""));
         tabWidget->addTab(tabWidgetPage1, QString());
         tabWidgetPage2 = new QWidget();
         tabWidgetPage2->setObjectName(QString::fromUtf8("tabWidgetPage2"));
         page_ae = new QFrame(tabWidgetPage2);
         page_ae->setObjectName(QString::fromUtf8("page_ae"));
-        page_ae->setGeometry(QRect(10, 10, 521, 171));
+        page_ae->setGeometry(QRect(10, 10, 581, 201));
         page_ae->setStyleSheet(QString::fromUtf8(""));
         page_ae->setFrameShape(QFrame::StyledPanel);
         page_ae->setFrameShadow(QFrame::Raised);
         btnAEReset = new QPushButton(page_ae);
         btnAEReset->setObjectName(QString::fromUtf8("btnAEReset"));
-        btnAEReset->setGeometry(QRect(390, 70, 84, 21));
+        btnAEReset->setGeometry(QRect(450, 70, 84, 26));
         btnAEReset->setStyleSheet(QString::fromUtf8(""));
         gridLayoutWidget_2 = new QWidget(page_ae);
         gridLayoutWidget_2->setObjectName(QString::fromUtf8("gridLayoutWidget_2"));
-        gridLayoutWidget_2->setGeometry(QRect(10, 10, 384, 141));
+        gridLayoutWidget_2->setGeometry(QRect(10, 10, 433, 141));
         gridLayout_4 = new QGridLayout(gridLayoutWidget_2);
         gridLayout_4->setSpacing(6);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
@@ -1537,11 +1558,11 @@ public:
 
         comboBox = new QComboBox(page_ae);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
-        comboBox->setGeometry(QRect(390, 130, 111, 21));
+        comboBox->setGeometry(QRect(450, 120, 121, 26));
         comboBox->setStyleSheet(QString::fromUtf8(""));
         cbEnableAEq = new QCheckBox(page_ae);
         cbEnableAEq->setObjectName(QString::fromUtf8("cbEnableAEq"));
-        cbEnableAEq->setGeometry(QRect(390, 10, 70, 17));
+        cbEnableAEq->setGeometry(QRect(450, 10, 70, 17));
         tabWidget->addTab(tabWidgetPage2, QString());
         toolButtonfs = new QToolButton(centralWidget);
         toolButtonfs->setObjectName(QString::fromUtf8("toolButtonfs"));
@@ -1651,7 +1672,7 @@ public:
         PlayerWindow->setStatusBar(statusBar);
         menuBar = new QMenuBar(PlayerWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 824, 20));
+        menuBar->setGeometry(QRect(0, 0, 879, 25));
         menuBar->setStyleSheet(QString::fromUtf8(""));
         menuBar->setNativeMenuBar(false);
         menu_Open = new QMenu(menuBar);
@@ -1734,7 +1755,7 @@ public:
         PlayerWindow->addDockWidget(static_cast<Qt::DockWidgetArea>(4), dockBrowser);
         dock_Playlist = new dockPlayList(PlayerWindow);
         dock_Playlist->setObjectName(QString::fromUtf8("dock_Playlist"));
-        dock_Playlist->setMinimumSize(QSize(79, 37));
+        dock_Playlist->setMinimumSize(QSize(79, 41));
         dock_Playlist->setFocusPolicy(Qt::StrongFocus);
         dock_Playlist->setAcceptDrops(true);
         dock_Playlist->setStyleSheet(QString::fromUtf8(""));

@@ -240,7 +240,12 @@ void audioconvDialog::encodeaudio(QString cfn,QString ofn,  QString fmt,QString 
     }
     //arguments<<"-i"<<cfn<<"-y"<<filepath;
     qDebug()<<arguments;
-    ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
+#ifdef Q_OS_WIN
+            ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
+#endif
+#ifdef Q_OS_LINUX
+             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg", arguments);
+#endif
 
 }
 

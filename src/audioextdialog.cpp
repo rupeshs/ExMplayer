@@ -110,7 +110,12 @@ void audioextDialog::on_pex_clicked()
       // arguments<<"-i"<<cfn<<"-ab"<<QString::number(128000)<<"-ac"<<QString::number(2)<<"-ar"<<QString::number(44100)<<"-y"<<filepath;
         arguments<<"-i"<<cfn<<"-y"<<filepath;
 
-        ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
+#ifdef Q_OS_WIN
+            ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
+#endif
+#ifdef Q_OS_LINUX
+             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg", arguments);
+#endif
 
 //coreTimer->start();
    }

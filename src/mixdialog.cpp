@@ -64,7 +64,12 @@ void mixDialog::changeEvent(QEvent *e)
        cfile=new QFileInfo(filepath);
        arguments<<"-i"<<cfn<<"-i"<<afn<<"-c"<<"copy"<<"-map"<<"0:0"<<"-map"<<"1:0"<<"-y"<<filepath;
        qDebug()<<arguments;
-       ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
+#ifdef Q_OS_WIN
+            ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
+#endif
+#ifdef Q_OS_LINUX
+             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg", arguments);
+#endif
 
 
 
