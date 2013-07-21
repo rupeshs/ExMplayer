@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'aboutdialog.ui'
 **
-** Created: Sun Apr 21 22:23:43 2013
+** Created: Sun May 5 19:33:23 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -51,7 +51,7 @@ public:
         aboutDialog->setStyleSheet(QString::fromUtf8(""));
         tabWidget = new QTabWidget(aboutDialog);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 10, 441, 241));
+        tabWidget->setGeometry(QRect(10, 10, 451, 241));
         tabWidget->setStyleSheet(QString::fromUtf8(""));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));

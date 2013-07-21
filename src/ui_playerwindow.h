@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'playerwindow.ui'
 **
-** Created: Sun Apr 21 23:06:57 2013
+** Created: Mon Jul 22 00:50:13 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -1689,6 +1689,9 @@ public:
         menu_Audio->setObjectName(QString::fromUtf8("menu_Audio"));
         menuAudio_Track = new QMenu(menu_Audio);
         menuAudio_Track->setObjectName(QString::fromUtf8("menuAudio_Track"));
+        QIcon icon46;
+        icon46.addFile(QString::fromUtf8(":/images/audio.png"), QSize(), QIcon::Normal, QIcon::Off);
+        menuAudio_Track->setIcon(icon46);
         menuC_hannels = new QMenu(menu_Audio);
         menuC_hannels->setObjectName(QString::fromUtf8("menuC_hannels"));
         menu_Filters = new QMenu(menu_Audio);
@@ -1710,16 +1713,16 @@ public:
         menuVideo_Track->setObjectName(QString::fromUtf8("menuVideo_Track"));
         menuOSD = new QMenu(menu_Video);
         menuOSD->setObjectName(QString::fromUtf8("menuOSD"));
-        QIcon icon46;
-        icon46.addFile(QString::fromUtf8(":/images/osd.png"), QSize(), QIcon::Normal, QIcon::Off);
-        menuOSD->setIcon(icon46);
+        QIcon icon47;
+        icon47.addFile(QString::fromUtf8(":/images/osd.png"), QSize(), QIcon::Normal, QIcon::Off);
+        menuOSD->setIcon(icon47);
         menuFrame_drop = new QMenu(menu_Video);
         menuFrame_drop->setObjectName(QString::fromUtf8("menuFrame_drop"));
         menuZoom = new QMenu(menu_Video);
         menuZoom->setObjectName(QString::fromUtf8("menuZoom"));
-        QIcon icon47;
-        icon47.addFile(QString::fromUtf8(":/images/zoom.png"), QSize(), QIcon::Normal, QIcon::Off);
-        menuZoom->setIcon(icon47);
+        QIcon icon48;
+        icon48.addFile(QString::fromUtf8(":/images/zoom.png"), QSize(), QIcon::Normal, QIcon::Off);
+        menuZoom->setIcon(icon48);
         menuFrame_rate_fps = new QMenu(menu_Video);
         menuFrame_rate_fps->setObjectName(QString::fromUtf8("menuFrame_rate_fps"));
         menu_Subtitles = new QMenu(menuBar);

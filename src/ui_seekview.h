@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'seekview.ui'
 **
-** Created: Sun Apr 21 18:46:18 2013
+** Created: Sun May 5 19:33:23 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

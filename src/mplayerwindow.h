@@ -191,6 +191,7 @@ protected:
 
 
     QLabel * logo;
+    QMovie * movie;
 
     // Zoom and moving
     int offset_x, offset_y;

@@ -29,7 +29,7 @@
 #endif
 #endif
 
-
+#include <paths.h>
 #include <QDebug>
 #include <QXmlStreamWriter>
 #include <QFile>
@@ -189,7 +189,7 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
               ass.valignment=ui->comboBoxVa->currentIndex();
               ass.halignment=ui->comboBoxHa->itemData(ui->comboBoxHa->currentIndex()).toInt();
               ass.save(_settings);
-              ass.exportStyles(qApp->applicationDirPath()+"/styles.ass");
+              ass.exportStyles(Paths::configPath()+"/styles.ass");
               emit restart();
               break;
              }
@@ -317,7 +317,7 @@ void preferenceDialog::on_twsc_itemClicked(QTableWidgetItem* item)
 void preferenceDialog::saveActionToXml()
 {//QMessageBox msgBox;
 
-    QFile file(qApp->applicationDirPath()+"/"+"sc_user.xml");
+    QFile file(Paths::configPath()+"/"+"sc_user.xml");
     file.resize(0);
 
     if (!file.open(QIODevice::ReadWrite)) {
@@ -377,10 +377,11 @@ else
 }
 
 void preferenceDialog::on_pushButton_clicked()
-{   resetsc=true;
-    QFile file(qApp->applicationDirPath()+"/"+"sc_user.xml");
+{
+    resetsc=true;
+    QFile file(Paths::configPath()+"/"+"sc_user.xml");
     file.remove();
-    file.copy(qApp->applicationDirPath()+"/"+"sc_default.xml",qApp->applicationDirPath()+"/"+"sc_user.xml");
+    file.copy(Paths::configPath()+"/"+"sc_default.xml",Paths::configPath()+"/"+"sc_user.xml");
 
     QMessageBox::information(this,qApp->applicationName(),tr("New Shortcut(s) will be active after a restart."),QMessageBox::Ok,QMessageBox::Cancel);
 
@@ -450,7 +451,7 @@ void preferenceDialog::on_pushButton_5_clicked()
 void preferenceDialog::on_pushButton_6_clicked()
 {
   AssStyles ass;
-  ass.exportStyles(qApp->applicationDirPath()+"/styles.ass") ;
+  ass.exportStyles(Paths::configPath()+"/styles.ass") ;
   ColorUtils::setBackgroundColor(ui->texcol,QColor(ass.primarycolor));
   ColorUtils::setBackgroundColor(ui->shcol,QColor(ass.backcolor));
   ColorUtils::setBackgroundColor(ui->borcol,QColor(ass.outlinecolor));

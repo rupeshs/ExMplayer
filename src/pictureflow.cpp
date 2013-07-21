@@ -34,6 +34,7 @@
 #include <QMutex>
 #include <QProgressDialog>
 #include <QMessageBox>
+#include "paths.h"
 // detect Qt version
 #if QT_VERSION >= 0x040000
 #define PICTUREFLOW_QT4
@@ -1030,9 +1031,9 @@ lock=false;
   QObject::connect(btnBack,SIGNAL(pressed()),this,SLOT(backpress()));
   QObject::connect(btnBack,SIGNAL(released()),this,SLOT(backrelease()));
 
-  QFile file(qApp->applicationDirPath()+"/fmts");
-  if (!QFile(qApp->applicationDirPath()+ "/fmts").exists())
-{
+  QFile file(Paths::configPath()+"/fmts");
+  if (!QFile(Paths::configPath()+ "/fmts").exists())
+ {
       qDebug()<<"Initializing formats.....FAILED";
   }
   file.open(QIODevice::ReadOnly);

@@ -2242,6 +2242,10 @@ p, li { white-space: pre-wrap; }
      <property name="title">
       <string>Audio &amp;Track</string>
      </property>
+     <property name="icon">
+      <iconset resource="ExMplayer.qrc">
+       <normaloff>:/images/audio.png</normaloff>:/images/audio.png</iconset>
+     </property>
      <addaction name="actionAudioDisable"/>
     </widget>
     <widget class="QMenu" name="menuC_hannels">

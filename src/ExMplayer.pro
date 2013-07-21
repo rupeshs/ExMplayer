@@ -43,7 +43,8 @@ SOURCES += main.cpp \
     myprocess.cpp \
     glassstyle.cpp \
     fontloaddialog.cpp\
-    advancedinfodialog.cpp
+    advancedinfodialog.cpp \
+    paths.cpp
 HEADERS += playerwindow.h \
     mplayerfe.h \
     rphlabelex.h \
@@ -80,7 +81,8 @@ HEADERS += playerwindow.h \
     myprocess.h \
     glassstyle.h \
     fontloaddialog.h\
-    advancedinfodialog.h
+    advancedinfodialog.h \
+    paths.h
 FORMS += playerwindow.ui \
     preferencedialog.ui \
     winampdspdialog.ui \
