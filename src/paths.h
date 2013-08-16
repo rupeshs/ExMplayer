@@ -9,6 +9,7 @@ public:
     //! Return the path where exmplayer should save its config files
     static QString configPath();
     static QString sharePath();
+    static QString getStaticConfigPath();
 };
 
 #endif // PATHS_H

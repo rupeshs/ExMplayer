@@ -40,3 +40,16 @@ QString Paths::sharePath()
 #endif
 
  }
+
+QString Paths::getStaticConfigPath()
+{
+
+#ifdef Q_OS_WIN
+    return qApp->applicationDirPath();
+#endif
+
+#ifdef Q_OS_LINUX
+    return  QString("/etc/exmplayer");
+
+#endif
+}

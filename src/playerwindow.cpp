@@ -354,6 +354,10 @@ void  PlayerWindow::setupMyUi()
 {
 
 
+#ifdef Q_OS_LINUX
+    ui->actionWinamp_Dsp->setVisible(false);
+# endif
+
     ui->actionInternet_Radio->setVisible(false);
     ui->actionCopy_Audio_CD->setVisible(false);
 
@@ -3289,8 +3293,14 @@ void PlayerWindow::createShortcuts()
     if(!file.exists())
     {  file.close();
         path.clear();
-        path=Paths::configPath();
+#ifdef Q_OS_WIN
+     path=Paths::configPath();
+#endif
+#ifdef Q_OS_LINUX
+    path=Paths::getStaticConfigPath();
+# endif
         path.append("/sc_default.xml");
+        qDebug()<<"Loading shortcut file :"<<path;
         file.setFileName(path);
         qDebug()<<"Checking for deault short cut bindings..."<<file.exists();
 

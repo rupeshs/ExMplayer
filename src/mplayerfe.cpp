@@ -197,7 +197,14 @@ void mplayerfe::play(QString File,int volume)
     if(!keepaspect){
         arguments<<"-nokeepaspect";
     }
-    //
+    // Load the styles.ass file
+    if (!QFile::exists(Paths::configPath()+"/styles.ass")) {
+        // If file doesn't exist, create it
+        AssStyles ass;
+        ass.exportStyles(Paths::configPath()+"/styles.ass") ;
+
+    }
+
     argSubOpt<<"-sub-fuzziness"<<QString::number(1)<<"-ass"<<"-embeddedfonts"<<"-ass-styles"<<Paths::configPath()+"/styles.ass";
     //
     argvideofilters<<"-vf"<<"screenshot";

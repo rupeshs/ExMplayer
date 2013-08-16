@@ -3,7 +3,9 @@
 # -------------------------------------------------
 QT       += core gui
 QT       += network xml
-TARGET    = ExMplayer
+unix{
+TARGET    = exmplayer
+}
 TEMPLATE  = app
 
 

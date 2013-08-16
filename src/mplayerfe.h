@@ -27,6 +27,7 @@
 #include <fontloaddialog.h>
 #include <QPointer>
 #include <myprocess.h>
+#include <assstyles.h>
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif

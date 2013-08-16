@@ -381,7 +381,13 @@ void preferenceDialog::on_pushButton_clicked()
     resetsc=true;
     QFile file(Paths::configPath()+"/"+"sc_user.xml");
     file.remove();
+#ifdef Q_OS_WIN
     file.copy(Paths::configPath()+"/"+"sc_default.xml",Paths::configPath()+"/"+"sc_user.xml");
+#endif
+#ifdef Q_OS_LINUX
+    file.copy(Paths::getStaticConfigPath()+"/"+"sc_default.xml",Paths::configPath()+"/"+"sc_user.xml");
+# endif
+
 
     QMessageBox::information(this,qApp->applicationName(),tr("New Shortcut(s) will be active after a restart."),QMessageBox::Ok,QMessageBox::Cancel);
 
