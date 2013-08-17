@@ -19,6 +19,7 @@
 #include "ui_cutterdialog.h"
 #include <QDebug>
 #include "rphfile.h"
+#include <paths.h>
 
 cutterDialog::cutterDialog(QWidget *parent, mplayerfe *mpf) :
     QDialog(parent),
@@ -140,7 +141,7 @@ void cutterDialog::on_pushButtonCut_clicked()
             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
 #endif
 #ifdef Q_OS_LINUX
-             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg", arguments);
+             ffProcess->start(Paths::sharePath()+"/ffmpeg", arguments);
 #endif
             \
             ui->pushButtonpre->setEnabled(false);

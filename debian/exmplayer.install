@@ -1,0 +1,7 @@
+exmplayer*.desktop usr/share/applications
+debian/exmplayer.png usr/share/pixmaps
+exmplayer_2/exmplayer usr/bin
+exmplayer_2/sc_default.xml /etc/exmplayer
+exmplayer_2/fmts /etc/exmplayer
+
+

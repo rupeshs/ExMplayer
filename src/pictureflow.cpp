@@ -763,7 +763,7 @@ QImage* PictureFlowSoftwareRenderer::surface(int slideIndex)
     QString key = QString::number(slideIndex);
 #endif
 
-    QImage* img = state->slideImages.at(slideIndex);
+    QImage* img = state->slideImages.value(slideIndex);
     bool empty = img ? img->isNull() : true;
     if(empty)
     {
@@ -1043,7 +1043,7 @@ PictureFlow::PictureFlow(QWidget* parent): QWidget(parent)
 #endif
 #ifdef Q_OS_LINUX
         QFile file(Paths::getStaticConfigPath()+"/fmts");
-        qDebug()<<Paths::getStaticConfigPath();
+
         if (!QFile(Paths::getStaticConfigPath()+ "/fmts").exists())
         {
             qDebug()<<"Initializing formats.....FAILED";
@@ -1286,7 +1286,7 @@ void PictureFlow::keyPressEvent(QKeyEvent* event)
     }
     if(event->key() == Qt::Key_Down)
     {if (strCenter.isEmpty())
-            if(filelist.at(d->state->centerIndex).isDir())
+            if(filelist.value(d->state->centerIndex).isDir())
             {
                 this->addFolderContents();
                 if (d->state->slideImages.count()>2)
@@ -1376,11 +1376,11 @@ void PictureFlow:: addDrives()
     mutex.lock();
     for (int i = 0; i < list.size(); ++i)
     {
-        QFileInfo fileInfo = list.at(i);
+        QFileInfo fileInfo = list.value(i);
 
         QIcon ic=ip.icon(fileInfo);
         //addSlide( ic.pixmap(48,48,QIcon::Active,QIcon::On));
-        d->renderer->fileTitle= list.at(0).absoluteFilePath();
+        d->renderer->fileTitle= list.value(0).absoluteFilePath();
         // d->renderer->filePath=list.at(0).absoluteFilePath();
         d->renderer->isdrv=true;
         addSlide(QIcon(":/images/drive.png").pixmap(128,128,QIcon::Normal,QIcon::On));
@@ -1394,7 +1394,7 @@ void PictureFlow::addFolder(QString path )
     this->btnBack->setEnabled(true);
     d->renderer->isdrv=false;
     QDir dir;
-    dir = QDir(qApp->applicationDirPath()+"/covers");
+    dir = QDir(QDir::tempPath()+"/covers");
     dir.setFilter(QDir::Hidden|QDir::Files|QDir::AllDirs | QDir::NoSymLinks | QDir::Readable|QDir::NoDotAndDotDot);
 
     QFileInfoList list = dir.entryInfoList();
@@ -1402,14 +1402,14 @@ void PictureFlow::addFolder(QString path )
     {
         for (int i=0;i<list.count();i++)
         {
-            dir.remove(list.at(i).filePath());
+            dir.remove(list.value(i).filePath());
         }
     }
     clear();
     filelist.clear();
     PictureFlow();
 
-    dir.mkdir(qApp->applicationDirPath()+"/covers");
+    dir.mkdir(QDir::tempPath()+"/covers");
     filelist.clear();
     dir = QDir();
     dir.setSorting(QDir::Name);
@@ -1442,23 +1442,23 @@ void PictureFlow::addFolder(QString path )
                     break;
                 }
 
-                QFileInfo fileInfo = list.at(i);
+                QFileInfo fileInfo = list.value(i);
                 QIcon ic=ip.icon(fileInfo);
 
                 d->renderer->fileTitle=QString("Please Wait...(%1)%").arg((double)(i+1)/list.size()*100,0,'g',2);
-                d->renderer->filePath=list.at(i).filePath();
+                d->renderer->filePath=list.value(i).filePath();
 
 
                 // paint();
                 if( i+1==list.size())
                 {
-                    d->renderer->fileTitle=list.at(0).fileName();
+                    d->renderer->fileTitle=list.value(0).fileName();
 
                 }
 
                 this->repaint();
 
-                if (list.at(i).isDir())
+                if (list.value(i).isDir())
                 {
                     addSlide( QIcon(":/images/folder.png").pixmap(128,128,QIcon::Normal,QIcon::On));
                     //addSlide( ic.pixmap(48,48,QIcon::Active,QIcon::On));
@@ -1497,7 +1497,13 @@ void PictureFlow::addFolder(QString path )
                 else
                 {//addSlide(ic.pixmap(32,32,QIcon::Normal,QIcon::Off));
                     QProcess *myProcess=new QProcess(this);
-                    myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+qApp->applicationDirPath()+ "/covers/cover"+QString::number(i)+".jpeg""\"");
+#ifdef Q_OS_WIN
+                    myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+QDir::tempPath()+ "/covers/cover"+QString::number(i)+".png""\"");
+#endif
+#ifdef Q_OS_LINUX
+                    myProcess->start("\""+Paths::sharePath()+"/ffmpeg\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+QDir::tempPath()+ "/covers/cover"+QString::number(i)+".png""\"");
+
+#endif
                     addSlide(QPixmap(":/images/videofile.png"));
 
                 }
@@ -1505,13 +1511,15 @@ void PictureFlow::addFolder(QString path )
 
                 if (list.count()==1)
                 {
-                    d->renderer->filePath=list.at(0).filePath();
-                    d->renderer->fileTitle=list.at(0).baseName();
-                    if(list.at(0).isFile())
-                    {if(QString(qApp->applicationDirPath()+"/covers/cover"+QString::number(d->state->centerIndex)+".jpeg").contains(QString::number(0)))
+                    d->renderer->filePath=list.value(0).filePath();
+                    d->renderer->fileTitle=list.value(0).baseName();
+                    if(list.value(0).isFile())
+                    {
+                       if(QString(QDir::tempPath()+"/covers/cover"+QString::number(d->state->centerIndex)+".png").contains(QString::number(0)))
                         {//QString::number(d->state->centerIndex)
-                            if (QPixmap(qApp->applicationDirPath()+"/covers/cover0.jpeg").width()>0)
-                            {d->state->slideImages[d->state->centerIndex] = new QImage(QPixmap(qApp->applicationDirPath()+"/covers/cover0.jpeg").toImage());
+
+                            if (QPixmap(QDir::tempPath()+"/covers/cover0.png").width()>0)
+                            {d->state->slideImages[d->state->centerIndex] = new QImage(QPixmap(QDir::tempPath()+"/covers/cover0.png").toImage());
 
                                 triggerRender();
                             }
@@ -1561,14 +1569,14 @@ void PictureFlow::updateAnimation()
     int old_center = d->state->centerIndex;
     d->animator->update();
     triggerRender();
-    d->renderer->filePath=filelist.at(d->state->centerIndex).filePath();
+    d->renderer->filePath=filelist.value(d->state->centerIndex).filePath();
     d->renderer->countstr=" ["+QString::number(d->state->centerIndex+1)+"/"+QString::number(d->state->slideImages.count())+"]";
-    if (filelist.at(d->state->centerIndex).isDir()||filelist.at(d->state->centerIndex).isFile())
-        d->renderer->fileTitle=filelist.at(d->state->centerIndex).completeBaseName();
+    if (filelist.value(d->state->centerIndex).isDir()||filelist.value(d->state->centerIndex).isFile())
+        d->renderer->fileTitle=filelist.value(d->state->centerIndex).completeBaseName();
     else
-        d->renderer->fileTitle=filelist.at(d->state->centerIndex).filePath();
+        d->renderer->fileTitle=filelist.value(d->state->centerIndex).filePath();
 
-    if(filelist.at(d->state->centerIndex).isFile())
+    if(filelist.value(d->state->centerIndex).isFile())
     { d->renderer->fileTitle=d->renderer->fileTitle+" ("+d->renderer->filePath.right(d->renderer->filePath.length()-d->renderer->filePath.lastIndexOf(".")-1) +")";
         if (d->renderer->filePath.endsWith(".mp2",Qt::CaseInsensitive)|
                 d->renderer->filePath.endsWith(".mp3",Qt::CaseInsensitive)|
@@ -1599,17 +1607,22 @@ void PictureFlow::updateAnimation()
         { //QString::number(d->state->centerIndex)
             QImage g;
             if (_showpic)
-            {  g.load(qApp->applicationDirPath()+"/pictures/cover"+QString::number(d->state->centerIndex)+".jpeg",0);
+            {
+
+                g.load(QDir::tempPath()+"/pictures/cover"+QString::number(d->state->centerIndex)+".png",0);
+
                 if (g.width()>0)
-                {d->state->slideImages[d->state->centerIndex] = new QImage(qApp->applicationDirPath()+"/pictures/cover"+QString::number(d->state->centerIndex)+".jpeg",0);
+                {d->state->slideImages[d->state->centerIndex] = new QImage(QDir::tempPath()+"/pictures/cover"+QString::number(d->state->centerIndex)+".png",0);
                     triggerRender();
                 }
             }
             else
             {
-                g.load(qApp->applicationDirPath()+"/covers/cover"+QString::number(d->state->centerIndex)+".jpeg",0);
+                g.load(QDir::tempPath()+"/covers/cover"+QString::number(d->state->centerIndex)+".png",0);
                 if (g.width()>0)
-                {d->state->slideImages[d->state->centerIndex] = new QImage(qApp->applicationDirPath()+"/covers/cover"+QString::number(d->state->centerIndex)+".jpeg",0);
+                {
+
+                    d->state->slideImages[d->state->centerIndex] = new QImage(QDir::tempPath()+"/covers/cover"+QString::number(d->state->centerIndex)+".png",0);
                     triggerRender();
                 }
             }
@@ -1637,11 +1650,11 @@ void PictureFlow::addFolderContents()
 {lock=true;
     d->renderer->isdrv=false;
     if (d->state->slideImages.count()>0)
-    { if (filelist.at(d->state->centerIndex).isDir())
+    { if (filelist.value(d->state->centerIndex).isDir())
         {
-            backlist<<filelist.at(d->state->centerIndex).canonicalPath();
+            backlist<<filelist.value(d->state->centerIndex).canonicalPath();
             previousCenterIndex<<QString::number(d->state->centerIndex);
-            addFolder(filelist.at(d->state->centerIndex).filePath());
+            addFolder(filelist.value(d->state->centerIndex).filePath());
         }
         else
         {//emit filename(filelist.at(d->state->centerIndex).filePath());
@@ -1667,8 +1680,8 @@ void PictureFlow::mouseDoubleClickEvent ( QMouseEvent * event )
     else
     {if (d->state->slideImages.count()>0)
         {if (!lock)
-            {if(filelist.at(d->state->centerIndex).isFile())
-                    emit filename(filelist.at(d->state->centerIndex).filePath());
+            {if(filelist.value(d->state->centerIndex).isFile())
+                    emit filename(filelist.value(d->state->centerIndex).filePath());
                 emit play();
             }
         }
@@ -1684,8 +1697,8 @@ void PictureFlow::contextMenuEvent(QContextMenuEvent *event)
     if (!_showpic)
     {  QMenu rmenu;
         if (d->state->slideImages.count())
-        { if (!filelist.at(d->state->centerIndex).baseName().isEmpty())
-            {QAction *addAct=rmenu.addAction("Add "+filelist.at(d->state->centerIndex).baseName()+" to playlist");
+        { if (!filelist.value(d->state->centerIndex).baseName().isEmpty())
+            {QAction *addAct=rmenu.addAction("Add "+filelist.value(d->state->centerIndex).baseName()+" to playlist");
                 QObject::connect(addAct,SIGNAL(triggered()), this, SLOT(addcontentstoplaylist()));
                 rmenu.exec(event->globalPos());
             } //filename(filelist.at(d->state->centerIndex).filePath());
@@ -1698,7 +1711,7 @@ void PictureFlow::back()
         PictureFlow();
     }
     QDir dir;
-    dir = QDir(qApp->applicationDirPath()+"/covers");
+    dir = QDir(QDir::tempPath()+"/covers");
 
     dir.setFilter(QDir::Hidden|QDir::Files|QDir::AllDirs | QDir::NoSymLinks | QDir::Readable|QDir::NoDotAndDotDot);
 
@@ -1707,7 +1720,7 @@ void PictureFlow::back()
     {
         for (int i=0;i<list.count();i++)
         {
-            dir.remove(list.at(i).filePath());
+            dir.remove(list.value(i).filePath());
         }
     }
     strCenter="";
@@ -1769,11 +1782,11 @@ QString PictureFlow::shortPathName(QString long_path) {
 
 void PictureFlow::addcontentstoplaylist()
 {
-    if (filelist.at(d->state->centerIndex).isFile()){
-        emit addFiletoPl(filelist.at(d->state->centerIndex).filePath());
+    if (filelist.value(d->state->centerIndex).isFile()){
+        emit addFiletoPl(filelist.value(d->state->centerIndex).filePath());
     }
-    else if(filelist.at(d->state->centerIndex).isDir()){
-        emit addFoldertoPl(filelist.at(d->state->centerIndex).filePath());
+    else if(filelist.value(d->state->centerIndex).isDir()){
+        emit addFoldertoPl(filelist.value(d->state->centerIndex).filePath());
     }
 
 }
@@ -1804,7 +1817,7 @@ void PictureFlow::addPictureFolder(QString path )
     piccount=0;
     QDir dir;
 
-    dir = QDir(qApp->applicationDirPath()+"/covers");
+    dir = QDir(QDir::tempPath()+"/covers");
 
     dir.setFilter(QDir::Hidden|QDir::Files|QDir::AllDirs | QDir::NoSymLinks | QDir::Readable|QDir::NoDotAndDotDot);
 
@@ -1813,14 +1826,14 @@ void PictureFlow::addPictureFolder(QString path )
     {
         for (int i=0;i<list.count();i++)
         {
-            dir.remove(list.at(i).filePath());
+            dir.remove(list.value(i).filePath());
         }
     }
     clear();
     filelist.clear();
     //PictureFlow();
     //init();
-    dir.mkdir(qApp->applicationDirPath()+"/pictures");
+    dir.mkdir(QDir::tempPath()+"/pictures");
     filelist.clear();
     dir = QDir();
     dir.setSorting(QDir::Name);
@@ -1903,11 +1916,18 @@ void PictureFlow::createThumbnails()
     if (piccount<filelist.size())
     {
         d->renderer->fileTitle=QString("Adding Pictures,Please Wait...(%1)%").arg((double)(piccount+1)/filelist.size()*100,0,'g',4);
-        d->renderer->filePath=filelist.at(piccount).filePath();
+        d->renderer->filePath=filelist.value(piccount).filePath();
         this->repaint();
         if (myProcess>0)
         {
-            myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+qApp->applicationDirPath()+ "/pictures/cover"+QString::number(piccount)+".jpeg""\"");
+#ifdef Q_OS_WIN
+            myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+QDir::tempPath()+ "/pictures/cover"+QString::number(piccount)+".png""\"");
+
+#endif
+#ifdef Q_OS_LINUX
+            myProcess->start("\""+Paths::sharePath()+"/ffmpeg\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+QDir::tempPath()+ "/pictures/cover"+QString::number(piccount)+".png""\"");
+
+#endif
             addSlide(QPixmap(":/images/image_file.png"));
             //myProcess->waitForFinished(-1);
             //this->showNext();

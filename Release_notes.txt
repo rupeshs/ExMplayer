@@ -1,0 +1,44 @@
+Version 2.0.0 beta
+Release Date : 10-2-2013
+Features Added:
+ *rphMPFE is now ExMplayer
+ *Version 2.0.0 beta
+ *Improved Seek View
+ *Enhanced Skin
+ *Some performance improvements
+ 
+Version 1.0.6 
+Release Date : 19-3-2011 
+Features Added:
+ *Audio converter 
+ *Video quality improver 
+ *Zooming Frame rate converter
+ *Enhanced skin 
+
+Version 1.0.5 
+Release Date : 19-3-2011 
+Features Added:
+ *Audio extractor
+
+Version 1.0.4
+Release Date : 9-11-2010
+Features Added:
+*Some performance improvements
+
+First version 
+Release Date : 20-10-2010
+Features 
+ *Seekview
+ *Flow browser
+ *Media cutter
+ *Media mixer
+ *Audio extractor
+ *Winamp dsp plugins support
+ *8 Audio effect filters,17 Video effect filter
+
+First beta 
+Release Date : 13-10-2010 
+Features 
+ *Seekview
+
+

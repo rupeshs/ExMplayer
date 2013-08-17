@@ -37,7 +37,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-
+qDebug()<<QDir::tempPath();
     this->disableStylesheet();
     qDebug()<< "Config path :"<<Paths::configPath();
     settings=new QSettings(Paths::configPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
@@ -1081,7 +1081,7 @@ void PlayerWindow::startingPlayback()
 
                     videoWin->setPixmap(QPixmap::fromImage(img,Qt::AutoColor).scaled(170,128,Qt::IgnoreAspectRatio, Qt::FastTransformation));
                     hascover=true;
-                    cover->save(qApp->applicationDirPath()+"/"+"mcover.jpeg",0,-1);
+                    cover->save(QDir::tempPath()+"/"+"mcover.jpeg",0,-1);
                     ui->actionSave_cover_art->setEnabled(true);
                 }
             }
@@ -2971,7 +2971,7 @@ void PlayerWindow::on_action_Media_Info_triggered()
 
             str[0] = QChar('"');
             //qDebug()<<str;
-            path=qApp->applicationDirPath()+"/mcover.jpeg";
+            path=QDir::tempPath()+"/mcover.jpeg";
             path.append(str);
             path.prepend(str);
             tex+="<p><img src="+path+"</img></p>";

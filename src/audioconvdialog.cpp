@@ -24,6 +24,7 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 #include <QDropEvent>
+#include <paths.h>
 audioconvDialog::audioconvDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::audioconvDialog)
@@ -244,7 +245,7 @@ void audioconvDialog::encodeaudio(QString cfn,QString ofn,  QString fmt,QString 
             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
 #endif
 #ifdef Q_OS_LINUX
-             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg", arguments);
+             ffProcess->start(Paths::sharePath()+"/ffmpeg", arguments);
 #endif
 
 }

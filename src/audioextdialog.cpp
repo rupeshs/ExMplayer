@@ -20,6 +20,7 @@
 #include "rphfile.h"
 #include <QDesktopServices>
 #include "playerwindow.h"
+#include <paths.h>
 
 audioextDialog::audioextDialog(QWidget *parent) :
     QDialog(parent),
@@ -114,7 +115,7 @@ void audioextDialog::on_pex_clicked()
             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
 #endif
 #ifdef Q_OS_LINUX
-             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg", arguments);
+             ffProcess->start(Paths::sharePath()+"/ffmpeg", arguments);
 #endif
 
 //coreTimer->start();
