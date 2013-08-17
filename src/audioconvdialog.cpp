@@ -130,6 +130,7 @@ void audioconvDialog::on_pushButton_clicked()
     QSettings settings;
 
     QString filter =fileFilters::getaudiofilters();
+    qDebug()<<filter;
     qDebug()<<settings.value("Playlist/OpenfileDlg","").toString();
     fileName = QFileDialog::getOpenFileName(this,
                                             tr("Open a audio file..."),

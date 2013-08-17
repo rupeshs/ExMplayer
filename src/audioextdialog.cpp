@@ -62,7 +62,7 @@ void audioextDialog::on_pushButton_clicked()
     QFileDialog::Options options;
     QString selectedFilter;
     QString fileName;
-    QString filter =getFilter();
+    QString filter =fileFilters::getvideofilters();
     fileName = QFileDialog::getOpenFileName(this,
                                              tr("Open a video file..."),
                                              "",
@@ -122,82 +122,6 @@ void audioextDialog::on_pex_clicked()
    }
 }
 
- QString audioextDialog::getFilter()
- {
-
- QString fpl;
- QStringList faul;
- QString fau;
- QString mul;
- faul <<"*.wav"
-      <<"*.ac3"
-      <<"*.flac"
-      <<"*.mka"
-      <<"*.mp3"
-      <<"*.m4a"
-      <<"*.aac"
-      <<"*.mpc"
-      <<"*.ogg"
-      <<"*.oga"
-      <<"*.ra"
-      <<"*.wma"
-      <<"*.spx"
-      <<"*.mmf"
-      <<"*.amr"
-      <<"*.ape";
- for (int i=0;i<faul.count();i++)
- {if (i==faul.count())
-     fau+=faul.at(i);
-  else
-     fau+=faul.at(i)+" ";
-
-    mul+=faul.at(i)+" ";
- }
-  fau.prepend("Audio files (");
-  fau.append(");;");
-  QStringList fvil;
-  QString fvi;
-  fvil     <<"*.wmv"
-           <<"*.3gp"
-           <<"*.asf"
-           <<"*.avi"
-           <<"*.dat"
-           <<"*.dv"
-           <<"*.divx"
-           <<"*.ext"
-           <<"*.flv"
-           <<"*.ifo"
-           <<"*.mkv"
-           <<"*.mpg"
-           <<"*.mpe"
-           <<"*.mov"
-           <<"*.mp4"
-           <<"*.ogm"
-           <<"*.ogv"
-           <<"*.rm"
-           <<"*.rmvb"
-           <<"*.nsv"
-           <<"*.smk"
-           <<"*.ts"
-           <<"*.vob";
-  for (int i=0;i<fvil.count();i++)
-  {if (i==fvil.count())
-      {fvi+=fvil.at(i);
-       mul+=fvil.at(i);
-   }
-   else
-      { fvi+=fvil.at(i)+" ";
-      mul+=fvil.at(i)+" ";
-  }
-  }
-   fvi.prepend("Video files (");
-   fvi.append(");;");
-   mul.prepend("Mutimedia files (");
-   mul.append(");;");
-   fpl="Playlists (*.m3u *.pls);;Any file (*.*)";
-
-   return fvi;
- }
 void audioextDialog::updateStatus()
 {if (!ui->pushButton_2->isEnabled())
     {ui->pushButton_2->setDisabled(false);

@@ -1,5 +1,4 @@
 QMAKE=qmake
-LRELEASE=lrelease
 
 ifdef KDE_SUPPORT
 
@@ -16,7 +15,6 @@ endif
 
 src/exmplayer:
 	+cd src && $(QMAKE) $(QMAKE_OPTS) && $(DEFS) make
-	cd src && $(LRELEASE) exmplayer.pro
 
 clean:
 	if [ -f src/Makefile ]; then cd src && make distclean; fi
