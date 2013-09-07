@@ -148,7 +148,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="page_2">
     <widget class="QGroupBox" name="groupBox">
@@ -156,7 +156,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>251</width>
+       <width>371</width>
        <height>64</height>
       </rect>
      </property>
@@ -240,7 +240,7 @@
       <rect>
        <x>10</x>
        <y>70</y>
-       <width>251</width>
+       <width>371</width>
        <height>65</height>
       </rect>
      </property>
@@ -316,7 +316,7 @@
       <rect>
        <x>10</x>
        <y>200</y>
-       <width>351</width>
+       <width>371</width>
        <height>41</height>
       </rect>
      </property>
@@ -355,7 +355,7 @@
       <rect>
        <x>10</x>
        <y>140</y>
-       <width>351</width>
+       <width>371</width>
        <height>51</height>
       </rect>
      </property>
@@ -389,7 +389,7 @@
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>351</width>
+       <width>371</width>
        <height>41</height>
       </rect>
      </property>
@@ -415,7 +415,7 @@
       <rect>
        <x>10</x>
        <y>0</y>
-       <width>351</width>
+       <width>371</width>
        <height>51</height>
       </rect>
      </property>
@@ -450,7 +450,7 @@
       <rect>
        <x>10</x>
        <y>0</y>
-       <width>351</width>
+       <width>371</width>
        <height>51</height>
       </rect>
      </property>
@@ -478,14 +478,14 @@
       <rect>
        <x>10</x>
        <y>60</y>
-       <width>361</width>
-       <height>56</height>
+       <width>371</width>
+       <height>71</height>
       </rect>
      </property>
      <property name="title">
       <string>Screen shot Folder</string>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>17</x>
@@ -583,16 +583,16 @@
     <widget class="QGroupBox" name="groupBox_14">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>230</x>
        <y>0</y>
        <width>171</width>
-       <height>141</height>
+       <height>161</height>
       </rect>
      </property>
      <property name="title">
       <string>Colors</string>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>17</x>
@@ -802,8 +802,8 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>190</y>
-       <width>231</width>
+       <y>170</y>
+       <width>221</width>
        <height>101</height>
       </rect>
      </property>
@@ -863,8 +863,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="pushButton_6">
      <property name="geometry">
       <rect>
-       <x>290</x>
-       <y>250</y>
+       <x>240</x>
+       <y>240</y>
        <width>81</width>
        <height>26</height>
       </rect>
@@ -915,17 +915,17 @@ p, li { white-space: pre-wrap; }
        <x>10</x>
        <y>70</y>
        <width>351</width>
-       <height>56</height>
+       <height>61</height>
       </rect>
      </property>
      <property name="title">
       <string>Cache Size</string>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>17</x>
-        <y>25</y>
+        <y>20</y>
         <width>221</width>
         <height>29</height>
        </rect>
@@ -968,8 +968,8 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>180</y>
-       <width>151</width>
+       <y>200</y>
+       <width>171</width>
        <height>51</height>
       </rect>
      </property>
@@ -1003,7 +1003,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>210</x>
-       <y>130</y>
+       <y>140</y>
        <width>151</width>
        <height>51</height>
       </rect>
@@ -1038,7 +1038,7 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>130</y>
+       <y>140</y>
        <width>171</width>
        <height>51</height>
       </rect>
@@ -1160,8 +1160,8 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>361</width>
-       <height>81</height>
+       <width>371</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="title">

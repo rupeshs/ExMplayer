@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'preferencedialog.ui'
 **
-** Created: Sun Apr 21 22:52:02 2013
-**      by: Qt User Interface Compiler version 4.7.4
+** Created: Sun Apr 21 20:53:35 2013
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -67,7 +67,7 @@ public:
     QGroupBox *groupBox_3;
     QComboBox *comboBox_2;
     QGroupBox *groupBox_12;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEditSc;
     QPushButton *chScDir;
@@ -82,7 +82,7 @@ public:
     QCheckBox *checkBoxBold;
     QCheckBox *checkBoxItalic;
     QGroupBox *groupBox_14;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QGridLayout *gridLayout_2;
     QLabel *label_4;
     QLineEdit *texcol;
@@ -104,7 +104,7 @@ public:
     QGroupBox *groupBox_5;
     QComboBox *cmbiv;
     QGroupBox *groupBox_6;
-    QWidget *widget2;
+    QWidget *layoutWidget2;
     QHBoxLayout *horizontalLayout_5;
     QSpinBox *sbNetCache;
     QPushButton *pushButton_2;
@@ -185,7 +185,7 @@ public:
         page_2->setObjectName(QString::fromUtf8("page_2"));
         groupBox = new QGroupBox(page_2);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(10, 10, 251, 64));
+        groupBox->setGeometry(QRect(10, 10, 371, 64));
         horizontalLayout_6 = new QHBoxLayout(groupBox);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         horizontalLayout_3 = new QHBoxLayout();
@@ -208,7 +208,7 @@ public:
 
         groupBox_16 = new QGroupBox(page_2);
         groupBox_16->setObjectName(QString::fromUtf8("groupBox_16"));
-        groupBox_16->setGeometry(QRect(10, 70, 251, 65));
+        groupBox_16->setGeometry(QRect(10, 70, 371, 65));
         horizontalLayout_7 = new QHBoxLayout(groupBox_16);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         horizontalLayout_2 = new QHBoxLayout();
@@ -229,7 +229,7 @@ public:
 
         groupBox_17 = new QGroupBox(page_2);
         groupBox_17->setObjectName(QString::fromUtf8("groupBox_17"));
-        groupBox_17->setGeometry(QRect(10, 200, 351, 41));
+        groupBox_17->setGeometry(QRect(10, 200, 371, 41));
         radioButtonIsng = new QRadioButton(groupBox_17);
         radioButtonIsng->setObjectName(QString::fromUtf8("radioButtonIsng"));
         radioButtonIsng->setGeometry(QRect(30, 20, 82, 17));
@@ -238,7 +238,7 @@ public:
         radioButtonImul->setGeometry(QRect(150, 20, 82, 17));
         groupBox_18 = new QGroupBox(page_2);
         groupBox_18->setObjectName(QString::fromUtf8("groupBox_18"));
-        groupBox_18->setGeometry(QRect(10, 140, 351, 51));
+        groupBox_18->setGeometry(QRect(10, 140, 371, 51));
         groupBox_18->setFlat(false);
         groupBox_18->setCheckable(false);
         checkBoxRemrm = new QCheckBox(groupBox_18);
@@ -249,13 +249,13 @@ public:
         page_3->setObjectName(QString::fromUtf8("page_3"));
         groupBox_2 = new QGroupBox(page_3);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 60, 351, 41));
+        groupBox_2->setGeometry(QRect(10, 60, 371, 41));
         cbEnableAEq = new QCheckBox(groupBox_2);
         cbEnableAEq->setObjectName(QString::fromUtf8("cbEnableAEq"));
         cbEnableAEq->setGeometry(QRect(10, 20, 70, 17));
         groupBox_4 = new QGroupBox(page_3);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(10, 0, 351, 51));
+        groupBox_4->setGeometry(QRect(10, 0, 371, 51));
         cmbAO = new QComboBox(groupBox_4);
         cmbAO->setObjectName(QString::fromUtf8("cmbAO"));
         cmbAO->setGeometry(QRect(20, 20, 311, 26));
@@ -264,26 +264,26 @@ public:
         page->setObjectName(QString::fromUtf8("page"));
         groupBox_3 = new QGroupBox(page);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(10, 0, 351, 51));
+        groupBox_3->setGeometry(QRect(10, 0, 371, 51));
         comboBox_2 = new QComboBox(groupBox_3);
         comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
         comboBox_2->setGeometry(QRect(20, 20, 331, 26));
         groupBox_12 = new QGroupBox(page);
         groupBox_12->setObjectName(QString::fromUtf8("groupBox_12"));
-        groupBox_12->setGeometry(QRect(10, 60, 361, 56));
-        widget = new QWidget(groupBox_12);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(17, 25, 331, 31));
-        horizontalLayout_4 = new QHBoxLayout(widget);
+        groupBox_12->setGeometry(QRect(10, 60, 371, 71));
+        layoutWidget = new QWidget(groupBox_12);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(17, 25, 331, 31));
+        horizontalLayout_4 = new QHBoxLayout(layoutWidget);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
-        lineEditSc = new QLineEdit(widget);
+        lineEditSc = new QLineEdit(layoutWidget);
         lineEditSc->setObjectName(QString::fromUtf8("lineEditSc"));
         lineEditSc->setReadOnly(true);
 
         horizontalLayout_4->addWidget(lineEditSc);
 
-        chScDir = new QPushButton(widget);
+        chScDir = new QPushButton(layoutWidget);
         chScDir->setObjectName(QString::fromUtf8("chScDir"));
 
         horizontalLayout_4->addWidget(chScDir);
@@ -333,19 +333,19 @@ public:
 
         groupBox_14 = new QGroupBox(page_4);
         groupBox_14->setObjectName(QString::fromUtf8("groupBox_14"));
-        groupBox_14->setGeometry(QRect(220, 0, 171, 141));
-        widget1 = new QWidget(groupBox_14);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(17, 25, 147, 91));
-        gridLayout_2 = new QGridLayout(widget1);
+        groupBox_14->setGeometry(QRect(230, 0, 171, 161));
+        layoutWidget1 = new QWidget(groupBox_14);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(17, 25, 147, 91));
+        gridLayout_2 = new QGridLayout(layoutWidget1);
         gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
-        label_4 = new QLabel(widget1);
+        label_4 = new QLabel(layoutWidget1);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
         gridLayout_2->addWidget(label_4, 0, 0, 1, 1);
 
-        texcol = new QLineEdit(widget1);
+        texcol = new QLineEdit(layoutWidget1);
         texcol->setObjectName(QString::fromUtf8("texcol"));
         texcol->setMinimumSize(QSize(38, 25));
         texcol->setMaximumSize(QSize(38, 25));
@@ -362,19 +362,19 @@ public:
 
         gridLayout_2->addWidget(texcol, 0, 1, 1, 1);
 
-        pushButton_3 = new QPushButton(widget1);
+        pushButton_3 = new QPushButton(layoutWidget1);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
         pushButton_3->setMinimumSize(QSize(38, 25));
         pushButton_3->setMaximumSize(QSize(38, 16777215));
 
         gridLayout_2->addWidget(pushButton_3, 0, 2, 1, 1);
 
-        label_5 = new QLabel(widget1);
+        label_5 = new QLabel(layoutWidget1);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
         gridLayout_2->addWidget(label_5, 1, 0, 1, 1);
 
-        borcol = new QLineEdit(widget1);
+        borcol = new QLineEdit(layoutWidget1);
         borcol->setObjectName(QString::fromUtf8("borcol"));
         borcol->setMinimumSize(QSize(38, 25));
         borcol->setMaximumSize(QSize(38, 25));
@@ -382,19 +382,19 @@ public:
 
         gridLayout_2->addWidget(borcol, 1, 1, 1, 1);
 
-        pushButton_4 = new QPushButton(widget1);
+        pushButton_4 = new QPushButton(layoutWidget1);
         pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
         pushButton_4->setMinimumSize(QSize(38, 25));
         pushButton_4->setMaximumSize(QSize(38, 25));
 
         gridLayout_2->addWidget(pushButton_4, 1, 2, 1, 1);
 
-        shdwcol = new QLabel(widget1);
+        shdwcol = new QLabel(layoutWidget1);
         shdwcol->setObjectName(QString::fromUtf8("shdwcol"));
 
         gridLayout_2->addWidget(shdwcol, 2, 0, 1, 1);
 
-        shcol = new QLineEdit(widget1);
+        shcol = new QLineEdit(layoutWidget1);
         shcol->setObjectName(QString::fromUtf8("shcol"));
         shcol->setMinimumSize(QSize(38, 25));
         shcol->setMaximumSize(QSize(38, 25));
@@ -402,7 +402,7 @@ public:
 
         gridLayout_2->addWidget(shcol, 2, 1, 1, 1);
 
-        pushButton_5 = new QPushButton(widget1);
+        pushButton_5 = new QPushButton(layoutWidget1);
         pushButton_5->setObjectName(QString::fromUtf8("pushButton_5"));
         pushButton_5->setMinimumSize(QSize(38, 25));
         pushButton_5->setMaximumSize(QSize(38, 25));
@@ -411,7 +411,7 @@ public:
 
         groupBox_15 = new QGroupBox(page_4);
         groupBox_15->setObjectName(QString::fromUtf8("groupBox_15"));
-        groupBox_15->setGeometry(QRect(0, 190, 231, 101));
+        groupBox_15->setGeometry(QRect(0, 170, 221, 101));
         gridLayout_7 = new QGridLayout(groupBox_15);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         label_7 = new QLabel(groupBox_15);
@@ -436,7 +436,7 @@ public:
 
         pushButton_6 = new QPushButton(page_4);
         pushButton_6->setObjectName(QString::fromUtf8("pushButton_6"));
-        pushButton_6->setGeometry(QRect(290, 250, 81, 26));
+        pushButton_6->setGeometry(QRect(240, 240, 81, 26));
         stackedWidget->addWidget(page_4);
         page_5 = new QWidget();
         page_5->setObjectName(QString::fromUtf8("page_5"));
@@ -448,14 +448,14 @@ public:
         cmbiv->setGeometry(QRect(20, 20, 311, 26));
         groupBox_6 = new QGroupBox(page_5);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(10, 70, 351, 56));
-        widget2 = new QWidget(groupBox_6);
-        widget2->setObjectName(QString::fromUtf8("widget2"));
-        widget2->setGeometry(QRect(17, 25, 221, 29));
-        horizontalLayout_5 = new QHBoxLayout(widget2);
+        groupBox_6->setGeometry(QRect(10, 70, 351, 61));
+        layoutWidget2 = new QWidget(groupBox_6);
+        layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
+        layoutWidget2->setGeometry(QRect(17, 20, 221, 29));
+        horizontalLayout_5 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
-        sbNetCache = new QSpinBox(widget2);
+        sbNetCache = new QSpinBox(layoutWidget2);
         sbNetCache->setObjectName(QString::fromUtf8("sbNetCache"));
         sbNetCache->setMinimum(4);
         sbNetCache->setMaximum(65535);
@@ -463,14 +463,14 @@ public:
 
         horizontalLayout_5->addWidget(sbNetCache);
 
-        pushButton_2 = new QPushButton(widget2);
+        pushButton_2 = new QPushButton(layoutWidget2);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
 
         horizontalLayout_5->addWidget(pushButton_2);
 
         groupBox_7 = new QGroupBox(page_5);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
-        groupBox_7->setGeometry(QRect(10, 180, 151, 51));
+        groupBox_7->setGeometry(QRect(10, 200, 171, 51));
         sbNetBw = new QSpinBox(groupBox_7);
         sbNetBw->setObjectName(QString::fromUtf8("sbNetBw"));
         sbNetBw->setGeometry(QRect(20, 20, 111, 26));
@@ -478,7 +478,7 @@ public:
         sbNetBw->setValue(320);
         groupBox_9 = new QGroupBox(page_5);
         groupBox_9->setObjectName(QString::fromUtf8("groupBox_9"));
-        groupBox_9->setGeometry(QRect(210, 130, 151, 51));
+        groupBox_9->setGeometry(QRect(210, 140, 151, 51));
         sbseekmin = new QSpinBox(groupBox_9);
         sbseekmin->setObjectName(QString::fromUtf8("sbseekmin"));
         sbseekmin->setGeometry(QRect(10, 20, 61, 26));
@@ -486,7 +486,7 @@ public:
         sbseekmin->setValue(50);
         groupBox_8 = new QGroupBox(page_5);
         groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
-        groupBox_8->setGeometry(QRect(10, 130, 171, 51));
+        groupBox_8->setGeometry(QRect(10, 140, 171, 51));
         sbNetCachemin = new QSpinBox(groupBox_8);
         sbNetCachemin->setObjectName(QString::fromUtf8("sbNetCachemin"));
         sbNetCachemin->setGeometry(QRect(20, 20, 61, 26));
@@ -526,7 +526,7 @@ public:
         page_7->setObjectName(QString::fromUtf8("page_7"));
         groupBox_11 = new QGroupBox(page_7);
         groupBox_11->setObjectName(QString::fromUtf8("groupBox_11"));
-        groupBox_11->setGeometry(QRect(10, 10, 361, 81));
+        groupBox_11->setGeometry(QRect(10, 10, 371, 61));
         rbVol = new QRadioButton(groupBox_11);
         rbVol->setObjectName(QString::fromUtf8("rbVol"));
         rbVol->setGeometry(QRect(70, 20, 82, 17));
@@ -557,7 +557,7 @@ public:
         QObject::connect(listWidget, SIGNAL(currentRowChanged(int)), stackedWidget, SLOT(setCurrentIndex(int)));
 
         listWidget->setCurrentRow(0);
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(preferenceDialog);
