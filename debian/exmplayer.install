@@ -1,0 +1,9 @@
+exmplayer*.desktop usr/share/applications
+debian/exmplayer.png usr/share/pixmaps
+src/exmplayer usr/bin
+linux_build/sc_default.xml /etc/exmplayer
+linux_build/fmts /etc/exmplayer
+linux_build/ffmpeg usr/share/exmplayer
+
+
+

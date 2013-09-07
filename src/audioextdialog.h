@@ -26,7 +26,7 @@
 #include <QMessageBox>
 #include "filefilters.h"
 namespace Ui {
-    class audioextDialog;
+class audioextDialog;
 }
 
 class audioextDialog : public QDialog {
@@ -44,7 +44,6 @@ private:
     QTimer *coreTimer;
     QPointer<mplayerfe> mp;
     QPointer<QProcess> ffProcess;
-    QString getFilter();
     QString cfn;
     QFileInfo *cfile;
 signals:
@@ -59,8 +58,8 @@ private slots:
     void completed(int ec);
 protected:
     void dropEvent(QDropEvent *event);
-void dragEnterEvent(QDragEnterEvent *event);
-void dragMoveEvent(QDragMoveEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    void dragMoveEvent(QDragMoveEvent *event);
 };
 
 #endif // AUDIOEXTDIALOG_H

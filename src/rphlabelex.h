@@ -39,6 +39,8 @@ public:
     void  drawArtistName(QString artist);
     void  setSuffix(QString suf);
     void showeof(bool en){_showeof=en;update();};
+    bool _showeof;
+    QString _errtext;
 
 public slots:
     void showRubberBand(bool val){mrubberBand=val;};
@@ -48,6 +50,7 @@ public slots:
     void  animatet4();
     void  drawall(){_drawtext=true;};
     void showErrorText(QString tex){_errtext=tex;clearText();update();};
+
 signals:
     void rectRubberBand(QRect *val);
      void resizeVideo(int wid,int hei);
@@ -76,9 +79,9 @@ private:
     int step2;
     int step3;
     int step4;
-    bool _showeof;
+
     bool _drawtext;
-    QString _errtext;
+
 
 };
 #endif // RPHLABELEX_H

@@ -18,7 +18,7 @@
 
 #include "mixdialog.h"
 #include "ui_mixdialog.h"
-
+#include <paths.h>
 mixDialog::mixDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::mixDialog)
@@ -68,7 +68,7 @@ void mixDialog::changeEvent(QEvent *e)
             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
 #endif
 #ifdef Q_OS_LINUX
-             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg", arguments);
+             ffProcess->start(Paths::sharePath()+"/ffmpeg", arguments);
 #endif
 
 

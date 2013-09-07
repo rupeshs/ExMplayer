@@ -58,7 +58,7 @@ QString fileFilters::getvideofilters()
        mul+=faul.at(i)+" ";
     }
      fau.prepend("Audio files (");
-     fau.append(");;");
+     fau.append(");");
      QStringList fvil;
      QString fvi;
      fvil     <<"*.wmv"
@@ -95,9 +95,9 @@ QString fileFilters::getvideofilters()
      }
      }
       fvi.prepend("Video files (");
-      fvi.append(");;");
+      fvi.append(");");
       mul.prepend("Mutimedia files (");
-      mul.append(");;");
+      mul.append(");");
       fpl="Playlists (*.m3u *.pls);;Any file (*.*)";
 
       return fvi;
@@ -133,7 +133,7 @@ QString fileFilters::getaudiofilters()
        mul+=faul.at(i)+" ";
     }
      fau.prepend("Audio files (");
-     fau.append(");;");
+     fau.append(");");
      QStringList fvil;
      QString fvi;
      fvil     <<"*.wmv"
@@ -170,9 +170,9 @@ QString fileFilters::getaudiofilters()
      }
      }
       fvi.prepend("Video files (");
-      fvi.append(");;");
+      fvi.append(");");
       mul.prepend("Mutimedia files (");
-      mul.append(");;");
+      mul.append(");");
       fpl="Playlists (*.m3u *.pls);;Any file (*.*)";
 
       return fau;

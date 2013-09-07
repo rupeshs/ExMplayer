@@ -87,15 +87,15 @@ void miDialog::on_pushButton_clicked()
 
          str[0] = QChar('"');
          //qDebug()<<str;
-          path=qApp->applicationDirPath()+"/mcover.jpeg";
+          path=QDir::tempPath()+"/mcover.jpeg";
           path.append(str);
           path.prepend(str);
          html.replace(path,fi.baseName()+".jpeg");
 
          out <<html ;
-         QFile file1(qApp->applicationDirPath()+"/"+"mcover.jpeg");
+         QFile file1(QDir::tempPath()+"/"+"mcover.jpeg");
         //qDebug()<<fi.absolutePath()+fi.baseName()+".jpeg";
-         file1.copy(qApp->applicationDirPath()+"/"+"mcover.jpeg",fi.absolutePath()+"/"+fi.baseName()+".jpeg");
+         file1.copy(QDir::tempPath()+"/"+"mcover.jpeg",fi.absolutePath()+"/"+fi.baseName()+".jpeg");
 
      }
 

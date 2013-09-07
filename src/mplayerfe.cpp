@@ -18,7 +18,7 @@
 
 #include "mplayerfe.h"
 #include <QColor>
-
+#include <paths.h>
 /*A: 2.1 V: 2.2 A-V: -0.167 ct: 0.042 57/57 41% 0% 2.6% 0 4 49% 1.00x
 A: 2.1
      audio position in seconds
@@ -197,8 +197,15 @@ void mplayerfe::play(QString File,int volume)
     if(!keepaspect){
         arguments<<"-nokeepaspect";
     }
-    //
-    argSubOpt<<"-sub-fuzziness"<<QString::number(1)<<"-ass"<<"-embeddedfonts"<<"-ass-styles"<<qApp->applicationDirPath()+"/styles.ass";
+    // Load the styles.ass file
+    if (!QFile::exists(Paths::configPath()+"/styles.ass")) {
+        // If file doesn't exist, create it
+        AssStyles ass;
+        ass.exportStyles(Paths::configPath()+"/styles.ass") ;
+
+    }
+
+    argSubOpt<<"-sub-fuzziness"<<QString::number(1)<<"-ass"<<"-embeddedfonts"<<"-ass-styles"<<Paths::configPath()+"/styles.ass";
     //
     argvideofilters<<"-vf"<<"screenshot";
     //All options

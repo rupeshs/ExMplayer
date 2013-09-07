@@ -60,6 +60,7 @@ Screen::Screen(QWidget* parent, Qt::WindowFlags f) : rphLabelEx(parent)
 	setAttribute(Qt::WA_PaintOnScreen);
 	setAttribute(Qt::WA_PaintUnclipped);
 	//setAttribute(Qt::WA_PaintOutsidePaintEvent);
+
 }
 
 Screen::~Screen() {
@@ -69,11 +70,26 @@ void Screen::paintEvent( QPaintEvent * e ) {
 
     //e->ignore();
 	//qDebug("Screen::paintEvent");
-          QPainter painter(this);
+   QPainter painter(this);
    painter.eraseRect( e->rect() );
 
+   if (_showeof)
+   {
+       painter.setPen(Qt::white);
+    painter.setFont(QFont("Arial", 16));
+    painter.drawText(rect(), Qt::AlignCenter, "End of playback");
+
+}
+
+   if (!_errtext.isEmpty())
+   {
+       painter.setPen(Qt::red);
+    painter.setFont(QFont("Arial", 15));
+    painter.drawText(rect(), Qt::AlignCenter, _errtext);
+
+}
     painter.setRenderHints(QPainter::NonCosmeticDefaultPen|QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform);
-rphLabelEx::paintEvent(e);
+   //rphLabelEx::paintEvent(e);
 //
 
 
@@ -183,17 +199,23 @@ MplayerWindow::MplayerWindow(QWidget* parent, Qt::WindowFlags f)
         mplayerlayer->setAutoFillBackground(TRUE);
 
 	logo = new QLabel( mplayerlayer );
-	logo->setAutoFillBackground(TRUE);
-#if QT_VERSION >= 0x040400
-	logo->setAttribute(Qt::WA_NativeWindow); // Otherwise the logo is not visible in Qt 4.4
-#else
-	logo->setAttribute(Qt::WA_PaintOnScreen); // Fixes the problem if compiled with Qt < 4.4
-#endif
+    logo->setAutoFillBackground(TRUE);
+
+
+
+//#if QT_VERSION >= 0x040400
+//	logo->setAttribute(Qt::WA_NativeWindow); // Otherwise the logo is not visible in Qt 4.4
+//#else
+//	logo->setAttribute(Qt::WA_PaintOnScreen); // Fixes the problem if compiled with Qt < 4.4
+//#endif
     ColorUtils::setBackgroundColor( logo, QColor(0,0,0) );
 
 	QVBoxLayout * mplayerlayerLayout = new QVBoxLayout( mplayerlayer );
 	mplayerlayerLayout->addWidget( logo, 0, Qt::AlignHCenter | Qt::AlignVCenter );
 
+    movie = new QMovie(":/images/backanim.gif");
+    logo->setMovie(movie);
+    movie->start();
     aspect = (double) 4 / 3;
 	monitoraspect = 0;
 

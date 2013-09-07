@@ -18,7 +18,7 @@
 
 #include "playerwindow.h"
 #include "ui_playerwindow.h"
-
+#include "paths.h"
 #include <QDesktopWidget>
 
 QDesktopWidget *desktop;
@@ -37,9 +37,10 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-
+qDebug()<<QDir::tempPath();
     this->disableStylesheet();
-    settings=new QSettings(qApp->applicationDirPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
+    qDebug()<< "Config path :"<<Paths::configPath();
+    settings=new QSettings(Paths::configPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
 
     if (settings->value("Skin/style","aqua").toString()=="wood")
         QApplication::setStyle(new NorwegianWoodStyle);
@@ -56,7 +57,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     //qApp->setStyle(new glassstyle);
 
     //Loading config
-    settings=new QSettings(qApp->applicationDirPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
+    settings=new QSettings(Paths::configPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
     myconfig=new config();
     desktop=qApp->desktop();
 
@@ -353,6 +354,10 @@ void  PlayerWindow::setupMyUi()
 {
 
 
+#ifdef Q_OS_LINUX
+    ui->actionWinamp_Dsp->setVisible(false);
+# endif
+
     ui->actionInternet_Radio->setVisible(false);
     ui->actionCopy_Audio_CD->setVisible(false);
 
@@ -363,10 +368,15 @@ void  PlayerWindow::setupMyUi()
     videoWin=new  MplayerWindow(this,0);
     videoWin->setAlignment(Qt::AlignCenter);
     videoWin->allowVideoMovement(true);
+
+    videoWin->showLogo(false);
+
     movie = new QMovie(":/images/backanim.gif");
+
     this->videoWin->setMovie(movie);
     movie->start();
-    videoWin->mplayerlayer->hide();
+    //videoWin->mplayerlayer->hide();
+    videoWin->showLogo(true);
 
     panel = new QWidget( this );
     panel->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
@@ -509,7 +519,7 @@ void  PlayerWindow::setupMyUi()
     //testlab->setText("ffffffffffffffffff");
     //testlab->show();
     //videoWin->setAspect(1.0);
-    videoWin->showLogo(false);
+    //videoWin->showLogo(false);
 
     piv->setColor(QColor(qRgb(255,255,255) ));
     piv->resize(32,32);
@@ -830,6 +840,7 @@ void PlayerWindow::startingPlayback()
 
     QMutex mutex;
     mutex.lock();
+    videoWin->showLogo(false);
 
     basicmetainfo.clear();
     qDebug()<<"Audio :"<<mp->hasaudio()<<"Video :"<<mp->hasvideo();
@@ -1070,7 +1081,7 @@ void PlayerWindow::startingPlayback()
 
                     videoWin->setPixmap(QPixmap::fromImage(img,Qt::AutoColor).scaled(170,128,Qt::IgnoreAspectRatio, Qt::FastTransformation));
                     hascover=true;
-                    cover->save(qApp->applicationDirPath()+"/"+"mcover.jpeg",0,-1);
+                    cover->save(QDir::tempPath()+"/"+"mcover.jpeg",0,-1);
                     ui->actionSave_cover_art->setEnabled(true);
                 }
             }
@@ -2017,7 +2028,16 @@ void PlayerWindow::on_actionStart_stop_Screenshot_triggered()
 void PlayerWindow::on_action_Open_Screenshot_folder_triggered()
 {
     QString arg= myconfig->screenshotfolder;
-    this->winExplorer("",arg);
+#ifdef Q_OS_WIN
+    path=path.replace("/","\\");
+    QProcess::execute("explorer.exe "+opt+path);
+#elif defined Q_OS_LINUX
+    //QString lpath = QDir::toNativeSeparators(path);
+    // lpath.left(lpath.length()- lpath.lastIndexOf(QDir::separator () );
+    //qDebug()<<lpath.left(lpath.length()-lpath.lastIndexOf("/")+1);
+    //QDir d = QFileInfo(lpath).absoluteDir();
+    QDesktopServices::openUrl(QUrl(arg));
+#endif
 }
 
 void PlayerWindow::on_actionToggle_subtitle_visibility_triggered()
@@ -2561,15 +2581,23 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
 
 }
 void PlayerWindow::dropEvent(QDropEvent *event)
-{  QList<QUrl> urlList;
+{
+    QList<QUrl> urlList;
 
     if (event->mimeData()->hasUrls())
         urlList = event->mimeData()->urls();
 
     for (int i = 0; i < urlList.size() && i < 32; ++i) {
+        //QString url = urlList.at(i).path();
+        // url=url.right(url.length()-1);
+
+#ifdef Q_OS_WIN
         QString url = urlList.at(i).path();
         url=url.right(url.length()-1);
-
+#endif
+#ifdef Q_OS_LINUX
+        QString url = urlList.at(i).toLocalFile();
+# endif
         QFileInfo fi(url);
         if(fi.isFile())
         {  if (urlList.size()==1)
@@ -2943,7 +2971,7 @@ void PlayerWindow::on_action_Media_Info_triggered()
 
             str[0] = QChar('"');
             //qDebug()<<str;
-            path=qApp->applicationDirPath()+"/mcover.jpeg";
+            path=QDir::tempPath()+"/mcover.jpeg";
             path.append(str);
             path.prepend(str);
             tex+="<p><img src="+path+"</img></p>";
@@ -3254,11 +3282,10 @@ void PlayerWindow:: playurl(QString url)
     myplaylist->playFirstFile();
 }
 void PlayerWindow::createShortcuts()
-{QString path;
+{
+    QString path;
 
-
-
-    path=qApp->applicationDirPath();
+    path=Paths::configPath();
     path.append("/sc_user.xml");
 
     QFile file(path);
@@ -3266,8 +3293,14 @@ void PlayerWindow::createShortcuts()
     if(!file.exists())
     {  file.close();
         path.clear();
-        path=qApp->applicationDirPath();
+#ifdef Q_OS_WIN
+     path=Paths::configPath();
+#endif
+#ifdef Q_OS_LINUX
+    path=Paths::getStaticConfigPath();
+# endif
         path.append("/sc_default.xml");
+        qDebug()<<"Loading shortcut file :"<<path;
         file.setFileName(path);
         qDebug()<<"Checking for deault short cut bindings..."<<file.exists();
 

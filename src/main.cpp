@@ -20,9 +20,29 @@
 #include "playerwindow.h"
 #include "qtsingleapplication.h"
 
+
+void crashingMessageHandler(QtMsgType type, const char *msg)
+{
+    switch (type) {
+    case QtDebugMsg:
+        fprintf(stderr, "Debug: %s\n", msg);
+        break;
+    case QtWarningMsg:
+        fprintf(stderr, "Warning: %s\n", msg);
+        break;
+    case QtCriticalMsg:
+        fprintf(stderr, "Critical: %s\n", msg);
+        break;
+    case QtFatalMsg:
+        fprintf(stderr, "Fatal: %s\n", msg);
+        __asm("int3");
+        abort();
+    }
+}
+
 int main(int argc, char *argv[])
 {
-
+    qInstallMsgHandler(crashingMessageHandler);
     QtSingleApplication instance(argc, argv);
     if(instance.isRunning())
     {
