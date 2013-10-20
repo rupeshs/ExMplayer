@@ -73,6 +73,12 @@ private slots:
 
     void on_comboBoxStyle_activated(const QString &arg1);
 
+
+
+    void on_hSliderVolumeBoost_valueChanged(int value);
+
+    void on_pushButtonResetVolumeBoost_clicked();
+
 private:
 QWidget *_w;
 ShortcutGetter *scg;

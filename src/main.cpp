@@ -42,7 +42,7 @@ void crashingMessageHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
-    qInstallMsgHandler(crashingMessageHandler);
+   // qInstallMsgHandler(crashingMessageHandler);
     QtSingleApplication instance(argc, argv);
     if(instance.isRunning())
     {

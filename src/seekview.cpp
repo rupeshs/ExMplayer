@@ -32,6 +32,11 @@ SeekView::SeekView(QWidget *parent) :
 
     this->setMask(pixmap.mask());
 
+    movie = new QMovie(":/images/loader.gif");
+
+    ui->frameView->setMovie(movie);
+    movie->start();
+
             //topLevelLabel->show();
 }
 

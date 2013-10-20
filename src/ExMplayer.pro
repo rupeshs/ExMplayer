@@ -46,7 +46,8 @@ SOURCES += main.cpp \
     glassstyle.cpp \
     fontloaddialog.cpp\
     advancedinfodialog.cpp \
-    paths.cpp
+    paths.cpp \
+    qcoverart.cpp
 HEADERS += playerwindow.h \
     mplayerfe.h \
     rphlabelex.h \
@@ -84,7 +85,8 @@ HEADERS += playerwindow.h \
     glassstyle.h \
     fontloaddialog.h\
     advancedinfodialog.h \
-    paths.h
+    paths.h \
+    qcoverart.h
 FORMS += playerwindow.ui \
     preferencedialog.ui \
     winampdspdialog.ui \
@@ -105,6 +107,10 @@ DEPENDPATH += qtsingleapplication
 SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
 HEADERS += qtsingleapplication.h qtlocalpeer.h
 
+
+INCLUDEPATH +=taglib
+
+LIBS += $$PWD\taglib\lib\libtag.a
 
 
 win32 {

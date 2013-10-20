@@ -93,7 +93,7 @@ color: rgb(0, 0, 255);
      <number>0</number>
     </property>
     <property name="smallDecimalPoint">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="numDigits">
      <number>8</number>
@@ -145,7 +145,7 @@ color: rgb(0, 0, 255);
      <number>3</number>
     </property>
     <property name="smallDecimalPoint">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
     <property name="numDigits">
      <number>8</number>
@@ -516,8 +516,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>-40</x>
-      <y>140</y>
+      <x>10</x>
+      <y>280</y>
       <width>601</width>
       <height>251</height>
      </rect>
@@ -561,7 +561,7 @@ p, li { white-space: pre-wrap; }
      <enum>QTabWidget::North</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabWidgetPage1">
      <attribute name="title">
@@ -1748,14 +1748,10 @@ p, li { white-space: pre-wrap; }
     <property name="text">
      <string>...</string>
     </property>
-    <property name="icon">
-     <iconset resource="ExMplayer.qrc">
-      <normaloff>:/images/fullscreen.png</normaloff>:/images/fullscreen.png</iconset>
-    </property>
     <property name="iconSize">
      <size>
-      <width>32</width>
-      <height>32</height>
+      <width>24</width>
+      <height>24</height>
      </size>
     </property>
    </widget>
@@ -2133,6 +2129,35 @@ color: grey;
      <bool>false</bool>
     </property>
    </widget>
+   <widget class="QToolButton" name="toolButtonStereoVideo">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonVolumeBoost">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Volume Boost </string>
+    </property>
+    <property name="text">
+     <string>...</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="sizePolicy">
@@ -2154,7 +2179,7 @@ color: grey;
      <x>0</x>
      <y>0</y>
      <width>879</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -2298,6 +2323,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="menu_Filters"/>
     <addaction name="action_Equalizer"/>
     <addaction name="separator"/>
+    <addaction name="actionVolume_Boost"/>
     <addaction name="action_Increase_volume"/>
     <addaction name="action_Decrease_volume"/>
     <addaction name="separator"/>
@@ -2534,11 +2560,65 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_Media_Info"/>
     <addaction name="actionSmallmode"/>
     <addaction name="actionAdvanced_Info"/>
+    <addaction name="actionInfobar"/>
+   </widget>
+   <widget class="QMenu" name="menu3D">
+    <property name="title">
+     <string>3D</string>
+    </property>
+    <widget class="QMenu" name="menuViewing_methods">
+     <property name="title">
+      <string>Viewing methods</string>
+     </property>
+     <widget class="QMenu" name="menuInput_formats">
+      <property name="title">
+       <string>Input formats</string>
+      </property>
+      <addaction name="actionSide_by_side_left_first"/>
+      <addaction name="actionSide_by_side_right_first"/>
+      <addaction name="actionSide_by_side_half_width_left_first"/>
+      <addaction name="actionSide_by_side_half_width_right_first"/>
+      <addaction name="separator"/>
+      <addaction name="actionAbove_below_left_first"/>
+      <addaction name="actionAbove_below_right_first"/>
+      <addaction name="actionAbove_below_half_height_left_first"/>
+      <addaction name="actionAbove_below_half_height_right_first"/>
+     </widget>
+     <widget class="QMenu" name="menu3D_output_formats">
+      <property name="title">
+       <string>3D output formats</string>
+      </property>
+      <addaction name="actionAnaglyph_red_cyan_dubois"/>
+      <addaction name="actionAnaglyph_red_cyan_color"/>
+      <addaction name="actionAnaglyph_red_cyan_half_color"/>
+      <addaction name="actionAnaglyph_red_cyan_gray"/>
+      <addaction name="separator"/>
+      <addaction name="actionAnaglyph_green_magenta_color"/>
+      <addaction name="actionAnaglyph_green_magenta_half_color"/>
+      <addaction name="actionAnaglyph_green_magenta_gray"/>
+      <addaction name="separator"/>
+      <addaction name="actionAnaglyph_yellow_blue_color"/>
+      <addaction name="actionAnaglyph_yellow_blue_half_color"/>
+      <addaction name="actionAnaglyph_yellow_blue_gray"/>
+      <addaction name="separator"/>
+      <addaction name="actionInterleave_rows_left_first"/>
+      <addaction name="actionInterleave_rows_right_first"/>
+      <addaction name="separator"/>
+      <addaction name="actionMono_left"/>
+      <addaction name="actionMono_right"/>
+     </widget>
+     <addaction name="menuInput_formats"/>
+     <addaction name="menu3D_output_formats"/>
+    </widget>
+    <addaction name="actionEnable_3D"/>
+    <addaction name="menuViewing_methods"/>
+    <addaction name="actionWatch_as_2D_video"/>
    </widget>
    <addaction name="menu_Open"/>
    <addaction name="menuPlay"/>
    <addaction name="menu_Audio"/>
    <addaction name="menu_Video"/>
+   <addaction name="menu3D"/>
    <addaction name="menu_Subtitles"/>
    <addaction name="menu_View"/>
    <addaction name="menuPlaylist"/>
@@ -4188,6 +4268,283 @@ p, li { white-space: pre-wrap; }
   <action name="actionAdvanced_Info">
    <property name="text">
     <string>Advanced Info</string>
+   </property>
+  </action>
+  <action name="actionEnable_3D">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable 3D</string>
+   </property>
+  </action>
+  <action name="actionInfobar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Infobar</string>
+   </property>
+  </action>
+  <action name="actionSide_by_side_left_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>side by side left first</string>
+   </property>
+   <property name="iconText">
+    <string>sbsl</string>
+   </property>
+   <property name="toolTip">
+    <string>side by side parallel (left eye left, right eye right)</string>
+   </property>
+  </action>
+  <action name="actionSide_by_side_right_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>side by side right first</string>
+   </property>
+   <property name="iconText">
+    <string>sbsr</string>
+   </property>
+  </action>
+  <action name="actionSide_by_side_half_width_left_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>side_by_side_half_width_left_first</string>
+   </property>
+   <property name="iconText">
+    <string>sbs2l</string>
+   </property>
+  </action>
+  <action name="actionSide_by_side_half_width_right_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>side_by_side_half_width_right_first</string>
+   </property>
+   <property name="iconText">
+    <string>sbs2r</string>
+   </property>
+  </action>
+  <action name="actionAbove_below_left_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>above_below_left_first</string>
+   </property>
+   <property name="iconText">
+    <string>abl</string>
+   </property>
+  </action>
+  <action name="actionAbove_below_right_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>above_below_right_first</string>
+   </property>
+   <property name="iconText">
+    <string>abr</string>
+   </property>
+  </action>
+  <action name="actionAbove_below_half_height_left_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>above_below_half_height_left_first</string>
+   </property>
+   <property name="iconText">
+    <string>ab2l</string>
+   </property>
+  </action>
+  <action name="actionAbove_below_half_height_right_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>above_below_half_height_right_first</string>
+   </property>
+   <property name="iconText">
+    <string>ab2r</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_red_cyan_dubois">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph red cyan dubois</string>
+   </property>
+   <property name="iconText">
+    <string>arcd</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_red_cyan_color">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph red cyan color</string>
+   </property>
+   <property name="iconText">
+    <string>arcc</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_red_cyan_half_color">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph red cyan half color</string>
+   </property>
+   <property name="iconText">
+    <string>arch</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_red_cyan_gray">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph red cyan gray</string>
+   </property>
+   <property name="iconText">
+    <string>arcg</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_green_magenta_color">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph green magenta color</string>
+   </property>
+   <property name="iconText">
+    <string>agmc</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_green_magenta_half_color">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph green magenta half color</string>
+   </property>
+   <property name="iconText">
+    <string>agmh</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_green_magenta_gray">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph green magenta gray</string>
+   </property>
+   <property name="iconText">
+    <string>agmg</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_yellow_blue_color">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph yellow blue color</string>
+   </property>
+   <property name="iconText">
+    <string>aybc</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_yellow_blue_half_color">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph yellow blue half color</string>
+   </property>
+   <property name="iconText">
+    <string>aybh</string>
+   </property>
+  </action>
+  <action name="actionAnaglyph_yellow_blue_gray">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>anaglyph yellow blue gray</string>
+   </property>
+   <property name="iconText">
+    <string>aybg</string>
+   </property>
+  </action>
+  <action name="actionInterleave_rows_left_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>interleave rows left first</string>
+   </property>
+   <property name="iconText">
+    <string>irl</string>
+   </property>
+  </action>
+  <action name="actionInterleave_rows_right_first">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>interleave_rows_right_first</string>
+   </property>
+   <property name="iconText">
+    <string>irr</string>
+   </property>
+  </action>
+  <action name="actionMono_left">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>mono left</string>
+   </property>
+   <property name="iconText">
+    <string>ml</string>
+   </property>
+  </action>
+  <action name="actionMono_right">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>mono right</string>
+   </property>
+   <property name="iconText">
+    <string>mr</string>
+   </property>
+  </action>
+  <action name="actionWatch_as_2D_video">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Watch as 2D video</string>
+   </property>
+  </action>
+  <action name="actionVolume_Boost">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Volume Boost</string>
    </property>
   </action>
  </widget>

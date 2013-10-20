@@ -19,7 +19,7 @@
 #define SEEKVIEW_H
 
 #include <QDialog>
-
+#include <QMovie>
 namespace Ui {
 class SeekView;
 }
@@ -36,6 +36,7 @@ public:
 
 private:
     Ui::SeekView *ui;
+    QMovie *movie;
 };
 
 #endif // SEEKVIEW_H

@@ -36,6 +36,8 @@ INPUT(
 ./release\glassstyle.o
 ./release\fontloaddialog.o
 ./release\advancedinfodialog.o
+./release\paths.o
+./release\qcoverart.o
 ./release\qtsingleapplication.o
 ./release\qtlocalpeer.o
 ./release\screensaver.o

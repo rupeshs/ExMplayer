@@ -4,8 +4,6 @@
         <file>images/removefile.png</file>
         <file>images/playlist.png</file>
         <file>images/faster.png</file>
-        <file>images/slower.png</file>
-        <file>images/fullscreen.png</file>
         <file>images/vol25.png</file>
         <file>images/vol50.png</file>
         <file>images/vol75.png</file>
@@ -86,9 +84,16 @@
         <file>images/seekview.png</file>
         <file>images/ExMplayer.ico</file>
         <file>images/ExMplayer.png</file>
-        <file>images/backanim.gif</file>
         <file>images/rphMPFE_sh.png</file>
         <file>images/like_icon.png</file>
         <file>images/lk.png</file>
+        <file>images/loader.gif</file>
+        <file>images/fullscreen.png</file>
+        <file>images/3D_off.png</file>
+        <file>images/backanim.gif</file>
+        <file>images/volboost_on.png</file>
+        <file>images/volboost_off.png</file>
+        <file>images/slower.png</file>
+        <file>images/3D_on.png</file>
     </qresource>
 </RCC>

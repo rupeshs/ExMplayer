@@ -36,6 +36,8 @@ INPUT(
 ./debug\glassstyle.o
 ./debug\fontloaddialog.o
 ./debug\advancedinfodialog.o
+./debug\paths.o
+./debug\qcoverart.o
 ./debug\qtsingleapplication.o
 ./debug\qtlocalpeer.o
 ./debug\screensaver.o

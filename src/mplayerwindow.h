@@ -77,29 +77,31 @@ private:
 
 class MplayerLayer : public Screen
 {
-    Q_OBJECT
-
+    Q_OBJECT 
 public:
     MplayerLayer(QWidget* parent = 0, Qt::WindowFlags f = 0);
     ~MplayerLayer();
 
-
-
-
 public slots:
+    //! If b is true, the background of the widget will be repainted as usual.
+    /*! Otherwise the background will not repainted when a video is playing. */
+    void setRepaintBackground(bool b);
+
+    //! Return true if repainting the background is allowed.
+        bool repaintBackground() { return repaint_background; }
+
+
     //! Should be called when a file has started.
     /*! It's needed to know if the background has to be cleared or not. */
     void playingStarted();
     //! Should be called when a file has stopped.
     void playingStopped();
-
-
-
 private:
-
-
-
     bool playing;
+     bool repaint_background;
+protected:
+
+    virtual void paintEvent ( QPaintEvent * e );
 };
 
 
@@ -165,6 +167,7 @@ protected:
     virtual void mouseDoubleClickEvent( QMouseEvent * e );
     virtual void wheelEvent( QWheelEvent * e );
 
+
     void moveLayer( int offset_x, int offset_y );
     virtual void hideEvent(QHideEvent *);
     virtual void showEvent(QShowEvent *);
@@ -204,6 +207,7 @@ protected:
 
     bool allow_video_movement;
     bool showvideo;
+    bool bshowLogo;
 
 #if DELAYED_RESIZE
     QTimer * resize_timer;

@@ -34,7 +34,6 @@ GlassStyle::GlassStyle()
 {
 
     m_colorBackgroundBegin = qRgb( 158, 190, 245 );
-
     m_colorBackgroundEnd = qRgb( 196, 218, 250 );
 
     m_colorMenuBorder = qRgba(167, 185, 221,100 );
@@ -44,18 +43,19 @@ GlassStyle::GlassStyle()
     m_colorMenuTitleEnd = qRgb( 250, 250, 255 );
 
     m_colorBarBegin = qRgb( 255, 255, 255 );
-    m_colorBarMiddle = qRgb( 230, 230, 230 );
-    int h,s,v;
+    m_colorBarMiddle = qRgb( 225, 225, 225 );
+    m_colorBarEnd = qRgb( 255,255, 255 );
+    /*int h,s,v;
     m_colorBarMiddle.getHsl(&h,&s,&v);
     qDebug("%d %d %d",h,s,v);
-  // m_colorBarMiddle.setHsl(200,128,150,30);
-    m_colorBarEnd = qRgb( 240,240, 240 );
+   //m_colorBarMiddle.setHsl(200,128,150,30);*/
+
     /*m_colorBarBegin = qRgb( 199, 219, 219 );
     m_colorBarMiddle = qRgb( 125, 132, 219 );
     m_colorBarEnd = qRgb( 53, 56,  );&*/
     m_colorHandle = qRgb( 250, 250, 250 );
     m_colorHandleLight = qRgb( 255, 255, 255 );
-    m_colorSeparator = qRgba( 200, 200, 200,50 );
+    m_colorSeparator = qRgba( 200, 200, 200,100 );
     m_colorSeparatorLight = qRgb( 255, 255, 255 );
     m_colorMenuItemBorder=qRgba(144,199, 227,255 );
     m_colorItemBorder = qRgba(255,255, 255,255 );
@@ -64,13 +64,13 @@ GlassStyle::GlassStyle()
     m_colorItemBackgroundMiddle = QColor(29,186,255,5);
     m_colorItemBackgroundEnd = qRgb( 255, 255, 255 );
 
-    m_colorItemCheckedBegin = qRgb( 255, 255, 255 );
-    m_colorItemCheckedMiddle = QColor(255,186,255,250);
-    m_colorItemCheckedEnd = qRgb( 255, 255, 255 );
+    m_colorItemCheckedBegin = QColor( 100,100,100,10 );
+    m_colorItemCheckedMiddle =QColor( 200,230,200,50 ) ;
+    m_colorItemCheckedEnd =QColor( 0,255,0,60 ) ;
 
-    m_colorItemSunkenBegin = qRgb( 250, 250, 255 );
+    m_colorItemSunkenBegin = qRgb( 240, 240, 240 );
     m_colorItemSunkenMiddle = QColor(255,255,255,255);
-    m_colorItemSunkenEnd = qRgb( 250, 250, 255 );
+    m_colorItemSunkenEnd = qRgb( 250, 250, 250 );
 
     m_colorBorder = qRgb( 255,0, 0 );
     m_colorBorderLight = qRgb(0 , 255, 0 );
@@ -277,7 +277,7 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
         gradient = QLinearGradient( rect.topLeft(), rect.bottomLeft() );
 
         gradient.setColorAt( 0.0, m_colorBarBegin );
-        gradient.setColorAt( 0.4, m_colorItemBackgroundMiddle );
+       gradient.setColorAt( 0.4, m_colorItemBackgroundMiddle );
         gradient.setColorAt( 0.6, m_colorItemBackgroundMiddle );
         gradient.setColorAt( 1.0, m_colorItemBackgroundEnd );
         painter->fillRect( rect, gradient );
@@ -604,8 +604,8 @@ void GlassStyle::drawControl( ControlElement element, const QStyleOption* option
             gradient = QLinearGradient( rect.topLeft(), rect.bottomLeft() );
 
         gradient.setColorAt( 0.0, m_colorBarBegin );
-        gradient.setColorAt( 0.4, m_colorBarMiddle );
-        gradient.setColorAt( 0.6, m_colorBarMiddle );
+        //gradient.setColorAt( 0.4, m_colorBarMiddle );
+       // gradient.setColorAt( 0.6, m_colorBarMiddle );
         gradient.setColorAt( 1.0,QColor(255,255,255,200));
         painter->fillRect( rect, gradient );
 
@@ -669,10 +669,15 @@ void GlassStyle::drawComplexControl( ComplexControl control, const QStyleOptionC
                         gradient.setColorAt( 0.0, m_colorItemCheckedBegin );
                         gradient.setColorAt( 0.5, m_colorItemCheckedMiddle );
                         gradient.setColorAt( 1.0, m_colorItemCheckedEnd );
+                        //painter->drawLine(buttonRect.right()+1,buttonRect.bottom()+3,buttonRect.width()-2,buttonRect.bottom()+3);
+
                     } else {
-                        gradient.setColorAt( 0.0, m_colorBarBegin );
-                        gradient.setColorAt( 0.5,m_colorBarMiddle );
-                        gradient.setColorAt( 1.0, m_colorBarEnd );
+
+
+                            gradient.setColorAt( 0.0, m_colorBarBegin );
+                            gradient.setColorAt( 0.5,m_colorBarMiddle );
+                            gradient.setColorAt( 1.0, m_colorBarEnd );
+
                     }
 
                     painter->setBrush( gradient );

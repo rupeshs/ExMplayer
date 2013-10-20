@@ -168,11 +168,13 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
        emit restartComplete();
            break;
 
-     case 1:{emit settingChanged("Audio","EnableEQ",QString::number(ui->cbEnableAEq->checkState()));
+     case 1:{
+             emit settingChanged("Audio","EnableEQ",QString::number(ui->cbEnableAEq->checkState()));
              emit settingChanged("Audio","Driver",ui->cmbAO->currentText());
              emit settingChanged("Audio","DevNo",QString::number(ui->cmbAO->currentIndex()));
-
+             emit settingChanged("Audio","VolumeBoost",QString::number(ui->hSliderVolumeBoost->value()));
              emit restartComplete();
+
               break;
              }
      case 2: emit restartComplete();
@@ -240,7 +242,9 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
             ui->cbEnableAEq->setCheckState(Qt::Unchecked);
 
          ui->cmbAO->setCurrentIndex(ui->cmbAO->findText(_settings->value("Audio/Driver","Auto").toString()));
-              break;
+
+         ui->hSliderVolumeBoost->setValue(_settings->value("Audio/VolumeBoost","1000").toInt());
+         break;
   case  2 :{QDesktopServices mycomputer;
            QString picfolder=mycomputer.storageLocation(QDesktopServices::PicturesLocation);
             ui->lineEditSc->setText(_settings->value("Video/CaptureDir",picfolder).toString());
@@ -483,4 +487,16 @@ void preferenceDialog::on_buttonBox_accepted()
 void preferenceDialog::on_comboBoxStyle_activated(const QString &arg1)
 {
 
+}
+
+
+
+void preferenceDialog::on_hSliderVolumeBoost_valueChanged(int value)
+{
+    ui->labelVolumeBoost->setText(QString::number(value)+QString("%"));
+}
+
+void preferenceDialog::on_pushButtonResetVolumeBoost_clicked()
+{
+    ui->hSliderVolumeBoost->setValue(1000);
 }

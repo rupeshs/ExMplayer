@@ -5,6 +5,8 @@
 #include <QRegExp>
 #include <QDir>
 #include <stdlib.h>
+#include <QApplication>
+
 Paths::Paths()
 {
 }

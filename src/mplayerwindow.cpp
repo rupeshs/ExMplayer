@@ -37,7 +37,7 @@ Screen::Screen(QWidget* parent, Qt::WindowFlags f) : rphLabelEx(parent)
 	setMouseTracking(TRUE);
 	setFocusPolicy( Qt::NoFocus );
 	setMinimumSize( QSize(0,0) );
-        showtext=true;
+    showtext=true;
 #if NEW_MOUSE_CHECK_POS
 	mouse_last_position = QPoint(0,0);
 #else
@@ -77,9 +77,9 @@ void Screen::paintEvent( QPaintEvent * e ) {
    {
        painter.setPen(Qt::white);
     painter.setFont(QFont("Arial", 16));
-    painter.drawText(rect(), Qt::AlignCenter, "End of playback");
+    painter.drawText(rect(), Qt::AlignCenter, "Play again");
 
-}
+   }
 
    if (!_errtext.isEmpty())
    {
@@ -89,13 +89,7 @@ void Screen::paintEvent( QPaintEvent * e ) {
 
 }
     painter.setRenderHints(QPainter::NonCosmeticDefaultPen|QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform);
-   //rphLabelEx::paintEvent(e);
-//
 
-
-
-
-        //painter.fillRect( e->rect(), QColor(255,0,0) );
 }
 
 #if NEW_MOUSE_CHECK_POS
@@ -146,12 +140,13 @@ MplayerLayer::MplayerLayer(QWidget* parent, Qt::WindowFlags f)
 	repaint_background = true;
 #endif
 	playing = false;
+
 }
 
 MplayerLayer::~MplayerLayer() {
 }
 
-#if REPAINT_BACKGROUND_OPTION
+
 void MplayerLayer::setRepaintBackground(bool b) {
 	qDebug("MplayerLayer::setRepaintBackground: %d", b);
 	repaint_background = b;
@@ -161,7 +156,7 @@ void MplayerLayer::paintEvent( QPaintEvent * e ) {
 	//qDebug("MplayerLayer::paintEvent: allow_clearing: %d", allow_clearing);
 
     if (repaint_background || !playing) {
-		//qDebug("MplayerLayer::paintEvent: painting");
+        //qDebug("MplayerLayer::paintEvent: painting");
                 Screen::paintEvent(e);
 	}
 
@@ -169,7 +164,7 @@ void MplayerLayer::paintEvent( QPaintEvent * e ) {
 
 }
 
-#endif
+
 
 void MplayerLayer::playingStarted() {
 	qDebug("MplayerLayer::playingStarted");
@@ -191,15 +186,16 @@ MplayerWindow::MplayerWindow(QWidget* parent, Qt::WindowFlags f)
 	offset_x = 0;
 	offset_y = 0;
 	zoom_factor = 1.0;
-        showvideo=true;
-	setAutoFillBackground(true);
-	ColorUtils::setBackgroundColor( this, QColor(0,0,0) );
+    showvideo=true;
+
+    ColorUtils::setBackgroundColor( this, QColor(1,1,1) );
 
 	mplayerlayer = new MplayerLayer( this );
-        mplayerlayer->setAutoFillBackground(TRUE);
+    mplayerlayer->setAutoFillBackground(TRUE);
 
-	logo = new QLabel( mplayerlayer );
+    logo = new QLabel( mplayerlayer );
     logo->setAutoFillBackground(TRUE);
+    bshowLogo=false;
 
 
 
@@ -208,7 +204,7 @@ MplayerWindow::MplayerWindow(QWidget* parent, Qt::WindowFlags f)
 //#else
 //	logo->setAttribute(Qt::WA_PaintOnScreen); // Fixes the problem if compiled with Qt < 4.4
 //#endif
-    ColorUtils::setBackgroundColor( logo, QColor(0,0,0) );
+    //ColorUtils::setBackgroundColor( logo, QColor(0,0,0) );
 
 	QVBoxLayout * mplayerlayerLayout = new QVBoxLayout( mplayerlayer );
 	mplayerlayerLayout->addWidget( logo, 0, Qt::AlignHCenter | Qt::AlignVCenter );
@@ -253,6 +249,7 @@ void MplayerWindow::retranslateStrings() {
 void MplayerWindow::showLogo( bool b)
 {
         if (b) logo->show(); else logo->hide();
+        bshowLogo=b;
 }
 
 /*
@@ -320,12 +317,15 @@ void MplayerWindow::updateVideoWindow()
     int w_width = size().width();
     int w_height = size().height();
 
-	int w = w_width;
+    int w = w_width;
 	int h = w_height;
 	int x = 0;
 	int y = 0;
+    if(!bshowLogo)
 
-	if (aspect != 0) {
+    {
+
+        if (aspect != 0) {
 	    int pos1_w = w_width;
             int pos1_h = w_width / aspect +0.5;
     
@@ -340,15 +340,16 @@ void MplayerWindow::updateVideoWindow()
 			w = pos1_w;
 			h = pos1_h;
 	
-                        y = (w_height - h) /2;
+            y = (w_height - h) /2;
 	    } else {
 		//qDebug("Pos2!");
 			w = pos2_w;
 			h = pos2_h;
 	
-                        x = (w_width - w) /2;
+            x = (w_width - w) /2;
 	    }
-	}
+    }
+    }
 
     mplayerlayer->move(x,y);
     mplayerlayer->resize(w, h);
@@ -356,11 +357,12 @@ void MplayerWindow::updateVideoWindow()
 	orig_x = x;
 	orig_y = y;
 	orig_width = w;
-	orig_height = h;
+    orig_height = h;
     
-    //qDebug( "w_width: %d, w_height: %d", w_width, w_height);
-    //qDebug("w: %d, h: %d", w,h);
+    qDebug( "w_width: %d, w_height: %d", w_width, w_height);
+    qDebug("w: %d, h: %d", w,h);
     }
+
 }
 
 
@@ -447,15 +449,16 @@ QSize MplayerWindow::minimumSizeHint () const {
 }
 
 void MplayerWindow::setOffsetX( int d) {
-	offset_x = d;
-	mplayerlayer->move( orig_x + offset_x, mplayerlayer->y() );
+
+    offset_x = d;
+    mplayerlayer->move( orig_x + offset_x, mplayerlayer->y() );
 }
 
 int MplayerWindow::offsetX() { return offset_x; }
 
 void MplayerWindow::setOffsetY( int d) {
 	offset_y = d;
-	mplayerlayer->move( mplayerlayer->x(), orig_y + offset_y );
+    mplayerlayer->move( mplayerlayer->x(), orig_y + offset_y );
 }
 
 int MplayerWindow::offsetY() { return offset_y; }
@@ -479,8 +482,8 @@ void MplayerWindow::setZoom( double d) {
 		y = (height() -h) / 2;
 	}
 
-	mplayerlayer->move(x,y);
-	mplayerlayer->resize(w,h);
+    mplayerlayer->move(x,y);
+    mplayerlayer->resize(w,h);
 }
 
 double MplayerWindow::zoom() { return zoom_factor; }
@@ -494,22 +497,22 @@ void MplayerWindow::moveLayer( int offset_x, int offset_y ) {
 
 void MplayerWindow::moveLeft() {
 	if ((allow_video_movement) || (mplayerlayer->x()+mplayerlayer->width() > width() ))
-                moveLayer( -8, 0 );
+                moveLayer( -16, 0 );
 }
 
 void MplayerWindow::moveRight() {
 	if ((allow_video_movement) || ( mplayerlayer->x() < 0 ))
-                moveLayer( +8, 0 );
+                moveLayer( +16, 0 );
 }
 
 void MplayerWindow::moveUp() {
 	if ((allow_video_movement) || (mplayerlayer->y()+mplayerlayer->height() > height() ))
-                moveLayer( 0, -8 );
+                moveLayer( 0, -16 );
 }
 
 void MplayerWindow::moveDown() {
 	if ((allow_video_movement) || ( mplayerlayer->y() < 0 ))
-                moveLayer( 0, +8 );
+                moveLayer( 0, +16 );
 }
 
 void MplayerWindow::incZoom() {
@@ -549,5 +552,6 @@ void  MplayerWindow::mouseMoveEvent(QMouseEvent *event)
 
    rphLabelEx::mouseMoveEvent(event);
 }
+
 
 #include "moc_mplayerwindow.cpp"

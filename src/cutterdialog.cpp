@@ -268,7 +268,7 @@ void cutterDialog::on_seek_actionTriggered(int action)
 {
     if (mpp)
     {this->cTimer->stop();
-        mpp->goturl(ui->seek->value());
+        mpp->seek(ui->seek->value());
         this->cTimer->start();
     }
 }

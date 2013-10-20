@@ -151,7 +151,7 @@ public slots:
     void toggleMute();
     void togglefullscreen(){bfullscreen=!bfullscreen;}
     void setVolume(int vol);
-    void goturl(int pos);
+    void seek(int pos);
     void setOSDlevel(int osdlevel);
     void setframedroplevel(int framedroplevel);
     void framestep();
@@ -254,6 +254,13 @@ public slots:
      void setInitSeekPos(double pos);
      QString shortPathName(QString long_path);
      void mplayerConsole(QByteArray ba);
+     void Stereo3D(bool enable);
+     void Stereo3D(QString inFmt,QString outFmt);
+     void StartUp3D(QString inFmt,QString outFmt);
+     void ConvertStereoVideoToMono(bool enable);
+     void addDefaultVideoDriver();
+     void addVolumeBoost(bool enable,long val);
+     void setVolumeBoost(long val);
     //void setcrossfading(int sec,bool enable);
 
  private:
@@ -293,6 +300,9 @@ public slots:
    bool _isRestarting;
    int _videowidth;
    bool bedlstart;
+   bool _usestereovideo;
+   bool _playmonovideo;
+   bool _usevolumeboost;
 
    QString _filepath;
    QStringList metainfovalue;
@@ -332,6 +342,10 @@ public slots:
    QString fsppstr;
    QString fpsstr;
    QString svstr;
+   QString stereo3Dstr;
+   QString volumeBoostStr;
+
+
    QFile *edlfile;
    QString edlline;
    QString winampdspstr;
@@ -358,6 +372,8 @@ public slots:
    QString eqbandval;
    bool _silent;
    QString edl;
+   long volumeBoost;
+
 
    bool mutelock;
    long mh;
@@ -371,6 +387,7 @@ public slots:
    QPointer<fontLoadDialog> fldDlg;
    void removeOption(QString option,bool addseek);
    QString colorToRGB(unsigned int color) ;
+
 
 
 };

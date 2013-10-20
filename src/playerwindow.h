@@ -59,6 +59,8 @@
 #include "rphslider.h"
 #include <QResizeEvent>
 #include "advancedinfodialog.h"
+#include "qcoverart.h"
+#include <QAction>
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -142,6 +144,8 @@ private:
     QPointer<QActionGroup> actiongroupAspectRatio;
     QPointer<QActionGroup> framedropGroup;
     QPointer<QActionGroup> osdGroup;
+    QPointer<QActionGroup> actiongroupInFormatStereo;
+    QPointer<QActionGroup> actiongroupOutFormatStereo;
     QWidget * panel;
     MplayerWindow *mpwindow;
     bool usingfidx;
@@ -429,6 +433,8 @@ private slots:
     void getMessage(QString msg);
     void clearingList();
     void playNextAfterFinish(int ec,bool stop);
+    void restartSeekView(int ec,bool stop);
+    void pauseSeekView();
     void showMsgBox(QString msg);
     QString getFilter();
     void showPictureFlow(QString path);
@@ -458,6 +464,15 @@ private slots:
     void on_sliderSeekFullSc_actionTriggered(int action);
     void resizeEvent ( QResizeEvent * event );
     void on_actionAdvanced_Info_triggered();
+    void on_actionEnable_3D_triggered();
+    void on_actionInfobar_triggered();
+    void changeStereoscopicView(QAction *);
+
+
+    void on_toolButtonStereoVideo_clicked();
+    void on_actionWatch_as_2D_video_triggered();
+    void on_actionVolume_Boost_triggered();
+    void on_toolButtonVolumeBoost_clicked();
 };
 
 #endif // PLAYERWINDOW_H

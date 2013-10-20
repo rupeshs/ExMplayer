@@ -50,7 +50,7 @@ background-color: rgb(0, 0, 0);
 font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
    </property>
    <property name="text">
-    <string>Loading...</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -59,7 +59,7 @@ font: 75 10pt &quot;MS Shell Dlg 2&quot;;</string>
   <widget class="QLabel" name="timedisp">
    <property name="geometry">
     <rect>
-     <x>27</x>
+     <x>30</x>
      <y>80</y>
      <width>61</width>
      <height>14</height>
