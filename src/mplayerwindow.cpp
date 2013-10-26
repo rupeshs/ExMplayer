@@ -77,7 +77,7 @@ void Screen::paintEvent( QPaintEvent * e ) {
    {
        painter.setPen(Qt::white);
     painter.setFont(QFont("Arial", 16));
-    painter.drawText(rect(), Qt::AlignCenter, "Play again");
+    painter.drawText(rect(), Qt::AlignCenter, "Play Again");
 
    }
 

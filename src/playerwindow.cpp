@@ -3514,6 +3514,9 @@ void PlayerWindow::toggleFullscreen()
         if (bfbvis)
             ui->dockBrowser->show();
 
+        if (fullScreenControls)
+            fullScreenControls->hide();
+
         delete hidetimer;
     }
     else

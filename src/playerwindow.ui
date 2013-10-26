@@ -4503,10 +4503,13 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>interleave_rows_right_first</string>
+    <string>interleave rows right first</string>
    </property>
    <property name="iconText">
     <string>irr</string>
+   </property>
+   <property name="toolTip">
+    <string>interleave_rows_right_first</string>
    </property>
   </action>
   <action name="actionMono_left">
