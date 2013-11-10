@@ -61,7 +61,7 @@
 #include "advancedinfodialog.h"
 #include "qcoverart.h"
 #include <QAction>
-
+#include <stereovinputdialog.h>
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
 
@@ -106,6 +106,7 @@ private:
     QPointer<mixDialog> mxdlg;
     QPointer<audioextDialog> axdlg;
     QPointer<audioconvDialog> aucdlg;
+    QPointer<StereoVinputDialog> svindlg;
     //QPointer<ripDialog> auripdlg;
     //QPointer<seekview> mpseekview;
     //QPixmap *pixCover;
@@ -467,12 +468,12 @@ private slots:
     void on_actionEnable_3D_triggered();
     void on_actionInfobar_triggered();
     void changeStereoscopicView(QAction *);
-
-
     void on_toolButtonStereoVideo_clicked();
     void on_actionWatch_as_2D_video_triggered();
     void on_actionVolume_Boost_triggered();
     void on_toolButtonVolumeBoost_clicked();
+    void setStereoInputFormat(int mode);
+    void hideSeek();
 };
 
 #endif // PLAYERWINDOW_H

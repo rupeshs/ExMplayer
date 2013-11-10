@@ -32,7 +32,12 @@ class fontLoadDialog : public QDialog
 public:
     explicit fontLoadDialog(QWidget *parent = 0);
     ~fontLoadDialog();
-    
+    QTimer *timer;
+public slots:
+    void updateProgress(int val);
+    void updateCaption();
+
+
 private:
     Ui::fontLoadDialog *ui;
 };

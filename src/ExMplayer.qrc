@@ -87,13 +87,17 @@
         <file>images/rphMPFE_sh.png</file>
         <file>images/like_icon.png</file>
         <file>images/lk.png</file>
-        <file>images/loader.gif</file>
         <file>images/fullscreen.png</file>
         <file>images/3D_off.png</file>
-        <file>images/backanim.gif</file>
         <file>images/volboost_on.png</file>
         <file>images/volboost_off.png</file>
         <file>images/slower.png</file>
         <file>images/3D_on.png</file>
+        <file>images/abl.png</file>
+        <file>images/sbl.png</file>
+        <file>images/backanim.gif</file>
+        <file>images/loader.gif</file>
+        <file>images/backanimxmas.gif</file>
+        <file>images/loadervideo.gif</file>
     </qresource>
 </RCC>

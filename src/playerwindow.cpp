@@ -208,7 +208,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     artisttext="";
     albumtext="";
     yeartext="";
-    movie->stop();
+    //movie->stop();
     zoomfact=1.0;
     usingfidx=false;
 
@@ -271,6 +271,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(showpg()),this,SLOT(showpg()));
     QObject::connect(mp,SIGNAL(hidepg()),pi,SLOT(hide()));
     QObject::connect(mp,SIGNAL(hidepg()),piv,SLOT(hide()));
+    QObject::connect(mp,SIGNAL(disableSeek()),this,SLOT(hideSeek()));
     QObject::connect(mp,SIGNAL(hidepg()),pi,SLOT(stopAnimation()));
     QObject::connect(mp,SIGNAL(hidepg()),piv,SLOT(stopAnimation()));
     QObject::connect(mp,SIGNAL(showerrortext(QString)),this,SLOT(showerror(QString)));
@@ -313,7 +314,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
        }
     if ((ui->actionVolume_Boost->isChecked()))
        {
-        mp->setVolumeBoost(settings->value("Audio/VolumeBoost","1000").toInt());
+        mp->setVolumeBoost(settings->value("Audio/VolumeBoost","500").toInt());
        }
 
     ui->actionEnable_Closed_Captions->setChecked(true);
@@ -407,10 +408,7 @@ void  PlayerWindow::setupMyUi()
 
     videoWin->showLogo(true);
 
-    movie = new QMovie(":/images/backanim.gif");
 
-    this->videoWin->setMovie(movie);
-    movie->start();
     //videoWin->mplayerlayer->hide();
     videoWin->showLogo(false);
 
@@ -528,6 +526,7 @@ void  PlayerWindow::setupMyUi()
     QObject::connect(myplaylist,SIGNAL(playThisfile(QString)),this,SLOT(playThisfile(QString)));
     QObject::connect(ui->dock_Playlist,SIGNAL(visibilityChanged (bool)),this,SLOT(playlistVisibility(bool)));
 
+    /***********************************************/
     //qApp->setEffectEnabled(Qt::UI_AnimateMenu,true);
     //qApp->setEffectEnabled(Qt::UI_AnimateTooltip,true);
     ui->dockBrowser->resize(this->width(),500);
@@ -563,6 +562,7 @@ void  PlayerWindow::setupMyUi()
     pi = new QProgressIndicator(this);
     pi->setColor(QColor(qRgb(60,150,255) ));
     piv = new QProgressIndicator(videoWin);
+    piv->ShowGif();
 
 
     //testlab =new QLabel(videoWin,0);
@@ -583,6 +583,8 @@ void  PlayerWindow::setupMyUi()
     ui->statusBar->addPermanentWidget(ui->labAD);
     ui->statusBar->addPermanentWidget(ui->lcdCurPos);
     ui->statusBar->addPermanentWidget(ui->lcdDuration);
+    //ui->statusBar->addPermanentWidget(ui->lcdDuration);
+
     ///////////////////////////////////////////////////////////////////
     //metainfodisnplay-toolbar
 
@@ -828,7 +830,7 @@ void  PlayerWindow::setupMyUi()
     mpseekView->hide();
 
     long height=ui->menuBar->height()+ui->toolBarSeek->height()+ui->toolBarStatus->height()+ui->toolBarSeekBar->height();
-    qDebug()<<height;
+
 
     this->setMinimumHeight(height);
 
@@ -836,6 +838,7 @@ void  PlayerWindow::setupMyUi()
     if (settings->value("Video/3D","0").toInt()==1)
     {
         ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
+        ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
         ui->actionEnable_3D->setChecked(true);
 
 
@@ -852,6 +855,34 @@ void  PlayerWindow::setupMyUi()
     ui->actionAnaglyph_red_cyan_dubois->setChecked(true);
     ui->labelStatus->setText(tr(""));
     videoWin->showLogo(true);
+
+    /*Easter eggs */
+
+    QDateTime curDt= QDateTime::currentDateTime();
+    /* New year greeting*/
+    if(curDt.date().month()==1)
+    {
+        if (curDt.date().day()==1)
+        {
+            QString strGreeting=QString("Happy New Year! <b>")+QString::number(curDt.date().year())+QString("</b>");
+            qDebug()<<"Happy New Year! ";
+            ui->labelStatus->setText(strGreeting);
+
+        }
+    }
+
+     /* Christmas  greeting*/
+    if(curDt.date().month()==12)
+    {
+        if (curDt.date().day()==25||curDt.date().day()==26)
+        {
+            ui->labelStatus->setText("Merry Christmas!");
+
+        }
+    }
+
+
+    /*End of Easter egg*/
 
 
 
@@ -1344,9 +1375,27 @@ void PlayerWindow::updateSeekbar()
     }
     if(!ui->sliderSeek->isEnabled())
     {if (mp->isseekable()){
-            ui->sliderSeek->setEnabled(true);
+            if (mp->duration()>0)
+            {ui->sliderSeek->setEnabled(true);
             if(sliderSeekFullSc)
                 sliderSeekFullSc->setEnabled(true);
+
+            }
+            else
+            {
+                ui->sliderSeek->setEnabled(false);
+                if(sliderSeekFullSc)
+                    sliderSeekFullSc->setEnabled(false);
+
+            }
+        }
+        else
+        {
+
+            ui->sliderSeek->setEnabled(false);
+            if(sliderSeekFullSc)
+                sliderSeekFullSc->setEnabled(false);
+
         }
 
 
@@ -1367,7 +1416,8 @@ void PlayerWindow::updateSeekbar()
     }
     if(mp)
     {
-        if( mp->isstarted()){
+       if (mp->duration()>0)
+        {if( mp->isstarted()){
             ui->sliderSeek->setValue((mp->curpos()/mp->duration())*100);
             if(sliderSeekFullSc)
                 sliderSeekFullSc->setValue((mp->curpos()/mp->duration())*100);
@@ -1379,6 +1429,22 @@ void PlayerWindow::updateSeekbar()
 
 
         }
+       }
+       else
+       {
+           ui->sliderSeek->setEnabled(false);
+           if(sliderSeekFullSc)
+               sliderSeekFullSc->setEnabled(false);
+           ui->lcdDuration->display("--:--:--");
+
+           ui->lcdCurPos->display(mp->tcurpos().toString());
+           if (isfullscreen){
+               lcdCurPosFullSc->display(mp->tcurpos().toString());
+               lcdDurationFullSc->display("--:--:--");
+           }
+
+
+       }
 
     }
 
@@ -2067,7 +2133,7 @@ void PlayerWindow::on_actionToggle_OSD_triggered()
         {
             switch(osdlevel)
             {case 0:
-                ui->action_osd0->setChecked(true);
+
                 break;
             case 1:
                 ui->action_osd1->setChecked(true);
@@ -2081,8 +2147,8 @@ void PlayerWindow::on_actionToggle_OSD_triggered()
             }
         }
         else
-        {osdlevel=0 ;
-            ui->action_osd0->setChecked(true);
+        {osdlevel=1 ;
+            ui->action_osd1->setChecked(true);
         }
 
 
@@ -2811,13 +2877,16 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
     if(lab)
     {if( mp->hasvideo())
         {
-            mpseekView->resize(128,105);
+           // qDebug()<<QString::number(mp->starttime())<<"::";
+           if (mp->starttime()<10)
+            {mpseekView->resize(128,105);
             if(! isfullscreen)
                 mpseekView->move(pt->x()-64+ui->sliderSeek->x(),ui->toolBarSeekBar->y()-105);
             else
                 mpseekView->move(pt->x()-64+sliderSeekFullSc->x()+fullScreenControls->x(),fullScreenControls->y()-105);
 
             mpseekView->show();
+           }
         }
         else
         {
@@ -3589,6 +3658,7 @@ void PlayerWindow::toggleFullscreen()
 
 
             fullScreenControls->setMovable(false);
+            fullScreenControls->setIconSize(QSize(30,30));
             fullScreenControls->setGeometry(leftSide,desktop->screen()->height()-FULLSCREENCTRLHEIGHT,fullScreenControlWidth,70);
             fullScreenControls->addAction(ui->action_Play_Pause);
             fullScreenControls->addAction(ui->action_Stop);
@@ -3601,6 +3671,7 @@ void PlayerWindow::toggleFullscreen()
             sliderSeekFullSc->setEnabled(ui->sliderSeek->isEnabled());
             sliderSeekFullSc->setValue(ui->sliderSeek->value());
             sliderVolumeFullSc->setValue(ui->sliderVolume->value());
+
 
             QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
             animation->setDuration(60);
@@ -4794,21 +4865,43 @@ void PlayerWindow::on_actionAdvanced_Info_triggered()
 
 void PlayerWindow::on_actionEnable_3D_triggered()
 {
+
+
      emit  settingChanged ("Video","3D",QString::number(ui->actionEnable_3D->isChecked()));
-    if(ui->actionEnable_3D->isChecked())
+
+     if(ui->actionEnable_3D->isChecked())
     {
-        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
-        ui->actionWatch_as_2D_video->setChecked(false);
+
+
+        if(mp)
+        {
+            if (mp->hasvideo())
+        {
+                svindlg= new StereoVinputDialog(this);
+                QObject::connect(svindlg,SIGNAL(stereoInputFormat(int)),this,SLOT(setStereoInputFormat(int)));
+                svindlg->setStereo(true);
+                svindlg->show();
+            }
+            else
+           {
+                ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
+                 ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
+                ui->actionEnable_3D->setToolTip("");
+            }
+        }
     }
     else
     {
         ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
+        ui->toolButtonStereoVideo->setToolTip("Turn <b>ON</b> 3D video");
+        if(mp)
+            {
+                if (mp->hasvideo())
+                    mp->Stereo3D(ui->actionEnable_3D->isChecked());
+
+            }
     }
-    if(mp)
-    {
-        if (mp->hasvideo())
-            mp->Stereo3D(ui->actionEnable_3D->isChecked());
-    }
+
 
 
 }
@@ -4851,6 +4944,12 @@ void PlayerWindow::changeStereoscopicView(QAction *act)
     if (!ui->actionEnable_3D->isChecked())
          ui->actionEnable_3D->trigger();
 
+     ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
+     ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
+     ui->actionWatch_as_2D_video->setChecked(false);
+
+
+
 }
 
 void PlayerWindow::on_toolButtonStereoVideo_clicked()
@@ -4862,22 +4961,19 @@ void PlayerWindow::on_toolButtonStereoVideo_clicked()
 void PlayerWindow::on_actionWatch_as_2D_video_triggered()
 {
 
-    ui->actionEnable_3D->setChecked(false);
-    if(ui->actionEnable_3D->isChecked())
+    if (ui->actionWatch_as_2D_video->isChecked())
     {
-        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
-        ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
-
+        svindlg= new StereoVinputDialog(this);
+        QObject::connect(svindlg,SIGNAL(stereoInputFormat(int)),this,SLOT(setStereoInputFormat(int)));
+        svindlg->show();
     }
     else
     {
-        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
-        ui->toolButtonStereoVideo->setToolTip("Turn <b>ON</b> 3D video");
-
+        if(mp)
+        {
+            mp->Stereo3D(false);
+        }
     }
-
-    if(mp)
-        mp->ConvertStereoVideoToMono(ui->actionWatch_as_2D_video->isChecked());
 
 }
 
@@ -4886,7 +4982,7 @@ void PlayerWindow::on_actionVolume_Boost_triggered()
 
     emit  settingChanged ("Audio","Boost",QString::number(ui->actionVolume_Boost->isChecked()));
    if(mp)
-       mp->addVolumeBoost(ui->actionVolume_Boost->isChecked(),settings->value("Audio/VolumeBoost","1000").toInt());
+       mp->addVolumeBoost(ui->actionVolume_Boost->isChecked(),settings->value("Audio/VolumeBoost","500").toInt());
     if(ui->actionVolume_Boost->isChecked())
    {
        ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_on.png"));
@@ -4921,3 +5017,70 @@ void PlayerWindow::pauseSeekView()
        fr->pause();
      }
 }
+void PlayerWindow::setStereoInputFormat(int mode)
+{
+
+    qDebug()<<QString ::number(mode);
+
+   if (mode==1)
+       ui->actionSide_by_side_left_first->setChecked(true);
+   else
+       ui->actionAbove_below_left_first->setChecked(true);
+
+
+    QString inStereoFmt, outStereoFmt;
+    //Get 3D input format
+    foreach(QAction* sInAct, actiongroupInFormatStereo->actions())
+    {
+        if(sInAct->isChecked())
+            inStereoFmt=sInAct->iconText();
+    }
+
+    //Get 3D output format
+    foreach(QAction* sOutAct, actiongroupOutFormatStereo->actions())
+    {
+        if(sOutAct->isChecked())
+           outStereoFmt=sOutAct->iconText();
+    }
+
+    if (!svindlg->Stereo())
+    {
+    ui->actionEnable_3D->setChecked(false);
+    if(ui->actionEnable_3D->isChecked())
+    {
+        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
+        ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
+
+    }
+    else
+    {
+        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
+        ui->toolButtonStereoVideo->setToolTip("Turn <b>ON</b> 3D video");
+
+    }
+    if(mp)
+        mp->Stereo3D(inStereoFmt,"ml");
+    }
+    else
+    {
+        //Got 3D input format now transform
+
+        //Transform 3D
+        if (mp)
+        {
+            if (mp->hasvideo())
+                mp->Stereo3D(inStereoFmt,outStereoFmt);
+            ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
+            ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
+            ui->actionWatch_as_2D_video->setChecked(false);
+
+        }
+    }
+
+}
+ void PlayerWindow::hideSeek()
+ {
+
+     ui->sliderSeek->setDisabled(true);
+     ui->lcdDuration->display("--:--:--");
+ }

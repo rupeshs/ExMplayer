@@ -1,7 +1,7 @@
 #include <winver.h>
 
-#define EXMPLAYER_FILEVERSION 1,1,0,0
-#define EXMPLAYER_PRODVERSION "1.1.0.0\0"
+#define EXMPLAYER_FILEVERSION 3,0,0,0
+#define EXMPLAYER_PRODVERSION "3.0.0.0\0"
 
 VS_VERSION_INFO     VERSIONINFO
 FILEVERSION         EXMPLAYER_FILEVERSION
@@ -17,7 +17,7 @@ FILETYPE            VFT_APP
       VALUE "FileDescription", "ExMPlayer\0"
       VALUE "FileVersion", EXMPLAYER_PRODVERSION
       VALUE "InternalName", "exmplayer\0"
-      VALUE "LegalCopyright", "Copyright (c) Rupesh Sreeraman\0"
+      VALUE "LegalCopyright", "Copyright (c)2010-2013 Rupesh Sreeraman\0"
       VALUE "OriginalFilename", "exmplayer.exe\0"
       VALUE "ProductName", "ExMplayer\0"
       VALUE "ProductVersion", EXMPLAYER_PRODVERSION

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'winampdspdialog.ui'
 **
-** Created: Sat Oct 19 18:28:38 2013
+** Created: Sun Nov 10 08:38:49 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

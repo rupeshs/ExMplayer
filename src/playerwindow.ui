@@ -2158,6 +2158,22 @@ color: grey;
      <string>...</string>
     </property>
    </widget>
+   <widget class="QLabel" name="labelDuration">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>120</y>
+      <width>61</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 75 10pt &quot;Arial&quot;;</string>
+    </property>
+    <property name="text">
+     <string>00:00:00</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="sizePolicy">
@@ -2794,6 +2810,12 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="movable">
     <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>24</width>
+     <height>24</height>
+    </size>
    </property>
    <property name="floatable">
     <bool>false</bool>
@@ -4316,7 +4338,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>side_by_side_half_width_left_first</string>
+    <string>side by side half width left first</string>
    </property>
    <property name="iconText">
     <string>sbs2l</string>
@@ -4327,7 +4349,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>side_by_side_half_width_right_first</string>
+    <string>side by side half width right first</string>
    </property>
    <property name="iconText">
     <string>sbs2r</string>
@@ -4338,7 +4360,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>above_below_left_first</string>
+    <string>above below left first</string>
    </property>
    <property name="iconText">
     <string>abl</string>
@@ -4349,10 +4371,13 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>above_below_right_first</string>
+    <string>above below right first</string>
    </property>
    <property name="iconText">
     <string>abr</string>
+   </property>
+   <property name="toolTip">
+    <string>above_below_right first</string>
    </property>
   </action>
   <action name="actionAbove_below_half_height_left_first">
@@ -4371,7 +4396,7 @@ p, li { white-space: pre-wrap; }
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>above_below_half_height_right_first</string>
+    <string>above below half height right first</string>
    </property>
    <property name="iconText">
     <string>ab2r</string>

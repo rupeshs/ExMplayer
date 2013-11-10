@@ -209,9 +209,24 @@ MplayerWindow::MplayerWindow(QWidget* parent, Qt::WindowFlags f)
 	QVBoxLayout * mplayerlayerLayout = new QVBoxLayout( mplayerlayer );
 	mplayerlayerLayout->addWidget( logo, 0, Qt::AlignHCenter | Qt::AlignVCenter );
 
-    movie = new QMovie(":/images/backanim.gif");
-    logo->setMovie(movie);
-    movie->start();
+    /* Christmas  greeting*/
+    QDateTime curDt= QDateTime::currentDateTime();
+   if(curDt.date().month()==12)
+   {
+       if (curDt.date().day()==25||curDt.date().day()==26)
+       {
+           movie = new QMovie(":/images/backanimxmas.gif");
+           logo->setMovie(movie);
+           movie->start();
+
+       }
+   }
+   else
+   {
+       movie = new QMovie(":/images/backanim.gif");
+       logo->setMovie(movie);
+       movie->start();
+   }
     aspect = (double) 4 / 3;
 	monitoraspect = 0;
 

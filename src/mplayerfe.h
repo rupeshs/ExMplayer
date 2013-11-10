@@ -77,6 +77,7 @@ public:
     QStringList listVideoTrack;
     QStringList listAudioTrack;
     QStringList listSubtitleTrack;
+    QStringList listAudioRepeat;
 
     QMap<QString, QString> mapCodecs;
     QMap<QString, QString> mapDevices;
@@ -100,6 +101,7 @@ public:
     bool hasaudio(){ return _hasaudio; }
     bool hasvideo(){ return _hasvideo; }
     float  duration(){ return _duration; }
+    float  starttime(){ return _starttime; }
     QTime  tduration(){ return _tduration;}
     QString getMediaTitle(){return _friendlyTitle;}
     QString currentspeed(){ return _currentspeed;}
@@ -143,6 +145,8 @@ signals:
     void streamingDuration(float le);
     void showvideoui();
     void resizeVideoWindow(int wid,int height);
+    void fontScanProgress(int val);
+    void disableSeek();
 public slots:
     void startMplayer();
     void play(QString File,int volume);
@@ -275,6 +279,7 @@ public slots:
    QString cmd;
    bool _started;
    float _duration;
+   float _starttime;
    float _curpos;
    int _bufferfill;
    float tmpcurpos;

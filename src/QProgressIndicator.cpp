@@ -4,7 +4,7 @@
 #include <QPainter>
 
 QProgressIndicator::QProgressIndicator(QWidget* parent)
-        : QWidget(parent),
+        : QLabel(parent),
         m_angle(0),
         m_timerId(-1),
         m_delay(40),
@@ -13,6 +13,8 @@ QProgressIndicator::QProgressIndicator(QWidget* parent)
 {
     //setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     setFocusPolicy(Qt::NoFocus);
+    m_useGif=false;
+
 }
 
 bool QProgressIndicator::isAnimated () const
@@ -35,16 +37,30 @@ bool QProgressIndicator::isDisplayedWhenStopped() const
 void QProgressIndicator::startAnimation()
 {   m_angle = 0;
 
+    if( m_useGif)
+          movie->start();
+    else
+    {
     if (m_timerId == -1)
         m_timerId = startTimer(m_delay);
+    }
+
+
 }
 
 void QProgressIndicator::stopAnimation()
 {
-    if (m_timerId != -1)
+   if( !m_useGif)
+    {
+       if (m_timerId != -1)
         killTimer(m_timerId);
 
-    m_timerId = -1;
+      m_timerId = -1;
+    }
+   else
+   {
+       movie->stop();
+   }
 
     update();
 }
@@ -84,13 +100,15 @@ void QProgressIndicator::timerEvent(QTimerEvent * /*event*/)
     update();
 }
 
-void QProgressIndicator::paintEvent(QPaintEvent * /*event*/)
+void QProgressIndicator::paintEvent(QPaintEvent * event)
 {
-    if (!m_displayedWhenStopped && !isAnimated())
+    if(!m_useGif)
+    {
+       if (!m_displayedWhenStopped && !isAnimated())
         return;
 
     int width = qMin(this->width(), this->height());
-    
+
     QPainter p(this);
 
     p.setRenderHints(QPainter::NonCosmeticDefaultPen|QPainter::Antialiasing|QPainter::HighQualityAntialiasing|QPainter::TextAntialiasing|QPainter::SmoothPixmapTransform);
@@ -108,12 +126,24 @@ void QProgressIndicator::paintEvent(QPaintEvent * /*event*/)
         QColor color = m_color;
         color.setAlphaF(1.0f - (i/12.0f));
         p.setPen(Qt::NoPen);
-        p.setBrush(color);       
+        p.setBrush(color);
         p.save();
         p.translate(rect().center());
         p.rotate(m_angle - i*25.0f);
         p.drawRoundedRect(-capsuleWidth*0.5, -(innerRadius+capsuleHeight), capsuleWidth, capsuleHeight, capsuleRadius, capsuleRadius);
         p.restore();
+     }
+    }
+    else
+    {
+      QLabel::paintEvent(event);
     }
 
+}
+void QProgressIndicator::ShowGif()
+{
+    m_useGif=true;
+    movie = new QMovie(":/images/loadervideo.gif");
+    this->setMovie(movie);
+    movie->start();
 }

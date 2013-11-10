@@ -38,6 +38,7 @@ INPUT(
 ./release\advancedinfodialog.o
 ./release\paths.o
 ./release\qcoverart.o
+./release\stereovinputdialog.o
 ./release\qtsingleapplication.o
 ./release\qtlocalpeer.o
 ./release\screensaver.o
@@ -67,6 +68,7 @@ INPUT(
 ./release\moc_glassstyle.o
 ./release\moc_fontloaddialog.o
 ./release\moc_advancedinfodialog.o
+./release\moc_stereovinputdialog.o
 ./release\moc_qtsingleapplication.o
 ./release\moc_qtlocalpeer.o
 ./release\qrc_ExMplayer.o

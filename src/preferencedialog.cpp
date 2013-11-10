@@ -243,7 +243,7 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
 
          ui->cmbAO->setCurrentIndex(ui->cmbAO->findText(_settings->value("Audio/Driver","Auto").toString()));
 
-         ui->hSliderVolumeBoost->setValue(_settings->value("Audio/VolumeBoost","1000").toInt());
+         ui->hSliderVolumeBoost->setValue(_settings->value("Audio/VolumeBoost","500").toInt());
          break;
   case  2 :{QDesktopServices mycomputer;
            QString picfolder=mycomputer.storageLocation(QDesktopServices::PicturesLocation);

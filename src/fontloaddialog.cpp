@@ -17,18 +17,27 @@
 */
 #include "fontloaddialog.h"
 #include "ui_fontloaddialog.h"
-
+#include <QTimer>
 fontLoadDialog::fontLoadDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::fontLoadDialog)
 {
     ui->setupUi(this);
-
-
     setWindowFlags(Qt::FramelessWindowHint);
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
+    timer->start(60000);
 }
 
 fontLoadDialog::~fontLoadDialog()
 {
     delete ui;
+}
+void fontLoadDialog::updateProgress(int val)
+{
+    ui->progressBar->setValue(val);
+}
+void fontLoadDialog::updateCaption()
+{
+    ui->labelCaption->setText("Seems like this system has too many fonts!");
 }

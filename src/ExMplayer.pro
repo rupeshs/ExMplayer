@@ -47,7 +47,8 @@ SOURCES += main.cpp \
     fontloaddialog.cpp\
     advancedinfodialog.cpp \
     paths.cpp \
-    qcoverart.cpp
+    qcoverart.cpp \
+    stereovinputdialog.cpp
 HEADERS += playerwindow.h \
     mplayerfe.h \
     rphlabelex.h \
@@ -86,7 +87,8 @@ HEADERS += playerwindow.h \
     fontloaddialog.h\
     advancedinfodialog.h \
     paths.h \
-    qcoverart.h
+    qcoverart.h \
+    stereovinputdialog.h
 FORMS += playerwindow.ui \
     preferencedialog.ui \
     winampdspdialog.ui \
@@ -100,7 +102,8 @@ FORMS += playerwindow.ui \
     audioconvdialog.ui \
     seekview.ui \
     fontloaddialog.ui \
-    advancedinfodialog.ui
+    advancedinfodialog.ui \
+    stereovinputdialog.ui
 
 INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication

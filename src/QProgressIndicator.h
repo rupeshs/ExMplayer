@@ -20,7 +20,8 @@
 
 #include <QWidget>
 #include <QColor>
-
+#include <QLabel>
+#include <QMovie>
 /*! 
     \class QProgressIndicator
     \brief The QProgressIndicator class lets an application display a progress indicator to show that a lengthy task is under way. 
@@ -28,7 +29,7 @@
     Progress indicators are indeterminate and do nothing more than spin to show that the application is busy.
     \sa QProgressBar
 */
-class QProgressIndicator : public QWidget
+class QProgressIndicator : public QLabel
 {
     Q_OBJECT
     Q_PROPERTY(int delay READ animationDelay WRITE setAnimationDelay)
@@ -90,6 +91,7 @@ public slots:
         \sa color
      */
     void setColor(const QColor & color);
+    void ShowGif();
 protected:
     virtual void timerEvent(QTimerEvent * event); 
     virtual void paintEvent(QPaintEvent * event);
@@ -99,6 +101,9 @@ private:
     int m_delay;
     bool m_displayedWhenStopped;
     QColor m_color;
+    QMovie *movie;
+    bool m_useGif;
+
 };
 
 #endif // QPROGRESSINDICATOR_H

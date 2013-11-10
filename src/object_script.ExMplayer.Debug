@@ -38,6 +38,7 @@ INPUT(
 ./debug\advancedinfodialog.o
 ./debug\paths.o
 ./debug\qcoverart.o
+./debug\stereovinputdialog.o
 ./debug\qtsingleapplication.o
 ./debug\qtlocalpeer.o
 ./debug\screensaver.o
@@ -67,6 +68,7 @@ INPUT(
 ./debug\moc_glassstyle.o
 ./debug\moc_fontloaddialog.o
 ./debug\moc_advancedinfodialog.o
+./debug\moc_stereovinputdialog.o
 ./debug\moc_qtsingleapplication.o
 ./debug\moc_qtlocalpeer.o
 ./debug\qrc_ExMplayer.o

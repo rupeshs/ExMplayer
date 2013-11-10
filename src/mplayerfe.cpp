@@ -58,6 +58,8 @@ static QRegExp rx_gin("Generating Index:.* (\\d+)");
 static QRegExp rx_cache("Cache not filling!");
 static QRegExp rx_audioinfo("^[AUDIO:].*(\\d+).*Hz.*(\\d+).*ch.*(\\d+).*(\\d+).*kbit.*");
 static QRegExp rx_bufferfill("^Cache fill:.*([0-9,.]+)% .*");
+static QRegExp rx_fscan("Scanning file (.*)");
+static QRegExp rx_videosize("VO:.*(\\d+)x(\\d+)");
 
 mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
 {
@@ -65,6 +67,7 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     _wparent=wparent;
 
     isurl=false;
+    _starttime=0;
     _bgotdimension=false;
 #ifdef Q_OS_WIN
     mPath= qApp->applicationDirPath()+ "/mplayer/mplayer.exe";
@@ -127,6 +130,7 @@ void mplayerfe::init()
     rx_videocpu_usage.setMinimal(true);
     bedlstart=false;
     uselavf=true;
+    _starttime=0;
 
 
 }
@@ -145,6 +149,7 @@ void mplayerfe::play(QString File,int volume)
 
 
     _curvolume=  volume;
+
     qDebug()<<"Starting mplayer process...";
 
     //FrontEnd options
@@ -324,11 +329,23 @@ QString mplayerfe::parsevalue( QString serstr,QString sep,QString str)
 }
 void mplayerfe::seek(int per)
 {
-    float pos=(this->duration()*(float)per)/100.0;
-    cmd =QString("pausing_keep seek " + QString::number(pos) + " 2\n");
-    mProcess->write(cmd.toAscii());
-    //qDebug()<<"Seeking :"+ QString::number(per);
-    emit show_message("Seeking :"+ QString::number(per)+"% ",1000);
+    if (_starttime==0)
+    {
+        float pos=((this->duration())*(float)per)/100.0;
+        cmd =QString("pausing_keep seek " + QString::number(pos) + " 2\n");
+        mProcess->write(cmd.toAscii());
+
+        emit show_message("Seeking :"+ QString::number(per)+"% ",1000);
+    }
+    else
+    {
+        float pos=((this->duration())*(float)per)/100.0;
+        pos=pos-_curpos;
+        //qDebug()<<QString::number(_curpos)<< " Seeking :"+ QString::number(pos);
+        cmd =QString("pausing_keep seek " + QString::number(pos) + " 0\n");
+        mProcess->write(cmd.toAscii());
+
+    }
 
 }
 void mplayerfe::pause()
@@ -1826,17 +1843,44 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
         //Scanning font files
         if( mplayerOutputLine.contains("Scanning file")){
+            int scanPer;
+            if(rx_fscan.indexIn(mplayerOutputLine)>-1){
+
+                //_bufferfill=(int)rx_bufferfill.cap(1);
+                QString fontPath=rx_fscan.cap(1);
+                QFileInfo fontFile(fontPath);
+
+                if (fontFile.fileName().at(0).isDigit())
+                {
+                    scanPer=0;
+                }
+                else
+                {
+                    scanPer=fontFile.fileName().at(0).toUpper().toAscii()-64;
+                }
+
+                qDebug()<<"Font :"<<QString::number(scanPer)<<fontFile.fileName();
+                if (fldDlg)
+                {
+                    emit fontScanProgress(scanPer);
+                }
+            }
+
+
             if(!_hideFontDlg){
+
 
                 if (!fldDlg){
 
                     fldDlg=new fontLoadDialog(_wparent);
                     fldDlg->setModal(true);
                     fldDlg->setGeometry(_wparent->width()/2-fldDlg->width()/2,_wparent->height()/2-fldDlg->height()/2,fldDlg->width(),fldDlg->height());
+                    QObject::connect(this,SIGNAL(fontScanProgress(int)),fldDlg,SLOT(updateProgress(int)));
                     fldDlg->show();
                     emit show_message("Please wait...Scanning font files...",4000) ;
 
                 }
+
             }
         }
         if(!_isRestarting){
@@ -1874,6 +1918,14 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
                 qDebug()<<ba;
 
+            }
+
+
+            //Stream Starttime
+            if(mplayerOutputLine.contains("ID_START_TIME",Qt::CaseInsensitive)){
+
+                tmpstr=parsevalue("ID_START_TIME=","=",mplayerOutputLine);
+                _starttime=tmpstr.toFloat();
             }
 
             //Stream duration-a recheck
@@ -2163,15 +2215,21 @@ void mplayerfe::mplayerConsole(QByteArray ba)
         if(rx_pos.indexIn(mplayerOutputLine)>-1){
 
             _curpos=rx_pos.cap(1).toFloat();
+            if (_starttime>0)
+               _curpos=_curpos-_starttime;
+            if( _curpos<0)
+                _curpos=-_curpos;
+           // qDebug()<<QString::number(_curpos);
+
             _tcurpos=QTime();
             _tcurpos=_tcurpos.addSecs(_curpos);
-            //qDebug()<<"3ND ENEND NDNDNDN NN :"<<QString::number(int(_curpos)-1)<<" "<<QString::number((int)_duration) ;
 
-            if((int)_duration-1== (int)_curpos)
-            {
-                qDebug()<<"Repeat audio (mt) fix :"<<QString::number(_curpos-1);
-                setVolume(0);
-            }
+            //qDebug()<<QString::number((int)_curpos-1);
+           // if(( (int)_duration*10 -_curpos*10)<11)
+            //{
+            //qDebug()<<"Repeat audio (mt) fix :"<<QString::number((int)_curpos-1);
+            // setVolume(0);
+            //}
 
 
         }
@@ -2207,6 +2265,21 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
         //Subtitles
         if(_started){
+
+                 //H265 EHVC
+                 if(_videowidth==0)
+                 {
+                     if (_duration==0)
+                         emit disableSeek();
+                   if (rx_videosize.indexIn(mplayerOutputLine)>-1)
+                   {
+                     qDebug()<<"video size : "<<QString::number(rx_videosize.cap(1).toInt())<<"x"<<QString::number(rx_videosize.cap(2).toInt());
+                     _videowidth=rx_videosize.cap(1).toInt();
+                     _videoheight=rx_videosize.cap(2).toInt();
+                     _hasvideo=true;
+                     emit startingplayback();
+                   }
+                 }
 
             if(_hasvideo){
 
@@ -2283,6 +2356,7 @@ void mplayerfe::mplayerConsole(QByteArray ba)
             _state=STOPPED;
             bstopping=true;
             emit stopping();
+
 
             qDebug()<<"stopped......";
         }
@@ -2377,6 +2451,7 @@ void  mplayerfe::Stereo3D(bool enable)
 {
     if (enable)
     {
+        removeOption("-vo",true);
         addDefaultVideoDriver();
         removeFilter(stereo3Dstr);
         stereo3Dstr=QString("stereo3d,scale");
