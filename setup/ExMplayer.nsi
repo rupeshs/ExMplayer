@@ -5,7 +5,7 @@
 ;12-march-2011
 ;9-dec-2012
 ;10-feb-2013
-;2-Nov-2013
+;10-Nov-2013
 ;v3.0.0
 ;Output
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -21,7 +21,7 @@ OutFile exmplayer-3.0.0-win32.exe
 ;Defines & includes
 !define PRODUCT_NAME "ExMplayer"
 !define PRODUCT_VERSION "3.0.0"
-!define PRODUCT_PUBLISHER "Rupesh.S<rupesh.rupeshs@gmail.com>"
+!define PRODUCT_PUBLISHER "Rupesh Sreeraman<exmplayer.dev@gmail.com>"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 !define PRODUCT_STARTMENU_GROUP "ExMplayer"
@@ -39,15 +39,15 @@ Var ext
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 VIProductVersion "3.0.0.0"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "ExMplayer Installer"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments""Media player for windows no codec is required."
-VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Rupesh.S<rupesh.rupeshs@gmail.com>"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments""3D Media player for windows no codec is required."
+VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Rupesh.S<exmplayer.dev@gmail.com>"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© Rupesh 2010-2013"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© Rupesh Sreeraman 2010-2013"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "ExMplayer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "3.0.0"
 
 Name "ExMplayer"
-BrandingText "ExMplayer for Windows"
+BrandingText "ExMplayer 3.0 for Windows"
 /* Sets default install dir to $PROGRAMFILES\ExMplayer.
   If InstallDirRegKey exists (from a previous installation,
   it will default to that directory instead. */
@@ -135,7 +135,8 @@ XPStyle on
 
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Section "Full install"
+
+Section "ExMplayer(required)"
 SectionIn RO
 SetOutPath "$INSTDIR"
 File "C:\ExMplayer_setup\styles.ass"

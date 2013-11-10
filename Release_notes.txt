@@ -1,3 +1,18 @@
+Version 3.0.0
+Release Date : 10-11-2013
+Features Added:
+ *3D video playback
+ *Wide variety of 3D formats supported
+ *Anaglyph/Polarised 3D
+ *Watch 3D video without glass (inbuilt 2D conversion)
+ *Volume booster (Upto 5000% boost)
+ *Added H265/HEVC support
+ *Improved Aqua skin
+ *Improved Seek view
+ *Added Advanced Info
+ *Configurable infobar
+ *Added taglib
+ 
 Version 2.0.0 beta
 Release Date : 10-2-2013
 Features Added:
