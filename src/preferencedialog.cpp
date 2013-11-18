@@ -498,5 +498,5 @@ void preferenceDialog::on_hSliderVolumeBoost_valueChanged(int value)
 
 void preferenceDialog::on_pushButtonResetVolumeBoost_clicked()
 {
-    ui->hSliderVolumeBoost->setValue(1000);
+    ui->hSliderVolumeBoost->setValue(500);
 }

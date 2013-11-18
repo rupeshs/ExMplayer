@@ -449,7 +449,7 @@
        <x>10</x>
        <y>110</y>
        <width>371</width>
-       <height>61</height>
+       <height>70</height>
       </rect>
      </property>
      <property name="title">
@@ -1322,13 +1322,16 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>70</x>
-       <y>120</y>
-       <width>261</width>
-       <height>16</height>
+       <y>110</y>
+       <width>301</width>
+       <height>17</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">font: 8pt &quot;Ubuntu&quot;;</string>
+     </property>
      <property name="text">
-      <string/>
+      <string>Build</string>
      </property>
     </widget>
    </widget>

@@ -612,4 +612,8 @@
         <Name>actionSmallmode</Name>
         <ShortCut></ShortCut>
     </Action>
+    <Action>
+        <Name>actionVolume_Boost</Name>
+        <ShortCut>B</ShortCut>
+    </Action>
 </Shortcuts>

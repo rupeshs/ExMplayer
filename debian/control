@@ -1,7 +1,7 @@
 Source: exmplayer
 Section: graphics
 Priority: extra
-Maintainer: Rupesh <exmplayer.dev@gmail.com>
+Maintainer: Rupesh Sreeraman<exmplayer.dev@gmail.com>
 Build-Depends: debhelper (>= 8.0.0),libqt4-dev
 Standards-Version: 3.9.2
 Homepage: <http://exmplayer.sourceforge.net>
@@ -11,10 +11,11 @@ Homepage: <http://exmplayer.sourceforge.net>
 Package: exmplayer
 Architecture: any
 Depends: ${shlibs:Depends},mplayer | mplayer-nogui
-Description: MPlayer GUI with thumbnail seeking.
- ExMplayer(Extended MPlayer) is a GUI front-end for MPlayer 
- with flow view and tool like media cutter.It can play audio,
- video,dvd files(.vob),vcd files(.mpg,.dat)etc and supports 
- network streaming.It supports subtitles,subtitle decoding 
- is done by using ass library.It can play any media formats
- without any external codecs.
+Description: MPlayer GUI with thumbnail seeking
+ ExMplayer(Extended MPlayer) is a GUI front-end for MPlayer. 
+ Version 3 introduces 3D video playback,wide variety 
+ of 3D video formats supported.Volume booster with volume
+ boost up to 5000%.It can play audio,video,dvd files(.vob),
+ vcd files(.mpg,.dat),mp4,mkv etc supports network streaming and subtitles.
+ ExMplayer has many useful tools like 
+ audio converter,audio extractor,media cutter.

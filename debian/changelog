@@ -1,3 +1,17 @@
+exmplayer (3.0.0)  precise; urgency=low
+  
+  *Added 3D video playback
+  *Wide variety of 3D formats supported
+  *Anaglyph/Polarised 3D
+  *Watch 3D video without glass (inbuilt 2D conversion)
+  *Added Volume booster (Upto 5000% boost)
+  *Improved Aqua skin
+  *Improved Seek view
+  *Configurable infobar
+  *Added taglib
+
+ -- rupeshsreeraman <exmplayer.dev@gmail.com>  Sat, 16 Nov 2013 22:17:04 +0430 
+
 exmplayer (2.0.0)  precise; urgency=low
 
   * Initial Release.

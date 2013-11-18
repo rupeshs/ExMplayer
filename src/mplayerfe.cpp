@@ -19,6 +19,7 @@
 #include "mplayerfe.h"
 #include <QColor>
 #include <paths.h>
+
 /*A: 2.1 V: 2.2 A-V: -0.167 ct: 0.042 57/57 41% 0% 2.6% 0 4 49% 1.00x
 A: 2.1
      audio position in seconds
@@ -159,6 +160,7 @@ void mplayerfe::play(QString File,int volume)
 #endif
 #ifdef Q_OS_LINUX
     argfrontEnd<<"-slave"<<"-identify"<<"-noquiet";
+    argVideoOpt<<"-stop-xscreensaver";
 # endif
 
     //Audio options
@@ -1535,10 +1537,15 @@ void mplayerfe::wmpsettings(QSettings *se)
 }
 void mplayerfe::setaudiodriver(int devnum)
 {
+  #ifdef Q_OS_WIN
     if (devnum==1)
         argao<<"-ao"<<"win32";
     else if (devnum>1)
         argao<<"-ao"<<"dsound:device="+QString::number(devnum-2);
+# endif
+#ifdef Q_OS_LINUX
+     argao<<"-ao"<<"alsa,sdl,pulse,oss";
+# endif
 
 
 }

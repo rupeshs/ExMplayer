@@ -36,6 +36,7 @@
 #if defined(Q_OS_WIN) || defined(Q_OS_OS2)
 #ifdef Q_OS_WIN
 #include "screensaver.h"
+#include "qcoverart.h"
 #endif
 #endif
 #include "aboutdialog.h"
@@ -59,9 +60,12 @@
 #include "rphslider.h"
 #include <QResizeEvent>
 #include "advancedinfodialog.h"
-#include "qcoverart.h"
+
+
 #include <QAction>
 #include <stereovinputdialog.h>
+#include <inhibitor.h>
+
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
 
@@ -107,6 +111,7 @@ private:
     QPointer<audioextDialog> axdlg;
     QPointer<audioconvDialog> aucdlg;
     QPointer<StereoVinputDialog> svindlg;
+     QPointer<Inhibitor> screensaverInhibit;
     //QPointer<ripDialog> auripdlg;
     //QPointer<seekview> mpseekview;
     //QPixmap *pixCover;

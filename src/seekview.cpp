@@ -31,12 +31,13 @@ SeekView::SeekView(QWidget *parent) :
     //QPixmap pixmap(":/images/seekview.png");
 
     this->setMask(pixmap.mask());
+    #ifdef Q_OS_WIN32
 
     movie = new QMovie(":/images/loader.gif");
 
     ui->frameView->setMovie(movie);
     movie->start();
-
+    #endif
             //topLevelLabel->show();
 }
 

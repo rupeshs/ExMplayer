@@ -109,6 +109,7 @@ qDebug()<<QDir::tempPath();
     readSettingsGeo();
 
 
+
 }
 
 PlayerWindow::~PlayerWindow()
@@ -245,6 +246,9 @@ void PlayerWindow::initMPlayer(QString file,int type)
     mp->wmpsettings(settings);
 #ifdef Q_OS_WIN
     mp->setaudiodriver(settings->value("Audio/DevNo","0").toInt());
+#endif
+#ifdef Q_OS_LINUX
+ mp->setaudiodriver(0);
 #endif
 
     QObject::connect(mp,SIGNAL(streamingDuration(float)),this,SLOT(streamingDuration(float)));
@@ -393,6 +397,8 @@ void  PlayerWindow::setupMyUi()
 
 #ifdef Q_OS_LINUX
     ui->actionWinamp_Dsp->setVisible(false);
+    screensaverInhibit=new Inhibitor();
+    screensaverInhibit->activateInhibit();
 # endif
 
     ui->actionInternet_Radio->setVisible(false);
@@ -475,6 +481,7 @@ void  PlayerWindow::setupMyUi()
     winscreensaver =new WinScreenSaver();
     winscreensaver->disable();
 #endif
+
     //ui->menu_Alignment->setVisible(false);
     //ui->label_11->setSuffix(" dB");
     hascover=false;
@@ -1193,6 +1200,7 @@ void PlayerWindow::startingPlayback()
             /***********************************************************
                                 Cover Art
             ************************************************************/
+            #ifdef Q_OS_WIN
             TagLib::FileRef  f(currentFile.toStdString().c_str());
             QCoverArt coverArt;
 
@@ -1219,6 +1227,7 @@ void PlayerWindow::startingPlayback()
                                        tr("This is likely a bug."));
 
             }
+          #endif
 
             /************************************************************/
 
@@ -2790,6 +2799,10 @@ void PlayerWindow::cleanMp()
 #ifdef Q_OS_WIN
     winscreensaver->enable();
 #endif
+#ifdef Q_OS_LINUX
+    if (screensaverInhibit)
+        screensaverInhibit->deactivateInhibit();
+# endif
 }
 void PlayerWindow::paused()
 {ui->action_Play_Pause->setIcon(QIcon(":/images/play.png"));
@@ -3015,7 +3028,8 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
 }
 void PlayerWindow::checkForNextPlayback()
 {
-
+   // system("dbus-send --session --dest=org.gnome.SessionManager --type=method_call --print-reply --reply-timeout=20000 /org/gnome/SessionManager org.gnome.SessionManager.Inhibit string:\"myApp\" uint32:0 string:\"Inhibiting\" uint32:8");
+    //system("dbus-send --session --dest=org.gnome.SessionManager --type=method_call --print-reply --reply-timeout=20000 /org/gnome/SessionManager org.gnome.SessionManager.IsInhibited uint32:8");
     if (mp->state()==mp->BUFFERING){
         QString cacheFill="Buffering...["+QString::number(mp->getBufferFill())+"%]";
         ui->labelStatus->setText(cacheFill);
@@ -3501,7 +3515,7 @@ void PlayerWindow::createShortcuts()
                 QAction *act= this->findChild<QAction *>(p);
 
                 act->setShortcut( QKeySequence(sc));
-                //   qDebug()<<act->shortcut().toString();
+                 // qDebug()<<act->shortcut().toString();
                 act->setShortcutContext(	Qt::WidgetShortcut);
                 shortcut = new QShortcut(QKeySequence(sc),
                                          this);
@@ -3548,22 +3562,23 @@ void PlayerWindow::on_action_Save_as_playlist_triggered()
 void PlayerWindow::toggleFullscreen()
 {
 
-    this->isFullScreen();
+
 
     if(this->isFullScreen()){
+
         if (mp){
             if (mp->hasvideo())
                 mp->usercommand("osd_show_text \"\" 1 1");
         }
 
-        if (!ui->actionStay_on_top->isChecked())
-            this->setWindowFlags(!Qt::WindowStaysOnTopHint);
+
 
         ui->actionFullscreen->setIcon(QIcon(":/images/fullscreen.png"));
         ui->actionFullscreen->setToolTip("Show fullscreen");
         isfullscreen=false;
         hidetimer->stop();
-        this->showNormal();
+
+
         ui->toolBarSeek->show();
         ui->menuBar->show();
 
@@ -3587,10 +3602,21 @@ void PlayerWindow::toggleFullscreen()
             fullScreenControls->hide();
 
         delete hidetimer;
+        this->showNormal();
+        this->setWindowState(Qt::WindowActive);
+        #ifdef Q_OS_WIN
+
+         if (!ui->actionStay_on_top->isChecked())
+            this->setWindowFlags(!Qt::WindowStaysOnTopHint);
+        #endif
+
     }
     else
     {
-        this->setWindowFlags(Qt::WindowStaysOnTopHint);
+       #ifdef Q_OS_WIN
+       this->setWindowFlags(Qt::WindowStaysOnTopHint);
+       #endif
+
         qDebug()<<"Screen Height :"<<desktop->screen()->height();
         qDebug()<<"Screen Width :"<<desktop->screen()->width();
 

@@ -2195,7 +2195,7 @@ color: grey;
      <x>0</x>
      <y>0</y>
      <width>879</width>
-     <height>20</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -4573,6 +4573,9 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string>Volume Boost</string>
+   </property>
+   <property name="shortcut">
+    <string>B</string>
    </property>
   </action>
  </widget>
