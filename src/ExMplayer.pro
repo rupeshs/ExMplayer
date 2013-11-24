@@ -2,13 +2,13 @@
 # Project created by QtCreator 2010-06-10T20:36:40
 # -------------------------------------------------
 QT       += core gui
-QT       += network xml dbus
+QT       += network xml
 unix{
+QT       += dbus
 TARGET    = exmplayer
 }
 TEMPLATE  = app
 
-QT += dbus
 SOURCES += main.cpp \
     playerwindow.cpp \
     mplayerfe.cpp \
@@ -47,8 +47,7 @@ SOURCES += main.cpp \
     fontloaddialog.cpp\
     advancedinfodialog.cpp \
     paths.cpp \
-    stereovinputdialog.cpp \
-    inhibitor.cpp
+    stereovinputdialog.cpp
 
 HEADERS += playerwindow.h \
     mplayerfe.h \
@@ -88,8 +87,8 @@ HEADERS += playerwindow.h \
     fontloaddialog.h\
     advancedinfodialog.h \
     paths.h \
-    stereovinputdialog.h \
-    inhibitor.h
+    stereovinputdialog.h
+
 FORMS += playerwindow.ui \
     preferencedialog.ui \
     winampdspdialog.ui \
@@ -112,10 +111,15 @@ SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
 HEADERS += qtsingleapplication.h qtlocalpeer.h
 
 
-
+unix{
+HEADERS += inhibitor.h
+SOURCES += inhibitor.cpp
+}
 win32 {
 INCLUDEPATH +=taglib
-LIBS += $$PWD\taglib\lib\libtag.a
+
+LIBS += $$PWD/taglib/lib/libtag.a
+
 HEADERS += qcoverart.h
 SOURCES += qcoverart.cpp
 }

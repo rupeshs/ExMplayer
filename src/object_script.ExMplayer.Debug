@@ -37,10 +37,10 @@ INPUT(
 ./debug\fontloaddialog.o
 ./debug\advancedinfodialog.o
 ./debug\paths.o
-./debug\qcoverart.o
 ./debug\stereovinputdialog.o
 ./debug\qtsingleapplication.o
 ./debug\qtlocalpeer.o
+./debug\qcoverart.o
 ./debug\screensaver.o
 ./debug\moc_playerwindow.o
 ./debug\moc_mplayerfe.o

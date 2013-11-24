@@ -35,6 +35,7 @@
 #include "midialog.h"
 #if defined(Q_OS_WIN) || defined(Q_OS_OS2)
 #ifdef Q_OS_WIN
+#include <Winbase.h>
 #include "screensaver.h"
 #include "qcoverart.h"
 #endif
@@ -64,8 +65,9 @@
 
 #include <QAction>
 #include <stereovinputdialog.h>
+#ifdef Q_OS_UNIX
 #include <inhibitor.h>
-
+#endif
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
 
@@ -88,6 +90,7 @@ public:
     float mediaposition;
 
 protected:
+    bool eventFilter(QObject *obj, QEvent *ev);
     void changeEvent(QEvent *e);
     void keyPressEvent ( QKeyEvent * e );
     void closeEvent(QCloseEvent *event);
@@ -106,12 +109,15 @@ private:
     QLocalSocket *socket;
     QString currentCmd;
     quint16 blockSize;
+    QTimer *idleTimer;
     QPointer<QMenu> menuLoadSavepl;
     QPointer<mixDialog> mxdlg;
     QPointer<audioextDialog> axdlg;
     QPointer<audioconvDialog> aucdlg;
     QPointer<StereoVinputDialog> svindlg;
+    #ifdef Q_OS_LINUX
      QPointer<Inhibitor> screensaverInhibit;
+    #endif
     //QPointer<ripDialog> auripdlg;
     //QPointer<seekview> mpseekview;
     //QPixmap *pixCover;
@@ -467,7 +473,7 @@ private slots:
     void image2Pixmap(QImage &img,QPixmap &pixmap);
     void mousePressEvent(QMouseEvent *event);
     void on_toolButtonFblike_clicked();
-    void on_sliderSeekFullSc_actionTriggered(int action);
+    void on_sliderSeekFullSc_actionTriggered(int act);
     void resizeEvent ( QResizeEvent * event );
     void on_actionAdvanced_Info_triggered();
     void on_actionEnable_3D_triggered();
@@ -479,6 +485,7 @@ private slots:
     void on_toolButtonVolumeBoost_clicked();
     void setStereoInputFormat(int mode);
     void hideSeek();
+    bool userInactive();
 };
 
 #endif // PLAYERWINDOW_H

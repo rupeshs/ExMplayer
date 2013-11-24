@@ -30,15 +30,21 @@ cutterDialog::cutterDialog(QWidget *parent, mplayerfe *mpf) :
     ui->pushButtonStop->setEnabled(false);
     ui->pushButtonCut->setEnabled(false);
     mp=mpf;
+
     startPos=0;
     stopPos=0;
     ui->progressBar->setValue(0);
-    ui->progressBar->setVisible(false);
+   // ui->progressBar->setVisible(false);
     ui->pushButtonof->setEnabled(false);
     ui->pushButtonclose->setEnabled(false);
     ui->pushButtonpre->setEnabled(false);
     ui->toolButtonStop->setEnabled(false);
     ui->seek->setEnabled(false);
+     if (mpf->starttime()>0)
+     {ui->seek->setEnabled(false);
+      ui->pushButtonStop->setEnabled(false);
+      ui->pushButtonpre->setVisible(false);
+     }
 
 }
 
@@ -96,6 +102,7 @@ void cutterDialog::on_pushButtonReset_clicked()
     ui->pushButtonStop->setEnabled(false);
     ui->lineEditStart->clear();
     ui->lineEditStop->clear();
+    ui->lineEditLen->clear();
     ui->pushButtonCut->setEnabled(false);
     startPos=0;
     stopPos=0;
@@ -128,7 +135,7 @@ void cutterDialog::on_pushButtonCut_clicked()
             QObject::connect(ffProcess,SIGNAL(started()),coreTimer ,SLOT(start()));
 
             ui->progressBar->setMaximum(0);
-            ui->progressBar->setVisible(true);
+            //ui->progressBar->setVisible(true);
             ui->pushButtonclose->setEnabled(true);
             QStringList arguments;
             QFileInfo fi(shortPathName(mp->filepath()));
@@ -169,7 +176,7 @@ void cutterDialog::completed(int val)
     ui->pushButtonof->setEnabled(true);
     ui->progressBar->setMaximum(100);
     ui->progressBar->setValue(0);
-    ui->progressBar->setVisible(false);
+    //ui->progressBar->setVisible(false);
     if (cfile->size()==0){
 
         QMessageBox::critical(this,qApp->applicationName(),tr("Error while saving the file!"),QMessageBox::Ok,QMessageBox::Cancel);

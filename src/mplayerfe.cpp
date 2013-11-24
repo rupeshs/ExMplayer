@@ -1935,18 +1935,7 @@ void mplayerfe::mplayerConsole(QByteArray ba)
                 _starttime=tmpstr.toFloat();
             }
 
-            //Stream duration-a recheck
-            if(mplayerOutputLine.contains("ANS_LENGTH",Qt::CaseInsensitive)){
 
-                tmpstr=parsevalue("ANS_LENGTH=","=",mplayerOutputLine);
-                _duration=tmpstr.toFloat();
-                _tduration=QTime();
-                _tduration=  _tduration.addSecs(_duration);
-                emit lengthChanged();
-
-                qDebug()<<ba;
-
-            }
 
             //Check for subtitles
             if (!internalrestart){
@@ -2195,8 +2184,29 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
 
         }
+        else if(mplayerOutputLine.contains("V:",Qt::CaseInsensitive)){
+            //Video only no audio
+            //Playing >
+            _state=PLAYING;
+            if (!bstop)
+                emit playing();
+            _isRestarting=false;
+        }
         else{
 
+            //Stream duration-a recheck
+            if(mplayerOutputLine.contains("ANS_LENGTH",Qt::CaseInsensitive)){
+
+                tmpstr=parsevalue("ANS_LENGTH=","=",mplayerOutputLine);
+                _duration=tmpstr.toFloat();
+                _tduration=QTime();
+                _tduration=  _tduration.addSecs(_duration);
+                emit lengthChanged();
+                qDebug()<<"Duration re-check";
+
+                qDebug()<<ba;
+
+            }
             if( !_isRestarting){
                 //ExMplayer log
                 emit lineavailable (mplayerOutputLine);

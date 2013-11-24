@@ -37,10 +37,10 @@ INPUT(
 ./release\fontloaddialog.o
 ./release\advancedinfodialog.o
 ./release\paths.o
-./release\qcoverart.o
 ./release\stereovinputdialog.o
 ./release\qtsingleapplication.o
 ./release\qtlocalpeer.o
+./release\qcoverart.o
 ./release\screensaver.o
 ./release\moc_playerwindow.o
 ./release\moc_mplayerfe.o

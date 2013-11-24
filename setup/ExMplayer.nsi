@@ -7,6 +7,8 @@
 ;10-feb-2013
 ;10-Nov-2013
 ;v3.0.0
+;24-Nov-2013
+;v3.1.0
 ;Output
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;Compressor
@@ -15,12 +17,12 @@
   SetCompressorDictSize 32
 ;setup file
 ;--------------------------------
-OutFile exmplayer-3.0.0-win32.exe 
+OutFile exmplayer-3.1.0-win32.exe 
 ;--------------------------------
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;Defines & includes
 !define PRODUCT_NAME "ExMplayer"
-!define PRODUCT_VERSION "3.0.0"
+!define PRODUCT_VERSION "3.1.0"
 !define PRODUCT_PUBLISHER "Rupesh Sreeraman<exmplayer.dev@gmail.com>"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -37,17 +39,17 @@ Var ext
 ;General
 ;Version tab on file properties
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-VIProductVersion "3.0.0.0"
+VIProductVersion "3.1.0.0"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "ExMplayer Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments""3D Media player for windows no codec is required."
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Rupesh.S<exmplayer.dev@gmail.com>"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© Rupesh Sreeraman 2010-2013"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "ExMplayer"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "3.0.0"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "3.1.0"
 
 Name "ExMplayer"
-BrandingText "ExMplayer 3.0 for Windows"
+BrandingText "ExMplayer 3.1 for Windows"
 /* Sets default install dir to $PROGRAMFILES\ExMplayer.
   If InstallDirRegKey exists (from a previous installation,
   it will default to that directory instead. */
@@ -151,6 +153,7 @@ File "C:\ExMplayer_setup\fmts"
 File "C:\ExMplayer_setup\libgcc_s_dw2-1.dll"
 File "C:\ExMplayer_setup\mingwm10.dll"
 File "C:\ExMplayer_setup\QtCore4.dll"
+File "C:\ExMplayer_setup\QtSvg4.dll"
 File "C:\ExMplayer_setup\QtGui4.dll"
 File "C:\ExMplayer_setup\QtNetwork4.dll"
 File "C:\ExMplayer_setup\QtWebKit4.dll"
@@ -327,6 +330,7 @@ Delete "$INSTDIR\fmts"
 Delete "$INSTDIR\libgcc_s_dw2-1.dll"
 Delete "$INSTDIR\mingwm10.dll"
 Delete "$INSTDIR\QtCore4.dll"
+Delete "$INSTDIR\QtSvg4.dll"
 Delete "$INSTDIR\QtGui4.dll"
 Delete "$INSTDIR\QtNetwork4.dll"
 Delete "$INSTDIR\QtWebKit4.dll"

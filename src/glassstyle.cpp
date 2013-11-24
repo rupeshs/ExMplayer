@@ -206,13 +206,13 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
                 QLinearGradient gradient(rect.topLeft(), rect.bottomLeft());
 
                 gradient.setColorAt( 0.0,m_colorBarBegin );
-                gradient.setColorAt( 0.5, m_colorBarMiddle );
+                //gradient.setColorAt( 0.5, m_colorBarMiddle );
                 gradient.setColorAt( 1.0,QColor(255,255,255,255) );
                 painter->fillRect( rect, gradient );
 
                 gradient.setColorAt( 0.0, QColor(255,255,255,255) );
-                gradient.setColorAt( 0.4, QColor(220,220,220,255) );
-                gradient.setColorAt( 0.6,QColor(220,220,220,255)  );
+                //gradient.setColorAt( 0.4, QColor(220,220,220,255) );
+                //gradient.setColorAt( 0.6,QColor(220,220,220,255)  );
                 gradient.setColorAt( 1.0,QColor(255,255,255,255) );
                 QRect rect2 = rect;
 
@@ -228,15 +228,15 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
 
                 gradient.setColorAt( 0.0, m_colorBarBegin );
 
-                gradient.setColorAt( 0.5, m_colorBarMiddle);
+               // gradient.setColorAt( 0.5, m_colorBarMiddle);
                 gradient.setColorAt( 1.0,QColor(255,255,255,255));
                 //gradient.setColorAt( 0.5, QColor(255,255,255));
 
                 painter->fillRect( rect, gradient );
 
                 gradient.setColorAt( 0.0, QColor(255,255,255,150) );
-                gradient.setColorAt( 0.4, QColor(255,255,255,150) );
-                gradient.setColorAt( 0.6,QColor(240,240,240,250)  );
+                //gradient.setColorAt( 0.4, QColor(255,255,255,150) );
+                //gradient.setColorAt( 0.6,QColor(240,240,240,250)  );
                 gradient.setColorAt( 1.0,QColor(255,255,255,255) );
                 QRect rect2 = rect;
 
@@ -277,7 +277,7 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
         gradient = QLinearGradient( rect.topLeft(), rect.bottomLeft() );
 
         gradient.setColorAt( 0.0, m_colorBarBegin );
-       gradient.setColorAt( 0.4, m_colorItemBackgroundMiddle );
+        gradient.setColorAt( 0.4, m_colorItemBackgroundMiddle );
         gradient.setColorAt( 0.6, m_colorItemBackgroundMiddle );
         gradient.setColorAt( 1.0, m_colorItemBackgroundEnd );
         painter->fillRect( rect, gradient );
@@ -606,12 +606,12 @@ void GlassStyle::drawControl( ControlElement element, const QStyleOption* option
         gradient.setColorAt( 0.0, m_colorBarBegin );
         //gradient.setColorAt( 0.4, m_colorBarMiddle );
        // gradient.setColorAt( 0.6, m_colorBarMiddle );
-        gradient.setColorAt( 1.0,QColor(255,255,255,200));
+        gradient.setColorAt( 1.0,QColor(255,255,255,255));
         painter->fillRect( rect, gradient );
 
         gradient.setColorAt( 0.0, QColor(255,255,255,150) );
         gradient.setColorAt( 0.4, QColor(255,255,255,150) );
-        gradient.setColorAt( 0.6,QColor(240,240,240,250)  );
+        //gradient.setColorAt( 0.6,QColor(240,240,240,250)  );
         gradient.setColorAt( 1.0,QColor(255,255,255,255) );
         QRect rect2 = option->rect;
 

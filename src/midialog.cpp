@@ -75,7 +75,7 @@ void miDialog::on_pushButton_clicked()
          file.open(QIODevice::WriteOnly);
          QTextStream out(&file);   // we will serialize the data into the file
 
-         QString html="<p><b><SPAN STYLE=\"color: blue\">Created by ExMplayer 1.1 Copyright (c) 2010 Rupesh.S</SPAN></b></p>"+ui->textEdit->toHtml();
+         QString html="<p><b><SPAN STYLE=\"color: grey\">Created by ExMplayer Copyright (c) 2013 Rupesh Sreeraman</SPAN></b></p>"+ui->textEdit->toHtml();
 
          //filename without extension
          QFileInfo fi(fileName);

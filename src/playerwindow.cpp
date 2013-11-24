@@ -37,7 +37,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     ui->setupUi(this);
 
 
-qDebug()<<QDir::tempPath();
+    qDebug()<<QDir::tempPath();
     this->disableStylesheet();
     qDebug()<< "Config path :"<<Paths::configPath();
     settings=new QSettings(Paths::configPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
@@ -107,6 +107,13 @@ qDebug()<<QDir::tempPath();
         }
     }
     readSettingsGeo();
+
+    idleTimer = new QTimer(this);
+    idleTimer->start(4000);
+    installEventFilter(this);
+
+    connect(idleTimer, SIGNAL(timeout()), this, SLOT(userInactive()));
+
 
 
 
@@ -248,7 +255,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     mp->setaudiodriver(settings->value("Audio/DevNo","0").toInt());
 #endif
 #ifdef Q_OS_LINUX
- mp->setaudiodriver(0);
+    mp->setaudiodriver(0);
 #endif
 
     QObject::connect(mp,SIGNAL(streamingDuration(float)),this,SLOT(streamingDuration(float)));
@@ -295,7 +302,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     mp->enableClosedCaption(true);
     qDebug()<<ui->actionEnable_3D->isChecked();
     if (ui->actionEnable_3D->isChecked())
-       {
+    {
         QString inStereoFmt, outStereoFmt;
         //Get 3D input format
         foreach(QAction* sInAct, actiongroupInFormatStereo->actions())
@@ -308,18 +315,18 @@ void PlayerWindow::initMPlayer(QString file,int type)
         foreach(QAction* sOutAct, actiongroupOutFormatStereo->actions())
         {
             if(sOutAct->isChecked())
-               outStereoFmt=sOutAct->iconText();
+                outStereoFmt=sOutAct->iconText();
         }
 
         qDebug()<<"3D in: "<<inStereoFmt <<" Out :"<<outStereoFmt;
         //Transform 3D
         if (mp)
             mp->StartUp3D(inStereoFmt,outStereoFmt);
-       }
+    }
     if ((ui->actionVolume_Boost->isChecked()))
-       {
+    {
         mp->setVolumeBoost(settings->value("Audio/VolumeBoost","500").toInt());
-       }
+    }
 
     ui->actionEnable_Closed_Captions->setChecked(true);
 
@@ -401,6 +408,7 @@ void  PlayerWindow::setupMyUi()
     screensaverInhibit->activateInhibit();
 # endif
 
+
     ui->actionInternet_Radio->setVisible(false);
     ui->actionCopy_Audio_CD->setVisible(false);
 
@@ -465,13 +473,13 @@ void  PlayerWindow::setupMyUi()
 
     if (settings->value("MainWindow/InfoBar","0").toInt()==0)
     {
-     ui->toolBarStatus->setVisible(false);
-     ui->actionInfobar->setChecked(false);
+        ui->toolBarStatus->setVisible(false);
+        ui->actionInfobar->setChecked(false);
     }
     else
     {
-     ui->toolBarStatus->setVisible(true);
-     ui->actionInfobar->setChecked(true);
+        ui->toolBarStatus->setVisible(true);
+        ui->actionInfobar->setChecked(true);
     }
     tmpxpos=0;
     tmpypos=0;
@@ -480,6 +488,27 @@ void  PlayerWindow::setupMyUi()
 #ifdef Q_OS_WIN
     winscreensaver =new WinScreenSaver();
     winscreensaver->disable();
+
+    //Prevent the sleep idle time-out.
+    QLibrary library("kernel32.dll");
+    if (!library.load())
+        qDebug("kernel32 Library loading failed.");
+    else{
+
+    qDebug("kernel32 Library loaded");
+    typedef uint (*SetThreadExecutionState)(uint esFlag);
+    SetThreadExecutionState setState = (SetThreadExecutionState)library.resolve("SetThreadExecutionState");
+    //flags
+    //ES_CONTINUOUS
+    //0x80000000
+    //ES_DISPLAY_REQUIRED
+    //0x00000002
+    //ES_SYSTEM_REQUIRED
+    //0x00000001
+
+    setState(0x80000000|0x00000002|0x00000001);
+    }
+
 #endif
 
     //ui->menu_Alignment->setVisible(false);
@@ -643,7 +672,7 @@ void  PlayerWindow::setupMyUi()
 
     ui->toolBarSeek->addWidget(ui->toolButtonVolume);
     ui->toolBarSeek->addWidget(ui->sliderVolume);
-     ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
+    ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
 
     //ui->toolBarSeek->addSeparator();
 
@@ -878,7 +907,7 @@ void  PlayerWindow::setupMyUi()
         }
     }
 
-     /* Christmas  greeting*/
+    /* Christmas  greeting*/
     if(curDt.date().month()==12)
     {
         if (curDt.date().day()==25||curDt.date().day()==26)
@@ -1200,7 +1229,7 @@ void PlayerWindow::startingPlayback()
             /***********************************************************
                                 Cover Art
             ************************************************************/
-            #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
             TagLib::FileRef  f(currentFile.toStdString().c_str());
             QCoverArt coverArt;
 
@@ -1223,11 +1252,11 @@ void PlayerWindow::startingPlayback()
             catch (...)
             {
                 QMessageBox::warning(0,
-                                       tr("An unexpected error occurred"),
-                                       tr("This is likely a bug."));
+                                     tr("An unexpected error occurred"),
+                                     tr("This is likely a bug."));
 
             }
-          #endif
+#endif
 
             /************************************************************/
 
@@ -1386,8 +1415,8 @@ void PlayerWindow::updateSeekbar()
     {if (mp->isseekable()){
             if (mp->duration()>0)
             {ui->sliderSeek->setEnabled(true);
-            if(sliderSeekFullSc)
-                sliderSeekFullSc->setEnabled(true);
+                if(sliderSeekFullSc)
+                    sliderSeekFullSc->setEnabled(true);
 
             }
             else
@@ -1425,11 +1454,27 @@ void PlayerWindow::updateSeekbar()
     }
     if(mp)
     {
-       if (mp->duration()>0)
+        if (mp->duration()>0)
         {if( mp->isstarted()){
-            ui->sliderSeek->setValue((mp->curpos()/mp->duration())*100);
+                ui->sliderSeek->setValue((mp->curpos()/mp->duration())*100);
+                if(sliderSeekFullSc)
+                    sliderSeekFullSc->setValue((mp->curpos()/mp->duration())*100);
+                ui->lcdCurPos->display(mp->tcurpos().toString());
+                if (isfullscreen){
+                    lcdCurPosFullSc->display(mp->tcurpos().toString());
+                    lcdDurationFullSc->display(mp->tduration().toString());
+                }
+
+
+            }
+        }
+        else
+        {
+            ui->sliderSeek->setEnabled(false);
             if(sliderSeekFullSc)
-                sliderSeekFullSc->setValue((mp->curpos()/mp->duration())*100);
+                sliderSeekFullSc->setEnabled(false);
+            ui->lcdDuration->display("--:--:--");
+
             ui->lcdCurPos->display(mp->tcurpos().toString());
             if (isfullscreen){
                 lcdCurPosFullSc->display(mp->tcurpos().toString());
@@ -1438,22 +1483,6 @@ void PlayerWindow::updateSeekbar()
 
 
         }
-       }
-       else
-       {
-           ui->sliderSeek->setEnabled(false);
-           if(sliderSeekFullSc)
-               sliderSeekFullSc->setEnabled(false);
-           ui->lcdDuration->display("--:--:--");
-
-           ui->lcdCurPos->display(mp->tcurpos().toString());
-           if (isfullscreen){
-               lcdCurPosFullSc->display(mp->tcurpos().toString());
-               lcdDurationFullSc->display("--:--:--");
-           }
-
-
-       }
 
     }
 
@@ -1569,8 +1598,7 @@ void PlayerWindow::togglePause()
 
     if(mp)
     {
-
-
+       //qDebug()<<QString::number(mp->state());
         if( mp->state()==mp->PLAYING|| mp->state()==mp->PAUSED)
         {    mp->pause();
 
@@ -2566,34 +2594,39 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
 {
 
     if(this->isFullScreen())
-    { ypos=e->y();
+    {
+        ypos=e->y();
         xpos=e->x();
 
+
+
+
+        //Not used from v3.1
         if(e->y()<(desktop->height() - fullScreenControls->height()))
         {
-            if (!hidetimer->isActive())
-                hidetimer->start();
 
-            this->unsetCursor();
-            fullScreenControls->hide();
+
+            if (fullScreenControls->geometry().top()==desktop->screen()->height()-70)
+            {
+
+            }
         }
         else
         {
 
-            this->unsetCursor();
-            fullScreenControls->show();
 
-            /*if (fullScreenControls->y()==desktop->screen()->height()){
+            if (!fullScreenControls->isVisible())
+            {
+                this->unsetCursor();
+
+                fullScreenControls->show();
                 QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
-                animation->setDuration(300);
+                animation->setDuration(500);
                 animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
                 animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
                 animation->start();
-            }*/
 
-
-            hidetimer->stop();
-
+            }
         }
     }
 
@@ -2610,7 +2643,7 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
                 }
 
             }
-           // qDebug()<<"checked "<<ui->action_Crop->isChecked();
+            // qDebug()<<"checked "<<ui->action_Crop->isChecked();
 
 
             e->accept();
@@ -2625,7 +2658,7 @@ void PlayerWindow::hidestatus()
 {
 
 
-    if (ypos<desktop->height() - fullScreenControls->height())
+    if (fullScreenControls->geometry().top()==desktop->screen()->height()-70)
     {
         //ui->toolBarSeekBar->hide();
         //  ui->toolBarSeek->hide();
@@ -2642,6 +2675,7 @@ void PlayerWindow::hidestatus()
     }
     tmpxpos= xpos;
     tmpypos= ypos;
+
 }
 void PlayerWindow::playThisfile(QString fn)
 {forceplay=true;
@@ -2798,6 +2832,24 @@ void PlayerWindow::cleanMp()
 {
 #ifdef Q_OS_WIN
     winscreensaver->enable();
+    QLibrary library("kernel32.dll");
+    if (!library.load())
+        qDebug("kernel32 Library loading failed.");
+    else
+       {
+
+     qDebug("kernel32 Library loaded");
+
+    typedef uint (*SetThreadExecutionState)(uint esFlag);
+    SetThreadExecutionState setState = (SetThreadExecutionState)library.resolve("SetThreadExecutionState");
+    //ES_CONTINUOUS
+    //0x80000000
+    //ES_DISPLAY_REQUIRED
+    //0x00000002
+    //ES_SYSTEM_REQUIRED
+    //0x00000001
+    setState(0x80000000);
+    }
 #endif
 #ifdef Q_OS_LINUX
     if (screensaverInhibit)
@@ -2890,16 +2942,16 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
     if(lab)
     {if( mp->hasvideo())
         {
-           // qDebug()<<QString::number(mp->starttime())<<"::";
-           if (mp->starttime()<10)
+            // qDebug()<<QString::number(mp->starttime())<<"::";
+            if (mp->starttime()<10)
             {mpseekView->resize(128,105);
-            if(! isfullscreen)
-                mpseekView->move(pt->x()-64+ui->sliderSeek->x(),ui->toolBarSeekBar->y()-105);
-            else
-                mpseekView->move(pt->x()-64+sliderSeekFullSc->x()+fullScreenControls->x(),fullScreenControls->y()-105);
+                if(! isfullscreen)
+                    mpseekView->move(pt->x()-64+ui->sliderSeek->x(),ui->toolBarSeekBar->y()-105);
+                else
+                    mpseekView->move(pt->x()-64+sliderSeekFullSc->x()+fullScreenControls->x(),fullScreenControls->y()-105);
 
-            mpseekView->show();
-           }
+                mpseekView->show();
+            }
         }
         else
         {
@@ -2949,8 +3001,8 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
 
             if(pos.toInt()<100)
             {
-                 fr->pause();
-                 fr->seek(pos.toInt());
+                fr->pause();
+                fr->seek(pos.toInt());
 
 
             }
@@ -3028,7 +3080,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
 }
 void PlayerWindow::checkForNextPlayback()
 {
-   // system("dbus-send --session --dest=org.gnome.SessionManager --type=method_call --print-reply --reply-timeout=20000 /org/gnome/SessionManager org.gnome.SessionManager.Inhibit string:\"myApp\" uint32:0 string:\"Inhibiting\" uint32:8");
+    // system("dbus-send --session --dest=org.gnome.SessionManager --type=method_call --print-reply --reply-timeout=20000 /org/gnome/SessionManager org.gnome.SessionManager.Inhibit string:\"myApp\" uint32:0 string:\"Inhibiting\" uint32:8");
     //system("dbus-send --session --dest=org.gnome.SessionManager --type=method_call --print-reply --reply-timeout=20000 /org/gnome/SessionManager org.gnome.SessionManager.IsInhibited uint32:8");
     if (mp->state()==mp->BUFFERING){
         QString cacheFill="Buffering...["+QString::number(mp->getBufferFill())+"%]";
@@ -3481,10 +3533,10 @@ void PlayerWindow::createShortcuts()
     {  file.close();
         path.clear();
 #ifdef Q_OS_WIN
-     path=Paths::configPath();
+        path=Paths::configPath();
 #endif
 #ifdef Q_OS_LINUX
-    path=Paths::getStaticConfigPath();
+        path=Paths::getStaticConfigPath();
 # endif
         path.append("/sc_default.xml");
         qDebug()<<"Loading shortcut file :"<<path;
@@ -3515,7 +3567,7 @@ void PlayerWindow::createShortcuts()
                 QAction *act= this->findChild<QAction *>(p);
 
                 act->setShortcut( QKeySequence(sc));
-                 // qDebug()<<act->shortcut().toString();
+                // qDebug()<<act->shortcut().toString();
                 act->setShortcutContext(	Qt::WidgetShortcut);
                 shortcut = new QShortcut(QKeySequence(sc),
                                          this);
@@ -3570,9 +3622,11 @@ void PlayerWindow::toggleFullscreen()
             if (mp->hasvideo())
                 mp->usercommand("osd_show_text \"\" 1 1");
         }
+#ifdef Q_OS_WIN
 
-
-
+        if (!ui->actionStay_on_top->isChecked())
+            this->setWindowFlags(!Qt::WindowStaysOnTopHint);
+#endif
         ui->actionFullscreen->setIcon(QIcon(":/images/fullscreen.png"));
         ui->actionFullscreen->setToolTip("Show fullscreen");
         isfullscreen=false;
@@ -3603,29 +3657,30 @@ void PlayerWindow::toggleFullscreen()
 
         delete hidetimer;
         this->showNormal();
+#ifdef Q_OS_LINUX
         this->setWindowState(Qt::WindowActive);
-        #ifdef Q_OS_WIN
+#endif
 
-         if (!ui->actionStay_on_top->isChecked())
-            this->setWindowFlags(!Qt::WindowStaysOnTopHint);
-        #endif
 
     }
     else
     {
-       #ifdef Q_OS_WIN
-       this->setWindowFlags(Qt::WindowStaysOnTopHint);
-       #endif
+#ifdef Q_OS_WIN
+        this->setWindowFlags(Qt::WindowStaysOnTopHint);
+#endif
 
         qDebug()<<"Screen Height :"<<desktop->screen()->height();
         qDebug()<<"Screen Width :"<<desktop->screen()->width();
 
         if(fullScreenControls<=0)
-        { fullScreenControls=new QToolBar(this);
+        {
+            fullScreenControls=new QToolBar(this);
+            fullScreenControls->setMouseTracking(true);
 
             GlassStyle *st=new GlassStyle;
             fullScreenControls->setStyle(st);
             lcdCurPosFullSc=new QLCDNumber(this);
+
 
             lcdDurationFullSc=new QLCDNumber(this);
             lcdCurPosFullSc->setSegmentStyle(ui->lcdCurPos->segmentStyle());
@@ -3662,7 +3717,6 @@ void PlayerWindow::toggleFullscreen()
             sliderSeekFullSc->setEnabled(ui->sliderSeek->isEnabled());
             sliderSeekFullSc->setStyleSheet(ui->sliderSeek->styleSheet());
             sliderSeekFullSc->setValue(ui->sliderSeek->value());
-            QObject::connect(sliderSeekFullSc,SIGNAL(actionTriggered(int)),this,SLOT(on_sliderSeekFullSc_actionTriggered(int)));
 
             QObject::connect(sliderSeekFullSc,SIGNAL(showtooltip(QPoint *)),this,SLOT(showtooltip(QPoint *)));
             QObject::connect(sliderSeekFullSc,SIGNAL(hoverValue(QString,QPoint*)),this,SLOT(showSeekpos(QString,QPoint*)));
@@ -3673,6 +3727,8 @@ void PlayerWindow::toggleFullscreen()
             lcdDurationFullSc->setStyleSheet(ui->lcdDuration->styleSheet());
 
             connect(sliderSeekFullSc,SIGNAL(hidetooltip()),this,SLOT(hideframe()));
+            QObject::connect(sliderSeekFullSc,SIGNAL(actionTriggered(int)),this,SLOT(on_sliderSeekFullSc_actionTriggered(int)));
+
 
 
         }
@@ -3700,11 +3756,15 @@ void PlayerWindow::toggleFullscreen()
 
 
             QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
-            animation->setDuration(60);
+            animation->setDuration(500);
             animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
             animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
+            //animation->blockSignals(true);
             animation->start();
+
         }
+
+
 
         ui->toolBarSeek->hide();
         ui->menuBar->hide();
@@ -3725,6 +3785,7 @@ void PlayerWindow::toggleFullscreen()
 
             }
         }
+
         ui->menuBar->hide();
         if (!hidetimer)
         {hidetimer = new QTimer(this);
@@ -3745,7 +3806,7 @@ void PlayerWindow::toggleFullscreen()
         if (ui->dock_Filter->isVisible())
             ui->dock_Filter->hide();
 
-        hidetimer->start(3000);
+        //hidetimer->start(10000);
         isfullscreen=true;
     }
     mp->togglefullscreen();
@@ -3907,18 +3968,18 @@ void PlayerWindow::setAqua()
 
     ui->sliderVolume->setStyleSheet(QString::fromUtf8("QSlider::sub-page:horizontal {\n"
                                                       "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 255), stop:1 rgba(255, 255, 255, 255));    \n"
-                                                      " border: 1px solid rgba(0, 205, 255, 255);\n"
+                                                      " border: 1px solid rgba(100, 255, 255, 255);\n"
                                                       " }\n"
                                                       " QSlider::groove:horizontal {\n"
                                                       "     height: 2px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
                                                       "     margin: 1px 0;\n"
                                                       " background: qlineargradient(x1: 1, y1:12, x1: 15, y2: 0, stop: 0 #e7effd, stop: 1 #D2E7FA); \n"
-                                                      " border: 2px solid rgba(0, 10, 10, 11);\n"
+                                                      " border: 2px solid rgba(10, 10, 10, 6);\n"
                                                       " }\n"
                                                       "QSlider::handle::horizontal{ \n"
                                                       "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 70), stop:1 rgba(255, 255, 255, 100));\n"
                                                       "width: 7px;\n"
-                                                      " border: 1px solid rgba(128, 184, 228, 150);\n"
+                                                      " border: 1px solid rgba(128, 184, 228, 100);\n"
                                                       "     margin: -8px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
                                                       "     border-radius: 8px;\n"
                                                       "}\n"
@@ -3939,33 +4000,33 @@ void PlayerWindow::setAqua()
                                                       "}"));
     ui->sliderSeek->setStyleSheet(QString::fromUtf8("QSlider::sub-page:horizontal {\n"
                                                     "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 255), stop:1 rgba(255, 255, 255, 255));    \n"
-                                                    " border: 1px solid rgba(0, 205, 255, 255);\n"
+                                                    " border: 1px solid rgba(100, 255, 255, 255);\n"
                                                     " }\n"
                                                     " QSlider::groove:horizontal {\n"
                                                     "     height: 2px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
                                                     "     margin: 1px 0;\n"
                                                     " background: qlineargradient(x1: 1, y1:12, x1: 15, y2: 0, stop: 0 #e7effd, stop: 1 #D2E7FA); \n"
-                                                    " border: 2px solid rgba(0, 10, 10, 11);\n"
+                                                    " border: 2px solid rgba(10, 10, 10, 6);\n"
                                                     " }\n"
                                                     "QSlider::handle::horizontal{ \n"
-                                                    "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 255), stop:1 rgba(255, 255, 255, 255));\n"
-                                                    "width: 2px;\n"
-                                                    " border: 1px solid rgba(128, 184, 228, 150);\n"
+                                                    "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 50), stop:1 rgba(255, 255, 255, 50));\n"
+                                                    "width: 3px;\n"
+                                                    " border: 1px solid rgba(128, 184, 228, 100);\n"
                                                     "     margin: -8px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
                                                     "     border-radius: 8px;\n"
                                                     "}\n"
                                                     "QSlider::handle::hover:horizontal{ \n"
                                                     "background:qlineargradient(spread:pad, x1:"
                                                     "0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 255, 0, 150), stop:1 rgba(255, 255, 255, 255));\n"
-                                                    "width: 2px;\n"
-                                                    "border: 1px solid rgba(128, 184, 228, 150);\n"
+                                                    "width: 3px;\n"
+                                                    " border: 1px solid lightgreen;\n"
                                                     "     margin: -8px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
                                                     "     border-radius: 8px;\n"
                                                     "}\n"
                                                     "QSlider::handle::disabled:horizontal{ \n"
-                                                    "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 205), stop:1 rgba(255, 255, 255, 200));\n"
+                                                    "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 0), stop:1 rgba(255, 255, 255, 0));\n"
                                                     "width: 0px;\n"
-                                                    " border: 2px solid lightblue;\n"
+                                                    " border: 0px solid lightblue;\n"
                                                     "     margin: -2px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
                                                     "     border-radius: 2px;\n"
                                                     "}"));
@@ -4359,13 +4420,14 @@ QString PlayerWindow::getFilter()
     QString fvi;
     fvil     <<"*.wmv"
             <<"*.3gp"
-           <<"*.asf"
-          <<"*.avi"
-         <<"*.dat"
-        <<"*.dv"
-       <<"*.divx"
-      <<"*.ext"
-     <<"*.flv"
+           <<"*.webm"
+          <<"*.asf"
+         <<"*.avi"
+        <<"*.dat"
+       <<"*.dv"
+      <<"*.divx"
+     <<"*.ext"
+    <<"*.flv"
     <<"*.ifo"
     <<"*.mkv"
     <<"*.mpg"
@@ -4685,7 +4747,7 @@ void PlayerWindow::on_toolButtonplaylist_clicked()
 
 void  PlayerWindow::updatevideovindow()
 {
-   /* qDebug()<<"Audio :"<<mp->hasaudio()<<"Video: "<<mp->hasvideo();
+    /* qDebug()<<"Audio :"<<mp->hasaudio()<<"Video: "<<mp->hasvideo();
     if (mp)
     {
         if (mp->hasaudio() && !mp->hasvideo())
@@ -4815,7 +4877,7 @@ void PlayerWindow::image2Pixmap(QImage &img,QPixmap &pixmap)
 void PlayerWindow::resizeVideoWindow(int w,int h)
 {
 
-   // videoWin->setAspect((float)w/h);
+    // videoWin->setAspect((float)w/h);
     //this->resize(w,h);
 }
 void PlayerWindow::mousePressEvent(QMouseEvent *event)
@@ -4855,9 +4917,8 @@ bool PlayerWindow::winEvent ( MSG * m, long * result ) {
 #endif
 
 
-void PlayerWindow::on_sliderSeekFullSc_actionTriggered(int action)
+void PlayerWindow::on_sliderSeekFullSc_actionTriggered(int act)
 {
-
     this->playerTimer->stop();
     mp->seek(sliderSeekFullSc->value());
     this->playerTimer->start();
@@ -4893,25 +4954,25 @@ void PlayerWindow::on_actionEnable_3D_triggered()
 {
 
 
-     emit  settingChanged ("Video","3D",QString::number(ui->actionEnable_3D->isChecked()));
+    emit  settingChanged ("Video","3D",QString::number(ui->actionEnable_3D->isChecked()));
 
-     if(ui->actionEnable_3D->isChecked())
+    if(ui->actionEnable_3D->isChecked())
     {
 
 
         if(mp)
         {
             if (mp->hasvideo())
-        {
+            {
                 svindlg= new StereoVinputDialog(this);
                 QObject::connect(svindlg,SIGNAL(stereoInputFormat(int)),this,SLOT(setStereoInputFormat(int)));
                 svindlg->setStereo(true);
                 svindlg->show();
             }
             else
-           {
+            {
                 ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
-                 ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
+                ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
                 ui->actionEnable_3D->setToolTip("");
             }
         }
@@ -4921,11 +4982,11 @@ void PlayerWindow::on_actionEnable_3D_triggered()
         ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
         ui->toolButtonStereoVideo->setToolTip("Turn <b>ON</b> 3D video");
         if(mp)
-            {
-                if (mp->hasvideo())
-                    mp->Stereo3D(ui->actionEnable_3D->isChecked());
+        {
+            if (mp->hasvideo())
+                mp->Stereo3D(ui->actionEnable_3D->isChecked());
 
-            }
+        }
     }
 
 
@@ -4934,8 +4995,8 @@ void PlayerWindow::on_actionEnable_3D_triggered()
 
 void PlayerWindow::on_actionInfobar_triggered()
 {
-       ui->toolBarStatus->setVisible(ui->actionInfobar->isChecked());
-       emit settingChanged ("MainWindow","InfoBar",QString::number(ui->actionInfobar->isChecked()));
+    ui->toolBarStatus->setVisible(ui->actionInfobar->isChecked());
+    emit settingChanged ("MainWindow","InfoBar",QString::number(ui->actionInfobar->isChecked()));
 
 
 }
@@ -4954,7 +5015,7 @@ void PlayerWindow::changeStereoscopicView(QAction *act)
     foreach(QAction* sOutAct, actiongroupOutFormatStereo->actions())
     {
         if(sOutAct->isChecked())
-           outStereoFmt=sOutAct->iconText();
+            outStereoFmt=sOutAct->iconText();
     }
 
     qDebug()<<"3D in: "<<inStereoFmt <<" Out :"<<outStereoFmt;
@@ -4968,11 +5029,11 @@ void PlayerWindow::changeStereoscopicView(QAction *act)
 
     ui->actionWatch_as_2D_video->setChecked(false);
     if (!ui->actionEnable_3D->isChecked())
-         ui->actionEnable_3D->trigger();
+        ui->actionEnable_3D->trigger();
 
-     ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
-     ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
-     ui->actionWatch_as_2D_video->setChecked(false);
+    ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
+    ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
+    ui->actionWatch_as_2D_video->setChecked(false);
 
 
 
@@ -5007,18 +5068,18 @@ void PlayerWindow::on_actionVolume_Boost_triggered()
 {
 
     emit  settingChanged ("Audio","Boost",QString::number(ui->actionVolume_Boost->isChecked()));
-   if(mp)
-       mp->addVolumeBoost(ui->actionVolume_Boost->isChecked(),settings->value("Audio/VolumeBoost","500").toInt());
+    if(mp)
+        mp->addVolumeBoost(ui->actionVolume_Boost->isChecked(),settings->value("Audio/VolumeBoost","500").toInt());
     if(ui->actionVolume_Boost->isChecked())
-   {
-       ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_on.png"));
-       ui->toolButtonVolumeBoost->setToolTip("Turn <b>OFF</b> volume boost");
+    {
+        ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_on.png"));
+        ui->toolButtonVolumeBoost->setToolTip("Turn <b>OFF</b> volume boost");
 
-   }
-   else
-   {
-       ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
-       ui->toolButtonVolumeBoost->setToolTip("Turn <b>ON</b> volume boost");
+    }
+    else
+    {
+        ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
+        ui->toolButtonVolumeBoost->setToolTip("Turn <b>ON</b> volume boost");
     }
 }
 
@@ -5030,7 +5091,7 @@ void PlayerWindow::on_toolButtonVolumeBoost_clicked()
 void PlayerWindow::restartSeekView(int ec,bool stop)
 {
     if (fr)
-     {
+    {
         qDebug()<<"Handle !!!!";
         fr->stop();
         fr=NULL;
@@ -5039,19 +5100,19 @@ void PlayerWindow::restartSeekView(int ec,bool stop)
 void PlayerWindow::pauseSeekView()
 {
     if (fr)
-     {
-       fr->pause();
-     }
+    {
+        fr->pause();
+    }
 }
 void PlayerWindow::setStereoInputFormat(int mode)
 {
 
     qDebug()<<QString ::number(mode);
 
-   if (mode==1)
-       ui->actionSide_by_side_left_first->setChecked(true);
-   else
-       ui->actionAbove_below_left_first->setChecked(true);
+    if (mode==1)
+        ui->actionSide_by_side_left_first->setChecked(true);
+    else
+        ui->actionAbove_below_left_first->setChecked(true);
 
 
     QString inStereoFmt, outStereoFmt;
@@ -5066,26 +5127,26 @@ void PlayerWindow::setStereoInputFormat(int mode)
     foreach(QAction* sOutAct, actiongroupOutFormatStereo->actions())
     {
         if(sOutAct->isChecked())
-           outStereoFmt=sOutAct->iconText();
+            outStereoFmt=sOutAct->iconText();
     }
 
     if (!svindlg->Stereo())
     {
-    ui->actionEnable_3D->setChecked(false);
-    if(ui->actionEnable_3D->isChecked())
-    {
-        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
-        ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
+        ui->actionEnable_3D->setChecked(false);
+        if(ui->actionEnable_3D->isChecked())
+        {
+            ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
+            ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
 
-    }
-    else
-    {
-        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
-        ui->toolButtonStereoVideo->setToolTip("Turn <b>ON</b> 3D video");
+        }
+        else
+        {
+            ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
+            ui->toolButtonStereoVideo->setToolTip("Turn <b>ON</b> 3D video");
 
-    }
-    if(mp)
-        mp->Stereo3D(inStereoFmt,"ml");
+        }
+        if(mp)
+            mp->Stereo3D(inStereoFmt,"ml");
     }
     else
     {
@@ -5099,14 +5160,42 @@ void PlayerWindow::setStereoInputFormat(int mode)
             ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
             ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
             ui->actionWatch_as_2D_video->setChecked(false);
-
         }
     }
 
 }
- void PlayerWindow::hideSeek()
- {
+void PlayerWindow::hideSeek()
+{
 
-     ui->sliderSeek->setDisabled(true);
-     ui->lcdDuration->display("--:--:--");
- }
+    ui->sliderSeek->setDisabled(true);
+    ui->lcdDuration->display("--:--:--");
+}
+bool PlayerWindow::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::MouseMove || event->type() == QEvent::KeyPress ||event->type() == QEvent::Wheel||event->type() == QEvent::MouseButtonPress)
+     {
+          //reset timer
+          idleTimer->start(5000);
+
+     }
+
+     return QMainWindow::eventFilter(obj, event);
+}
+bool PlayerWindow::userInactive()
+{
+
+    if (isfullscreen)
+    {
+
+            if(fullScreenControls)
+            {qDebug()<<"User inactivity";
+                if (fullScreenControls->isVisible())
+                  {
+                    fullScreenControls->hide();
+                    this->setCursor(Qt::BlankCursor);
+
+                   }
+            }
+
+    }
+}
