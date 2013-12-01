@@ -1407,6 +1407,7 @@ void PlayerWindow::updateSeekbar()
         if(this->videoWin->mplayerlayer->isVisible())
          this->videoWin->mplayerlayer->hide();
     }*/
+
     if (windowTimer->isActive())
     {
         windowTimer->stop();
@@ -1454,6 +1455,7 @@ void PlayerWindow::updateSeekbar()
     }
     if(mp)
     {
+
         if (mp->duration()>0)
         {if( mp->isstarted()){
                 ui->sliderSeek->setValue((mp->curpos()/mp->duration())*100);
@@ -1463,6 +1465,8 @@ void PlayerWindow::updateSeekbar()
                 if (isfullscreen){
                     lcdCurPosFullSc->display(mp->tcurpos().toString());
                     lcdDurationFullSc->display(mp->tduration().toString());
+                    //qDebug()<<  mp->tduration().toString();
+
                 }
 
 

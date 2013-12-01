@@ -220,6 +220,12 @@ MplayerWindow::MplayerWindow(QWidget* parent, Qt::WindowFlags f)
            movie->start();
 
        }
+       else
+       {
+           movie = new QMovie(":/images/backanim.gif");
+           logo->setMovie(movie);
+          movie->start();
+       }
    }
    else
    {

@@ -116,13 +116,13 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     bmute=false;
     volumeBoost=110;
     _usevolumeboost=false;
+     _tduration = QTime(0,0,0,0);
 
 }
 void mplayerfe::init()
 {
     _align=2;
     _isRestarting=false;
-    _tduration = QTime(0,0,0,0);
     _started=false;
     _hasaudio=false;
     _hasvideo=false;
@@ -1916,6 +1916,7 @@ void mplayerfe::mplayerConsole(QByteArray ba)
             //Stream duration
             if(mplayerOutputLine.contains("ID_LENGTH",Qt::CaseInsensitive)){
 
+
                 tmpstr=parsevalue("ID_LENGTH=","=",mplayerOutputLine);
                 _duration=tmpstr.toFloat();
                 emit gotduration(_duration);
@@ -1923,7 +1924,6 @@ void mplayerfe::mplayerConsole(QByteArray ba)
                 if (isurl)
                     emit streamingDuration(_duration);
 
-                qDebug()<<ba;
 
             }
 
