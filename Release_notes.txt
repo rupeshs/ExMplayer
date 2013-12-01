@@ -1,3 +1,9 @@
+Version 3.2.0
+Release Date : 1-12-2013
+*Fixed blank cover issue
+*Fixed fullscreen time issue
+*updated MPlayer Redxii-SVN-r36526-4.6.3(Windows)
+
 Version 3.1.0
 Release Date : 24-11-2013
 *Added VP9 support
