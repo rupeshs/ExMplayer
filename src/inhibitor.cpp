@@ -17,7 +17,7 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
- /*
+/*
  * Based on freedesktop Power Management Specification
  * https://people.gnome.org/~mccann/gnome-session/docs/gnome-session.html#id344989
  */
@@ -39,9 +39,12 @@ Inhibitor::Inhibitor()
     serviceInterfaceLst.append("org.gnome.SessionManager");
     serviceInterfaceLst.append("org.freedesktop.ScreenSaver");
     serviceInterfaceLst.append("org.mate.SessionManager");
+
     _inhibitCookie=0;
+    _systemType=-1;//We don't know current system
 
     dectectSystem();
+
 }
 void Inhibitor::dectectSystem()
 {
@@ -82,6 +85,7 @@ void Inhibitor::dectectSystem()
 
 
 
+
 }
 //CheckProcess returns processid
 int Inhibitor::checkProcess(const char* name)
@@ -97,43 +101,52 @@ int Inhibitor::checkProcess(const char* name)
         return pid;
     else
         return -1;
+
 }
 
 //This wil disable screensaver/powersaving
 bool Inhibitor::activateInhibit()
 {
 
-    system("xset -dpms");
-    system("xset s off");
 
-    QDBusConnection bus = QDBusConnection::sessionBus();
-
-   interfaceScreenSvr= new QDBusInterface(serviceLst.at(_systemType),
-                                                   servicePathLst.at(_systemType),
-                                                   serviceInterfaceLst.at(_systemType),
-                                                   bus,
-                                                   0);
-
-    QList<QVariant> args;
-    uint inhibitCookie;
-    args.append("ExMplayer");
-    args.append((uint)0);
-    args.append("Playing a media file");
-    args.append((uint)8|4);
-
-
-    QDBusReply<uint> reply = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"Inhibit", args);
-
-    if (reply.isValid())
-
+    qDebug()<<"System Type" <<QString::number(_systemType);
+    if (  _systemType>-1&& _systemType<serviceInterfaceLst.count())
     {
-        _inhibitCookie=reply.value();
-        qDebug()<<"Inhibit :OK "<<QString::number(_inhibitCookie);
-        return true;
+        system("xset -dpms");
+        system("xset s off");
 
+        QDBusConnection bus = QDBusConnection::sessionBus();
+
+        interfaceScreenSvr= new QDBusInterface(serviceLst.at(_systemType),
+                                               servicePathLst.at(_systemType),
+                                               serviceInterfaceLst.at(_systemType),
+                                               bus,
+                                               0);
+
+        QList<QVariant> args;
+        uint inhibitCookie;
+        args.append("ExMplayer");
+        args.append((uint)0);
+        args.append("Playing a media file");
+        args.append((uint)8|4);
+
+        if(interfaceScreenSvr)
+        {
+            QDBusReply<uint> reply = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"Inhibit", args);
+
+            if (reply.isValid())
+
+            {
+                _inhibitCookie=reply.value();
+                qDebug()<<"Inhibit :OK "<<QString::number(_inhibitCookie);
+                return true;
+
+            }
+            else
+                qDebug()<< reply.error();
+        }
     }
-    else
-       qDebug()<< reply.error();
+
 
 
 
@@ -144,26 +157,34 @@ bool Inhibitor::activateInhibit()
 bool  Inhibitor::deactivateInhibit()
 {
 
-    system("xset +dpms");
-    system("xset s on");
 
-    QList<QVariant> args;
-    args.append((uint)8|4);
-    QDBusReply<bool> re = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"IsInhibited", args);
+    if (_systemType>-1&& _systemType<serviceInterfaceLst.count())
+    {
+        system("xset +dpms");
+        system("xset s on");
 
-    if(re)
-   {
-    qDebug()<<"Uninhibiting...";
-    args.clear();
-    args.append((uint)_inhibitCookie);
-    interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"Uninhibit", args);
+        QList<QVariant> args;
+        args.append((uint)8|4);
+        if(interfaceScreenSvr)
+        {
 
-    QDBusReply<bool> re = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"IsInhibited", args);
+            QDBusReply<bool> re = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"IsInhibited", args);
 
-    qDebug()<< re;
+            if(re)
+            {
+                qDebug()<<"Uninhibiting...";
+                args.clear();
+                args.append((uint)_inhibitCookie);
+                interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"Uninhibit", args);
 
-    return true;
+                QDBusReply<bool> re = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"IsInhibited", args);
 
+                qDebug()<< re;
+
+                return true;
+
+            }
+        }
     }
     return false;
 }

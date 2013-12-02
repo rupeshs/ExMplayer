@@ -495,18 +495,18 @@ void  PlayerWindow::setupMyUi()
         qDebug("kernel32 Library loading failed.");
     else{
 
-    qDebug("kernel32 Library loaded");
-    typedef uint (*SetThreadExecutionState)(uint esFlag);
-    SetThreadExecutionState setState = (SetThreadExecutionState)library.resolve("SetThreadExecutionState");
-    //flags
-    //ES_CONTINUOUS
-    //0x80000000
-    //ES_DISPLAY_REQUIRED
-    //0x00000002
-    //ES_SYSTEM_REQUIRED
-    //0x00000001
+        qDebug("kernel32 Library loaded");
+        typedef uint (*SetThreadExecutionState)(uint esFlag);
+        SetThreadExecutionState setState = (SetThreadExecutionState)library.resolve("SetThreadExecutionState");
+        //flags
+        //ES_CONTINUOUS
+        //0x80000000
+        //ES_DISPLAY_REQUIRED
+        //0x00000002
+        //ES_SYSTEM_REQUIRED
+        //0x00000001
 
-    setState(0x80000000|0x00000002|0x00000001);
+        setState(0x80000000|0x00000002|0x00000001);
     }
 
 #endif
@@ -1602,7 +1602,7 @@ void PlayerWindow::togglePause()
 
     if(mp)
     {
-       //qDebug()<<QString::number(mp->state());
+        //qDebug()<<QString::number(mp->state());
         if( mp->state()==mp->PLAYING|| mp->state()==mp->PAUSED)
         {    mp->pause();
 
@@ -2623,12 +2623,16 @@ void PlayerWindow::mouseMoveEvent ( QMouseEvent * e )
             {
                 this->unsetCursor();
 
+
                 fullScreenControls->show();
+#ifdef Q_OS_WIN
                 QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
                 animation->setDuration(500);
                 animation->setStartValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
                 animation->setEndValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
                 animation->start();
+#endif
+
 
             }
         }
@@ -2840,19 +2844,19 @@ void PlayerWindow::cleanMp()
     if (!library.load())
         qDebug("kernel32 Library loading failed.");
     else
-       {
+    {
 
-     qDebug("kernel32 Library loaded");
+        qDebug("kernel32 Library loaded");
 
-    typedef uint (*SetThreadExecutionState)(uint esFlag);
-    SetThreadExecutionState setState = (SetThreadExecutionState)library.resolve("SetThreadExecutionState");
-    //ES_CONTINUOUS
-    //0x80000000
-    //ES_DISPLAY_REQUIRED
-    //0x00000002
-    //ES_SYSTEM_REQUIRED
-    //0x00000001
-    setState(0x80000000);
+        typedef uint (*SetThreadExecutionState)(uint esFlag);
+        SetThreadExecutionState setState = (SetThreadExecutionState)library.resolve("SetThreadExecutionState");
+        //ES_CONTINUOUS
+        //0x80000000
+        //ES_DISPLAY_REQUIRED
+        //0x00000002
+        //ES_SYSTEM_REQUIRED
+        //0x00000001
+        setState(0x80000000);
     }
 #endif
 #ifdef Q_OS_LINUX
@@ -5177,13 +5181,13 @@ void PlayerWindow::hideSeek()
 bool PlayerWindow::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::MouseMove || event->type() == QEvent::KeyPress ||event->type() == QEvent::Wheel||event->type() == QEvent::MouseButtonPress)
-     {
-          //reset timer
-          idleTimer->start(5000);
+    {
+        //reset timer
+        idleTimer->start(5000);
 
-     }
+    }
 
-     return QMainWindow::eventFilter(obj, event);
+    return QMainWindow::eventFilter(obj, event);
 }
 bool PlayerWindow::userInactive()
 {
@@ -5191,15 +5195,26 @@ bool PlayerWindow::userInactive()
     if (isfullscreen)
     {
 
-            if(fullScreenControls)
-            {qDebug()<<"User inactivity";
-                if (fullScreenControls->isVisible())
-                  {
+        if(fullScreenControls)
+        {qDebug()<<"User inactivity";
+            if (fullScreenControls->isVisible())
+            {
+                // qDebug("%d %d %d",ypos,xpos,fullScreenControls->geometry().top());
+#ifdef Q_OS_LINUX
+                if (ypos<fullScreenControls->geometry().top())
+                {
                     fullScreenControls->hide();
                     this->setCursor(Qt::BlankCursor);
+                }
+#endif
 
-                   }
+#ifdef Q_OS_WIN
+                fullScreenControls->hide();
+                this->setCursor(Qt::BlankCursor);
+#endif
+
             }
+        }
 
     }
 }

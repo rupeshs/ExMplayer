@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Media cutter</string>
+   <string>Media Cutter</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -93,7 +93,7 @@
      <x>70</x>
      <y>170</y>
      <width>301</width>
-     <height>31</height>
+     <height>32</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -164,7 +164,7 @@
       <x>20</x>
       <y>115</y>
       <width>171</width>
-      <height>24</height>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -218,13 +218,13 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>71</x>
      <y>30</y>
      <width>301</width>
-     <height>91</height>
+     <height>95</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">

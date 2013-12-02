@@ -46,7 +46,7 @@ public:
 
     int _systemType;
     uint _inhibitCookie;
-    QDBusInterface *interfaceScreenSvr;
+     QPointer<QDBusInterface> interfaceScreenSvr;
 
     QStringList serviceLst;
     QStringList servicePathLst;

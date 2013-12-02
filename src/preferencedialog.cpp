@@ -79,10 +79,13 @@ preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
         ui->cmbAO->addItem(AudioDriverLst.at(i));
 
     }
-
+    ui->comboBoxStyle->addItem("windowsxp");
 #endif
+
+
 #ifdef Q_OS_LINUX
     ui->comboBox->setEnabled(false);
+    ui->comboBoxStyle->addItem("GTK+");
 #endif
 
 ui->stackedWidget->setCurrentIndex(0);

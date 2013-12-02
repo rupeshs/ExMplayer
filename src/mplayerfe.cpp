@@ -1544,7 +1544,7 @@ void mplayerfe::setaudiodriver(int devnum)
         argao<<"-ao"<<"dsound:device="+QString::number(devnum-2);
 # endif
 #ifdef Q_OS_LINUX
-     argao<<"-ao"<<"alsa,sdl,pulse,oss";
+     argao<<"-ao"<<"sdl,alsa,pulse,oss";
 # endif
 
 

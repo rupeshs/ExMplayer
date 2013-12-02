@@ -300,11 +300,6 @@
             <string>plastique</string>
            </property>
           </item>
-          <item>
-           <property name="text">
-            <string>windowsxp</string>
-           </property>
-          </item>
          </widget>
         </item>
        </layout>
