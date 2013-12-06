@@ -117,6 +117,8 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     volumeBoost=110;
     _usevolumeboost=false;
      _tduration = QTime(0,0,0,0);
+    _osdLevel=1;
+    _currentSubtitleTrack="0";
 
 }
 void mplayerfe::init()
@@ -131,7 +133,7 @@ void mplayerfe::init()
     rx_videocpu_usage.setMinimal(true);
     bedlstart=false;
     uselavf=true;
-    _starttime=0;
+
 
 
 }
@@ -389,6 +391,7 @@ void mplayerfe::toggleMute()
 void mplayerfe::setOSDlevel(int osdlevel)
 {
     cmd="osd "+QString::number(osdlevel)+"\n";
+    _osdLevel=osdlevel;
     mProcess->write(cmd.toAscii()) ;
 
 }
@@ -502,31 +505,21 @@ void mplayerfe::loadsubtitles(QString subfile)
     // otherwise mplayer fails to load it
     subfile = subfile.replace("\\","/");
     cmd="sub_load \""+ subfile+"\"\n";
-    arguments<<"-sub"<<subfile;
-    restart();
+    mProcess->write(cmd.toAscii());
+    qDebug()<<cmd;
+    switchSubtitle(listSubtitleTrack.count());
+    //arguments<<"-sub"<<subfile;
+    //restart();
+
 
 }
 
 // This function has been copied (and modified a little bit) from Scribus (program under GPL license):
 // http://docs.scribus.net/devel/util_8cpp-source.html#l00112
 QString mplayerfe::shortPathName(QString long_path) {
-#ifdef Q_OS_WIN
-    if ((QSysInfo::WindowsVersion >= QSysInfo::WV_NT) && (QFile::exists(long_path))) {
-        QString short_path = long_path;
 
-        const int max_path = 4096;
-        WCHAR shortName[max_path];
-
-        QString nativePath = QDir::convertSeparators(long_path);
-        int ret = GetShortPathNameW((LPCWSTR) nativePath.utf16(), shortName, max_path);
-        if (ret != ERROR_INVALID_PARAMETER && ret < MAX_PATH)
-            short_path = QString::fromUtf16((const ushort*) shortName);
-
-        return short_path;
-    } else {
-        return long_path;
-    }
-#endif
+    //New mplayer buils supports unicode support so nothing to do
+    //
     return long_path;
 }
 
@@ -538,7 +531,9 @@ void mplayerfe::toggle_subtitle_visibility()
     if (bsubtvisible)
         emit show_message("Subtitles enabled",1000);
     else
-        emit show_message("Subtitles disabled",1000);
+       { if( !_isRestarting)
+           emit show_message("Subtitles disabled",1000);
+       }
 }
 void  mplayerfe::usercommand(QString user_cmd)
 {
@@ -654,9 +649,23 @@ void mplayerfe::restart()
     qDebug()<<_curvolume;
     qDebug()<<"restart"<<arguments;
     if(!bsubtvisible)
-    {cmd="sub_visibility\n";
+    {
+        cmd="sub_visibility\n";
         mProcess->write(cmd.toAscii());
     }
+    else
+    {
+    switchSubtitle(_currentSubtitleTrack.toInt());
+    }
+
+
+    if (_starttime>0)
+    {
+        cmd =QString("pausing_keep seek " + QString::number(_curpos) + " 0\n");
+        mProcess->write(cmd.toAscii());
+    }
+    cmd="osd "+QString::number(_osdLevel)+"\n";
+    mProcess->write(cmd.toAscii()) ;
     //setequalizerbandvalue(this->equlizerstr);
 }
 void mplayerfe::loadExternalFile(QString File)
@@ -1423,11 +1432,38 @@ void mplayerfe::crop(QRect *rect,bool enable )
 
 void mplayerfe::switchSubtitle(int id)
 {
-    //cmd=QString("sub_vob %1").arg(QString(listSubtitleTrack.at(id)).toInt());
-    arguments<<"-sid"<<QString::number(QString(listSubtitleTrack.at(id)).toInt());
-    restart();
-    qDebug()<<listSubtitleTrack;
-    //mProcess->write(cmd.toAscii()+"\n");
+    if (id==-1)
+    {
+
+        //Disable subtitle from file, vob,demux.
+        cmd=QString("sub_source %1").arg(id);
+        mProcess->write(cmd.toAscii()+"\n");
+        _currentSubtitleTrack=QString::number(-1);
+        return;
+
+    }
+
+    if (mapFileSubtitles.count()>0)
+    {
+       cmd=QString("sub_file %1").arg(id);
+       mProcess->write(cmd.toAscii()+"\n");
+       _currentSubtitleTrack=QString::number(id);
+    }
+    else
+    {
+     if (listSubtitleTrack.count()>0)
+     {
+
+       if(! _isRestarting)
+       {
+         cmd=QString("sub_demux %1").arg(id);
+         mProcess->write(cmd.toAscii()+"\n");
+         _currentSubtitleTrack=QString::number(id);
+         //qDebug()<<listSubtitleTrack;
+       }
+     }
+
+    }
 }
 void mplayerfe::setSubAlignment(int align)
 {
@@ -1935,6 +1971,23 @@ void mplayerfe::mplayerConsole(QByteArray ba)
                 _starttime=tmpstr.toFloat();
             }
 
+            //Check for File subtitles
+
+            if (mplayerOutputLine.contains("ID_FILE_SUB_ID")){
+
+                     subTrackId=parsevalue("ID_FILE_SUB_ID","=",mplayerOutputLine);
+                    listSubtitleTrack<<subTrackId;
+                    listSubtitleTrack.removeDuplicates();
+                    // emit foundSubtitletrack(listSubtitleTrack);
+
+            }
+
+            if (mplayerOutputLine.contains("ID_FILE_SUB_FILENAME")){
+
+            QString subFileName=parsevalue("ID_FILE_SUB_FILENAME","=",mplayerOutputLine);
+            mapFileSubtitles.insert(subTrackId,subFileName);
+            }
+
 
 
             //Check for subtitles
@@ -1994,6 +2047,8 @@ void mplayerfe::mplayerConsole(QByteArray ba)
                 _isseekable =(bool)tmpstr.toInt();
                 qDebug()<<"Seekable :"<<_isseekable;
             }
+
+
 
             //*******************************************************************
             //Title
@@ -2138,6 +2193,8 @@ void mplayerfe::mplayerConsole(QByteArray ba)
             qDebug()<<"===================================================";
             qDebug()<<"Subtitle tracks:"<< listSubtitleTrack;
             qDebug()<<"===================================================";
+            qDebug()<<"Subtitle File"<<mapFileSubtitles;
+            qDebug()<<"===================================================";
             qDebug()<<"Codec(s) used:"<< mapCodecs;
             qDebug()<<"===================================================";
             qDebug()<<"Device(s) used:"<< mapDevices;
@@ -2233,7 +2290,9 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
             _curpos=rx_pos.cap(1).toFloat();
             if (_starttime>0)
-               _curpos=_curpos-_starttime;
+            {
+                _curpos=_curpos-_starttime;
+            }
             if( _curpos<0)
                 _curpos=-_curpos;
            // qDebug()<<QString::number(_curpos);
@@ -2302,6 +2361,23 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
                 if (!_isRestarting){
 
+
+                    //Check for File subtitles
+
+                    if (mplayerOutputLine.contains("ID_FILE_SUB_ID")){
+
+                             subTrackId=parsevalue("ID_FILE_SUB_ID","=",mplayerOutputLine);
+                            listSubtitleTrack<<subTrackId;
+                            listSubtitleTrack.removeDuplicates();
+                             emit addSubtitletrack(listSubtitleTrack);
+
+                    }
+
+                    if (mplayerOutputLine.contains("ID_FILE_SUB_FILENAME")){
+
+                    QString subFileName=parsevalue("ID_FILE_SUB_FILENAME","=",mplayerOutputLine);
+                    mapFileSubtitles.insert(subTrackId,subFileName);
+                    }
                     if (mplayerOutputLine.contains("ID_SUBTITLE_ID")){
 
                         if (!internalrestart){
@@ -2316,6 +2392,8 @@ void mplayerfe::mplayerConsole(QByteArray ba)
                         qDebug()<<"Subtitles " <<listSubtitleTrack;
 
                     }
+
+
                 }
 
             }

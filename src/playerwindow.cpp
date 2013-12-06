@@ -270,6 +270,8 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(settingChanged(QString,QString,QString)),this,SLOT(settingChanged(QString,QString,QString)));
     QObject::connect(mp,SIGNAL(lengthChanged()),this,SLOT(lengthChanged()));
     QObject::connect(mp,SIGNAL(foundSubtitletrack(QStringList)),this,SLOT(foundSubtitletrack(QStringList)));
+    QObject::connect(mp,SIGNAL(addSubtitletrack(QStringList)),this,SLOT(addSubtitletrack(QStringList)));
+
     QObject::connect(mp,SIGNAL(show_endmessage(QString)),ui->labelStatus,SLOT(setText(QString)));
     QObject::connect(mp,SIGNAL(paused()),this,SLOT(paused()));
     QObject::connect(mp,SIGNAL(playing()),this,SLOT(playing()));
@@ -1174,16 +1176,29 @@ void PlayerWindow::startingPlayback()
 
             ui->menu_Video->setDisabled(false);
             ui->menu_Subtitles->setDisabled(false);
-            actiongroupSubtitleTrack=new QActionGroup(this);
-            actiongroupSubtitleTrack->addAction(ui->actionStNone);
+            if (!actiongroupSubtitleTrack)
+            {
+                actiongroupSubtitleTrack=new QActionGroup(this);
+                actiongroupSubtitleTrack->addAction(ui->actionStNone);
+            }
+
+
+
             actiongroupVideoTrack=new QActionGroup(this);
+
             QObject::connect(actiongroupSubtitleTrack,SIGNAL(triggered(QAction*)),this,SLOT(changeSubTitles(QAction*)));
 
             if( mp->listSubtitleTrack.count()>0)
-            {for (int i=0;i<mp->listSubtitleTrack.count();i++)
-                {actiongroupSubtitleTrack->addAction( ui->menuSelect->addAction("Track "+QString::number(mp->listSubtitleTrack.count())));
+            {   ui->actionStNone->setDisabled(false);
+                ui->actionStNone->setChecked(false);
+                qDebug()<<"Found "<<QString::number(mp->listSubtitleTrack.count())<<" Subtitle tracks";
+                for (int i=0;i<mp->listSubtitleTrack.count();i++)
+                {
+                    actiongroupSubtitleTrack->addAction( ui->menuSelect->addAction("Track "+QString::number(i+1)));
                     actiongroupSubtitleTrack->actions().last()->setCheckable(true);
                 }
+                if(actiongroupSubtitleTrack->actions().count()>1)
+                    actiongroupSubtitleTrack->actions().at(1)->setChecked(true);
             }
             if(mp->listSubtitleTrack.count()==0)
             {
@@ -2481,9 +2496,13 @@ void PlayerWindow::foundSubtitletrack(QStringList sl )
 {
 
     if (sl.count()+1!=ui->menuSelect->actions().count())
-    {if(actiongroupSubtitleTrack)
-            actiongroupSubtitleTrack->addAction( ui->menuSelect->addAction("Track "+QString::number(sl.count())));
-        actiongroupSubtitleTrack->actions().last()->setCheckable(true);
+    {
+        if (!ui->actionStNone->isEnabled())
+            ui->actionStNone->setEnabled(true);
+        if(actiongroupSubtitleTrack)
+        {   actiongroupSubtitleTrack->addAction( ui->menuSelect->addAction("Track "+QString::number(sl.count())));
+            actiongroupSubtitleTrack->actions().last()->setCheckable(true);
+        }
     }
 }
 
@@ -2509,6 +2528,13 @@ void PlayerWindow::changeSubTitles(QAction*act)
     {if(this->actiongroupSubtitleTrack->actions().indexOf(act)-1>-1)
             mp->switchSubtitle(this->actiongroupSubtitleTrack->actions().indexOf(act)-1);
     }
+    if( this->actiongroupSubtitleTrack->actions().indexOf(act)==0)
+    {
+        if(mp)
+            mp->switchSubtitle(-1);
+    }
+
+
 
 }
 void PlayerWindow::changesubAlignment(QAction *action)
@@ -2534,6 +2560,7 @@ void PlayerWindow::on_actionStUnload_triggered()
     if (mp)
     {mp->unloadsub();
         ui->actionStUnload->setEnabled(false);
+
     }
 
 }
@@ -2812,12 +2839,38 @@ void PlayerWindow::dropEvent(QDropEvent *event)
 # endif
         QFileInfo fi(url);
         if(fi.isFile())
-        {  if (urlList.size()==1)
-                myplaylist->clearList();
-            else if (urlList.size()>1 &&i==0)
-                myplaylist->clearList();
-            myplaylist->addFile(url);
-            myplaylist->playFirstFile();
+        {
+            //Check dropped file is a subtitle or not
+            if ( fi.suffix().toLower().contains("srt")||
+                 fi.suffix().toLower().contains("sub")||
+                 fi.suffix().toLower().contains("ssa")||
+                 fi.suffix().toLower().contains("ass")||
+                 fi.suffix().toLower().contains("idx")||
+                 fi.suffix().toLower().contains("txt")||
+                 fi.suffix().toLower().contains("smi")||
+                 fi.suffix().toLower().contains("rt") ||
+                 fi.suffix().toLower().contains("utf")||
+                 fi.suffix().toLower().contains("aqt")
+                 )
+
+           {
+              if (mp->hasvideo())
+                {
+                  //Video found so adding subtitle
+                  mp->loadsubtitles(url);
+                 ui->actionStUnload->setEnabled(true);
+                 }
+            }
+            else
+            {
+              //This is a media file add and play
+                if (urlList.size()==1)
+                    myplaylist->clearList();
+                else if (urlList.size()>1 &&i==0)
+                    myplaylist->clearList();
+                myplaylist->addFile(url);
+                myplaylist->playFirstFile();
+            }
         }
         else if(fi.isDir())
         { myplaylist->clearList();
@@ -5216,5 +5269,20 @@ bool PlayerWindow::userInactive()
             }
         }
 
+    }
+}
+void PlayerWindow::addSubtitletrack(QStringList sl )
+{
+
+    if (sl.count()+1!=ui->menuSelect->actions().count())
+    {
+        if (!ui->actionStNone->isEnabled())
+            ui->actionStNone->setEnabled(true);
+        if(actiongroupSubtitleTrack)
+        {   actiongroupSubtitleTrack->addAction( ui->menuSelect->addAction("Track "+QString::number(sl.count())));
+            actiongroupSubtitleTrack->actions().last()->setCheckable(true);
+            actiongroupSubtitleTrack->actions().last()->setChecked(true);
+
+        }
     }
 }

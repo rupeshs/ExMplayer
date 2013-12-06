@@ -486,6 +486,7 @@ private slots:
     void setStereoInputFormat(int mode);
     void hideSeek();
     bool userInactive();
+    void addSubtitletrack(QStringList sl);
 };
 
 #endif // PLAYERWINDOW_H

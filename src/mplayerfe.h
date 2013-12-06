@@ -72,6 +72,7 @@ public:
     bool bstop;
     QString commandLine;
 
+
     //---------------------------------------------
     QStringList listTemp;
     QStringList listVideoTrack;
@@ -82,6 +83,7 @@ public:
     QMap<QString, QString> mapCodecs;
     QMap<QString, QString> mapDevices;
     QMap<QString, QString> mapMetaInfo;
+    QMap<QString, QString> mapFileSubtitles;
 
     //-----------------------------------------------
     QString getAudioRate(){return _audio_rate;}
@@ -130,6 +132,7 @@ signals:
     void lengthChanged();
     void gotduration(float dur);
     void foundSubtitletrack(QStringList sl );
+    void addSubtitletrack(QStringList sl );
     void playNextFile();
     void foundAudioandVideo();
     void removelavf();
@@ -378,6 +381,7 @@ public slots:
    bool _silent;
    QString edl;
    long volumeBoost;
+   QString subTrackId;
 
 
    bool mutelock;
@@ -389,6 +393,8 @@ public slots:
    QString _friendlyTitle;
    bool _hideFontDlg;
    bool _bgotdimension;
+   int _osdLevel;
+   QString _currentSubtitleTrack;
    QPointer<fontLoadDialog> fldDlg;
    void removeOption(QString option,bool addseek);
    QString colorToRGB(unsigned int color) ;
