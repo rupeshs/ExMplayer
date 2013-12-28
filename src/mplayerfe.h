@@ -268,6 +268,7 @@ public slots:
      void addDefaultVideoDriver();
      void addVolumeBoost(bool enable,long val);
      void setVolumeBoost(long val);
+     void setSubtitleCodePage(QString cp);
     //void setcrossfading(int sec,bool enable);
 
  private:

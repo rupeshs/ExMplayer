@@ -23,7 +23,7 @@
 
 QDesktopWidget *desktop;
 QDesktopServices *mycomputer;
-//extern "C" __declspec(dllimport) double AddNumbers(double a, double b);
+
 
 PlayerWindow::PlayerWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -88,6 +88,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     //Setting ui
     setupMyUi();
 
+
     brotate=false;
     starting=false;
 
@@ -114,8 +115,19 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
 
     connect(idleTimer, SIGNAL(timeout()), this, SLOT(userInactive()));
 
+    //Update check
+    if(settings->value("Updates/Automatic","1").toInt()==1)
+     {
 
+        QDateTime curDt= QDateTime::currentDateTime();
+       if(curDt.date().day()%7==0)
+       {
+        updCheckDlg =new updateCheckDlg(this);
+       }
+    }
 
+  this->setMinimumHeight(1);
+   calculateHeight();
 
 }
 
@@ -209,6 +221,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
 
     QMutex mutex;
     mutex.lock();
+    curSubTitleTrack=0;
     ui->mpconsole->clear();
     videoWin->mplayerlayer->hide();
     windowTimer->setInterval(1);
@@ -300,7 +313,12 @@ void PlayerWindow::initMPlayer(QString file,int type)
 
     if( cdlg)
         cdlg->setMp(mp);
-
+    //Add subtitle code page
+    if (settings->value("Subtitles/UseCodePage","0").toInt()!=0)
+    {
+       QString lanPg=settings->value("Subtitles/CodePage","Western European Languages").toString();
+       mp->setSubtitleCodePage(Languages::encodings().key(lanPg));
+    }
     mp->enableClosedCaption(true);
     qDebug()<<ui->actionEnable_3D->isChecked();
     if (ui->actionEnable_3D->isChecked())
@@ -402,7 +420,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
 
 void  PlayerWindow::setupMyUi()
 {
-
+ bool bMin=true;
 
 #ifdef Q_OS_LINUX
     ui->actionWinamp_Dsp->setVisible(false);
@@ -439,7 +457,10 @@ void  PlayerWindow::setupMyUi()
     layout->setSpacing(0);
     layout->setMargin(0);
     layout->addWidget(videoWin);
+    videoWin->setMinimumSize( QSize(1,1) );
     panel->setLayout(layout);
+   //panel->hide();
+   //videoWin->hide();
 
     this->setCentralWidget(panel);
     connect(this->videoWin, SIGNAL(mousewheelsg(QWheelEvent*)), this, SLOT(wheelEvent(QWheelEvent*)));
@@ -646,47 +667,74 @@ void  PlayerWindow::setupMyUi()
     ui->toolBarStatus->addWidget(ui->labelSpeed);
 
 
+
     ///////////////////////////////////////////////////////////////////
     //seekbar-toolbar
 
     //ui->toolBarSeekBar->addSeparator();
-    ui->toolBarSeekBar->addWidget(ui->toolButtonRewind);
+    if (!bMin)
+    {
+       ui->toolBarSeekBar->addWidget(ui->toolButtonRewind);
+       ui->toolBarSeekBar->addWidget(ui->sliderSeek);
+       toolButtonForwardAction=ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
+       ui->toolBarSeekBar->addAction(ui->actionFullscreen);
 
-    //ui->toolBarSeekBar->addSeparator();
-    //ui->toolBarSeekBar->addAction(ui->actionRewind_10_seconds);
-    ui->toolBarSeekBar->addWidget(ui->sliderSeek);
-    // ui->toolBarSeekBar->addAction(ui->actionForward_10_seconds);
-    // ui->toolBarSeekBar->addSeparator();
-    toolButtonForwardAction=ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
-    //ui->toolBarSeekBar->addSeparator();
-    ui->toolBarSeekBar->addAction(ui->actionFullscreen);
-    //ui->toolBarSeekBar->addSeparator();
-    //////////////////////////////////////////////////////////////////
-    //btns-toolbar
-    //ui->toolBarSeek->addSeparator();
-    ui->toolBarSeek->addAction(ui->action_Play_Pause);
+       ui->toolBarSeek->addAction(ui->action_Play_Pause);
+       ui->toolBarSeek->addAction(ui->action_Stop);
+       ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
+       ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
+       ui->toolBarSeek->addWidget(ui->toolButtonVolume);
+       ui->toolBarSeek->addWidget(ui->sliderVolume);
+       ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
+       ui->toolBarSeek->addAction(ui->action_Equalizer);
+       ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
+       ui->toolBarSeek->addWidget(ui->toolButtonFblike);
+       ui->toolBarSeek->addWidget(ui->toolButtonSpeed);
+       ui->toolBarSeek->addWidget(ui->toolButtonStereoVideo);
+       ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
+       ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
 
-    ui->toolBarSeek->addAction(ui->action_Stop);
-    //ui->toolBarSeek->addSeparator();
-    ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
 
-    ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
+    }
+    else{
 
-    ui->toolBarSeek->addWidget(ui->toolButtonVolume);
-    ui->toolBarSeek->addWidget(ui->sliderVolume);
-    ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
+         ui->toolBarSeekBar->addAction(ui->action_Play_Pause);
+         ui->toolBarSeekBar->addAction(ui->action_Stop);
 
-    //ui->toolBarSeek->addSeparator();
+        ui->toolBarSeekBar->addWidget(ui->labelCurrentPosition);
 
-    ui->toolBarSeek->addAction(ui->action_Equalizer);
-    //ui->toolBarSeek->addSeparator();
-    ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
-    //ui->toolBarSeek->addSeparator();
-    ui->toolBarSeek->addWidget(ui->toolButtonFblike);
-    ui->toolBarSeek->addWidget(ui->toolButtonStereoVideo);
-    ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
-    ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
 
+        ui->toolBarSeek->addWidget(ui->toolButtonRewind);
+        ui->toolBarSeekBar->addWidget(ui->sliderSeek);
+        toolButtonForwardAction=ui->toolBarSeek->addWidget(ui->toolButtonForward);
+
+
+        ui->toolBarSeekBar->addWidget(ui->labelDuration);
+
+        ui->toolBarSeekBar->addWidget(ui->toolButtonVolume);
+        ui->toolBarSeekBar->addWidget(ui->sliderVolume);
+
+        ui->toolBarSeekBar->addAction(ui->actionFullscreen);
+        //this->addToolBarBreak();
+
+
+        ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
+        ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
+
+        ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
+        ui->toolBarSeek->addAction(ui->action_Equalizer);
+        ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
+        ui->toolBarSeek->addWidget(ui->toolButtonFblike);
+        ui->toolBarSeek->addWidget(ui->toolButtonStereoVideo);
+        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
+        ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
+
+        ui->statusBar->addWidget(ui->toolBarSeek);
+        ui->lcdCurPos->setVisible(false);
+        ui->lcdDuration->setVisible(false);
+        //ui->toolBarSeek->hide();
+        //ui->statusBar->hide();
+    }
 
 
     // ui->toolBarSeek->addWidget(youtubeBox);
@@ -867,10 +915,7 @@ void  PlayerWindow::setupMyUi()
     mpseekView=new SeekView(this);
     mpseekView->hide();
 
-    long height=ui->menuBar->height()+ui->toolBarSeek->height()+ui->toolBarStatus->height()+ui->toolBarSeekBar->height();
 
-
-    this->setMinimumHeight(height);
 
 
     if (settings->value("Video/3D","0").toInt()==1)
@@ -924,6 +969,8 @@ void  PlayerWindow::setupMyUi()
 
 
 
+
+
 }
 void PlayerWindow::resetUi()
 {
@@ -973,6 +1020,8 @@ void PlayerWindow::resetUi()
     ui->labelSpeed->setText("--");
     ui->lcdDuration->display("--:--:--");
     ui->lcdCurPos->display("--:--:--");
+    ui->labelDuration->setText("--:--");
+    ui->labelCurrentPosition->setText("<b>  --:--  </b>");
 
     if(sliderSeekFullSc)
         sliderSeekFullSc->setEnabled(false);
@@ -1122,9 +1171,9 @@ void PlayerWindow::startingPlayback()
         astr=QString(mp->getAudioRate()+" Khz ");
 
         if (mp->getAudioNch().toInt()==1)
-            astr+="M \n";
+            astr+="M ";
         else if (mp->getAudioNch().toInt()==2)
-            astr+="S \n";
+            astr+="S ";
         else
             astr=mp->getAudioNch();
 
@@ -1216,6 +1265,11 @@ void PlayerWindow::startingPlayback()
             }
             QObject::connect(actiongroupVideoTrack,SIGNAL(triggered(QAction*)),this,SLOT(changeVideoTrack(QAction*)));
         }
+
+        if (mp->duration()<3600)
+            ui->labelDuration->setText("<b>  "+mp->tduration().toString("hh:mm:ss").mid(3)+"  </b>");
+        else
+            ui->labelDuration->setText("<b>  "+mp->tduration().toString("hh:mm:ss")+"  </b>");
 
         ui->lcdDuration->display(mp->tduration().toString());
         ui->action_Play_Pause->setIcon(QIcon(":/images/pause.png"));
@@ -1477,12 +1531,22 @@ void PlayerWindow::updateSeekbar()
                 if(sliderSeekFullSc)
                     sliderSeekFullSc->setValue((mp->curpos()/mp->duration())*100);
                 ui->lcdCurPos->display(mp->tcurpos().toString());
+
+                QString curtPos=mp->tcurpos().toString("hh:mm:ss");
+                //qDebug()<<curtPos.mid(3);
+                if (mp->duration()<3600)
+                    ui->labelCurrentPosition->setText("<b>  "+curtPos.mid(3)+"  </b> ");
+                else
+                    ui->labelCurrentPosition->setText("<b>  "+curtPos+"  </b> ");
                 if (isfullscreen){
                     lcdCurPosFullSc->display(mp->tcurpos().toString());
                     lcdDurationFullSc->display(mp->tduration().toString());
                     //qDebug()<<  mp->tduration().toString();
-
                 }
+                //int w = ui->labelCurrentPosition->fontMetrics().width(ui->labelCurrentPosition->text());
+                //ui->labelCurrentPosition->setMinimumWidth(w/2);
+                //ui->labelDuration->setMinimumWidth(w/2);
+                //qDebug() << Q_FUNC_INFO << w;
 
 
             }
@@ -1493,6 +1557,7 @@ void PlayerWindow::updateSeekbar()
             if(sliderSeekFullSc)
                 sliderSeekFullSc->setEnabled(false);
             ui->lcdDuration->display("--:--:--");
+
 
             ui->lcdCurPos->display(mp->tcurpos().toString());
             if (isfullscreen){
@@ -1605,6 +1670,13 @@ jmp:
 }
 void PlayerWindow::on_toolButtonVolume_clicked()
 {
+    ui->sliderVolume->setGeometry(0,0,0,20);
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->sliderVolume, "size");
+    animation->setDuration(1000);
+animation->setEndValue(QSize(1,20));
+    animation->setEndValue(QSize(70,20));
+
+    animation->start();
     toggleMute();
 }
 
@@ -2105,7 +2177,16 @@ void PlayerWindow::changeAspectRatio(QAction*act)
 }
 void  PlayerWindow::lengthChanged()
 {if(mp)
+     {
+
+        if (mp->duration()<3600)
+            ui->labelDuration->setText("<b>  "+mp->tduration().toString("hh:mm:ss").mid(3)+"  </b>");
+        else
+            ui->labelDuration->setText("<b>  "+mp->tduration().toString("hh:mm:ss")+"  </b>");
+
         ui->lcdDuration->display(mp->tduration().toString());
+
+    }
 }
 
 void PlayerWindow::on_action_Crop_triggered()
@@ -2558,9 +2639,10 @@ void PlayerWindow::on_actionSize_Decrease_triggered()
 void PlayerWindow::on_actionStUnload_triggered()
 {
     if (mp)
-    {mp->unloadsub();
+    {//mp->unloadsub();
         ui->actionStUnload->setEnabled(false);
 
+     completeRestart() ;
     }
 
 }
@@ -2873,7 +2955,7 @@ void PlayerWindow::dropEvent(QDropEvent *event)
             }
         }
         else if(fi.isDir())
-        { myplaylist->clearList();
+        {   myplaylist->clearList();
             myplaylist->addFolder(url,w->filters,this);
             myplaylist->playFirstFile();
             //this->playThisfile(myplaylist->tab->item(0,2)->data(Qt::DisplayRole).toString());
@@ -3064,8 +3146,6 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
             {
                 fr->pause();
                 fr->seek(pos.toInt());
-
-
             }
         }
 
@@ -3700,8 +3780,10 @@ void PlayerWindow::toggleFullscreen()
         if (ui->actionInfobar->isChecked())
             ui->toolBarStatus->show();
 
+
         ui->toolBarSeekBar->show();
         ui->statusBar->show();
+
         this->unsetCursor();
 
         if (bfilvis)
@@ -3829,10 +3911,7 @@ void PlayerWindow::toggleFullscreen()
 
         ui->toolBarSeek->hide();
         ui->menuBar->hide();
-
         ui->toolBarStatus->hide();
-
-
         ui->toolBarSeekBar->hide();
         ui->statusBar->hide();
         this->showFullScreen();
@@ -3929,7 +4008,8 @@ void PlayerWindow::on_action_Load_pl_triggered()
 
 
     if (!fileName.isEmpty())
-    {myplaylist->addFile(fileName);
+    {
+        myplaylist->addFile(fileName);
     }
 }
 void PlayerWindow::winExplorer(QString opt,QString path)
@@ -4032,25 +4112,25 @@ void PlayerWindow::setAqua()
                                                       " border: 1px solid rgba(100, 255, 255, 255);\n"
                                                       " }\n"
                                                       " QSlider::groove:horizontal {\n"
-                                                      "     height: 2px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
+                                                      "     height: 3px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */\n"
                                                       "     margin: 1px 0;\n"
                                                       " background: qlineargradient(x1: 1, y1:12, x1: 15, y2: 0, stop: 0 #e7effd, stop: 1 #D2E7FA); \n"
-                                                      " border: 2px solid rgba(10, 10, 10, 6);\n"
+                                                      " border: 1px solid rgba(10, 10, 10, 6);\n"
                                                       " }\n"
                                                       "QSlider::handle::horizontal{ \n"
-                                                      "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 70), stop:1 rgba(255, 255, 255, 100));\n"
-                                                      "width: 7px;\n"
+                                                      "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 255), stop:1 rgba(255, 255, 255, 255));\n"
+                                                      "width: 8px;\n"
                                                       " border: 1px solid rgba(128, 184, 228, 100);\n"
-                                                      "     margin: -8px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
-                                                      "     border-radius: 8px;\n"
+                                                      "     margin: -4px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
+                                                      "     border-radius: 4px;\n"
                                                       "}\n"
                                                       "QSlider::handle::hover:horizontal{ \n"
                                                       "background:qlineargradient(spread:pad, x1:"
-                                                      "0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 255, 0, 150), stop:1 rgba(255, 255, 255, 255));\n"
-                                                      "width: 7px;\n"
+                                                      "0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(14, 255, 0, 255), stop:1 rgba(255, 255, 255, 255));\n"
+                                                      "width: 8px;\n"
                                                       " border: 1px solid lightgreen;\n"
-                                                      "     margin: -8px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
-                                                      "     border-radius: 8px;\n"
+                                                      "     margin: -4px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
+                                                      "     border-radius: 4px;\n"
                                                       "}\n"
                                                       "QSlider::handle::disabled:horizontal{ \n"
                                                       "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 205), stop:1 rgba(255, 255, 255, 200));\n"
@@ -4071,8 +4151,8 @@ void PlayerWindow::setAqua()
                                                     " }\n"
                                                     "QSlider::handle::horizontal{ \n"
                                                     "background:qlineargradient(spread:pad, x1:0.955, y1:1, x2:0.914318, y2:0.057, stop:0 rgba(0, 205, 248, 50), stop:1 rgba(255, 255, 255, 50));\n"
-                                                    "width: 3px;\n"
-                                                    " border: 1px solid rgba(128, 184, 228, 100);\n"
+                                                    "width: 0px;\n"
+                                                    " border: 0px solid rgba(128, 184, 228, 100);\n"
                                                     "     margin: -8px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */\n"
                                                     "     border-radius: 8px;\n"
                                                     "}\n"
@@ -4987,15 +5067,16 @@ void PlayerWindow::on_sliderSeekFullSc_actionTriggered(int act)
 }
 void PlayerWindow::resizeEvent ( QResizeEvent * event )
 {
+calculateHeight();
     if (ui->menuBar->height()==ui->toolBarSeekBar->y()){
         if(mp){
             if(mp->hasaudio()&&!mp->hasvideo()){
-                setMinimumSize(450,this->height());
+                //setMinimumSize(450,this->height());
                 qDebug()<<"resize to 450"<<this->height();
             }
             else
             {
-                setMinimumSize(450,this->height());
+                //setMinimumSize(450,this->height());
             }
         }
     }
@@ -5058,7 +5139,7 @@ void PlayerWindow::on_actionInfobar_triggered()
 {
     ui->toolBarStatus->setVisible(ui->actionInfobar->isChecked());
     emit settingChanged ("MainWindow","InfoBar",QString::number(ui->actionInfobar->isChecked()));
-
+    calculateHeight();
 
 }
 
@@ -5286,3 +5367,33 @@ void PlayerWindow::addSubtitletrack(QStringList sl )
         }
     }
 }
+
+void PlayerWindow::on_actionCheck_for_updates_triggered()
+{
+    updCheckDlg =new updateCheckDlg(this);
+    updCheckDlg->show();
+}
+
+void PlayerWindow::on_toolButtonVolume_pressed()
+{
+
+
+}
+ void PlayerWindow::calculateHeight()
+ {
+
+
+   long playerHeight=0;
+   if (ui->menuBar->isVisible())
+       playerHeight+=ui->menuBar->height();
+   //if(ui->toolBarSeek->isVisible())
+   //    playerHeight+=ui->toolBarSeek->height();
+   if(ui->toolBarSeekBar->isVisible())
+       playerHeight+=ui->toolBarSeekBar->height();
+   if(ui->toolBarStatus->isVisible())
+       playerHeight+=ui->toolBarStatus->height();
+   if(ui->statusBar->isVisible())
+       playerHeight+=ui->statusBar->height();
+      qDebug("playerHeight :%d",playerHeight);
+     this->setMinimumHeight(playerHeight);
+ }

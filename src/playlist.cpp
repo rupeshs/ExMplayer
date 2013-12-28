@@ -59,6 +59,8 @@ void playList::addFile(QString path)
     {
         this->loadPls(path);
     }
+    else
+    {
     tab->setRowCount(tab->rowCount()+1);
     QTableWidgetItem *newItem = new QTableWidgetItem(QIcon(""),path.right(path.length()-path.lastIndexOf("/")-1));
     tab->setItem(tab->rowCount()-1, 0, newItem);
@@ -72,6 +74,7 @@ void playList::addFile(QString path)
     tab->setRowHeight(tab->rowCount()-1,20);
     if(currentIndex==-2)
         currentIndex=-1;
+    }
 }
 void playList::clearList()
 {

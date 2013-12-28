@@ -1,4 +1,6 @@
 INPUT(
+./release\qtsingleapplication.o
+./release\qtlocalpeer.o
 ./release\main.o
 ./release\playerwindow.o
 ./release\mplayerfe.o
@@ -38,10 +40,14 @@ INPUT(
 ./release\advancedinfodialog.o
 ./release\paths.o
 ./release\stereovinputdialog.o
-./release\qtsingleapplication.o
-./release\qtlocalpeer.o
+./release\languages.o
+./release\version.o
+./release\updatecheck.o
+./release\updatecheckdlg.o
 ./release\qcoverart.o
 ./release\screensaver.o
+./release\moc_qtsingleapplication.o
+./release\moc_qtlocalpeer.o
 ./release\moc_playerwindow.o
 ./release\moc_mplayerfe.o
 ./release\moc_rphlabelex.o
@@ -69,7 +75,8 @@ INPUT(
 ./release\moc_fontloaddialog.o
 ./release\moc_advancedinfodialog.o
 ./release\moc_stereovinputdialog.o
-./release\moc_qtsingleapplication.o
-./release\moc_qtlocalpeer.o
+./release\moc_languages.o
+./release\moc_updatecheck.o
+./release\moc_updatecheckdlg.o
 ./release\qrc_ExMplayer.o
 );

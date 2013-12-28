@@ -41,6 +41,10 @@
 #include "assstyles.h"
 #include "rphmpfehelp.h"
 #include "norwegianwoodstyle.h"
+#include "languages.h"
+#include <QMap>
+#include <QString>
+#include <QStringList>
 
 int sound_devices;
 
@@ -90,6 +94,11 @@ preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
 
 ui->stackedWidget->setCurrentIndex(0);
 on_listWidget_currentRowChanged(0);
+//Init sub encodings combo
+QStringList lstEncodings=QStringList(Languages::encodings().values());
+lstEncodings.sort();
+ui->comboBoxSubEncoding->addItems( lstEncodings);
+
 
 }
 
@@ -195,7 +204,9 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
               ass.halignment=ui->comboBoxHa->itemData(ui->comboBoxHa->currentIndex()).toInt();
               ass.save(_settings);
               ass.exportStyles(Paths::configPath()+"/styles.ass");
-              emit restart();
+              emit settingChanged("Subtitles","UseCodePage",QString::number(ui->checkBoxUseCodePage->checkState()));
+              emit settingChanged("Subtitles","CodePage",ui->comboBoxSubEncoding->currentText());
+              emit restartComplete();
               break;
              }
      case 4:{emit settingChanged("Network","ipv",ui->cmbiv->currentText());
@@ -212,8 +223,11 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
              QMessageBox::information(this,qApp->applicationName(),tr("Shortcut will be active after a restart."),QMessageBox::Ok,QMessageBox::Cancel);
              }
              break;
-     case 6:  emit settingChanged("Mouse","Wheel",QString::number(mw));
+     case 6:  {emit settingChanged("Mouse","Wheel",QString::number(mw));
               emit setmousewheelrole();
+              break;
+             }
+     case 7:settingChanged("Updates","Automatic",QString::number(ui->checkUpdates->isChecked()));
       }
 
     }
@@ -269,6 +283,15 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
 
           ui->comboBoxHa->setCurrentIndex(ui->comboBoxHa->itemData(ui->comboBoxHa->currentIndex()).toInt());
           ui->comboBoxVa->setCurrentIndex(ass.valignment);
+
+          if (_settings->value("Subtitles/UseCodePage","0").toInt()==0)
+
+              ui->checkBoxUseCodePage->setCheckState(Qt::Unchecked);
+          else
+              ui->checkBoxUseCodePage->setCheckState(Qt::Checked);
+
+          ui->comboBoxSubEncoding->setCurrentIndex(ui->comboBoxSubEncoding->findText(_settings->value("Subtitles/CodePage","Western European Languages").toString()));
+
           break;
          }
 
@@ -285,13 +308,13 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
          else
              ui->rbSk->setChecked(true);
          break;
-  case 7:{ QFileInfo fi(qApp->applicationFilePath());
+  case 8:{ QFileInfo fi(qApp->applicationFilePath());
           QDateTime dt=fi.created();
           ui->labelDate->setText(QString("Build on "+dt.toString()));
          break;
           }
   case  5 :
-       QList<QAction *> acts = _w->findChildren<QAction*>();
+       {QList<QAction *> acts = _w->findChildren<QAction*>();
 
        for (int i=0;i<acts.count();i++)
        {
@@ -307,7 +330,16 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
          }
        }
        break;
+      }
+  case 7:{
+      if (_settings->value("Updates/Automatic","1").toInt()==1)
+          ui->checkUpdates->setCheckState(Qt::Checked);
+      else
+           ui->checkUpdates->setCheckState(Qt::Unchecked);
 
+         //ui->checkUpdates->setChecked(_settings->value("","1").toInt());
+         break;
+          }
 
   }
 }

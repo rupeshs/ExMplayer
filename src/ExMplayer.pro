@@ -9,6 +9,11 @@ TARGET    = exmplayer
 }
 TEMPLATE  = app
 
+INCLUDEPATH += qtsingleapplication
+DEPENDPATH += qtsingleapplication
+HEADERS += qtsingleapplication.h qtlocalpeer.h
+SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
+
 SOURCES += main.cpp \
     playerwindow.cpp \
     mplayerfe.cpp \
@@ -47,7 +52,12 @@ SOURCES += main.cpp \
     fontloaddialog.cpp\
     advancedinfodialog.cpp \
     paths.cpp \
-    stereovinputdialog.cpp
+    stereovinputdialog.cpp \
+    languages.cpp \
+    version.cpp \
+    updatecheck.cpp \
+    updatecheckdlg.cpp
+
 
 HEADERS += playerwindow.h \
     mplayerfe.h \
@@ -87,7 +97,11 @@ HEADERS += playerwindow.h \
     fontloaddialog.h\
     advancedinfodialog.h \
     paths.h \
-    stereovinputdialog.h
+    stereovinputdialog.h \
+    languages.h \
+    updatecheck.h \
+    version.h \
+    updatecheckdlg.h
 
 FORMS += playerwindow.ui \
     preferencedialog.ui \
@@ -103,13 +117,8 @@ FORMS += playerwindow.ui \
     seekview.ui \
     fontloaddialog.ui \
     advancedinfodialog.ui \
-    stereovinputdialog.ui
-
-INCLUDEPATH += qtsingleapplication
-DEPENDPATH += qtsingleapplication
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
-HEADERS += qtsingleapplication.h qtlocalpeer.h
-
+    stereovinputdialog.ui \
+    updatecheckdlg.ui
 
 unix{
 HEADERS += inhibitor.h

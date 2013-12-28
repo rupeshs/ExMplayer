@@ -208,7 +208,7 @@ void mplayerfe::play(QString File,int volume)
     argSubOpt<<"-sub-fuzziness"<<QString::number(1)<<"-ass"<<"-embeddedfonts"<<"-ass-styles"<<Paths::configPath()+"/styles.ass";
 
     argvideofilters<<"-vf"<<"screenshot";
-    //argvideofilters<<"-vf-add"<<"eq2";
+    argvideofilters<<"-vf-add"<<"eq2";
     //argvideofilters<<"-vf-add"<<"hue";
     //argAudioOpt<<"-softvol"<<"-softvol-max"<<QString::number(1000);
 
@@ -503,13 +503,34 @@ void mplayerfe::loadsubtitles(QString subfile)
     subfile = shortPathName(subfile);
     // For some reason it seems it's necessary to change the path separator to unix style
     // otherwise mplayer fails to load it
-    subfile = subfile.replace("\\","/");
-    cmd="sub_load \""+ subfile+"\"\n";
-    mProcess->write(cmd.toAscii());
-    qDebug()<<cmd;
-    switchSubtitle(listSubtitleTrack.count());
-    //arguments<<"-sub"<<subfile;
-    //restart();
+       QFileInfo fi(subfile);
+
+
+    if ( fi.suffix().toLower().contains("idx")||fi.suffix().toLower().contains("sub"))
+    {
+      QString sPath;
+      if(fi.suffix().toLower().contains("idx"))
+          sPath=subfile.remove(".idx") ;
+      else
+          sPath=subfile.remove(".sub") ;
+
+     sPath = sPath.replace("\\","/");
+
+     removeOption("-vobsub",true);
+     arguments<<"-vobsub"<<sPath;
+     qDebug()<<sPath;
+     restart();
+    }
+    else
+    {
+        subfile = subfile.replace("\\","/");
+
+        cmd="sub_load \""+ subfile+"\"\n";
+        mProcess->write(cmd.toAscii());
+        qDebug()<<cmd;
+        switchSubtitle(listSubtitleTrack.count());
+
+    }
 
 
 }
@@ -2646,3 +2667,8 @@ void mplayerfe::ConvertStereoVideoToMono(bool enable)
       _usevolumeboost=true;
        volumeBoost=val+10;
   }
+void mplayerfe::setSubtitleCodePage(QString cp)
+{
+    removeOption("-subcp",true);
+    arguments<<"-subcp"<< cp;
+}

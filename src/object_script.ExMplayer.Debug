@@ -1,4 +1,6 @@
 INPUT(
+./debug\qtsingleapplication.o
+./debug\qtlocalpeer.o
 ./debug\main.o
 ./debug\playerwindow.o
 ./debug\mplayerfe.o
@@ -38,10 +40,14 @@ INPUT(
 ./debug\advancedinfodialog.o
 ./debug\paths.o
 ./debug\stereovinputdialog.o
-./debug\qtsingleapplication.o
-./debug\qtlocalpeer.o
+./debug\languages.o
+./debug\version.o
+./debug\updatecheck.o
+./debug\updatecheckdlg.o
 ./debug\qcoverart.o
 ./debug\screensaver.o
+./debug\moc_qtsingleapplication.o
+./debug\moc_qtlocalpeer.o
 ./debug\moc_playerwindow.o
 ./debug\moc_mplayerfe.o
 ./debug\moc_rphlabelex.o
@@ -69,7 +75,8 @@ INPUT(
 ./debug\moc_fontloaddialog.o
 ./debug\moc_advancedinfodialog.o
 ./debug\moc_stereovinputdialog.o
-./debug\moc_qtsingleapplication.o
-./debug\moc_qtlocalpeer.o
+./debug\moc_languages.o
+./debug\moc_updatecheck.o
+./debug\moc_updatecheckdlg.o
 ./debug\qrc_ExMplayer.o
 );

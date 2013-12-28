@@ -63,7 +63,7 @@
     </size>
    </property>
    <property name="currentRow">
-    <number>0</number>
+    <number>-1</number>
    </property>
    <item>
     <property name="text">
@@ -130,6 +130,11 @@
    </item>
    <item>
     <property name="text">
+     <string>Updates</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
      <string>About</string>
     </property>
     <property name="icon">
@@ -148,7 +153,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>7</number>
    </property>
    <widget class="QWidget" name="page_2">
     <widget class="QGroupBox" name="groupBox">
@@ -916,7 +921,7 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="pushButton_6">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>310</x>
        <y>240</y>
        <width>81</width>
        <height>26</height>
@@ -928,6 +933,31 @@ p, li { white-space: pre-wrap; }
      <property name="text">
       <string>&amp;Reset</string>
      </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_20">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>272</y>
+       <width>391</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Encoding</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="checkBoxUseCodePage">
+        <property name="text">
+         <string>Use subtitle codepage.</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="comboBoxSubEncoding"/>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="page_5">
@@ -1255,6 +1285,21 @@ p, li { white-space: pre-wrap; }
        <string>Seek</string>
       </property>
      </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_9">
+    <widget class="QCheckBox" name="checkUpdates">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>30</y>
+       <width>231</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Automatically check for updates</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_8">

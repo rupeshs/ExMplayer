@@ -21,6 +21,7 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QPropertyAnimation>
+#include <version.h>
 aboutDialog::aboutDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::aboutDialog)
@@ -29,6 +30,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
       QFileInfo fi(qApp->applicationFilePath());
       QDateTime dt=fi.created();
       ui->labelDate->setText(QString("Build on "+dt.toString()));
+      ui->labelVersion->setText("ExMplayer v"+Version::stable());
 }
 
 aboutDialog::~aboutDialog()

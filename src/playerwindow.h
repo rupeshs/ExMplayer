@@ -61,13 +61,16 @@
 #include "rphslider.h"
 #include <QResizeEvent>
 #include "advancedinfodialog.h"
-
+#include <languages.h>
 
 #include <QAction>
 #include <stereovinputdialog.h>
 #ifdef Q_OS_UNIX
 #include <inhibitor.h>
 #endif
+
+#include <updatecheckdlg.h>
+
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
 
@@ -191,6 +194,7 @@ private:
     QPointer<RadioDialog> radiodlg;
     QPointer<QShortcut> shortcut;
     QRecentFilesMenu *recentFilesMenu;
+    QPointer<updateCheckDlg> updCheckDlg;
     int mousewheelrole ;
     bool isfullscreen;
     bool hascover;
@@ -225,6 +229,7 @@ private:
     QPointer<rphSlider> sliderVolumeFullSc;
 
     QPointer<AdvancedInfoDialog> advInfoDlg;
+    int curSubTitleTrack;
 
 
 signals:
@@ -487,6 +492,9 @@ private slots:
     void hideSeek();
     bool userInactive();
     void addSubtitletrack(QStringList sl);
+    void on_actionCheck_for_updates_triggered();
+    void on_toolButtonVolume_pressed();
+    void calculateHeight();
 };
 
 #endif // PLAYERWINDOW_H
