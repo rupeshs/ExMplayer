@@ -1,6 +1,13 @@
 INPUT(
 ./release\qtsingleapplication.o
 ./release\qtlocalpeer.o
+./release\opensubtitleclient.o
+./release\gzipuncompressor.o
+./release\searchsubtitle.o
+./release\miniz.o
+./release\maiaObject.o
+./release\maiaFault.o
+./release\maiaXmlRpcClient.o
 ./release\main.o
 ./release\playerwindow.o
 ./release\mplayerfe.o
@@ -48,6 +55,12 @@ INPUT(
 ./release\screensaver.o
 ./release\moc_qtsingleapplication.o
 ./release\moc_qtlocalpeer.o
+./release\moc_opensubtitleclient.o
+./release\moc_gzipuncompressor.o
+./release\moc_searchsubtitle.o
+./release\moc_maiaObject.o
+./release\moc_maiaFault.o
+./release\moc_maiaXmlRpcClient.o
 ./release\moc_playerwindow.o
 ./release\moc_mplayerfe.o
 ./release\moc_rphlabelex.o

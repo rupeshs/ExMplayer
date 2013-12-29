@@ -285,7 +285,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(foundSubtitletrack(QStringList)),this,SLOT(foundSubtitletrack(QStringList)));
     QObject::connect(mp,SIGNAL(addSubtitletrack(QStringList)),this,SLOT(addSubtitletrack(QStringList)));
 
-    QObject::connect(mp,SIGNAL(show_endmessage(QString)),ui->labelStatus,SLOT(setText(QString)));
+    //QObject::connect(mp,SIGNAL(show_endmessage(QString)),ui->labelStatus,SLOT(setText(QString)));
     QObject::connect(mp,SIGNAL(paused()),this,SLOT(paused()));
     QObject::connect(mp,SIGNAL(playing()),this,SLOT(playing()));
     QObject::connect(mp,SIGNAL(stopping()),this,SLOT(stopping()));
@@ -306,7 +306,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     //QObject::connect(mp,SIGNAL(eof()),this,SLOT(resetUi()));
     //QObject::connect(mp,SIGNAL(showmsgBox(QString)),this,SLOT(showMsgBox(QString)));
 
-
+actPrgsIndicator->setVisible(true);
     isstreaming=false;
     ui->actionStep1_fm->setEnabled(true);
     ui->actionStep2_fm->setEnabled(true);
@@ -405,7 +405,8 @@ void PlayerWindow::initMPlayer(QString file,int type)
     //ui->progressBarBusy->setMaximum(0);
     //ui->progressBarBusy->show();
 
-    ui->labelStatus->setText(tr("Opening..."));
+    //ui->labelStatus->setText(tr("Opening..."));
+    ui->labelCurrentPosition->setText("Opening...");
 
 
 
@@ -635,9 +636,9 @@ void  PlayerWindow::setupMyUi()
     ui->dock_log->setVisible(false);
     ///////////////////////////////////////////////////////////////////
     //statusbar
-    ui->statusBar->addWidget(ui->labelStatus);
 
-    ui->statusBar->addPermanentWidget(pi);
+
+
 
     ui->statusBar->addPermanentWidget(ui->labAD);
     ui->statusBar->addPermanentWidget(ui->lcdCurPos);
@@ -703,7 +704,9 @@ void  PlayerWindow::setupMyUi()
 
         ui->toolBarSeekBar->addWidget(ui->labelCurrentPosition);
 
+actPrgsIndicator=ui->toolBarSeekBar->addWidget(pi);
 
+actPrgsIndicator->setVisible(false);
         ui->toolBarSeek->addWidget(ui->toolButtonRewind);
         ui->toolBarSeekBar->addWidget(ui->sliderSeek);
         toolButtonForwardAction=ui->toolBarSeek->addWidget(ui->toolButtonForward);
@@ -713,6 +716,7 @@ void  PlayerWindow::setupMyUi()
 
         ui->toolBarSeekBar->addWidget(ui->toolButtonVolume);
         ui->toolBarSeekBar->addWidget(ui->sliderVolume);
+        ui->toolBarSeekBar->addWidget(ui->toolButtonVolumeBoost);
 
         ui->toolBarSeekBar->addAction(ui->actionFullscreen);
         //this->addToolBarBreak();
@@ -721,7 +725,7 @@ void  PlayerWindow::setupMyUi()
         ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
         ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
 
-        ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
+
         ui->toolBarSeek->addAction(ui->action_Equalizer);
         ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
         ui->toolBarSeek->addWidget(ui->toolButtonFblike);
@@ -732,8 +736,10 @@ void  PlayerWindow::setupMyUi()
         ui->statusBar->addWidget(ui->toolBarSeek);
         ui->lcdCurPos->setVisible(false);
         ui->lcdDuration->setVisible(false);
+        ui->toolBarSeek->addWidget(ui->labelStatus);
         //ui->toolBarSeek->hide();
         //ui->statusBar->hide();
+        //ui->labelStatus->hide();
     }
 
 
@@ -949,7 +955,8 @@ void  PlayerWindow::setupMyUi()
         {
             QString strGreeting=QString("Happy New Year! <b>")+QString::number(curDt.date().year())+QString("</b>");
             qDebug()<<"Happy New Year! ";
-            ui->labelStatus->setText(strGreeting);
+            //ui->labelStatus->setText(strGreeting);
+            ui->labelCurrentPosition->setText(strGreeting);
 
         }
     }
@@ -959,14 +966,22 @@ void  PlayerWindow::setupMyUi()
     {
         if (curDt.date().day()==25||curDt.date().day()==26)
         {
-            ui->labelStatus->setText("Merry Christmas!");
+            //ui->labelStatus->setText("Merry Christmas!");
+            ui->labelCurrentPosition->setText("Merry Christmas!");
 
         }
     }
 
-
     /*End of Easter egg*/
 
+    actiongroupShareExMplayer=new QActionGroup(this);
+    actiongroupShareExMplayer->addAction(ui->actionFacebook);
+    actiongroupShareExMplayer->addAction(ui->actionTwitter);
+    actiongroupShareExMplayer->addAction(ui->actionGmail);
+    actiongroupShareExMplayer->addAction(ui->actionYahoo);
+    actiongroupShareExMplayer->addAction(ui->actionHotmail);
+
+    QObject::connect(actiongroupShareExMplayer,SIGNAL(triggered(QAction*)),this,SLOT(shareWithFriends(QAction*)));
 
 
 
@@ -1072,7 +1087,9 @@ void PlayerWindow::startingPlayback()
     QMutex mutex;
     mutex.lock();
     videoWin->showLogo(false);
+    ui->labelCurrentPosition->setText("--:--");
 
+    actPrgsIndicator->setVisible(false);
     basicmetainfo.clear();
     qDebug()<<"Audio :"<<mp->hasaudio()<<"Video :"<<mp->hasvideo();
 
@@ -1128,7 +1145,8 @@ void PlayerWindow::startingPlayback()
         }
         //show status
         ui->lcdCurPos->display("00:00:00");
-        ui->labelStatus->setText(tr("Playing"));
+        //ui->labelStatus->hide();
+        //ui->labelStatus->setText(tr("Playing"));
         //videoWin->mplayerlayer->show();
         //video stream
         if( mp->hasvideo()){
@@ -1543,9 +1561,9 @@ void PlayerWindow::updateSeekbar()
                     lcdDurationFullSc->display(mp->tduration().toString());
                     //qDebug()<<  mp->tduration().toString();
                 }
-                //int w = ui->labelCurrentPosition->fontMetrics().width(ui->labelCurrentPosition->text());
-                //ui->labelCurrentPosition->setMinimumWidth(w/2);
-                //ui->labelDuration->setMinimumWidth(w/2);
+                int w = ui->labelCurrentPosition->fontMetrics().width(ui->labelCurrentPosition->text());
+                ui->labelCurrentPosition->setMinimumWidth(w/2);
+                ui->labelDuration->setMinimumWidth(w/2);
                 //qDebug() << Q_FUNC_INFO << w;
 
 
@@ -1570,19 +1588,19 @@ void PlayerWindow::updateSeekbar()
 
     }
 
-    if (mp->state()==mp->PLAYING)
-    {/*if(ui->labelStatus->text()=="Playing")
+    /*if (mp->state()==mp->PLAYING)
+    {if(ui->labelStatus->text()=="Playing")
       ui->labelStatus->setText("Playing.");
      else if(ui->labelStatus->text()=="Playing.")
        ui->labelStatus->setText("Playing..");
      else if(ui->labelStatus->text()=="Playing..")
        ui->labelStatus->setText("Playing...");
      else if(ui->labelStatus->text()=="Playing...")
-       ui->labelStatus->setText("Playing");*/
-        ui->labelStatus->setText("Playing...");
-    }
-    if (mp->state()==mp->PAUSED)
-        ui->labelStatus->setText("Paused.");
+       ui->labelStatus->setText("Playing");
+       ui->labelStatus->setText("Playing...");
+    }*/
+    //if (mp->state()==mp->PAUSED)
+       // ui->labelStatus->setText("Paused.");
 
 
 
@@ -3153,7 +3171,13 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
         {if (fr)
             {if( fr->isstarted())
                 {if (lab)
-                    {lab->setText(_duration.toString());
+                    {
+                        if (mp->duration()<3600)
+                            lab->setText(_duration.toString(_duration.toString("hh:mm:ss").mid(3)));
+                        else
+                            lab->setText(_duration.toString(_duration.toString("hh:mm:ss")));
+
+
                         mpseekView->setPosition(_duration.toString());
                         frpos=_duration.toString();
                     }
@@ -3169,7 +3193,11 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
         if (!mp->hasvideo()&&mp->hasaudio())
         {if (lab)
             {
-                lab->setText(_duration.toString());
+                if (mp->duration()<3600)
+                    lab->setText(_duration.toString(_duration.toString("hh:mm:ss").mid(3)));
+                else
+                    lab->setText(_duration.toString(_duration.toString("hh:mm:ss")));
+
                 frpos=_duration.toString();
             }
 
@@ -3223,14 +3251,25 @@ void PlayerWindow::checkForNextPlayback()
 {
     // system("dbus-send --session --dest=org.gnome.SessionManager --type=method_call --print-reply --reply-timeout=20000 /org/gnome/SessionManager org.gnome.SessionManager.Inhibit string:\"myApp\" uint32:0 string:\"Inhibiting\" uint32:8");
     //system("dbus-send --session --dest=org.gnome.SessionManager --type=method_call --print-reply --reply-timeout=20000 /org/gnome/SessionManager org.gnome.SessionManager.IsInhibited uint32:8");
+
     if (mp->state()==mp->BUFFERING){
         QString cacheFill="Buffering...["+QString::number(mp->getBufferFill())+"%]";
-        ui->labelStatus->setText(cacheFill);
+        //ui->labelStatus->setText(cacheFill);
+        ui->labelCurrentPosition->setText("Buffering...["+QString::number(mp->getBufferFill())+"%]");
     }
     if (mp->state()==mp->CONNECTING)
-        ui->labelStatus->setText("Connecting...");
+      {  //ui->labelStatus->setText("Connecting...");
+         ui->labelCurrentPosition->setText("Connecting...");
+         //ui->labelCurrentPosition->setToolTip("Connecting...");
+      }
+
     if (mp->state()==mp->RESOLVING)
-        ui->labelStatus->setText("Resolving host...");
+    {
+        //ui->labelStatus->setText("Resolving host...");
+        ui->labelCurrentPosition->setText("Resolving host...");
+        //ui->labelCurrentPosition->setToolTip("Resolving host...");
+
+    }
     if (mp->state()==mp->CRASHED)
         ui->labelStatus->setText("Whoops...Failed!");
 
@@ -4326,6 +4365,7 @@ void PlayerWindow::readSettingsGeo()
     QSize sz;
     settings->beginGroup("MainWindow");
     sz=settings->value("size", QSize(600, 500)).toSize();
+    calculateHeight();
     resize(sz);
 
     QPoint po=settings->value("pos", QPoint((desktop->width()-this->width())/2, (desktop->height()-this->height())/2)).toPoint();
@@ -5397,3 +5437,43 @@ void PlayerWindow::on_toolButtonVolume_pressed()
       qDebug("playerHeight :%d",playerHeight);
      this->setMinimumHeight(playerHeight);
  }
+ void PlayerWindow::shareWithFriends(QAction *act)
+ {
+
+     QString text = QString("Free media player for Windows and Linux that can all media files,featuring audio converter,audio extractor,media cutter and 3D video.").replace(" ","+");
+     QString url = "http://exmplayer.sourceforge.net";
+
+     if (act->text().toLower() == "twitter") {
+         text="Free media player for Windows and Linux that can all media files,featuring audio converter,extractor ,media cutter.";
+         QDesktopServices::openUrl(QUrl("http://twitter.com/intent/tweet?text=" + text + "&url=" + url));
+     }
+     else
+     if (act->text().toLower() == "gmail") {
+         QDesktopServices::openUrl(QUrl("https://mail.google.com/mail/?view=cm&fs=1&to&su=" + text + "&body=" + url + "&ui=2&tf=1&shva=1"));
+     }
+     else
+     if (act->text().toLower() == "yahoo") {
+         QDesktopServices::openUrl(QUrl("http://compose.mail.yahoo.com/?To=&Subject=" + text + "&body=" + url));
+     }
+     else
+     if (act->text().toLower()=="hotmail") {
+         QDesktopServices::openUrl(QUrl("http://www.hotmail.msn.com/secure/start?action=compose&to=&subject=" + text + "&body=" + url));
+     }
+     else
+     if (act->text().toLower()=="facebook") {
+         QDesktopServices::openUrl(QUrl("http://www.facebook.com/sharer.php?u=" + url + "&t=" + text));
+
+         #ifdef REMINDER_ACTIONS
+         QSettings * set = Global::settings;
+         set->beginGroup("reminder");
+         set->setValue("action", 2);
+         set->endGroup();
+         #endif
+     }
+ }
+
+void PlayerWindow::on_actionSearch_subtitles_on_OpenSubtitles_org_triggered()
+{
+    subSearchDlg= new SearchSubtitle(this);
+    subSearchDlg->show();
+}

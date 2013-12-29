@@ -70,6 +70,7 @@
 #endif
 
 #include <updatecheckdlg.h>
+#include <searchsubtitle.h>
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -161,6 +162,7 @@ private:
     QPointer<QActionGroup> osdGroup;
     QPointer<QActionGroup> actiongroupInFormatStereo;
     QPointer<QActionGroup> actiongroupOutFormatStereo;
+    QPointer<QActionGroup> actiongroupShareExMplayer;
     QWidget * panel;
     MplayerWindow *mpwindow;
     bool usingfidx;
@@ -183,6 +185,7 @@ private:
     int metadispcount;
     QString tmp;
     QString currentFile;
+    QAction *actPrgsIndicator;
     QPointer<QProgressIndicator> pi;
     QPointer<QProgressIndicator> piv;
     QPointer<cutterDialog> cdlg;
@@ -230,6 +233,9 @@ private:
 
     QPointer<AdvancedInfoDialog> advInfoDlg;
     int curSubTitleTrack;
+
+    QPointer<SearchSubtitle> subSearchDlg;
+
 
 
 signals:
@@ -495,6 +501,8 @@ private slots:
     void on_actionCheck_for_updates_triggered();
     void on_toolButtonVolume_pressed();
     void calculateHeight();
+    void shareWithFriends(QAction *act);
+    void on_actionSearch_subtitles_on_OpenSubtitles_org_triggered();
 };
 
 #endif // PLAYERWINDOW_H

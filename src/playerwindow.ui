@@ -2063,6 +2063,12 @@ color: grey;
     <property name="text">
      <string>...</string>
     </property>
+    <property name="iconSize">
+     <size>
+      <width>24</width>
+      <height>24</height>
+     </size>
+    </property>
    </widget>
    <widget class="QToolButton" name="toolButtonVolumeBoost">
     <property name="geometry">
@@ -2476,6 +2482,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="action_st_Set_Delay"/>
     <addaction name="separator"/>
     <addaction name="actionEnable_Closed_Captions"/>
+    <addaction name="separator"/>
+    <addaction name="actionSearch_subtitles_on_OpenSubtitles_org"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -2590,6 +2598,22 @@ p, li { white-space: pre-wrap; }
     <addaction name="menuViewing_methods"/>
     <addaction name="actionWatch_as_2D_video"/>
    </widget>
+   <widget class="QMenu" name="menuSocial">
+    <property name="title">
+     <string>Social</string>
+    </property>
+    <widget class="QMenu" name="menuShare_with_your_friends">
+     <property name="title">
+      <string>Share with your friends</string>
+     </property>
+     <addaction name="actionFacebook"/>
+     <addaction name="actionTwitter"/>
+     <addaction name="actionGmail"/>
+     <addaction name="actionYahoo"/>
+     <addaction name="actionHotmail"/>
+    </widget>
+    <addaction name="menuShare_with_your_friends"/>
+   </widget>
    <addaction name="menu_Open"/>
    <addaction name="menuPlay"/>
    <addaction name="menu_Audio"/>
@@ -2600,6 +2624,7 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuPlaylist"/>
    <addaction name="menu_Tools"/>
    <addaction name="menu_Help"/>
+   <addaction name="menuSocial"/>
   </widget>
   <widget class="QDockWidget" name="dockBrowser">
    <property name="minimumSize">
@@ -4550,6 +4575,36 @@ p, li { white-space: pre-wrap; }
   <action name="actionCheck_for_updates">
    <property name="text">
     <string>Check for updates...</string>
+   </property>
+  </action>
+  <action name="actionFacebook">
+   <property name="text">
+    <string>Facebook</string>
+   </property>
+  </action>
+  <action name="actionTwitter">
+   <property name="text">
+    <string>Twitter</string>
+   </property>
+  </action>
+  <action name="actionGmail">
+   <property name="text">
+    <string>Gmail</string>
+   </property>
+  </action>
+  <action name="actionYahoo">
+   <property name="text">
+    <string>Yahoo</string>
+   </property>
+  </action>
+  <action name="actionHotmail">
+   <property name="text">
+    <string>Hotmail</string>
+   </property>
+  </action>
+  <action name="actionSearch_subtitles_on_OpenSubtitles_org">
+   <property name="text">
+    <string>Search subtitles on OpenSubtitles.org...</string>
    </property>
   </action>
  </widget>

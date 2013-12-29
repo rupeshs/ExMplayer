@@ -78,7 +78,6 @@
         <file>images/arrow.png</file>
         <file>images/speedtb.png</file>
         <file>images/mute.png</file>
-        <file>images/stop.png</file>
         <file>images/fullscreen_exit.png</file>
         <file>images/tooltip.png</file>
         <file>images/seekview.png</file>
@@ -99,5 +98,7 @@
         <file>images/loader.gif</file>
         <file>images/backanimxmas.gif</file>
         <file>images/loadervideo.gif</file>
+        <file>images/opensubtitles-logo.png</file>
+        <file>images/stop.png</file>
     </qresource>
 </RCC>

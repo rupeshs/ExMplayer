@@ -14,6 +14,28 @@ DEPENDPATH += qtsingleapplication
 HEADERS += qtsingleapplication.h qtlocalpeer.h
 SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
 
+INCLUDEPATH += searchsubtitle
+DEPENDPATH += searchsubtitle
+
+INCLUDEPATH += searchsubtitle/maia
+DEPENDPATH += searchsubtitle/maia
+
+INCLUDEPATH += searchsubtitle/miniz
+DEPENDPATH += searchsubtitle/miniz
+
+
+HEADERS += opensubtitleclient.h gzipuncompressor.h searchsubtitle.h
+SOURCES += opensubtitleclient.cpp gzipuncompressor.cpp searchsubtitle.cpp
+
+FORMS += searchsubtitle.ui
+
+#miniz libarary to uncompress data
+SOURCES += miniz.c tinfl.c
+
+# xmlrpc client code to connect to opensubtitles.org
+HEADERS += maiaObject.h maiaFault.h maiaXmlRpcClient.h
+SOURCES += maiaObject.cpp maiaFault.cpp maiaXmlRpcClient.cpp
+
 SOURCES += main.cpp \
     playerwindow.cpp \
     mplayerfe.cpp \

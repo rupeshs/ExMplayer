@@ -208,7 +208,7 @@ void mplayerfe::play(QString File,int volume)
     argSubOpt<<"-sub-fuzziness"<<QString::number(1)<<"-ass"<<"-embeddedfonts"<<"-ass-styles"<<Paths::configPath()+"/styles.ass";
 
     argvideofilters<<"-vf"<<"screenshot";
-    argvideofilters<<"-vf-add"<<"eq2";
+    //argvideofilters<<"-vf-add"<<"eq2";
     //argvideofilters<<"-vf-add"<<"hue";
     //argAudioOpt<<"-softvol"<<"-softvol-max"<<QString::number(1000);
 

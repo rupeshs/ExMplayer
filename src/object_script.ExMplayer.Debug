@@ -1,6 +1,13 @@
 INPUT(
 ./debug\qtsingleapplication.o
 ./debug\qtlocalpeer.o
+./debug\opensubtitleclient.o
+./debug\gzipuncompressor.o
+./debug\searchsubtitle.o
+./debug\miniz.o
+./debug\maiaObject.o
+./debug\maiaFault.o
+./debug\maiaXmlRpcClient.o
 ./debug\main.o
 ./debug\playerwindow.o
 ./debug\mplayerfe.o
@@ -48,6 +55,12 @@ INPUT(
 ./debug\screensaver.o
 ./debug\moc_qtsingleapplication.o
 ./debug\moc_qtlocalpeer.o
+./debug\moc_opensubtitleclient.o
+./debug\moc_gzipuncompressor.o
+./debug\moc_searchsubtitle.o
+./debug\moc_maiaObject.o
+./debug\moc_maiaFault.o
+./debug\moc_maiaXmlRpcClient.o
 ./debug\moc_playerwindow.o
 ./debug\moc_mplayerfe.o
 ./debug\moc_rphlabelex.o
