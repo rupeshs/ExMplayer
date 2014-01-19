@@ -46,11 +46,13 @@ public:
 signals:
     void gotSubtitles(QVariantList data);
     void NetworkError(QString);
+    void readyForSearch();
     
 public slots:
     void login();
     void logout();
     void search(const QString& filename,SearchMode mode);
+
 
 private slots:
     void handleResponse(QVariant &);
@@ -63,6 +65,7 @@ protected:
 private:
     MaiaXmlRpcClient *rpc;
     QString token;
+
 };
 
 #endif // OPENSUBTITLECLIENT_H

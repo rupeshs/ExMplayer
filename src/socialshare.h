@@ -15,39 +15,20 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#ifndef UPDATECHECK_H
-#define UPDATECHECK_H
-
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QXmlStreamReader>
-#include <QDebug>
-#include <QMap>
-#include <QPair>
-#include <QStringList>
-#include <version.h>
-
-class UpdateCheck:public QObject
+#ifndef SOCIALSHARE_H
+#define SOCIALSHARE_H
+#include <QWidget>
+#include <mplayerfe.h>
+#include <QString>
+#include <QMessageBox>
+#include <QInputDialog>
+class SocialShare
 {
-    Q_OBJECT
 public:
-    explicit UpdateCheck(QObject *parent = 0);
-    void Check();
-    inline QString GetLatestStableVersion(){ return _stableVersion;}
-
-public slots:
-    void fileIsReady(QNetworkReply* reply);
-
-signals:
-    void gotUpdateChkResponse(bool updAvail,QString ver,QString relNotes);
-    void NetworkError(QString);
+    SocialShare();
+    static bool  shareThisPlaybackOnFacebook(QWidget *parent,mplayerfe* mp);
 private:
-    QNetworkAccessManager * manager ;
-    QString _stableVersion;
-    QMap<QString,QStringList> mapVersions;
-
-    bool isUpdated(QString currentVersion,QString myVersion);
+    static QString makeClearInfoText(QString inf);
 };
 
-#endif // UPDATECHECK_H
+#endif // SOCIALSHARE_H

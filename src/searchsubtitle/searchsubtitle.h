@@ -31,7 +31,7 @@
 #include <QAction>
 #include <gzipuncompressor.h>
 #include <QDesktopServices>
-
+#include <rphfile.h>
 namespace Ui {
 class SearchSubtitle;
 }
@@ -48,13 +48,17 @@ protected:
 
     QSortFilterProxyModel * proxy_model;
 public slots:
+     void searchSubtitleForMovie(const QString& filename);
      void gotSubtitles(QVariantList data);
      void filterSubtitles(QString filter);
      void subLanguageChanged(QString ln);
      void disableUi();
      void enableUi();
+     void loginOkay();
 
-
+signals:
+     void readyForSubSearch();
+     void loadSubtitle(QString path);
 
 private slots:
      void on_comboLangFilter_currentIndexChanged(const QString &arg1);
@@ -73,6 +77,7 @@ private slots:
      void on_tableSubtitles_customContextMenuRequested(const QPoint &pos);
 
      void on_pushButtonUploadSub_clicked();
+     void downloadComplete();
 
 private:
     Ui::SearchSubtitle *ui;
@@ -82,6 +87,8 @@ private:
     QAction * downloadAct;
     QAction * copyLinkAct;
     GzipUncompressor *gzDownloader;
+    QString _filePath;
+    QString _subfileName;
 
 };
 

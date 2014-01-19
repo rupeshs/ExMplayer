@@ -20,7 +20,6 @@
 #include <QtCore>
 #include <QtGui>
 #include <QDebug>
-
 #include "winampdspdialog.h"
 #include <QActionGroup>
 #include <QMessageBox>
@@ -86,6 +85,7 @@ public:
     QMap<QString, QString> mapFileSubtitles;
 
     //-----------------------------------------------
+    QString getVideoFormat(){return _videoFormat;}
     QString getAudioRate(){return _audio_rate;}
     QString getAudioNch(){return _audio_nch;}
     QString getAudioBitrate(){return _audio_bitrate;}
@@ -399,6 +399,7 @@ public slots:
    QPointer<fontLoadDialog> fldDlg;
    void removeOption(QString option,bool addseek);
    QString colorToRGB(unsigned int color) ;
+   QString _videoFormat;
 
 
 

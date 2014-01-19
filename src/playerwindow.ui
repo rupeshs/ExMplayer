@@ -1773,7 +1773,8 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="icon">
      <iconset resource="ExMplayer.qrc">
-      <normaloff>:/images/loop.png</normaloff>:/images/loop.png</iconset>
+      <normaloff>:/images/loop_off.png</normaloff>
+      <normalon>:/images/loop.png</normalon>:/images/loop_off.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -1815,7 +1816,8 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="icon">
      <iconset resource="ExMplayer.qrc">
-      <normaloff>:/images/shuffle.png</normaloff>:/images/shuffle.png</iconset>
+      <normaloff>:/images/shuffle_off.png</normaloff>
+      <normalon>:/images/shuffle.png</normalon>:/images/shuffle_off.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -2131,6 +2133,22 @@ color: grey;
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButtonInfo">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>60</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>Show Info</string>
+    </property>
+    <property name="text">
+     <string>i</string>
     </property>
    </widget>
   </widget>
@@ -2484,6 +2502,8 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionEnable_Closed_Captions"/>
     <addaction name="separator"/>
     <addaction name="actionSearch_subtitles_on_OpenSubtitles_org"/>
+    <addaction name="actionUpload_subtitle_to_OpenSubtitles_org"/>
+    <addaction name="actionUpload_subtitle_to_OpenSubtitles_org_Advanced"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -2545,6 +2565,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionSmallmode"/>
     <addaction name="actionAdvanced_Info"/>
     <addaction name="actionInfobar"/>
+    <addaction name="actionMini_Mode"/>
    </widget>
    <widget class="QMenu" name="menu3D">
     <property name="title">
@@ -2606,6 +2627,10 @@ p, li { white-space: pre-wrap; }
      <property name="title">
       <string>Share with your friends</string>
      </property>
+     <property name="icon">
+      <iconset resource="ExMplayer.qrc">
+       <normaloff>:/images/social.png</normaloff>:/images/social.png</iconset>
+     </property>
      <addaction name="actionFacebook"/>
      <addaction name="actionTwitter"/>
      <addaction name="actionGmail"/>
@@ -2613,8 +2638,10 @@ p, li { white-space: pre-wrap; }
      <addaction name="actionHotmail"/>
     </widget>
     <addaction name="menuShare_with_your_friends"/>
+    <addaction name="actionShare_this_playback_on_Facebook"/>
    </widget>
    <addaction name="menu_Open"/>
+   <addaction name="menuSocial"/>
    <addaction name="menuPlay"/>
    <addaction name="menu_Audio"/>
    <addaction name="menu_Video"/>
@@ -2624,7 +2651,6 @@ p, li { white-space: pre-wrap; }
    <addaction name="menuPlaylist"/>
    <addaction name="menu_Tools"/>
    <addaction name="menu_Help"/>
-   <addaction name="menuSocial"/>
   </widget>
   <widget class="QDockWidget" name="dockBrowser">
    <property name="minimumSize">
@@ -4573,38 +4599,89 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
   <action name="actionCheck_for_updates">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/update.png</normaloff>:/images/update.png</iconset>
+   </property>
    <property name="text">
     <string>Check for updates...</string>
    </property>
   </action>
   <action name="actionFacebook">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/Facebook.png</normaloff>:/images/Facebook.png</iconset>
+   </property>
    <property name="text">
     <string>Facebook</string>
    </property>
   </action>
   <action name="actionTwitter">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/bird_blue_48.png</normaloff>:/images/bird_blue_48.png</iconset>
+   </property>
    <property name="text">
     <string>Twitter</string>
    </property>
   </action>
   <action name="actionGmail">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/gmail.png</normaloff>:/images/gmail.png</iconset>
+   </property>
    <property name="text">
     <string>Gmail</string>
    </property>
   </action>
   <action name="actionYahoo">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/yahoo-mail.png</normaloff>:/images/yahoo-mail.png</iconset>
+   </property>
    <property name="text">
     <string>Yahoo</string>
    </property>
   </action>
   <action name="actionHotmail">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/Live Hotmail.png</normaloff>:/images/Live Hotmail.png</iconset>
+   </property>
    <property name="text">
     <string>Hotmail</string>
    </property>
   </action>
   <action name="actionSearch_subtitles_on_OpenSubtitles_org">
+   <property name="icon">
+    <iconset resource="ExMplayer.qrc">
+     <normaloff>:/images/OpenSubtitlesFavIcon.gif</normaloff>:/images/OpenSubtitlesFavIcon.gif</iconset>
+   </property>
    <property name="text">
     <string>Search subtitles on OpenSubtitles.org...</string>
+   </property>
+  </action>
+  <action name="actionMini_Mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Mini Mode</string>
+   </property>
+  </action>
+  <action name="actionUpload_subtitle_to_OpenSubtitles_org">
+   <property name="text">
+    <string>Upload subtitle to OpenSubtitles.org</string>
+   </property>
+  </action>
+  <action name="actionShare_this_playback_on_Facebook">
+   <property name="text">
+    <string>Share this playback on Facebook</string>
+   </property>
+  </action>
+  <action name="actionUpload_subtitle_to_OpenSubtitles_org_Advanced">
+   <property name="text">
+    <string>Upload subtitle to OpenSubtitles.org (Advanced)</string>
    </property>
   </action>
  </widget>

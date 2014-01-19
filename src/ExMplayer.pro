@@ -11,8 +11,13 @@ TEMPLATE  = app
 
 INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication
-HEADERS += qtsingleapplication.h qtlocalpeer.h
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
+HEADERS += qtsingleapplication.h qtlocalpeer.h \
+    socialshare.h \
+    WinVersion.h \
+    coverartdialog.h
+SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp \
+    socialshare.cpp \
+    coverartdialog.cpp
 
 INCLUDEPATH += searchsubtitle
 DEPENDPATH += searchsubtitle
@@ -27,7 +32,8 @@ DEPENDPATH += searchsubtitle/miniz
 HEADERS += opensubtitleclient.h gzipuncompressor.h searchsubtitle.h
 SOURCES += opensubtitleclient.cpp gzipuncompressor.cpp searchsubtitle.cpp
 
-FORMS += searchsubtitle.ui
+FORMS += searchsubtitle.ui \
+    coverartdialog.ui
 
 #miniz libarary to uncompress data
 SOURCES += miniz.c tinfl.c

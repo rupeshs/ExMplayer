@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2014 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
       QFileInfo fi(qApp->applicationFilePath());
       QDateTime dt=fi.created();
       ui->labelDate->setText(QString("Build on "+dt.toString()));
-      ui->labelVersion->setText("ExMplayer v"+Version::stable());
+      ui->labelVersion->setText("<span style=\" font-size:12pt; font-weight:600; color:#000000;\">ExMplayer v"+Version::stable()+ " Beta<span>");
 }
 
 aboutDialog::~aboutDialog()

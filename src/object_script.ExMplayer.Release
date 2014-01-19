@@ -1,6 +1,8 @@
 INPUT(
 ./release\qtsingleapplication.o
 ./release\qtlocalpeer.o
+./release\socialshare.o
+./release\coverartdialog.o
 ./release\opensubtitleclient.o
 ./release\gzipuncompressor.o
 ./release\searchsubtitle.o
@@ -55,6 +57,7 @@ INPUT(
 ./release\screensaver.o
 ./release\moc_qtsingleapplication.o
 ./release\moc_qtlocalpeer.o
+./release\moc_coverartdialog.o
 ./release\moc_opensubtitleclient.o
 ./release\moc_gzipuncompressor.o
 ./release\moc_searchsubtitle.o

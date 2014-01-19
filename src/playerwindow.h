@@ -71,10 +71,12 @@
 
 #include <updatecheckdlg.h>
 #include <searchsubtitle.h>
+#include <socialshare.h>
+#include <coverartdialog.h>
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
-
+#define PLAYER_WIDTH  500
 namespace Ui {
 class PlayerWindow;
 }
@@ -183,6 +185,7 @@ private:
     int osdlevel;
     int framedroplevel;
     int metadispcount;
+    bool bPlayListDrop;
     QString tmp;
     QString currentFile;
     QAction *actPrgsIndicator;
@@ -235,6 +238,8 @@ private:
     int curSubTitleTrack;
 
     QPointer<SearchSubtitle> subSearchDlg;
+    QPointer<CoverArtDialog> covArtDlg;
+
 
 
 
@@ -416,6 +421,7 @@ private slots:
     void addFolder();
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent *event);
+    void dropPlayListEvent(QDropEvent *event);
     void dragMoveEvent(QDragMoveEvent *event);
     void cleanMp();
     void paused();
@@ -503,6 +509,15 @@ private slots:
     void calculateHeight();
     void shareWithFriends(QAction *act);
     void on_actionSearch_subtitles_on_OpenSubtitles_org_triggered();
+    void on_actionMini_Mode_triggered();
+    void searchForSubtitle();
+    void loadSubtitleOS(QString url);
+    void on_actionUpload_subtitle_to_OpenSubtitles_org_triggered();
+    void on_actionShare_this_playback_on_Facebook_triggered();
+
+
+    void on_actionUpload_subtitle_to_OpenSubtitles_org_Advanced_triggered();
+    void on_toolButtonInfo_clicked();
 };
 
 #endif // PLAYERWINDOW_H

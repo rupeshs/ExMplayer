@@ -23,6 +23,9 @@
    <iconset resource="ExMplayer.qrc">
     <normaloff>:/images/ExMplayer.png</normaloff>:/images/ExMplayer.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
@@ -46,7 +49,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="labelVersionFound">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>50</x>
      <y>40</y>
      <width>271</width>
      <height>16</height>
@@ -72,7 +75,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QLabel" name="labelCurVersion">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>50</x>
      <y>20</y>
      <width>251</width>
      <height>16</height>
@@ -104,6 +107,22 @@ p, li { white-space: pre-wrap; }
      </rect>
     </property>
    </widget>
+  </widget>
+  <widget class="QLabel" name="labelOk">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap resource="ExMplayer.qrc">:/images/ok.png</pixmap>
+   </property>
   </widget>
  </widget>
  <resources>

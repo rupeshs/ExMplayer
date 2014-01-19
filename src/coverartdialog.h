@@ -15,39 +15,34 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#ifndef UPDATECHECK_H
-#define UPDATECHECK_H
+#ifndef COVERARTDIALOG_H
+#define COVERARTDIALOG_H
 
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
-#include <QXmlStreamReader>
-#include <QDebug>
-#include <QMap>
-#include <QPair>
-#include <QStringList>
-#include <version.h>
+#include <QDialog>
+#include <QDir>
+#include <QPixmap>
+#include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
+#include <QSequentialAnimationGroup>
+namespace Ui {
+class CoverArtDialog;
+}
 
-class UpdateCheck:public QObject
+class CoverArtDialog : public QDialog
 {
     Q_OBJECT
+    
 public:
-    explicit UpdateCheck(QObject *parent = 0);
-    void Check();
-    inline QString GetLatestStableVersion(){ return _stableVersion;}
-
-public slots:
-    void fileIsReady(QNetworkReply* reply);
-
+    explicit CoverArtDialog(QWidget *parent = 0);
+    ~CoverArtDialog();
 signals:
-    void gotUpdateChkResponse(bool updAvail,QString ver,QString relNotes);
-    void NetworkError(QString);
-private:
-    QNetworkAccessManager * manager ;
-    QString _stableVersion;
-    QMap<QString,QStringList> mapVersions;
+    void showInfo();
+private slots:
+    void on_toolButton_clicked();
 
-    bool isUpdated(QString currentVersion,QString myVersion);
+private:
+    Ui::CoverArtDialog *ui;
+    QMovie *movie;
 };
 
-#endif // UPDATECHECK_H
+#endif // COVERARTDIALOG_H

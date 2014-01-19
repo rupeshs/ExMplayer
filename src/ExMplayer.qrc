@@ -100,5 +100,16 @@
         <file>images/loadervideo.gif</file>
         <file>images/opensubtitles-logo.png</file>
         <file>images/stop.png</file>
+        <file>images/shuffle_off.png</file>
+        <file>images/loop_off.png</file>
+        <file>images/update.png</file>
+        <file>images/bird_blue_48.png</file>
+        <file>images/Live Hotmail.png</file>
+        <file>images/gmail.png</file>
+        <file>images/yahoo-mail.png</file>
+        <file>images/Facebook.png</file>
+        <file>images/social.png</file>
+        <file>images/OpenSubtitlesFavIcon.gif</file>
+        <file>images/info-btn.png</file>
     </qresource>
 </RCC>

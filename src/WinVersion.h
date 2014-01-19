@@ -15,35 +15,21 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+#ifndef WINVERSION_H
+#define WINVERSION_H
 
-#ifndef UPDATECHECKDLG_H
-#define UPDATECHECKDLG_H
+#define VER_FILEVERSION             3,8,0,0
+#define VER_FILEVERSION_STR         "3.8.0.0\0"
 
-#include <QDialog>
-#include <updatecheck.h>
-#include <QProgressIndicator.h>
-#include <version.h>
-#include <QPropertyAnimation>
-namespace Ui {
-class updateCheckDlg;
-}
+#define VER_PRODUCTVERSION          3,8,0,0
+#define VER_PRODUCTVERSION_STR      "3.8.0.0\0"
 
-class updateCheckDlg : public QDialog
-{
-    Q_OBJECT
-    
-public:
-    explicit updateCheckDlg(QWidget *parent = 0);
-    ~updateCheckDlg();
-    
-private:
-    Ui::updateCheckDlg *ui;
-    UpdateCheck* updChecker;
-    QProgressIndicator *pgIndicator;
+#define VER_COMPANYNAME_STR         "Rupesh Sreeraman\0"
+#define VER_FILEDESCRIPTION_STR     "ExMplayer 3.8 beta\0"
+#define VER_INTERNALNAME_STR        "exmplayer\0"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright (c)2010-2014 Rupesh Sreeraman\0"
+#define VER_ORIGINALFILENAME_STR    "exmplayer.exe\0"
+#define VER_PRODUCTNAME_STR         "ExMplayer\0"
+#define VER_COMPANYDOMAIN_STR       "http://exmplayer.sourceforge.net"
 
-public slots:
-void gotUpdateChkResponse(bool ,QString,QString) ;
-void NetworkError(QString);
-};
-
-#endif // UPDATECHECKDLG_H
+#endif // WINVERSION_H

@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2014 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -61,7 +61,9 @@ static QRegExp rx_audioinfo("^[AUDIO:].*(\\d+).*Hz.*(\\d+).*ch.*(\\d+).*(\\d+).*
 static QRegExp rx_bufferfill("^Cache fill:.*([0-9,.]+)% .*");
 static QRegExp rx_fscan("Scanning file (.*)");
 static QRegExp rx_videosize("VO:.*(\\d+)x(\\d+)");
+static QRegExp rx_dur("^[A]:.*.of.([0-9.]+)");
 
+//A:   9.3 (09.2) of 2346.0 (39:06.0)  0.0%
 mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
 {
     isnet=false;
@@ -120,6 +122,7 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     _osdLevel=1;
     _currentSubtitleTrack="0";
 
+
 }
 void mplayerfe::init()
 {
@@ -169,6 +172,7 @@ void mplayerfe::play(QString File,int volume)
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     argAudioOpt<<"-volume"<<QString::number(volume);
 
+
      //argAudioOpt<<"-hr-mp3-seek";
     //argAudioOpt<<"-afm"<< "ffmpeg";
 
@@ -178,21 +182,17 @@ void mplayerfe::play(QString File,int volume)
 
     //Video options
 #ifdef Q_WS_WIN
-    switch(QSysInfo::windowsVersion())
-    {
-    case QSysInfo::WV_XP:
-        argVideoOpt<<"-vo"<<"direct3d";
-        break;
-    case QSysInfo::WV_VISTA:
-        argVideoOpt<<"-vo"<<"direct3d";
-        break;
-    case QSysInfo::WV_WINDOWS7:
-        argVideoOpt<<"-vo"<<"direct3d";
-        break;
-    }
+    argVideoOpt<<"-vo"<<"direct3d,directx";
 #endif
 
-    argVideoOpt<<"-nodr" <<"-double"<<"-nocolorkey"<<"-wid"<<QString::number(_videowinid)<<"-nokeepaspect";
+    argVideoOpt<<"-nodr"
+              <<"-double"
+              <<"-nocolorkey"
+              <<"-wid"<<QString::number(_videowinid)
+              <<"-nokeepaspect"
+              <<"-subfont-autoscale"<<QString::number(0)
+              <<"-subfont-osd-scale"<<QString::number(20)
+              <<"-font"<<qApp->applicationDirPath()+"/mplayer/mplayer/subfont.ttf";
     if(!keepaspect){
         arguments<<"-nokeepaspect";
     }
@@ -208,6 +208,7 @@ void mplayerfe::play(QString File,int volume)
     argSubOpt<<"-sub-fuzziness"<<QString::number(1)<<"-ass"<<"-embeddedfonts"<<"-ass-styles"<<Paths::configPath()+"/styles.ass";
 
     argvideofilters<<"-vf"<<"screenshot";
+    //argDemuxerOpt<<"-demuxer"<<"lavf";
     //argvideofilters<<"-vf-add"<<"eq2";
     //argvideofilters<<"-vf-add"<<"hue";
     //argAudioOpt<<"-softvol"<<"-softvol-max"<<QString::number(1000);
@@ -261,8 +262,9 @@ void mplayerfe::play(QString File,int volume)
     qDebug()<<"Starting mplayer...";
 
     _filepath=File;
+     emit starting();
     startMplayer();
-    emit starting();
+
 
     //******************************************************
 }
@@ -313,6 +315,8 @@ void mplayerfe::readmpconsole()
             metainfo <<"VIDEO_CODEC: "+ parsevalue("ID_VIDEO_CODEC","=",str);
 
         }
+
+
 
     }
 
@@ -506,13 +510,11 @@ void mplayerfe::loadsubtitles(QString subfile)
        QFileInfo fi(subfile);
 
 
-    if ( fi.suffix().toLower().contains("idx")||fi.suffix().toLower().contains("sub"))
+    if ( fi.suffix().toLower().contains("idx"))
     {
       QString sPath;
       if(fi.suffix().toLower().contains("idx"))
           sPath=subfile.remove(".idx") ;
-      else
-          sPath=subfile.remove(".sub") ;
 
      sPath = sPath.replace("\\","/");
 
@@ -1864,6 +1866,8 @@ void  mplayerfe::startMplayer()
     }
 
     qDebug()<<commandLine;
+
+    emit lineavailable(commandLine);
     mProcess->start();
 }
 
@@ -2134,6 +2138,11 @@ void mplayerfe::mplayerConsole(QByteArray ba)
             qDebug()<<"Got Video height:"<<_video_height;
 
         }
+        if(mplayerOutputLine.contains("ID_VIDEO_FORMAT",Qt::CaseInsensitive)){
+
+            _videoFormat=parsevalue("ID_VIDEO_FORMAT","=",mplayerOutputLine);
+
+        }
 
         //Audio Properties
         if(rx_audioinfo.indexIn(mplayerOutputLine) >-1){
@@ -2276,13 +2285,17 @@ void mplayerfe::mplayerConsole(QByteArray ba)
             if(mplayerOutputLine.contains("ANS_LENGTH",Qt::CaseInsensitive)){
 
                 tmpstr=parsevalue("ANS_LENGTH=","=",mplayerOutputLine);
-                _duration=tmpstr.toFloat();
-                _tduration=QTime();
+
+               if (_duration>tmpstr.toFloat())
+                {  _duration=tmpstr.toFloat();
+                   _tduration=QTime();
                 _tduration=  _tduration.addSecs(_duration);
+
                 emit lengthChanged();
                 qDebug()<<"Duration re-check";
 
                 qDebug()<<ba;
+               }
 
             }
             if( !_isRestarting){
@@ -2306,6 +2319,19 @@ void mplayerfe::mplayerConsole(QByteArray ba)
             this->usercommand("osd_show_text \"Screenshot is saved as " + rx_screenshot.cap(1) + "\" 2000 1");
         }
 
+        //Duration
+        if(rx_dur.indexIn(mplayerOutputLine)>-1){
+            if (_duration!=rx_dur.cap(1).toFloat())
+            {
+                _duration=rx_dur.cap(1).toFloat();
+                _tduration=QTime();
+                _tduration=  _tduration.addSecs(_duration);
+
+                emit lengthChanged();
+              //qDebug()<<rx_dur.cap(1).toFloat();
+            }
+
+        }
         //Position
         if(rx_pos.indexIn(mplayerOutputLine)>-1){
 
@@ -2630,18 +2656,7 @@ void mplayerfe::ConvertStereoVideoToMono(bool enable)
       }
       //Video options
   #ifdef Q_WS_WIN
-      switch(QSysInfo::windowsVersion())
-      {
-      case QSysInfo::WV_XP:
-          arguments<<"-vo"<<"direct3d";
-          break;
-      case QSysInfo::WV_VISTA:
-          arguments<<"-vo"<<"direct3d";
-          break;
-      case QSysInfo::WV_WINDOWS7:
-          arguments<<"-vo"<<"direct3d";
-          break;
-      }
+      arguments<<"-vo"<<"direct3d,directx";
   #endif
   }
  void mplayerfe::addVolumeBoost(bool enable,long val)

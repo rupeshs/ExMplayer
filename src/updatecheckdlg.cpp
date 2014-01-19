@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2014 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -34,6 +34,7 @@ updateCheckDlg::updateCheckDlg(QWidget *parent) :
     pgIndicator->show();
     pgIndicator->startAnimation();
     ui->labelCurVersion->setText("Current version :v" +Version::stable());
+    ui->labelOk->setVisible(false);
 }
 
 updateCheckDlg::~updateCheckDlg()
@@ -54,8 +55,10 @@ void updateCheckDlg::gotUpdateChkResponse(bool updAvail,QString version,QString 
          animation->start();
        }
     else
-       ui->labelVersionFound->setText("<font color=\"green\"><b>ExMplayer is up to date</b></font>");
-
+       {
+        ui->labelOk->setVisible(true);
+        ui->labelVersionFound->setText("<font color=\"green\"><b>ExMplayer is up to date</b></font>");
+       }
 
     QStringList sList=releaseNotes.split(",");
     QString var;
@@ -65,10 +68,10 @@ void updateCheckDlg::gotUpdateChkResponse(bool updAvail,QString version,QString 
     }
 
 }
-void updateCheckDlg::NetworkError(QString)
+void updateCheckDlg::NetworkError(QString strErr)
 {
     pgIndicator->stopAnimation();
     pgIndicator->hide();
-    ui->labelVersionFound->setText("<font color=\"red\"><b>Error...Please check your internet connection.</b></font>");
+    ui->labelVersionFound->setText("<font color=\"red\"><b>Error..."+strErr+"</b></font>");
 
 }

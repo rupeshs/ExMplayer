@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2014 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -84,6 +84,7 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     bfbvis=true;
     bplvis=false;
     usingfidx=false;
+    bPlayListDrop=false;
 
     //Setting ui
     setupMyUi();
@@ -117,17 +118,18 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
 
     //Update check
     if(settings->value("Updates/Automatic","1").toInt()==1)
-     {
+    {
 
         QDateTime curDt= QDateTime::currentDateTime();
-       if(curDt.date().day()%7==0)
-       {
-        updCheckDlg =new updateCheckDlg(this);
-       }
+        if(curDt.date().day()%7==0)
+        {
+            updCheckDlg =new updateCheckDlg(this);
+        }
     }
 
-  this->setMinimumHeight(1);
-   calculateHeight();
+    this->setMinimumHeight(1);
+    calculateHeight();
+
 
 }
 
@@ -241,6 +243,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     videoWin->showErrorText("");
     videoWin->showeof(false);
     videoWin->mplayerlayer->setRepaintBackground(true);
+    ui->toolButtonInfo->setIcon((QIcon(":/images/info-btn.png")));
 
 
 
@@ -306,7 +309,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     //QObject::connect(mp,SIGNAL(eof()),this,SLOT(resetUi()));
     //QObject::connect(mp,SIGNAL(showmsgBox(QString)),this,SLOT(showMsgBox(QString)));
 
-actPrgsIndicator->setVisible(true);
+    actPrgsIndicator->setVisible(true);
     isstreaming=false;
     ui->actionStep1_fm->setEnabled(true);
     ui->actionStep2_fm->setEnabled(true);
@@ -316,8 +319,8 @@ actPrgsIndicator->setVisible(true);
     //Add subtitle code page
     if (settings->value("Subtitles/UseCodePage","0").toInt()!=0)
     {
-       QString lanPg=settings->value("Subtitles/CodePage","Western European Languages").toString();
-       mp->setSubtitleCodePage(Languages::encodings().key(lanPg));
+        QString lanPg=settings->value("Subtitles/CodePage","Western European Languages").toString();
+        mp->setSubtitleCodePage(Languages::encodings().key(lanPg));
     }
     mp->enableClosedCaption(true);
     qDebug()<<ui->actionEnable_3D->isChecked();
@@ -421,7 +424,7 @@ actPrgsIndicator->setVisible(true);
 
 void  PlayerWindow::setupMyUi()
 {
- bool bMin=true;
+    bool bMin=true;
 
 #ifdef Q_OS_LINUX
     ui->actionWinamp_Dsp->setVisible(false);
@@ -460,8 +463,8 @@ void  PlayerWindow::setupMyUi()
     layout->addWidget(videoWin);
     videoWin->setMinimumSize( QSize(1,1) );
     panel->setLayout(layout);
-   //panel->hide();
-   //videoWin->hide();
+    //panel->hide();
+    //videoWin->hide();
 
     this->setCentralWidget(panel);
     connect(this->videoWin, SIGNAL(mousewheelsg(QWheelEvent*)), this, SLOT(wheelEvent(QWheelEvent*)));
@@ -504,6 +507,17 @@ void  PlayerWindow::setupMyUi()
     {
         ui->toolBarStatus->setVisible(true);
         ui->actionInfobar->setChecked(true);
+    }
+    if (settings->value("MainWindow/MiniMode","0").toInt()==0)
+    {
+        this->statusBar()->setVisible(true);
+        ui->actionMini_Mode->setChecked(false);
+    }
+    else
+    {
+        this->statusBar()->setVisible(false);
+        ui->actionMini_Mode->setChecked(true);
+
     }
     tmpxpos=0;
     tmpypos=0;
@@ -555,7 +569,7 @@ void  PlayerWindow::setupMyUi()
 
 
     QObject::connect(ui->dock_Playlist,SIGNAL(sgcontextMenuEvent(QContextMenuEvent*)),this,SLOT(showCtxmenuPlaylist(QContextMenuEvent*)));
-    QObject::connect(ui->dock_Playlist,SIGNAL(sgdropEvent(QDropEvent*)),this,SLOT(dropEvent(QDropEvent*)));
+    QObject::connect(ui->dock_Playlist,SIGNAL(sgdropEvent(QDropEvent*)),this,SLOT(dropPlayListEvent(QDropEvent*)));
     // QObject::connect(ui->dockBrowser,SIGNAL(visibilityChanged(bool)),this,SLOT(setfbvis(bool)));
     QObject::connect(myplaylist,SIGNAL(clearingList()),this,SLOT(clearingList()));
     QObject::connect(myplaylist,SIGNAL(showPictureFlow(QString)),this,SLOT(showPictureFlow(QString)));
@@ -634,12 +648,9 @@ void  PlayerWindow::setupMyUi()
     piv->setColor(QColor(qRgb(255,255,255) ));
     piv->resize(32,32);
     ui->dock_log->setVisible(false);
+
     ///////////////////////////////////////////////////////////////////
     //statusbar
-
-
-
-
     ui->statusBar->addPermanentWidget(ui->labAD);
     ui->statusBar->addPermanentWidget(ui->lcdCurPos);
     ui->statusBar->addPermanentWidget(ui->lcdDuration);
@@ -675,38 +686,38 @@ void  PlayerWindow::setupMyUi()
     //ui->toolBarSeekBar->addSeparator();
     if (!bMin)
     {
-       ui->toolBarSeekBar->addWidget(ui->toolButtonRewind);
-       ui->toolBarSeekBar->addWidget(ui->sliderSeek);
-       toolButtonForwardAction=ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
-       ui->toolBarSeekBar->addAction(ui->actionFullscreen);
+        ui->toolBarSeekBar->addWidget(ui->toolButtonRewind);
+        ui->toolBarSeekBar->addWidget(ui->sliderSeek);
+        toolButtonForwardAction=ui->toolBarSeekBar->addWidget(ui->toolButtonForward);
+        ui->toolBarSeekBar->addAction(ui->actionFullscreen);
 
-       ui->toolBarSeek->addAction(ui->action_Play_Pause);
-       ui->toolBarSeek->addAction(ui->action_Stop);
-       ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
-       ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
-       ui->toolBarSeek->addWidget(ui->toolButtonVolume);
-       ui->toolBarSeek->addWidget(ui->sliderVolume);
-       ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
-       ui->toolBarSeek->addAction(ui->action_Equalizer);
-       ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
-       ui->toolBarSeek->addWidget(ui->toolButtonFblike);
-       ui->toolBarSeek->addWidget(ui->toolButtonSpeed);
-       ui->toolBarSeek->addWidget(ui->toolButtonStereoVideo);
-       ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
-       ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
+        ui->toolBarSeek->addAction(ui->action_Play_Pause);
+        ui->toolBarSeek->addAction(ui->action_Stop);
+        ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
+        ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
+        ui->toolBarSeek->addWidget(ui->toolButtonVolume);
+        ui->toolBarSeek->addWidget(ui->sliderVolume);
+        ui->toolBarSeek->addWidget(ui->toolButtonVolumeBoost);
+        ui->toolBarSeek->addAction(ui->action_Equalizer);
+        ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
+        ui->toolBarSeek->addWidget(ui->toolButtonFblike);
+        ui->toolBarSeek->addWidget(ui->toolButtonSpeed);
+        ui->toolBarSeek->addWidget(ui->toolButtonStereoVideo);
+        ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
+        ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
 
 
     }
     else{
 
-         ui->toolBarSeekBar->addAction(ui->action_Play_Pause);
-         ui->toolBarSeekBar->addAction(ui->action_Stop);
+        ui->toolBarSeekBar->addAction(ui->action_Play_Pause);
+        ui->toolBarSeekBar->addAction(ui->action_Stop);
 
         ui->toolBarSeekBar->addWidget(ui->labelCurrentPosition);
 
-actPrgsIndicator=ui->toolBarSeekBar->addWidget(pi);
+        actPrgsIndicator=ui->toolBarSeekBar->addWidget(pi);
+        actPrgsIndicator->setVisible(false);
 
-actPrgsIndicator->setVisible(false);
         ui->toolBarSeek->addWidget(ui->toolButtonRewind);
         ui->toolBarSeekBar->addWidget(ui->sliderSeek);
         toolButtonForwardAction=ui->toolBarSeek->addWidget(ui->toolButtonForward);
@@ -726,10 +737,13 @@ actPrgsIndicator->setVisible(false);
         ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
 
 
+
         ui->toolBarSeek->addAction(ui->action_Equalizer);
         ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
         ui->toolBarSeek->addWidget(ui->toolButtonFblike);
         ui->toolBarSeek->addWidget(ui->toolButtonStereoVideo);
+        ui->toolBarSeek->addWidget(ui->toolButtonInfo);
+        ui->toolButtonInfo->setIcon(QIcon(":/images/info-btn.png"));
         ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_off.png"));
         ui->toolButtonVolumeBoost->setIcon(QIcon(":/images/volboost_off.png"));
 
@@ -983,7 +997,9 @@ actPrgsIndicator->setVisible(false);
 
     QObject::connect(actiongroupShareExMplayer,SIGNAL(triggered(QAction*)),this,SLOT(shareWithFriends(QAction*)));
 
-
+    int w = ui->labelCurrentPosition->fontMetrics().width(ui->labelCurrentPosition->text());
+    ui->labelCurrentPosition->setMinimumWidth(w/2);
+    ui->labelDuration->setMinimumWidth(w/2);
 
 
 }
@@ -1301,17 +1317,17 @@ void PlayerWindow::startingPlayback()
 
         }
         if( !mp->hasvideo()&&mp->hasaudio()){
-            if (this->width()>450 ||this->height()>145)
+            if (this->width()>PLAYER_WIDTH ||this->height()>145)
             {
-                this->resize(450,145);
-                qDebug()<<"Offset height -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
-                this->resize(450,this->height()+(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y());
-                qDebug()<<"Adjusted offset -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
-
+                if (!isfullscreen)
+                {this->resize(PLAYER_WIDTH,145);
+                    qDebug()<<"Offset height -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
+                    this->resize(PLAYER_WIDTH,this->height()+(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y());
+                    qDebug()<<"Adjusted offset -"<<(ui->menuBar->height()+ui->menuBar->y())-ui->toolBarSeekBar->y();
+                }
             }
 
             //#ifdef Q_OS_WIN
-            //this->resize(450,145);
             ui->actionAudioDisable->setEnabled(false);
             /***********************************************************
                                 Cover Art
@@ -1323,17 +1339,26 @@ void PlayerWindow::startingPlayback()
             try {
                 if(coverArt.GetCover(f))
                 {
+
                     QImage img=coverArt.getCoverImage();
-                    //QMessageBox::critical(this,qApp->applicationName(),QString::number(img.width()),QMessageBox::Ok,QMessageBox::Cancel);
-                    cover = new QPixmap(QPixmap::fromImage(img,Qt::AutoColor));
+                    if (img.height()>0 &&img.width()>0)
+                    {//QMessageBox::critical(this,qApp->applicationName(),QString::number(img.width()),QMessageBox::Ok,QMessageBox::Cancel);
+                        cover = new QPixmap(QPixmap::fromImage(img,Qt::AutoColor));
 
-                    videoWin->setPixmap(QPixmap::fromImage(img,Qt::AutoColor).scaled(170,128,Qt::IgnoreAspectRatio, Qt::FastTransformation));
+                        videoWin->setPixmap(QPixmap::fromImage(img,Qt::AutoColor).scaled(170,128,Qt::IgnoreAspectRatio, Qt::FastTransformation));
 
-                    hascover=true;
-                    cover->save(QDir::tempPath()+"/"+"mcover.jpeg",0,-1);
-                    ui->actionSave_cover_art->setEnabled(true);
+                        hascover=true;
+                        cover->save(QDir::tempPath()+"/"+"mcover.jpeg",0,-1);
+                        ui->actionSave_cover_art->setEnabled(true);
+                        QString coverPath=QDir::tempPath()+"/mcover.jpeg";
+                        ui->toolButtonInfo->setIcon(QIcon(coverPath));
+                    }
+                    //ui->toolButtonInfo->setIconSize(QSize(60,22));
+
 
                 }
+
+
 
             }
             catch (...)
@@ -1600,7 +1625,7 @@ void PlayerWindow::updateSeekbar()
        ui->labelStatus->setText("Playing...");
     }*/
     //if (mp->state()==mp->PAUSED)
-       // ui->labelStatus->setText("Paused.");
+    // ui->labelStatus->setText("Paused.");
 
 
 
@@ -1641,6 +1666,13 @@ void PlayerWindow::on_toolButtonRewind_clicked()
 }
 void PlayerWindow::on_sliderVolume_valueChanged(int value)
 {
+   /*if (mp->hasvideo())
+    {if (value>90)
+        mp->usercommand("af_cmdline volnorm ");
+    else if (value<89)
+         mp->usercommand("af_cmdline volume 0,1");
+    }*/
+
     if(mp)
         mp->setVolume(value);
     if (sliderVolumeFullSc)
@@ -1688,13 +1720,12 @@ jmp:
 }
 void PlayerWindow::on_toolButtonVolume_clicked()
 {
-    ui->sliderVolume->setGeometry(0,0,0,20);
+    /*ui->sliderVolume->setGeometry(0,0,0,20);
     QPropertyAnimation *animation = new QPropertyAnimation(ui->sliderVolume, "size");
     animation->setDuration(1000);
-animation->setEndValue(QSize(1,20));
+    animation->setEndValue(QSize(1,20));
     animation->setEndValue(QSize(70,20));
-
-    animation->start();
+    animation->start();*/
     toggleMute();
 }
 
@@ -1917,12 +1948,12 @@ void PlayerWindow::on_actionDecrease_Delay_triggered()
 
 void PlayerWindow::on_action_Increase_volume_triggered()
 {
-    ui->sliderVolume->setValue( ui->sliderVolume->value()+1);
+    ui->sliderVolume->setValue( ui->sliderVolume->value()+5);
 }
 
 void PlayerWindow::on_action_Decrease_volume_triggered()
 {
-    ui->sliderVolume->setValue( ui->sliderVolume->value()-1);
+    ui->sliderVolume->setValue( ui->sliderVolume->value()-5);
 }
 void PlayerWindow::changeAudioTrack(QAction*act)
 {
@@ -2195,7 +2226,7 @@ void PlayerWindow::changeAspectRatio(QAction*act)
 }
 void  PlayerWindow::lengthChanged()
 {if(mp)
-     {
+    {
 
         if (mp->duration()<3600)
             ui->labelDuration->setText("<b>  "+mp->tduration().toString("hh:mm:ss").mid(3)+"  </b>");
@@ -2660,7 +2691,7 @@ void PlayerWindow::on_actionStUnload_triggered()
     {//mp->unloadsub();
         ui->actionStUnload->setEnabled(false);
 
-     completeRestart() ;
+        completeRestart() ;
     }
 
 }
@@ -2921,64 +2952,84 @@ void PlayerWindow::dragEnterEvent(QDragEnterEvent *event)
 }
 void PlayerWindow::dropEvent(QDropEvent *event)
 {
-    QList<QUrl> urlList;
 
+    QList<QUrl> urlList;
     if (event->mimeData()->hasUrls())
         urlList = event->mimeData()->urls();
 
-    for (int i = 0; i < urlList.size() && i < 32; ++i) {
-        //QString url = urlList.at(i).path();
-        // url=url.right(url.length()-1);
+    for (int i = 0; i < urlList.count(); i++) {
 
-#ifdef Q_OS_WIN
-        QString url = urlList.at(i).path();
-        url=url.right(url.length()-1);
-#endif
-#ifdef Q_OS_LINUX
         QString url = urlList.at(i).toLocalFile();
-# endif
-        QFileInfo fi(url);
-        if(fi.isFile())
+        if (urlList[i].isValid())
         {
-            //Check dropped file is a subtitle or not
-            if ( fi.suffix().toLower().contains("srt")||
-                 fi.suffix().toLower().contains("sub")||
-                 fi.suffix().toLower().contains("ssa")||
-                 fi.suffix().toLower().contains("ass")||
-                 fi.suffix().toLower().contains("idx")||
-                 fi.suffix().toLower().contains("txt")||
-                 fi.suffix().toLower().contains("smi")||
-                 fi.suffix().toLower().contains("rt") ||
-                 fi.suffix().toLower().contains("utf")||
-                 fi.suffix().toLower().contains("aqt")
-                 )
-
-           {
-              if (mp->hasvideo())
-                {
-                  //Video found so adding subtitle
-                  mp->loadsubtitles(url);
-                 ui->actionStUnload->setEnabled(true);
-                 }
-            }
-            else
+            QFileInfo fi(url);
+            if(fi.isFile())
             {
-              //This is a media file add and play
-                if (urlList.size()==1)
-                    myplaylist->clearList();
-                else if (urlList.size()>1 &&i==0)
-                    myplaylist->clearList();
-                myplaylist->addFile(url);
-                myplaylist->playFirstFile();
+
+
+                //Check dropped file is a subtitle or not
+                if ( fi.suffix().toLower().contains("srt")||
+                     fi.suffix().toLower().contains("sub")||
+                     fi.suffix().toLower().contains("ssa")||
+                     fi.suffix().toLower().contains("ass")||
+                     fi.suffix().toLower().contains("idx")||
+                     fi.suffix().toLower().contains("txt")||
+                     fi.suffix().toLower().contains("smi")||
+                     fi.suffix().toLower().contains("rt") ||
+                     fi.suffix().toLower().contains("utf")||
+                     fi.suffix().toLower().contains("aqt")
+                     )
+
+                {
+                    if (mp->hasvideo())
+                    {
+                        //Video found so adding subtitle
+                        mp->loadsubtitles(url);
+                        ui->actionStUnload->setEnabled(true);
+                    }
+                }
+                else
+                {
+                    //This is a media file add and play
+                    if (urlList.size()==1)
+                    {   if (!bPlayListDrop)
+                        {
+                            myplaylist->clearList();
+
+                        }
+                        myplaylist->addFile(url);
+                        if (!bPlayListDrop)
+                        {
+                            myplaylist->playFirstFile();
+                        }
+                    }
+                    else {
+                        qDebug()<<QString::number(i)<<"/"<<QString::number(urlList.count())<<url;
+                        myplaylist->addFile(url);
+                    }
+
+
+                }
             }
-        }
-        else if(fi.isDir())
-        {   myplaylist->clearList();
-            myplaylist->addFolder(url,w->filters,this);
-            myplaylist->playFirstFile();
-            //this->playThisfile(myplaylist->tab->item(0,2)->data(Qt::DisplayRole).toString());
+            else if(fi.isDir())
+            {
+                qDebug()<<"Add folder"<<url;
+                if (!bPlayListDrop)
+                {
+                    myplaylist->clearList();
+
+                }
+                myplaylist->addFolder(url,w->filters,this);
+                if (!bPlayListDrop)
+                {
+                    myplaylist->playFirstFile();
+                }
+                //this->playThisfile(myplaylist->tab->item(0,2)->data(Qt::DisplayRole).toString());
+            }
+
         }
     }
+    bPlayListDrop=false;
     event->acceptProposedAction();
 }
 void PlayerWindow::dragMoveEvent(QDragMoveEvent *event)
@@ -3158,6 +3209,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
                 fr->play(this->currentFile,0);
                 fr->setOSDlevel(0);
 
+
             }
 
             if(pos.toInt()<100)
@@ -3258,10 +3310,10 @@ void PlayerWindow::checkForNextPlayback()
         ui->labelCurrentPosition->setText("Buffering...["+QString::number(mp->getBufferFill())+"%]");
     }
     if (mp->state()==mp->CONNECTING)
-      {  //ui->labelStatus->setText("Connecting...");
-         ui->labelCurrentPosition->setText("Connecting...");
-         //ui->labelCurrentPosition->setToolTip("Connecting...");
-      }
+    {  //ui->labelStatus->setText("Connecting...");
+        ui->labelCurrentPosition->setText("Connecting...");
+        //ui->labelCurrentPosition->setToolTip("Connecting...");
+    }
 
     if (mp->state()==mp->RESOLVING)
     {
@@ -3818,10 +3870,12 @@ void PlayerWindow::toggleFullscreen()
 
         if (ui->actionInfobar->isChecked())
             ui->toolBarStatus->show();
+        if (!ui->actionMini_Mode->isChecked())
+            this->statusBar()->show();
 
 
         ui->toolBarSeekBar->show();
-        ui->statusBar->show();
+
 
         this->unsetCursor();
 
@@ -4967,7 +5021,7 @@ void PlayerWindow::on_actionSmallmode_triggered()
     if (ui->dock_Filter->isVisible())
         ui->dock_Filter->hide();
 
-    this->resize(450,0);
+    this->resize(PLAYER_WIDTH,0);
 
 }
 
@@ -5107,22 +5161,7 @@ void PlayerWindow::on_sliderSeekFullSc_actionTriggered(int act)
 }
 void PlayerWindow::resizeEvent ( QResizeEvent * event )
 {
-calculateHeight();
-    if (ui->menuBar->height()==ui->toolBarSeekBar->y()){
-        if(mp){
-            if(mp->hasaudio()&&!mp->hasvideo()){
-                //setMinimumSize(450,this->height());
-                qDebug()<<"resize to 450"<<this->height();
-            }
-            else
-            {
-                //setMinimumSize(450,this->height());
-            }
-        }
-    }
-
-
-
+    calculateHeight();
 }
 
 void PlayerWindow::on_actionAdvanced_Info_triggered()
@@ -5419,61 +5458,122 @@ void PlayerWindow::on_toolButtonVolume_pressed()
 
 
 }
- void PlayerWindow::calculateHeight()
- {
+void PlayerWindow::calculateHeight()
+{
+    long playerHeight=0;
+    if (ui->menuBar->isVisible())
+        playerHeight+=ui->menuBar->height();
+    //if(ui->toolBarSeek->isVisible())
+    //    playerHeight+=ui->toolBarSeek->height();
+    if(ui->toolBarSeekBar->isVisible())
+        playerHeight+=ui->toolBarSeekBar->height();
+    if(ui->toolBarStatus->isVisible())
+        playerHeight+=ui->toolBarStatus->height();
+    if(ui->statusBar->isVisible())
+        playerHeight+=ui->statusBar->height();
+    qDebug("playerHeight :%d",playerHeight);
+    this->setMinimumHeight(playerHeight);
+}
+void PlayerWindow::shareWithFriends(QAction *act)
+{
 
+    QString text = QString("Free media player for Windows and Linux that can all media files,featuring audio converter,audio extractor,media cutter and 3D video.").replace(" ","+");
+    QString url = "http://exmplayer.sourceforge.net";
 
-   long playerHeight=0;
-   if (ui->menuBar->isVisible())
-       playerHeight+=ui->menuBar->height();
-   //if(ui->toolBarSeek->isVisible())
-   //    playerHeight+=ui->toolBarSeek->height();
-   if(ui->toolBarSeekBar->isVisible())
-       playerHeight+=ui->toolBarSeekBar->height();
-   if(ui->toolBarStatus->isVisible())
-       playerHeight+=ui->toolBarStatus->height();
-   if(ui->statusBar->isVisible())
-       playerHeight+=ui->statusBar->height();
-      qDebug("playerHeight :%d",playerHeight);
-     this->setMinimumHeight(playerHeight);
- }
- void PlayerWindow::shareWithFriends(QAction *act)
- {
-
-     QString text = QString("Free media player for Windows and Linux that can all media files,featuring audio converter,audio extractor,media cutter and 3D video.").replace(" ","+");
-     QString url = "http://exmplayer.sourceforge.net";
-
-     if (act->text().toLower() == "twitter") {
-         text="Free media player for Windows and Linux that can all media files,featuring audio converter,extractor ,media cutter.";
-         QDesktopServices::openUrl(QUrl("http://twitter.com/intent/tweet?text=" + text + "&url=" + url));
-     }
-     else
-     if (act->text().toLower() == "gmail") {
-         QDesktopServices::openUrl(QUrl("https://mail.google.com/mail/?view=cm&fs=1&to&su=" + text + "&body=" + url + "&ui=2&tf=1&shva=1"));
-     }
-     else
-     if (act->text().toLower() == "yahoo") {
-         QDesktopServices::openUrl(QUrl("http://compose.mail.yahoo.com/?To=&Subject=" + text + "&body=" + url));
-     }
-     else
-     if (act->text().toLower()=="hotmail") {
-         QDesktopServices::openUrl(QUrl("http://www.hotmail.msn.com/secure/start?action=compose&to=&subject=" + text + "&body=" + url));
-     }
-     else
-     if (act->text().toLower()=="facebook") {
-         QDesktopServices::openUrl(QUrl("http://www.facebook.com/sharer.php?u=" + url + "&t=" + text));
-
-         #ifdef REMINDER_ACTIONS
-         QSettings * set = Global::settings;
-         set->beginGroup("reminder");
-         set->setValue("action", 2);
-         set->endGroup();
-         #endif
-     }
- }
+    if (act->text().toLower() == "twitter") {
+        text="Free media player for Windows and Linux that can all media files,featuring audio converter,extractor ,media cutter.";
+        QDesktopServices::openUrl(QUrl("http://twitter.com/intent/tweet?text=" + text + "&url=" + url));
+    }
+    else
+        if (act->text().toLower() == "gmail") {
+            QDesktopServices::openUrl(QUrl("https://mail.google.com/mail/?view=cm&fs=1&to&su=" + text + "&body=" + url + "&ui=2&tf=1&shva=1"));
+        }
+        else
+            if (act->text().toLower() == "yahoo") {
+                QDesktopServices::openUrl(QUrl("http://compose.mail.yahoo.com/?To=&Subject=" + text + "&body=" + url));
+            }
+            else
+                if (act->text().toLower()=="hotmail") {
+                    QDesktopServices::openUrl(QUrl("http://www.hotmail.msn.com/secure/start?action=compose&to=&subject=" + text + "&body=" + url));
+                }
+                else
+                    if (act->text().toLower()=="facebook") {
+                        QDesktopServices::openUrl(QUrl("http://www.facebook.com/sharer.php?u=" + url + "&t=" + text));
+                    }
+}
 
 void PlayerWindow::on_actionSearch_subtitles_on_OpenSubtitles_org_triggered()
 {
     subSearchDlg= new SearchSubtitle(this);
+    QObject::connect(subSearchDlg,SIGNAL(readyForSubSearch()),this,SLOT(searchForSubtitle()));
+    QObject::connect(subSearchDlg,SIGNAL(loadSubtitle(QString)),this,SLOT(loadSubtitleOS(QString)));
+
     subSearchDlg->show();
+}
+
+void PlayerWindow::on_actionMini_Mode_triggered()
+{
+    if (ui->actionMini_Mode->isChecked())
+        this->statusBar()->setVisible(false);
+    else
+        this->statusBar()->setVisible(true);
+
+    emit settingChanged ("MainWindow","MiniMode",QString::number(ui->actionMini_Mode->isChecked()));
+    calculateHeight();
+}
+void PlayerWindow::dropPlayListEvent(QDropEvent *event)
+{
+    bPlayListDrop=true;
+    dropEvent(event);
+}
+
+void PlayerWindow::searchForSubtitle()
+{
+    if (mp)
+        subSearchDlg->searchSubtitleForMovie(mp->filepath());
+}
+void PlayerWindow::loadSubtitleOS(QString url)
+{
+    if (mp->hasvideo())
+    {
+        //Video found so adding subtitle
+        mp->loadsubtitles(url);
+        ui->actionStUnload->setEnabled(true);
+        QMessageBox::information(this,"ExMplayer","Subtitle downloaded and loaded.");
+    }
+}
+
+void PlayerWindow::on_actionUpload_subtitle_to_OpenSubtitles_org_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/upload"));
+}
+
+void PlayerWindow::on_actionShare_this_playback_on_Facebook_triggered()
+{
+    if (mp)
+        SocialShare::shareThisPlaybackOnFacebook(this,mp);
+}
+
+void PlayerWindow::on_actionUpload_subtitle_to_OpenSubtitles_org_Advanced_triggered()
+{
+    QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/en/uploadjava"));
+}
+
+void PlayerWindow::on_toolButtonInfo_clicked()
+{
+    if (mp)
+    {
+        if (hascover)
+        {
+            covArtDlg= new CoverArtDialog(ui->toolBarSeekBar);
+            QObject::connect(covArtDlg,SIGNAL(showInfo()),this,SLOT(on_action_Media_Info_triggered()));
+            covArtDlg->show();
+
+        }
+        else
+        {
+            ui->action_Media_Info->trigger();
+        }
+
+    }
 }

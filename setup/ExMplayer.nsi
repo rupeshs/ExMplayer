@@ -13,6 +13,9 @@
 ;1-Dec-2013
 ;v3.2.0
 ;Output
+;19-Jan-2014
+;v3.2.0
+;Output
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;Compressor
 
@@ -20,12 +23,12 @@
   SetCompressorDictSize 32
 ;setup file
 ;--------------------------------
-OutFile exmplayer-3.2.0-win32.exe 
+OutFile exmplayer-3.8.0-win32.exe 
 ;--------------------------------
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;Defines & includes
 !define PRODUCT_NAME "ExMplayer"
-!define PRODUCT_VERSION "3.2.0"
+!define PRODUCT_VERSION "3.8.0"
 !define PRODUCT_PUBLISHER "Rupesh Sreeraman<exmplayer.dev@gmail.com>"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
@@ -42,17 +45,17 @@ Var ext
 ;General
 ;Version tab on file properties
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-VIProductVersion "3.2.0.0"
+VIProductVersion "3.8.0.0"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "ExMplayer Installer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "Comments""3D Media player for windows no codec is required."
 VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "Rupesh.S<exmplayer.dev@gmail.com>"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalTrademarks" ""
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© Rupesh Sreeraman 2010-2013"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "© Rupesh Sreeraman 2010-2014"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "ExMplayer"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "3.2.0"
+VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "3.8.0"
 
 Name "ExMplayer"
-BrandingText "ExMplayer 3.2 for Windows"
+BrandingText "ExMplayer 3.8 beta for Windows"
 /* Sets default install dir to $PROGRAMFILES\ExMplayer.
   If InstallDirRegKey exists (from a previous installation,
   it will default to that directory instead. */

@@ -1,6 +1,8 @@
 INPUT(
 ./debug\qtsingleapplication.o
 ./debug\qtlocalpeer.o
+./debug\socialshare.o
+./debug\coverartdialog.o
 ./debug\opensubtitleclient.o
 ./debug\gzipuncompressor.o
 ./debug\searchsubtitle.o
@@ -55,6 +57,7 @@ INPUT(
 ./debug\screensaver.o
 ./debug\moc_qtsingleapplication.o
 ./debug\moc_qtlocalpeer.o
+./debug\moc_coverartdialog.o
 ./debug\moc_opensubtitleclient.o
 ./debug\moc_gzipuncompressor.o
 ./debug\moc_searchsubtitle.o

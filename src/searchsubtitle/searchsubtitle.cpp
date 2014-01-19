@@ -24,12 +24,14 @@ SearchSubtitle::SearchSubtitle(QWidget *parent) :
     ui(new Ui::SearchSubtitle)
 {
     ui->setupUi(this);
-    //osLogo=new QLabel(this);
-    //osLogo->setPixmap(QPixmap(":/images/opensubtitles-logo.png").scaled(180,50));
-    //ui->statusBar->addPermanentWidget(osLogo);
+
     oSubClient=new OpenSubtitlesClient();
+    QObject::connect(oSubClient,SIGNAL(readyForSearch()),this,SLOT(loginOkay()));
+
     oSubClient->login();
-     //-32300 - "Host api.opensubtitles.org not found"
+
+
+    //-32300 - "Host api.opensubtitles.org not found"
 
     QStringList labels;
     labels << tr("Language") << tr("Name") << tr("Download count") <<tr("Format")<< tr("Added Date")<<tr("Uploaded by")<<tr("Download link");
@@ -45,11 +47,7 @@ SearchSubtitle::SearchSubtitle(QWidget *parent) :
 
     proxy_model = new QSortFilterProxyModel(this);
     proxy_model->setSourceModel(table);
-
     proxy_model->setFilterKeyColumn(0);
-    //proxy_model->setFilterRole(Qt::);
-     //proxy_model->setSortRole(Qt::UserRole);
-
     ui->tableSubtitles->setModel(proxy_model);
     ui->tableSubtitles->setSortingEnabled(true);
     ui->tableSubtitles->setAlternatingRowColors(true);
@@ -59,7 +57,6 @@ SearchSubtitle::SearchSubtitle(QWidget *parent) :
     ui->tableSubtitles->resizeRowsToContents();
     ui->tableSubtitles->resizeColumnsToContents();
 
-    //ui->tableSubtitles->set
     pgIndicator=new QProgressIndicator(this);
     pgIndicator->setColor(QColor(qRgb(0,0,0) ));
     pgIndicator->show();
@@ -86,6 +83,7 @@ SearchSubtitle::SearchSubtitle(QWidget *parent) :
     context_menu->addAction(copyLinkAct);
 
     gzDownloader=new GzipUncompressor(this);
+    QObject::connect(gzDownloader,SIGNAL(uncompressFinished()),this,SLOT(downloadComplete()));
     disableUi();
 
 
@@ -98,7 +96,7 @@ SearchSubtitle::~SearchSubtitle()
 void SearchSubtitle::gotSubtitles(QVariantList data)
 {
 
-     /*  Fron  http://trac.opensubtitles.org/projects/opensubtitles/wiki/XMLRPC#SearchSubtitles
+    /*  Fron  http://trac.opensubtitles.org/projects/opensubtitles/wiki/XMLRPC#SearchSubtitles
                 [0] => Array
                 (
                     [MatchedBy] => moviehash
@@ -154,15 +152,18 @@ void SearchSubtitle::gotSubtitles(QVariantList data)
       */
     enableUi();
     pgIndicator->hide();
-    ui->statusBar->showMessage(QString("%1 subtitles available.").arg(data.count()));
 
+    if(data.count()==0)
+        ui->statusBar->showMessage(QString("%1 subtitles available.").arg(data.count()));
+    else
+        ui->statusBar->showMessage("Subtitles not available");
 
     for (int n = 0; n < data.count(); n++) {
         QVariantMap mResult = data[n].toMap();
         qDebug()<<mResult["SubDownloadLink"].toString()<<":"
                <<mResult["SubFormat"].toString()<<":"
-               <<mResult["SubLanguageID"].toString()<<":"
-               <<mResult["SubDownloadsCnt"].toString();
+              <<mResult["SubLanguageID"].toString()<<":"
+             <<mResult["SubDownloadsCnt"].toString();
 
         QString Lang=mResult["LanguageName"].toString();
         QStandardItem * itemLang = new QStandardItem(Lang);
@@ -196,7 +197,7 @@ void SearchSubtitle::gotSubtitles(QVariantList data)
 
     }
     //proxy_model->sort(2);
-    //ui->tableSubtitles->sortByColumn(2);
+    //ui->tableSubtitles->sortByColumn(0);
     filterSubtitles(ui->comboLangFilter->currentText());
     subLanguageChanged(ui->comboLangFilter->currentText());
 
@@ -207,26 +208,30 @@ void SearchSubtitle::gotSubtitles(QVariantList data)
 void SearchSubtitle::on_comboLangFilter_currentIndexChanged(const QString &arg1)
 {
 
-  filterSubtitles(arg1);
+    filterSubtitles(arg1);
 
 }
 void SearchSubtitle::filterSubtitles(QString filter)
 {
+
     if( filter=="All")
         proxy_model->setFilterWildcard("*");
     else
         proxy_model->setFilterWildcard(filter);
     ui->tableSubtitles->resizeRowsToContents();
+    proxy_model->sort(0, Qt::AscendingOrder);
 
 }
 void SearchSubtitle::subLanguageChanged(QString ln)
 {
-   if (ui->statusBar->currentMessage()!="      Searching...")
-   {if (pgIndicator->isVisible())
-       ui->statusBar->showMessage(QString("      Found %1 subtitles.").arg(ui->tableSubtitles->model()->rowCount()));
-    else
-       ui->statusBar->showMessage(QString("%1 subtitle(s) available.").arg(ui->tableSubtitles->model()->rowCount()));
-   }
+    if (ui->statusBar->currentMessage()!="      Searching...")
+    {if (pgIndicator->isVisible())
+            ui->statusBar->showMessage(QString("      Found %1 subtitles.").arg(ui->tableSubtitles->model()->rowCount()));
+        else
+            ui->statusBar->showMessage(QString("%1 subtitle(s) available.").arg(ui->tableSubtitles->model()->rowCount()));
+        if (ui->tableSubtitles->model()->rowCount()==0)
+            ui->statusBar->showMessage("Subtitles not available");
+    }
 
 }
 
@@ -235,7 +240,7 @@ void SearchSubtitle::on_toolButtonSearch_clicked()
     if (ui->lineEditSeachFilm->text()=="")
     {
         ui->statusBar->showMessage(QString("Oops...Enter a movie name."));
-    return;
+        return;
     }
     table->clear();
     QStringList labels;
@@ -248,6 +253,7 @@ void SearchSubtitle::on_toolButtonSearch_clicked()
     pgIndicator->startAnimation();
     pgIndicator->show();
     oSubClient->search(ui->lineEditSeachFilm->text(),OpenSubtitlesClient::QUERY);
+    _filePath="";
     disableUi();
 
 }
@@ -277,12 +283,12 @@ void SearchSubtitle::on_lineEditSeachFilm_returnPressed()
 {
     on_toolButtonSearch_clicked();
 }
- void SearchSubtitle::gotNetworkError(QString err)
- {
+void SearchSubtitle::gotNetworkError(QString err)
+{
 
-     pgIndicator->startAnimation();
-     ui->statusBar->showMessage(err);
- }
+    pgIndicator->startAnimation();
+    ui->statusBar->showMessage(err);
+}
 
 void SearchSubtitle::on_tableSubtitles_clicked(const QModelIndex &index)
 {
@@ -293,40 +299,83 @@ void SearchSubtitle::on_tableSubtitles_clicked(const QModelIndex &index)
 
 void SearchSubtitle::on_pushCopyLink_clicked()
 {
-     QClipboard *clipboard = QApplication::clipboard();
-     QModelIndexList selectedRows =ui->tableSubtitles->selectionModel()->selectedRows();
-     QString originalText;
-     foreach( QModelIndex index, selectedRows )
-     {
+    QClipboard *clipboard = QApplication::clipboard();
+    QModelIndexList selectedRows =ui->tableSubtitles->selectionModel()->selectedRows();
+    QString originalText;
+    foreach( QModelIndex index, selectedRows )
+    {
 
         originalText = ui->tableSubtitles->model()->index(index.row(),6).data().toString();;
 
-     }
-     clipboard->setText(originalText);
+    }
+    clipboard->setText(originalText);
 }
 
 void SearchSubtitle::on_pushButtonDwnld_clicked()
 {
-    QModelIndexList selectedRows =ui->tableSubtitles->selectionModel()->selectedRows();
-    QString subUrl;
-    QString subName;
-    QString subFormat;
-    QString subLanguage;
-    foreach( QModelIndex index, selectedRows )
+    bool isQury=false;
+    if (!ui->lineEditSeachFilm->text().contains("."))
     {
-
-       subUrl = ui->tableSubtitles->model()->index(index.row(),6).data().toString();;
-       subName = ui->tableSubtitles->model()->index(index.row(),1).data().toString();;
-       subFormat = ui->tableSubtitles->model()->index(index.row(),3).data().toString();
-       subLanguage= ui->tableSubtitles->model()->index(index.row(),0).data().toString();;
+    isQury=true;
     }
+     QModelIndexList selectedRows =ui->tableSubtitles->selectionModel()->selectedRows();
+    if(selectedRows.count()==0)
+    {
+        QMessageBox::information(this,"ExMplayer","Please select a subtitle to download.   ");
+    }
+    else
+    {   if (_filePath=="")
+        {
+            isQury=true;
+            QString dir = rphFile::getDir(this,"Open a Directory for output:","");
 
-    QString fileName="F:/subs/"+ subName+"_"+Languages::LangList().key(subLanguage)+"."+subFormat;
-    qDebug()<<QFile::exists(fileName);
+            if (!dir.isEmpty())
+            {
+                _filePath=dir;
+            }
+            else
+                return;
+
+        }
+
+        QString subUrl;
+        QString subName;
+        QString subFormat;
+        QString subLanguage;
+        foreach( QModelIndex index, selectedRows )
+        {
+
+            subUrl = ui->tableSubtitles->model()->index(index.row(),6).data().toString();
+
+            if (isQury)
+                subName =ui->tableSubtitles->model()->index(index.row(),1).data().toString();
+
+            subFormat = ui->tableSubtitles->model()->index(index.row(),3).data().toString();
+            subLanguage= ui->tableSubtitles->model()->index(index.row(),0).data().toString();;
+        }
 
 
-    gzDownloader->downloadAndUncompress(QUrl(subUrl),fileName);
-    gzDownloader->show();
+
+        QFileInfo fInfo(_filePath);
+        QString fileName;
+        if (!isQury)
+          {
+            subName =fInfo.completeBaseName();
+            fileName=QFileInfo(_filePath).canonicalPath()+ QString(QDir::separator())+ subName+"_"+Languages::LangList().key(subLanguage)+"."+subFormat;
+
+        }
+        else
+        {
+            fileName=_filePath+subName+"_"+Languages::LangList().key(subLanguage)+"."+subFormat;
+            //_filePath=="";
+        }
+           qDebug()<<QFile::exists(fileName);
+        _subfileName=fileName;
+
+
+        gzDownloader->downloadAndUncompress(QUrl(subUrl),fileName);
+        gzDownloader->show();
+    }
 
 }
 
@@ -343,4 +392,23 @@ void SearchSubtitle::on_pushButtonUploadSub_clicked()
 
     QDesktopServices::openUrl(QUrl("http://www.opensubtitles.org/upload"));
 
+}
+void SearchSubtitle::loginOkay()
+{
+    emit readyForSubSearch();
+}
+
+void  SearchSubtitle::searchSubtitleForMovie(const QString& filename)
+{
+    oSubClient->search(filename,OpenSubtitlesClient::FILEHASH);
+    _filePath=filename;
+
+
+    qDebug()<<QFileInfo(_filePath).canonicalPath();
+    ui->lineEditSeachFilm->setText(QFileInfo(_filePath).fileName());
+
+}
+void SearchSubtitle::downloadComplete()
+{
+    emit loadSubtitle(_subfileName);
 }
