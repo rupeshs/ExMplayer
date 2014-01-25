@@ -210,9 +210,32 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
 #ifdef Q_OS_WIN
                 //Open fontconfig
 
-                QStringList fontConfLst;
+                //Calculate Sha1
+                //QStringList fontConfLst;
+                /*QByteArray hashData;
                 QFile inputFile(qApp->applicationDirPath()+"/mplayer/fonts/fonts.conf");
-                if (inputFile.open(QIODevice::ReadOnly))
+
+                    if (inputFile.open(QIODevice::ReadOnly)) {
+                        QByteArray fileData = inputFile.readAll();
+                        hashData =  QCryptographicHash::hash(fileData, QCryptographicHash::Sha1);
+                    }
+                    qDebug() << hashData.toHex();
+                    QMessageBox::critical(this,QString(hashData.toHex()),"gfd");
+                    QString actHash="c8ba9d01342f8488c815fb5e63e96f53ba9f46fb";*/
+                // if ( QString(hashData.toHex())!=actHash)
+                //{
+                //   qDebug() << "Differnt font config";
+                QString exeFileName(qApp->applicationDirPath()+"/exmplayer-font-cache.exe");
+
+                int result = (int)::ShellExecuteA(0, "open", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
+                if (SE_ERR_ACCESSDENIED == result)
+                {
+                    // Requesting elevation(Windows Vista/Window7/window8)
+                    result = (int)::ShellExecuteA(0, "runas", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
+                }
+
+                //c8ba9d01342f8488c815fb5e63e96f53ba9f46fb
+                /*if (inputFile.open(QIODevice::ReadOnly))
                 {
                     QTextStream in(&inputFile);
                     while ( !in.atEnd() )
@@ -244,7 +267,7 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
 
                     outFile.close();
 
-                }
+                }*/
 #endif
 
                 emit restartComplete();
@@ -270,14 +293,14 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
                 break;
             }
             case 7:settingChanged("Updates","Automatic",QString::number(ui->checkUpdates->isChecked()));
-            }
-
         }
 
     }
-    apply=true;
-    if(ui->buttonBox->buttonRole(button)==QDialogButtonBox::AcceptRole)
-        this->close();
+
+}
+apply=true;
+if(ui->buttonBox->buttonRole(button)==QDialogButtonBox::AcceptRole)
+this->close();
 
 
 }
