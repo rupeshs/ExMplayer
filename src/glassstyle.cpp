@@ -129,7 +129,7 @@ QSize GlassStyle::sizeFromContents( ContentsType type, const QStyleOption* optio
 #endif
 
     case CT_MenuBarItem:
-        return contentsSize + QSize( 16, 6 );
+        break;
 
     case CT_MenuItem:
         if ( const QStyleOptionMenuItem* menuItem = qstyleoption_cast<const QStyleOptionMenuItem*>( option ) ) {
