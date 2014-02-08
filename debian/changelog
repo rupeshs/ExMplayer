@@ -1,3 +1,16 @@
+exmplayer (3.8.0)  precise; urgency=low
+  
+  *Added Facebook sharing( Listening to... Watching....)
+  *Added subtitle Search (Thanks to Opensubtitles.org)
+  *Added subtitle download and upload (Thanks to Opensubtitles.org)
+  *Added support for multiple subtitle languages
+  *Added update checking
+  *Introduced mini mode
+  *Fixed fontcache problem on 64 bit Windows
+  *Fixed screen flickering (Seek view) on Windows8
+  *Up-down keys for volume control and left-right keys for seeking
+  
+ -- rupeshsreeraman <exmplayer.dev@gmail.com>  Tue, 04 Feb 2014 01:49:08 +0430 
 exmplayer (3.2.0)  precise; urgency=low
   
   *Fixed blank cover issue

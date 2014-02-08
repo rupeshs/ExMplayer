@@ -97,7 +97,7 @@ void UpdateCheck::fileIsReady( QNetworkReply * reply)
         latestVersion= mapVersions["Linux"].at(0);
     bool bUpdateAvail=isUpdated(latestVersion,myVersion);
 
-    if(mapVersions["Linux"].size()>1)
+    if(mapVersions["Linux"].count()>1)
         emit gotUpdateChkResponse(bUpdateAvail,mapVersions["Linux"].at(0),mapVersions["Linux"].at(1));
 
 # endif
@@ -108,7 +108,9 @@ void UpdateCheck::fileIsReady( QNetworkReply * reply)
 }
 void UpdateCheck::Check()
 {
-    QNetworkRequest request(QUrl("https://raw.github.com/rupeshs/exmplayer-update/master/update.xml"));
+
+    QNetworkRequest request(QUrl("http://exmplayer.sourceforge.net/update.xml"));
+    request.setRawHeader("User-Agent", "Mozilla/5.0 Gecko/20100101 Firefox/18.0");
     manager->get(request);
 }
 bool UpdateCheck::isUpdated(QString currentVersion,QString myVersion)

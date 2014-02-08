@@ -28,8 +28,14 @@
 #include <QString>
 #include <QSslConfiguration>
 #include <QDebug>
-
+#ifdef Q_OS_UNIX
+#include <inttypes.h>
+#endif
+#if defined(Q_OS_WIN) || defined(Q_OS_OS2)
  typedef unsigned __int64 uint64_t;
+#endif
+
+
 
 class OpenSubtitlesClient : public QObject
 {

@@ -4198,6 +4198,8 @@ void PlayerWindow::on_action_Help_triggered()
 void PlayerWindow::setAqua()
 {   //qApp->setStyle("windowsxp");
     qApp->setStyle(new GlassStyle);
+
+    ui->statusBar->setStyleSheet(QString::fromUtf8("background:white;"));
     // QApplication::setPalette(QApplication::style()->standardPalette());
 
     ui->sliderVolume->setStyleSheet(QString::fromUtf8("QSlider::sub-page:horizontal {\n"
