@@ -11,6 +11,7 @@ exmplayer (3.8.0)  precise; urgency=low
   *Up-down keys for volume control and left-right keys for seeking
   
  -- rupeshsreeraman <exmplayer.dev@gmail.com>  Tue, 04 Feb 2014 01:49:08 +0430 
+
 exmplayer (3.2.0)  precise; urgency=low
   
   *Fixed blank cover issue
