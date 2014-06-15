@@ -107,47 +107,47 @@ int Inhibitor::checkProcess(const char* name)
 //This wil disable screensaver/powersaving
 bool Inhibitor::activateInhibit()
 {
-
-
-    qDebug()<<"System Type" <<QString::number(_systemType);
-    if (  _systemType>-1&& _systemType<serviceInterfaceLst.count())
+    if (_systemType!=KDE) //Fix me KDE avoid segmentation fault
     {
-        system("xset -dpms");
-        system("xset s off");
-
-        QDBusConnection bus = QDBusConnection::sessionBus();
-
-        interfaceScreenSvr= new QDBusInterface(serviceLst.at(_systemType),
-                                               servicePathLst.at(_systemType),
-                                               serviceInterfaceLst.at(_systemType),
-                                               bus,
-                                               0);
-
-        QList<QVariant> args;
-        uint inhibitCookie;
-        args.append("ExMplayer");
-        args.append((uint)0);
-        args.append("Playing a media file");
-        args.append((uint)8|4);
-
-        if(interfaceScreenSvr)
+        qDebug()<<"System Type" <<QString::number(_systemType);
+        if (  _systemType>-1&& _systemType<serviceInterfaceLst.count())
         {
-            QDBusReply<uint> reply = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"Inhibit", args);
+            system("xset -dpms");
+            system("xset s off");
 
-            if (reply.isValid())
+            QDBusConnection bus = QDBusConnection::sessionBus();
 
+            interfaceScreenSvr= new QDBusInterface(serviceLst.at(_systemType),
+                                                   servicePathLst.at(_systemType),
+                                                   serviceInterfaceLst.at(_systemType),
+                                                   bus,
+                                                   0);
+
+            QList<QVariant> args;
+            uint inhibitCookie;
+            args.append("ExMplayer");
+            args.append((uint)0);
+            args.append("Playing a media file");
+            args.append((uint)8|4);
+
+            if(interfaceScreenSvr)
             {
-                _inhibitCookie=reply.value();
-                qDebug()<<"Inhibit :OK "<<QString::number(_inhibitCookie);
-                return true;
+                QDBusReply<uint> reply = interfaceScreenSvr->callWithArgumentList(QDBus::BlockWithGui	,"Inhibit", args);
 
+                if (reply.isValid())
+
+                {
+                    _inhibitCookie=reply.value();
+                    qDebug()<<"Inhibit :OK "<<QString::number(_inhibitCookie);
+                    return true;
+
+                }
+                else
+                    qDebug()<< reply.error();
             }
-            else
-                qDebug()<< reply.error();
         }
+
     }
-
-
 
 
     return false;
