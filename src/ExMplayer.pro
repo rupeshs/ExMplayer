@@ -42,6 +42,16 @@ SOURCES += miniz.c tinfl.c
 HEADERS += maiaObject.h maiaFault.h maiaXmlRpcClient.h
 SOURCES += maiaObject.cpp maiaFault.cpp maiaXmlRpcClient.cpp
 
+#video dl suppport
+INCLUDEPATH += videodl
+DEPENDPATH += videodl
+
+FORMS +=videodl.ui\
+        supsitesdialog.ui \
+        vdlsettingsdialog.ui
+
+HEADERS += youtubedlfe.h videodl.h vdlsettingsdialog.h supsitesdialog.h
+SOURCES += youtubedlfe.cpp videodl.cpp vdlsettingsdialog.cpp supsitesdialog.cpp
 SOURCES += main.cpp \
     playerwindow.cpp \
     mplayerfe.cpp \

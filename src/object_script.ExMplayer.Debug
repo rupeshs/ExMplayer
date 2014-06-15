@@ -10,6 +10,10 @@ INPUT(
 ./debug\maiaObject.o
 ./debug\maiaFault.o
 ./debug\maiaXmlRpcClient.o
+./debug\youtubedlfe.o
+./debug\videodl.o
+./debug\vdlsettingsdialog.o
+./debug\supsitesdialog.o
 ./debug\main.o
 ./debug\playerwindow.o
 ./debug\mplayerfe.o
@@ -64,6 +68,10 @@ INPUT(
 ./debug\moc_maiaObject.o
 ./debug\moc_maiaFault.o
 ./debug\moc_maiaXmlRpcClient.o
+./debug\moc_youtubedlfe.o
+./debug\moc_videodl.o
+./debug\moc_vdlsettingsdialog.o
+./debug\moc_supsitesdialog.o
 ./debug\moc_playerwindow.o
 ./debug\moc_mplayerfe.o
 ./debug\moc_rphlabelex.o

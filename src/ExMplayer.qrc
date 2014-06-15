@@ -111,5 +111,10 @@
         <file>images/social.png</file>
         <file>images/OpenSubtitlesFavIcon.gif</file>
         <file>images/info-btn.png</file>
+        <file>images/YouTube-logo.jpg</file>
+        <file>images/Facebook-logo.png</file>
+        <file>images/metacafe-logo.png</file>
+        <file>images/vimeo_logo_blue.png</file>
+        <file>images/dailymotion-logo.png</file>
     </qresource>
 </RCC>

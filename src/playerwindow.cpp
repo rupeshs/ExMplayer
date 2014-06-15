@@ -5577,3 +5577,10 @@ void PlayerWindow::on_toolButtonInfo_clicked()
 
     }
 }
+
+void PlayerWindow::on_actionVideo_Downloader_triggered()
+{
+    videodlDlg= new Videodl(this);
+
+    videodlDlg->show();
+}

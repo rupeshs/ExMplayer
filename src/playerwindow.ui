@@ -2178,7 +2178,7 @@ color: grey;
      <x>0</x>
      <y>0</y>
      <width>879</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -2555,6 +2555,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionMedia_cutter"/>
     <addaction name="actionAudio_extrctor"/>
     <addaction name="actionAudio_Converter"/>
+    <addaction name="actionVideo_Downloader"/>
     <addaction name="actionCopy_Audio_CD"/>
    </widget>
    <widget class="QMenu" name="menu_View">
@@ -2655,7 +2656,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QDockWidget" name="dockBrowser">
    <property name="minimumSize">
     <size>
-     <width>79</width>
+     <width>80</width>
      <height>130</height>
     </size>
    </property>
@@ -2682,7 +2683,7 @@ p, li { white-space: pre-wrap; }
   <widget class="dockPlayList" name="dock_Playlist">
    <property name="minimumSize">
     <size>
-     <width>79</width>
+     <width>80</width>
      <height>41</height>
     </size>
    </property>
@@ -4682,6 +4683,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionUpload_subtitle_to_OpenSubtitles_org_Advanced">
    <property name="text">
     <string>Upload subtitle to OpenSubtitles.org (Advanced)</string>
+   </property>
+  </action>
+  <action name="actionVideo_Downloader">
+   <property name="text">
+    <string>Video Downloader</string>
    </property>
   </action>
  </widget>

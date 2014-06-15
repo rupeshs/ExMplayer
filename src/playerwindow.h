@@ -73,6 +73,7 @@
 #include <searchsubtitle.h>
 #include <socialshare.h>
 #include <coverartdialog.h>
+#include <videodl.h>
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -239,6 +240,8 @@ private:
 
     QPointer<SearchSubtitle> subSearchDlg;
     QPointer<CoverArtDialog> covArtDlg;
+
+    QPointer<Videodl> videodlDlg;
 
 
 
@@ -518,6 +521,7 @@ private slots:
 
     void on_actionUpload_subtitle_to_OpenSubtitles_org_Advanced_triggered();
     void on_toolButtonInfo_clicked();
+    void on_actionVideo_Downloader_triggered();
 };
 
 #endif // PLAYERWINDOW_H
