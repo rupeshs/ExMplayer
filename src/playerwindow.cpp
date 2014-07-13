@@ -5582,7 +5582,7 @@ void PlayerWindow::on_toolButtonInfo_clicked()
 
 void PlayerWindow::on_actionVideo_Downloader_triggered()
 {
-    videodlDlg= new Videodl(this);
-
+    videodlDlg= new Videodl(this,settings);
+    QObject::connect(videodlDlg,SIGNAL(showfile(QString,QString)),this,SLOT(winExplorer(QString,QString)));
     videodlDlg->show();
 }

@@ -1,8 +1,6 @@
 INPUT(
 ./debug\qtsingleapplication.o
 ./debug\qtlocalpeer.o
-./debug\socialshare.o
-./debug\coverartdialog.o
 ./debug\opensubtitleclient.o
 ./debug\gzipuncompressor.o
 ./debug\searchsubtitle.o
@@ -57,11 +55,12 @@ INPUT(
 ./debug\version.o
 ./debug\updatecheck.o
 ./debug\updatecheckdlg.o
+./debug\socialshare.o
+./debug\coverartdialog.o
 ./debug\qcoverart.o
 ./debug\screensaver.o
 ./debug\moc_qtsingleapplication.o
 ./debug\moc_qtlocalpeer.o
-./debug\moc_coverartdialog.o
 ./debug\moc_opensubtitleclient.o
 ./debug\moc_gzipuncompressor.o
 ./debug\moc_searchsubtitle.o
@@ -102,5 +101,6 @@ INPUT(
 ./debug\moc_languages.o
 ./debug\moc_updatecheck.o
 ./debug\moc_updatecheckdlg.o
+./debug\moc_coverartdialog.o
 ./debug\qrc_ExMplayer.o
 );

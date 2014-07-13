@@ -11,9 +11,12 @@
 #include <vdlsettingsdialog.h>
 #include <QPointer>
 #include <QListWidget>
+#include <QSettings>
 #include <supsitesdialog.h>
 #include <QProgressIndicator.h>
-
+#include <QGraphicsOpacityEffect>
+#include <QPropertyAnimation>
+#include <QSequentialAnimationGroup>
 //[download]  32.2% of 3.95MiB at 136.61KiB/s ETA 00:20"
 //format code extension resolution  note
 static QRegExp rx_pro("[download].*(\\d+.\\d+)%.*");
@@ -27,11 +30,12 @@ class Videodl : public QMainWindow
     Q_OBJECT
     
 public:
-    explicit Videodl(QWidget *parent = 0);
+    explicit Videodl(QWidget *parent ,QSettings *settings);
     ~Videodl();
    public slots:
     void ydlConsole(QByteArray);
     void emitProcessFinished(int);
+    void animateUi();
 private slots:
     void on_pushButtonChkFormats_clicked();
 
@@ -48,6 +52,18 @@ private slots:
 
     void on_pushButtonUpdate_clicked();
 
+    //get youtube-dl path it varies
+    QString getYoutubeDlPath();
+    //ger download path default my video
+    QString getDownloadPath();
+
+    void initDownload();
+
+    void on_pushButtonOpenOutput_clicked();
+    void on_toolButtonSupFormats_clicked();
+
+signals:
+    void showfile(QString opt,QString fn);
 private:
     Ui::Videodl *ui;
     QPointer<YoutubedlFe> ydlFe;
@@ -58,6 +74,7 @@ private:
     bool isUpdating;
     SupSitesDialog *supDlg;
     QProgressIndicator *pgIndicator;
+    QSettings *_settings;
 };
 
 #endif // VIDEODL_H

@@ -1,7 +1,7 @@
 #include "videodl.h"
 #include "ui_videodl.h"
 
-Videodl::Videodl(QWidget *parent) :
+Videodl::Videodl(QWidget *parent,QSettings *settings) :
     QMainWindow(parent),
     ui(new Ui::Videodl)
 {
@@ -14,7 +14,11 @@ Videodl::Videodl(QWidget *parent) :
     pgIndicator->setColor(QColor(qRgb(0,100,0) ));
     pgIndicator->show();
     ui->statusBar->addPermanentWidget(pgIndicator);
-    ui->pushButtonUpdate->setVisible(false);
+   // ui->pushButtonUpdate->setVisible(false);
+    _settings=settings;
+
+animateUi();
+
 
 
 }
@@ -132,40 +136,40 @@ void Videodl::on_pushButtonDwnload_clicked()
         QMessageBox::information(this,"Videodl","Please enter a valid URL");
         return;
     }
-    QString oPath=QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
-    qDebug()<<QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
+    //Advanced options enabled
+    if (ui->groupBox->isChecked())
+    {
+     if (ui->formatsCombo->count()>0)
+         initDownload();
+     else
+         QMessageBox::information(this,"Videodl","Advacned options enabled,so first check formats available");
 
-
-    initYoutubeDl("E:/ydl/ydl.exe",ui->lineEditVurl->text());
-
-    if (ui->formatsCombo->count()>1)
-    { QString id=ui->formatsCombo->currentText().split("-").at(0);
-        ydlFe->downloadVideo(oPath,id,false);
-        pgIndicator->startAnimation();
-        pgIndicator->show();
     }
     else
     {
-
-
-            ydlFe->downloadVideo(oPath,0,true);
-            pgIndicator->startAnimation();
-            pgIndicator->show();
-
+       initDownload();
     }
-    isdownloading=true;
-    ui->toolButtonSupFormats->setEnabled(false);
 
 
 }
 void Videodl::emitProcessFinished(int)
 {
+    if(isdownloading)
+    {
+        QMessageBox msgBox;
+        ui->pushButtonCancel->setEnabled(false);
+        ui->pushButtonDwnload->setEnabled(true);
+        msgBox.setText("Downloading finished successfully.");
+        msgBox.exec();
+    }
     isdownloading=false;
     ui->pushButtonChkFormats->setEnabled(true);
     ui->toolButtonSupFormats->setEnabled(true);
     ui->pushButtonChkFormats->setText("Recheck formats Available");
     blistExtrators=false;
     pgIndicator->hide();
+
+
 
 
 }
@@ -183,9 +187,9 @@ void  Videodl::initYoutubeDl(QString ydlPath,QString videoUrl)
 
 void Videodl::on_pushButtonCancel_clicked()
 {
+    ydlFe->ydlProcess->close();
     ui->pushButtonCancel->setEnabled(false);
     ui->pushButtonDwnload->setEnabled(true);
-    ydlFe->ydlProcess->close();
     ui->progressBarDwnldPg->setValue( 0);
     this->statusBar()->showMessage("");
     ui->pushButtonChkFormats->setEnabled(true);
@@ -203,13 +207,13 @@ void Videodl::on_lineEditVurl_textChanged(const QString &arg1)
 
 void Videodl::on_toolButtonSettings_clicked()
 {
-    settingDlg = new VdlSettingsDialog(this);
+    settingDlg = new VdlSettingsDialog(this,_settings);
     settingDlg->show();
 }
 
 void Videodl::on_toolButton_clicked()
 {
-    initYoutubeDl("E:/ydl/ydl.exe","");
+    initYoutubeDl(getYoutubeDlPath(),"");
     blistExtrators=true;
     ydlFe->querySupportedSites();
     supDlg = new SupSitesDialog(this);
@@ -234,3 +238,148 @@ void Videodl::on_pushButtonUpdate_clicked()
      ui->pushButtonCancel->setEnabled(false);
 
 }
+QString Videodl::getYoutubeDlPath()
+{
+#ifdef Q_OS_WIN
+    return _settings->value("VideoDl/YoutubedlDir",qApp->applicationDirPath()).toString()+"/ydl.exe";
+#endif
+
+}
+QString Videodl::getDownloadPath()
+{
+#ifdef Q_OS_WIN
+   return _settings->value("VideoDl/DownloadDir",QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString();
+#endif
+}
+void  Videodl::initDownload()
+{
+    QString oPath=getDownloadPath();
+   // qDebug()<<QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
+
+
+    initYoutubeDl(getYoutubeDlPath(),ui->lineEditVurl->text());
+
+    if (ui->formatsCombo->count()>1)
+    { QString id=ui->formatsCombo->currentText().split("-").at(0);
+        ydlFe->downloadVideo(oPath,id,false);
+        pgIndicator->startAnimation();
+        pgIndicator->show();
+    }
+    else
+    {
+
+
+            ydlFe->downloadVideo(oPath,0,true);
+            pgIndicator->startAnimation();
+            pgIndicator->show();
+
+    }
+    isdownloading=true;
+    ui->toolButtonSupFormats->setEnabled(false);
+}
+
+void Videodl::on_pushButtonOpenOutput_clicked()
+{
+    emit  showfile(QString(""),getDownloadPath());
+}
+
+void Videodl::on_toolButtonSupFormats_clicked()
+{
+
+}
+ void Videodl::animateUi()
+ {
+     /*QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
+     ui->label_4->setGraphicsEffect(fade_effect);
+
+     QPropertyAnimation *animation = new QPropertyAnimation(fade_effect, "opacity");
+     animation->setEasingCurve(QEasingCurve::InOutQuad);
+     animation->setDuration(600);
+     animation->setStartValue(0.01);
+     animation->setEndValue(1.0);
+     animation->start();
+
+      fade_effect = new QGraphicsOpacityEffect(this);
+     ui->label_5->setGraphicsEffect(fade_effect);
+
+     animation = new QPropertyAnimation(fade_effect, "opacity");
+     animation->setEasingCurve(QEasingCurve::InOutQuad);
+     animation->setDuration(700);
+     animation->setStartValue(0.01);
+     animation->setEndValue(1.0);
+     animation->start();
+
+     fade_effect = new QGraphicsOpacityEffect(this);
+     ui->label_6->setGraphicsEffect(fade_effect);
+
+     animation = new QPropertyAnimation(fade_effect, "opacity");
+     animation->setEasingCurve(QEasingCurve::InOutQuad);
+     animation->setDuration(800);
+     animation->setStartValue(0.01);
+     animation->setEndValue(1.0);
+     animation->start();
+
+     fade_effect = new QGraphicsOpacityEffect(this);
+     ui->label_7->setGraphicsEffect(fade_effect);
+
+     animation = new QPropertyAnimation(fade_effect, "opacity");
+     animation->setEasingCurve(QEasingCurve::InOutQuad);
+     animation->setDuration(900);
+     animation->setStartValue(0.01);
+     animation->setEndValue(1.0);
+     animation->start();
+
+     fade_effect = new QGraphicsOpacityEffect(this);
+     ui->label_8->setGraphicsEffect(fade_effect);
+
+     animation = new QPropertyAnimation(fade_effect, "opacity");
+     animation->setEasingCurve(QEasingCurve::InOutQuad);
+     animation->setDuration(1000);
+     animation->setStartValue(0.01);
+     animation->setEndValue(1.0);
+     animation->start();*/
+
+     QPropertyAnimation *animation = new QPropertyAnimation(ui->label_4, "geometry");
+     animation->setDuration(300);
+     animation->setStartValue(QRect(ui->label_4->x(), 0, ui->label_4->width(), ui->label_4->height()));
+     animation->setEndValue(QRect(ui->label_4->x(), 20, ui->label_4->width(), ui->label_4->height()));
+
+     animation->start();
+
+     QPropertyAnimation *animation2 = new QPropertyAnimation(ui->label_5, "geometry");
+     animation2->setDuration(300);
+     animation2->setStartValue(QRect(ui->label_5->x(), 0, ui->label_5->width(), ui->label_5->height()));
+     animation2->setEndValue(QRect(ui->label_5->x(), 20, ui->label_5->width(), ui->label_5->height()));
+
+     animation2->start();
+
+     QPropertyAnimation *animation3 = new QPropertyAnimation(ui->label_6, "geometry");
+     animation3->setDuration(300);
+     animation3->setStartValue(QRect(ui->label_6->x(), 0, ui->label_6->width(), ui->label_6->height()));
+     animation3->setEndValue(QRect(ui->label_6->x(), 10, ui->label_6->width(), ui->label_6->height()));
+
+     animation3->start();
+
+     QPropertyAnimation *animation4 = new QPropertyAnimation(ui->label_7, "geometry");
+     animation4->setDuration(300);
+     animation4->setStartValue(QRect(ui->label_7->x(), 0, ui->label_7->width(), ui->label_7->height()));
+     animation4->setEndValue(QRect(ui->label_7->x(), 20, ui->label_7->width(), ui->label_7->height()));
+
+     animation4->start();
+
+     QPropertyAnimation *animation5 = new QPropertyAnimation(ui->label_8, "geometry");
+     animation5->setDuration(300);
+     animation5->setStartValue(QRect(ui->label_8->x(), 0, ui->label_8->width(), ui->label_8->height()));
+     animation5->setEndValue(QRect(ui->label_8->x(), 30, ui->label_8->width(), ui->label_8->height()));
+
+     animation5->start();
+
+     QPropertyAnimation *animation6 = new QPropertyAnimation(ui->label_3, "geometry");
+     animation6->setDuration(200);
+     animation6->setStartValue(QRect(ui->label_3->x(), 0, ui->label_3->width(), ui->label_3->height()));
+     animation6->setEndValue(QRect(ui->label_3->x(), 20, ui->label_3->width(), ui->label_3->height()));
+
+     animation6->start();
+
+
+ }

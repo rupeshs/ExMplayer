@@ -26,24 +26,24 @@
    <string>ExMplayer Video-dl</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="videodl.qrc">
+   <iconset resource="../ExMplayer.qrc">
     <normaloff>:/images/ExMplayer.png</normaloff>:/images/ExMplayer.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="pushButtonDwnload">
     <property name="geometry">
      <rect>
-      <x>240</x>
+      <x>270</x>
       <y>100</y>
-      <width>171</width>
+      <width>101</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Download Selected Format</string>
+     <string>Download </string>
     </property>
     <property name="icon">
-     <iconset resource="videodl.qrc">
+     <iconset resource="../ExMplayer.qrc">
       <normaloff>:/images/vid_down.png</normaloff>:/images/vid_down.png</iconset>
     </property>
     <property name="iconSize">
@@ -128,10 +128,10 @@
       <string>Select format :</string>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="">
      <property name="geometry">
       <rect>
-       <x>11</x>
+       <x>12</x>
        <y>40</y>
        <width>531</width>
        <height>31</height>
@@ -153,7 +153,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>25</height>
+          <height>30</height>
          </size>
         </property>
         <property name="text">
@@ -167,7 +167,7 @@
    <widget class="QToolButton" name="toolButtonSettings">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>510</x>
       <y>100</y>
       <width>31</width>
       <height>30</height>
@@ -180,14 +180,14 @@
      <string>...</string>
     </property>
     <property name="icon">
-     <iconset resource="videodl.qrc">
+     <iconset resource="../ExMplayer.qrc">
       <normaloff>:/images/options.png</normaloff>:/images/options.png</iconset>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonCancel">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>380</x>
       <y>100</y>
       <width>121</width>
       <height>31</height>
@@ -197,7 +197,7 @@
      <string>Cancel Download</string>
     </property>
     <property name="icon">
-     <iconset resource="videodl.qrc">
+     <iconset resource="../ExMplayer.qrc">
       <normaloff>:/images/cancel.png</normaloff>:/images/cancel.png</iconset>
     </property>
    </widget>
@@ -220,7 +220,7 @@
    <widget class="QPushButton" name="pushButtonUpdate">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>50</x>
       <y>100</y>
       <width>61</width>
       <height>31</height>
@@ -260,7 +260,7 @@ p, li { white-space: pre-wrap; }
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="videodl.qrc">:/images/YouTube-logo.jpg</pixmap>
+     <pixmap resource="../ExMplayer.qrc">:/images/YouTube-logo.jpg</pixmap>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -276,7 +276,7 @@ p, li { white-space: pre-wrap; }
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="videodl.qrc">:/images/Facebook-logo.png</pixmap>
+     <pixmap resource="../ExMplayer.qrc">:/images/Facebook.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -295,7 +295,7 @@ p, li { white-space: pre-wrap; }
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="videodl.qrc">:/images/vimeo_logo_blue.png</pixmap>
+     <pixmap resource="../ExMplayer.qrc">:/images/vimeo_logo_blue.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -314,7 +314,7 @@ p, li { white-space: pre-wrap; }
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="videodl.qrc">:/images/metacafe-logo.png</pixmap>
+     <pixmap resource="../ExMplayer.qrc">:/images/metacafe-logo.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -333,10 +333,40 @@ p, li { white-space: pre-wrap; }
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap resource="videodl.qrc">:/images/dailymotion-logo.png</pixmap>
+     <pixmap resource="../ExMplayer.qrc">:/images/dailymotion-logo.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>520</y>
+      <width>82</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>RadioButton</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonOpenOutput">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>100</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Open Download folder</string>
+    </property>
+    <property name="icon">
+     <iconset resource="../ExMplayer.qrc">
+      <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
     </property>
    </widget>
   </widget>
@@ -344,7 +374,7 @@ p, li { white-space: pre-wrap; }
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="videodl.qrc"/>
+  <include location="../ExMplayer.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -35,6 +35,7 @@ CoverArtDialog::CoverArtDialog(QWidget *parent) :
 
     QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
     this->setGraphicsEffect(fade_effect);
+
     QPropertyAnimation *animation = new QPropertyAnimation(fade_effect, "opacity");
     animation->setEasingCurve(QEasingCurve::InOutQuad);
     animation->setDuration(1000);

@@ -11,13 +11,9 @@ TEMPLATE  = app
 
 INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication
-HEADERS += qtsingleapplication.h qtlocalpeer.h \
-    socialshare.h \
-    WinVersion.h \
-    coverartdialog.h
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp \
-    socialshare.cpp \
-    coverartdialog.cpp
+HEADERS += qtsingleapplication.h qtlocalpeer.h
+
+SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
 
 INCLUDEPATH += searchsubtitle
 DEPENDPATH += searchsubtitle
@@ -45,10 +41,6 @@ SOURCES += maiaObject.cpp maiaFault.cpp maiaXmlRpcClient.cpp
 #video dl suppport
 INCLUDEPATH += videodl
 DEPENDPATH += videodl
-
-FORMS +=videodl.ui\
-        supsitesdialog.ui \
-        vdlsettingsdialog.ui
 
 HEADERS += youtubedlfe.h videodl.h vdlsettingsdialog.h supsitesdialog.h
 SOURCES += youtubedlfe.cpp videodl.cpp vdlsettingsdialog.cpp supsitesdialog.cpp
@@ -94,7 +86,9 @@ SOURCES += main.cpp \
     languages.cpp \
     version.cpp \
     updatecheck.cpp \
-    updatecheckdlg.cpp
+    updatecheckdlg.cpp\
+    socialshare.cpp \
+    coverartdialog.cpp
 
 
 HEADERS += playerwindow.h \
@@ -139,7 +133,10 @@ HEADERS += playerwindow.h \
     languages.h \
     updatecheck.h \
     version.h \
-    updatecheckdlg.h
+    updatecheckdlg.h\
+    socialshare.h \
+    WinVersion.h \
+    coverartdialog.h
 
 FORMS += playerwindow.ui \
     preferencedialog.ui \
@@ -156,12 +153,15 @@ FORMS += playerwindow.ui \
     fontloaddialog.ui \
     advancedinfodialog.ui \
     stereovinputdialog.ui \
-    updatecheckdlg.ui
-
+    updatecheckdlg.ui\
+    videodl.ui\
+    supsitesdialog.ui \
+    vdlsettingsdialog.ui
 unix{
 HEADERS += inhibitor.h
 SOURCES += inhibitor.cpp
 }
+
 win32 {
 INCLUDEPATH +=taglib
 
