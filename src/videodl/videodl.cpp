@@ -17,7 +17,7 @@ Videodl::Videodl(QWidget *parent,QSettings *settings) :
    // ui->pushButtonUpdate->setVisible(false);
     _settings=settings;
 
-animateUi();
+    animateUi();
 
 
 
@@ -120,7 +120,7 @@ void Videodl::on_pushButtonChkFormats_clicked()
     ui->pushButtonChkFormats->setText("Checking...");
     ui->pushButtonChkFormats->setEnabled(false);
 
-    initYoutubeDl("E:/ydl/ydl.exe",ui->lineEditVurl->text());
+    initYoutubeDl(getYoutubeDlPath(),ui->lineEditVurl->text());
     formatsFound=false;
     isdownloading=false;
     ui->formatsCombo->clear();
@@ -225,7 +225,7 @@ void Videodl::on_toolButton_clicked()
 
 void Videodl::on_pushButtonUpdate_clicked()
 {
-     initYoutubeDl("E:/ydl/ydl.exe","");
+     initYoutubeDl(getYoutubeDlPath(),"");
      isUpdating=true;
      ui->statusBar->showMessage("Checking for updates...");
      pgIndicator->startAnimation();

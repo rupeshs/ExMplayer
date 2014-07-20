@@ -248,6 +248,7 @@ public slots:
      void setStartStop(float st,float stop);
      int getVolume(){return _curvolume;}
      void setSilent(bool sil){_silent=sil;}
+     void configureSoftEqualiser(bool _en){_useVideoSoftEq=_en;}
      void emitProcessFinished(int ec){_state=STOPPED;emit processFinished(ec,bstopping);}
      void forceidx();
      void twins(bool enable);
@@ -312,6 +313,7 @@ public slots:
    bool _usestereovideo;
    bool _playmonovideo;
    bool _usevolumeboost;
+   bool _useVideoSoftEq;
 
    QString _filepath;
    QStringList metainfovalue;

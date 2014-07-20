@@ -190,8 +190,12 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
 
                 break;
             }
-            case 2: emit restartComplete();
-                break;
+            case 2: {
+
+                     emit settingChanged("Video","EnableSoftEQ",QString::number(ui->cbEnableVideoSoftEq->checkState()));
+                     emit restartComplete();
+                     break;
+            }
             case 3 :{AssStyles ass;
                 //qDebug()<<ui->texcol->palette().color(QPalette::Base).toRgb().value();
                 ass.primarycolor=ui->texcol->palette().color(QPalette::Base).rgb();
@@ -330,6 +334,12 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
     case  2 :{QDesktopServices mycomputer;
         QString picfolder=mycomputer.storageLocation(QDesktopServices::PicturesLocation);
         ui->lineEditSc->setText(_settings->value("Video/CaptureDir",picfolder).toString());
+        if (_settings->value("Video/EnableSoftEQ","0").toInt()==0)
+            ui->cbEnableVideoSoftEq->setCheckState(Qt::Unchecked);
+        else
+            ui->cbEnableVideoSoftEq->setCheckState(Qt::Checked);
+
+
         break;
     }
     case 3 :{AssStyles ass;

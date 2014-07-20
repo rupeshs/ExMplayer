@@ -157,7 +157,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page_2">
     <widget class="QGroupBox" name="groupBox">
@@ -573,6 +573,19 @@
        </item>
       </layout>
      </widget>
+    </widget>
+    <widget class="QCheckBox" name="cbEnableVideoSoftEq">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>140</y>
+       <width>231</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Use software equalizer</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="page_4">

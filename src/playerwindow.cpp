@@ -378,8 +378,14 @@ void PlayerWindow::initMPlayer(QString file,int type)
     }
 
     mp->setSilent(false);
+    int enSoftEq=settings->value("Video/EnableSoftEQ","0").toInt();
+    if (enSoftEq==2)
+    {
+        mp->configureSoftEqualiser(true);
+    }
     if (settings->value("Audio/mute","0").toInt()==1)
-    {mp->play(file,0);
+    {
+        mp->play(file,0);
         mp->toggleMute();
     }
     else

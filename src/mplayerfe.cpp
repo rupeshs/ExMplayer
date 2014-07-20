@@ -121,6 +121,7 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
      _tduration = QTime(0,0,0,0);
     _osdLevel=1;
     _currentSubtitleTrack="0";
+     _useVideoSoftEq=false;
 
 
 }
@@ -209,8 +210,13 @@ void mplayerfe::play(QString File,int volume)
 
     argvideofilters<<"-vf"<<"screenshot";
     //argDemuxerOpt<<"-demuxer"<<"lavf";
-    //argvideofilters<<"-vf-add"<<"eq2";
-    //argvideofilters<<"-vf-add"<<"hue";
+
+    if(_useVideoSoftEq)
+    {
+      argvideofilters<<"-vf-add"<<"eq2";
+      argvideofilters<<"-vf-add"<<"hue";
+    }
+
     //argAudioOpt<<"-softvol"<<"-softvol-max"<<QString::number(1000);
 
     //All options

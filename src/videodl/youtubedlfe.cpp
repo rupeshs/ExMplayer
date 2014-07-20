@@ -5,6 +5,7 @@ YoutubedlFe::YoutubedlFe(QObject *parent,QString ydlPath) :
 {
     _ydlPath=ydlPath;
     ydlProcess=new MyProcess(this);
+    qDebug()<<"ydlpath :"<< ydlPath;
 
     QObject::connect(ydlProcess,SIGNAL(lineAvailable(QByteArray)),this,SLOT(ydlConsole(QByteArray)));
     QObject::connect(ydlProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));

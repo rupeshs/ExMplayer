@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QString>
 #include <myprocess.h>
-
+#include <QDebug>
 class YoutubedlFe : public QObject
 {
     Q_OBJECT
