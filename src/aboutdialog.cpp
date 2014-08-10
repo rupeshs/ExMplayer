@@ -30,7 +30,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
       QFileInfo fi(qApp->applicationFilePath());
       QDateTime dt=fi.created();
       ui->labelDate->setText(QString("Build on "+dt.toString()));
-      ui->labelVersion->setText("<span style=\" font-size:12pt; font-weight:600; color:#000000;\">ExMplayer v"+Version::stable()+ " Beta<span>");
+      ui->labelVersion->setText("<span style=\" font-size:12pt; font-weight:600; color:#000000;\">ExMplayer v"+Version::stable()+ " <span>");
 }
 
 aboutDialog::~aboutDialog()

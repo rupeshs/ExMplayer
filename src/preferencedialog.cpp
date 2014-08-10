@@ -98,7 +98,7 @@ preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
     QStringList lstEncodings=QStringList(Languages::encodings().values());
     lstEncodings.sort();
     ui->comboBoxSubEncoding->addItems( lstEncodings);
-    ui->labelVersion->setText("<span style=\" font-size:12pt; font-weight:600; color:#000000;\">ExMplayer v"+Version::stable()+ " Beta<span>");
+    ui->labelVersion->setText("<span style=\" font-size:12pt; font-weight:600; color:#000000;\">ExMplayer v"+Version::stable()+ " <span>");
 
 
 }

@@ -21,7 +21,7 @@
 #include <QString>
 
 //Stable version of ExMplayer
-#define VERSION "3.8.0"
+#define VERSION "4.0.0"
 
 class Version
 {

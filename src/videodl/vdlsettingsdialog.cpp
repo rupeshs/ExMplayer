@@ -1,3 +1,21 @@
+/*  exmplayer, GUI front-end for mplayer.
+    Copyright (C) 2010-2014 Rupesh Sreeraman
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
 #include "vdlsettingsdialog.h"
 #include "ui_vdlsettingsdialog.h"
 
@@ -17,7 +35,7 @@ VdlSettingsDialog::VdlSettingsDialog(QWidget *parent,QSettings *settings) :
     ui->lineEditDomDir->setText(_settings->value("VideoDl/DownloadDir",oPath).toString());
 
     ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir",qApp->applicationDirPath()).toString());
-
+    ui->pushButtonUpdate->setVisible(true);
 #endif
 #ifdef Q_OS_LINUX
 
@@ -85,4 +103,22 @@ void VdlSettingsDialog::on_pushButtonReset_clicked()
     ui->lineEditYoudlDir->setText(qApp->applicationDirPath());
     settingChanged("VideoDl","YoutubedlDir",qApp->applicationDirPath());
 #endif
+}
+
+void VdlSettingsDialog::on_pushButtonUpdate_clicked()
+{
+    close();
+    QString exeFileName(qApp->applicationDirPath()+"/update-youtube-dl.exe");
+
+    int result = (int)::ShellExecuteA(0, "open", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
+    if (SE_ERR_ACCESSDENIED == result)
+    {
+        // Requesting elevation(Windows Vista/Window7/window8)
+        result = (int)::ShellExecuteA(0, "runas", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
+    }
+}
+
+void VdlSettingsDialog::on_buttonBox_accepted()
+{
+
 }

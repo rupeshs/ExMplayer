@@ -40,6 +40,8 @@ cutterDialog::cutterDialog(QWidget *parent, mplayerfe *mpf) :
     ui->pushButtonpre->setEnabled(false);
     ui->toolButtonStop->setEnabled(false);
     ui->seek->setEnabled(false);
+    ui->lineEditStart->setInputMask("99:99:99");
+    ui->lineEditStop->setInputMask("99:99:99");
      if (mpf->starttime()>0)
      {ui->seek->setEnabled(false);
       ui->pushButtonStop->setEnabled(false);

@@ -123,14 +123,19 @@ bool UpdateCheck::isUpdated(QString currentVersion,QString myVersion)
     {
         if(cVl.at(0).toInt()>myVl.at(0).toInt())
         { //Major update found
+            qDebug("major update found");
             return true;
         }
         else if (cVl.at(1).toInt()>myVl.at(1).toInt())
         { //Minor update found
+           // qDebug()<<cVl.at(1).toInt();
+            //qDebug()<<myVl.at(1).toInt();
+             qDebug("minor update found");
             return true;
         }
         else if (cVl.at(2).toInt()>myVl.at(2).toInt())
         {//Revision update found
+             qDebug("major update found");
             return true;
         }
 

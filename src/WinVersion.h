@@ -18,14 +18,14 @@
 #ifndef WINVERSION_H
 #define WINVERSION_H
 
-#define VER_FILEVERSION             3,8,0,0
-#define VER_FILEVERSION_STR         "3.8.0.0\0"
+#define VER_FILEVERSION             4,0,0,0
+#define VER_FILEVERSION_STR         "4.0.0.0\0"
 
-#define VER_PRODUCTVERSION          3,8,0,0
-#define VER_PRODUCTVERSION_STR      "3.8.0.0\0"
+#define VER_PRODUCTVERSION          4,0,0,0
+#define VER_PRODUCTVERSION_STR      "4.0.0.0\0"
 
 #define VER_COMPANYNAME_STR         "Rupesh Sreeraman\0"
-#define VER_FILEDESCRIPTION_STR     "ExMplayer 3.8 beta\0"
+#define VER_FILEDESCRIPTION_STR     "ExMplayer 4.0 \0"
 #define VER_INTERNALNAME_STR        "exmplayer\0"
 #define VER_LEGALCOPYRIGHT_STR      "Copyright (c)2010-2014 Rupesh Sreeraman\0"
 #define VER_ORIGINALFILENAME_STR    "exmplayer.exe\0"

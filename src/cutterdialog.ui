@@ -238,7 +238,7 @@
     <item row="0" column="1">
      <widget class="QLineEdit" name="lineEditStart">
       <property name="readOnly">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -263,7 +263,7 @@
     <item row="1" column="1">
      <widget class="QLineEdit" name="lineEditStop">
       <property name="readOnly">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </item>
