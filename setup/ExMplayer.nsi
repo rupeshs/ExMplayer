@@ -16,7 +16,7 @@
 ;v3.8.0
 ;8-feb-2014
 ;v4.0.0
-;10-Aug-2014
+;6-Sep-2014
 ;Output
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;Compressor
@@ -25,7 +25,7 @@
   SetCompressorDictSize 32
 ;setup file
 ;--------------------------------
-OutFile exmplayer-4.0.0beta-win32.exe 
+OutFile exmplayer-4.0.0-win32.exe 
 ;--------------------------------
 ;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ;Defines & includes
@@ -57,7 +57,7 @@ VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "ExMplayer"
 VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "4.0.0"
 
 Name "ExMplayer"
-BrandingText "ExMplayer 4.0 beta for Windows"
+BrandingText "ExMplayer 4.0 for Windows"
 /* Sets default install dir to $PROGRAMFILES\ExMplayer.
   If InstallDirRegKey exists (from a previous installation,
   it will default to that directory instead. */
