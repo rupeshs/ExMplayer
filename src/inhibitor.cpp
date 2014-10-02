@@ -42,7 +42,8 @@ Inhibitor::Inhibitor()
 
     _inhibitCookie=0;
     _systemType=-1;//We don't know current system
-
+    _dpmsEnabled=checkDpms();
+    _screenSvrEnabled=checkScreenSvr();;
     dectectSystem();
 
 }
@@ -104,7 +105,33 @@ int Inhibitor::checkProcess(const char* name)
 
 }
 
-//This wil disable screensaver/powersaving
+//Check if DMPS is enabled
+bool Inhibitor::checkDpms()
+{
+    QProcess p;
+    p.start("xset q");
+    p.waitForFinished(1000);
+    QString p_stdout = p.readAllStandardOutput().simplified();
+    if ( p_stdout.contains("DPMS is Enabled", Qt::CaseInsensitive) )
+        return true;
+    else
+        return false;
+}
+
+//Check if screensaver is enabled
+bool Inhibitor::checkScreenSvr()
+{
+    QProcess p;
+    p.start("xset q");
+    p.waitForFinished(1000);
+    QString p_stdout = p.readAllStandardOutput().simplified();
+    if ( p_stdout.contains("timeout: 0", Qt::CaseInsensitive) )
+        return false;
+    else
+        return true;
+}
+
+//This will disable screensaver/powersaving
 bool Inhibitor::activateInhibit()
 {
     if (_systemType!=KDE) //Fix me KDE avoid segmentation fault
@@ -153,15 +180,17 @@ bool Inhibitor::activateInhibit()
     return false;
 }
 
-//This wil enable screensaver/powersaving
+//This will enable screensaver/powersaving
 bool  Inhibitor::deactivateInhibit()
 {
 
 
     if (_systemType>-1&& _systemType<serviceInterfaceLst.count())
     {
-        system("xset +dpms");
-        system("xset s on");
+        if ( _dpmsEnabled )
+            system("xset +dpms");
+        if ( _screenSvrEnabled )
+            system("xset s on");
 
         QList<QVariant> args;
         args.append((uint)8|4);
