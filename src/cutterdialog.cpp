@@ -144,7 +144,10 @@ void cutterDialog::on_pushButtonCut_clicked()
 
             cfile=new  QFile(dir+"strip_"+fi.baseName()+"."+fi.suffix());
             filepath=shortPathName(dir+"strip_"+fi.baseName()+"."+fi.suffix());
-            arguments<<"-ss"<<QString::number(startPos)<<"-t"<<QString::number(stopPos-startPos)<<"-i"<<shortPathName(mp->filepath())<<"-c"<<"copy"<<"-y"<<dir+"strip_"+fi.baseName()+"."+fi.suffix();
+
+            //http://trac.ffmpeg.org/wiki/Seeking added Output seeking
+            arguments<<"-i"<<shortPathName(mp->filepath())<<"-ss"<<QString::number(startPos)<<"-t"<<QString::number(stopPos-startPos)<<"-c"<<"copy"<<"-y"<<dir+"strip_"+fi.baseName()+"."+fi.suffix();
+
             qDebug()<< arguments;
 #ifdef Q_OS_WIN
             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
