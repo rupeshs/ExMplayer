@@ -11,9 +11,11 @@ TEMPLATE  = app
 
 INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication
-HEADERS += qtsingleapplication.h qtlocalpeer.h
+HEADERS += qtsingleapplication.h qtlocalpeer.h \
+    gifpalettegenerator.h
 
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp
+SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp \
+    gifpalettegenerator.cpp
 
 INCLUDEPATH += searchsubtitle
 DEPENDPATH += searchsubtitle

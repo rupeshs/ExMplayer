@@ -5592,3 +5592,10 @@ void PlayerWindow::on_actionVideo_Downloader_triggered()
     QObject::connect(videodlDlg,SIGNAL(showfile(QString,QString)),this,SLOT(winExplorer(QString,QString)));
     videodlDlg->show();
 }
+
+void PlayerWindow::on_actionGIF_Animator_triggered()
+{
+    gifPalettteGen=new GifPaletteGenerator();
+    gifPalettteGen->setFfmpegOptions("DS",1,1);
+    gifPalettteGen->generatePalette();
+}

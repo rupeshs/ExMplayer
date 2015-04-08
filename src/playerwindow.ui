@@ -2556,6 +2556,7 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionAudio_extrctor"/>
     <addaction name="actionAudio_Converter"/>
     <addaction name="actionVideo_Downloader"/>
+    <addaction name="actionGIF_Animator"/>
     <addaction name="actionCopy_Audio_CD"/>
    </widget>
    <widget class="QMenu" name="menu_View">
@@ -4688,6 +4689,14 @@ p, li { white-space: pre-wrap; }
   <action name="actionVideo_Downloader">
    <property name="text">
     <string>Video Downloader</string>
+   </property>
+  </action>
+  <action name="actionGIF_Animator">
+   <property name="text">
+    <string>GIF Animator</string>
+   </property>
+   <property name="toolTip">
+    <string>Converts your favorite video portion into animation</string>
    </property>
   </action>
  </widget>

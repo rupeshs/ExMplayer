@@ -74,10 +74,12 @@
 #include <socialshare.h>
 #include <coverartdialog.h>
 #include <videodl.h>
+#include "gifpalettegenerator.h"
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
 #define PLAYER_WIDTH  500
+
 namespace Ui {
 class PlayerWindow;
 }
@@ -243,7 +245,7 @@ private:
 
     QPointer<Videodl> videodlDlg;
 
-
+    QPointer<GifPaletteGenerator> gifPalettteGen;
 
 
 signals:
@@ -522,6 +524,7 @@ private slots:
     void on_actionUpload_subtitle_to_OpenSubtitles_org_Advanced_triggered();
     void on_toolButtonInfo_clicked();
     void on_actionVideo_Downloader_triggered();
+    void on_actionGIF_Animator_triggered();
 };
 
 #endif // PLAYERWINDOW_H
