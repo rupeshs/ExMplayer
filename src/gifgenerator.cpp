@@ -15,20 +15,20 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#include "gifpalettegenerator.h"
+#include "gifgenerator.h"
 
-GifPaletteGenerator::GifPaletteGenerator(QObject *parent) :
+GifGenerator::GifGenerator(QObject *parent) :
     QObject(parent)
 {
-
     ffmpegProcess=new MyProcess(this);
     QObject::connect(ffmpegProcess,SIGNAL(lineAvailable(QByteArray)),this,SLOT(ffmpegConsole(QByteArray)));
     QObject::connect(ffmpegProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
 
 }
-void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,short duration){
+void GifGenerator::setFfmpegOptions(QString filename,double startPos,short duration){
 
     QString ffmpegBinPath;
+    //ffmpeg -v warning -ss 6767 -t 2  -i %1 -i %palette% -lavfi "%filters% [x]; [x][1:v] paletteuse" -y %2
 #ifdef Q_OS_WIN
     ffmpegBinPath=qApp->applicationDirPath()+"/ffmpeg.exe";
 #endif
@@ -44,24 +44,28 @@ void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,shor
     ffmpegProcess->addArgument(QString::number(2));
     ffmpegProcess->addArgument("-i");
     ffmpegProcess->addArgument("E:\\films\\jp.mkv");
-    ffmpegProcess->addArgument("-vf");
-    ffmpegProcess->addArgument("fps=15,scale=320:-1:flags=lanczos,palettegen");
-    ffmpegProcess->addArgument("-y");
+    ffmpegProcess->addArgument("-i");
     ffmpegProcess->addArgument("E:\\films\\palette.png");
-
+    ffmpegProcess->addArgument("-lavfi");
+    ffmpegProcess->addArgument("fps=15,scale=320:-1:flags=lanczos [x]; [x][1:v] paletteuse");
+    ffmpegProcess->addArgument("-y");
+    ffmpegProcess->addArgument("E:\\films\\anim.gif");
 }
-void GifPaletteGenerator::generatePalette()
+void GifGenerator::generateGif()
 {
     ffmpegProcess->start();
 
 }
-void GifPaletteGenerator::ffmpegConsole(QByteArray ba)
+void GifGenerator::ffmpegConsole(QByteArray ba)
 {
     qDebug()<<QString(ba);
+    if(ba.contains("frame"))
+        qDebug("Processing...");
+
 }
 
-void GifPaletteGenerator::emitProcessFinished(int ec)
+void GifGenerator::emitProcessFinished(int ec)
 {
     emit ffmpegexit(ec);
-    qDebug()<<"GifPaletteGenerator Exit code :"<<QString::number(ec);
+    qDebug()<<"GifGenerator Exit code :"<<QString::number(ec);
 }

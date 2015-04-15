@@ -75,6 +75,7 @@
 #include <coverartdialog.h>
 #include <videodl.h>
 #include "gifpalettegenerator.h"
+#include "gifgenerator.h"
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -246,6 +247,7 @@ private:
     QPointer<Videodl> videodlDlg;
 
     QPointer<GifPaletteGenerator> gifPalettteGen;
+    QPointer<GifGenerator> gifGene;
 
 
 signals:
@@ -525,6 +527,7 @@ private slots:
     void on_toolButtonInfo_clicked();
     void on_actionVideo_Downloader_triggered();
     void on_actionGIF_Animator_triggered();
+    void triggerGifGenerator(int ec);
 };
 
 #endif // PLAYERWINDOW_H
