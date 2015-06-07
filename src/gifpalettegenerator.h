@@ -24,6 +24,7 @@
 #include <QDebug>
 #include <QString>
 #include <paths.h>
+#include <QDesktopServices>
 
 //Purpose:
 // Generate one palette for a whole video stream.

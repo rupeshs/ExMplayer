@@ -5595,20 +5595,14 @@ void PlayerWindow::on_actionVideo_Downloader_triggered()
 
 void PlayerWindow::on_actionGIF_Animator_triggered()
 {
-    gifPalettteGen=new GifPaletteGenerator();
-    QObject::connect(gifPalettteGen,SIGNAL(ffmpegexit(int)),this,SLOT(triggerGifGenerator(int)));
-
-    gifPalettteGen->setFfmpegOptions("DS",1,1);
-    gifPalettteGen->generatePalette();
-
-
-}
-void PlayerWindow::triggerGifGenerator(int ec)
-{
-    if(ec==0)
-    {
-        gifGene=new GifGenerator();
-        gifGene->setFfmpegOptions("DS",1,1);
-        gifGene->generateGif();
+   if (mp)
+   {
+        gifdlg=new GifAnimatorDialog(this,mp);
+        QObject::connect(gifdlg,SIGNAL(showfile(QString,QString)),this,SLOT(winExplorer(QString,QString)));
+        gifdlg->show();
     }
+
+
+
 }
+

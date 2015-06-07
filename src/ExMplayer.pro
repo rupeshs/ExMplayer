@@ -13,11 +13,13 @@ INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication
 HEADERS += qtsingleapplication.h qtlocalpeer.h \
     gifpalettegenerator.h \
-    gifgenerator.h
+    gifgenerator.h \
+    gifanimatordialog.h
 
 SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp \
     gifpalettegenerator.cpp \
-    gifgenerator.cpp
+    gifgenerator.cpp \
+    gifanimatordialog.cpp
 
 INCLUDEPATH += searchsubtitle
 DEPENDPATH += searchsubtitle
@@ -33,7 +35,8 @@ HEADERS += opensubtitleclient.h gzipuncompressor.h searchsubtitle.h
 SOURCES += opensubtitleclient.cpp gzipuncompressor.cpp searchsubtitle.cpp
 
 FORMS += searchsubtitle.ui \
-    coverartdialog.ui
+    coverartdialog.ui \
+    gifanimatordialog.ui
 
 #miniz libarary to uncompress data
 SOURCES += miniz.c tinfl.c

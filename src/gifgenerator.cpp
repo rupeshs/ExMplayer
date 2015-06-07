@@ -25,10 +25,15 @@ GifGenerator::GifGenerator(QObject *parent) :
     QObject::connect(ffmpegProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
 
 }
-void GifGenerator::setFfmpegOptions(QString filename,double startPos,short duration){
+void GifGenerator::setFfmpegOptions(QString filename,double startPos,short duration,QString outpath){
 
     QString ffmpegBinPath;
     //ffmpeg -v warning -ss 6767 -t 2  -i %1 -i %palette% -lavfi "%filters% [x]; [x][1:v] paletteuse" -y %2
+    QFileInfo fi(fileFilters::shortPathName(filename));
+
+
+
+
 #ifdef Q_OS_WIN
     ffmpegBinPath=qApp->applicationDirPath()+"/ffmpeg.exe";
 #endif
@@ -39,17 +44,17 @@ void GifGenerator::setFfmpegOptions(QString filename,double startPos,short durat
     ffmpegProcess->clearArguments();
     ffmpegProcess->addArgument(ffmpegBinPath);
     ffmpegProcess->addArgument("-ss");
-    ffmpegProcess->addArgument(QString::number(6767));
+    ffmpegProcess->addArgument(QString::number(startPos));
     ffmpegProcess->addArgument("-t");
-    ffmpegProcess->addArgument(QString::number(2));
+    ffmpegProcess->addArgument(QString::number(duration));
     ffmpegProcess->addArgument("-i");
-    ffmpegProcess->addArgument("E:\\films\\jp.mkv");
+    ffmpegProcess->addArgument(filename);
     ffmpegProcess->addArgument("-i");
-    ffmpegProcess->addArgument("E:\\films\\palette.png");
+    ffmpegProcess->addArgument(QDir::tempPath()+"\\exm_gf_palette.png");
     ffmpegProcess->addArgument("-lavfi");
     ffmpegProcess->addArgument("fps=15,scale=320:-1:flags=lanczos [x]; [x][1:v] paletteuse");
     ffmpegProcess->addArgument("-y");
-    ffmpegProcess->addArgument("E:\\films\\anim.gif");
+    ffmpegProcess->addArgument( fileFilters::shortPathName(outpath+"Anim_"+fi.baseName()+".gif"));
 }
 void GifGenerator::generateGif()
 {

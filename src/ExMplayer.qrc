@@ -117,5 +117,7 @@
         <file>images/vimeo_logo_blue.png</file>
         <file>images/dailymotion-logo.png</file>
         <file>images/vid_down.png</file>
+        <file>images/ExManim.png</file>
+        <file>images/loaderanim.gif</file>
     </qresource>
 </RCC>

@@ -39,15 +39,16 @@ void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,shor
     ffmpegProcess->clearArguments();
     ffmpegProcess->addArgument(ffmpegBinPath);
     ffmpegProcess->addArgument("-ss");
-    ffmpegProcess->addArgument(QString::number(6767));
+    ffmpegProcess->addArgument(QString::number(startPos));
     ffmpegProcess->addArgument("-t");
-    ffmpegProcess->addArgument(QString::number(2));
+    ffmpegProcess->addArgument(QString::number(duration));
     ffmpegProcess->addArgument("-i");
-    ffmpegProcess->addArgument("E:\\films\\jp.mkv");
+    ffmpegProcess->addArgument(filename);
     ffmpegProcess->addArgument("-vf");
     ffmpegProcess->addArgument("fps=15,scale=320:-1:flags=lanczos,palettegen");
     ffmpegProcess->addArgument("-y");
-    ffmpegProcess->addArgument("E:\\films\\palette.png");
+    ffmpegProcess->addArgument(QDir::tempPath()+QString("\\exm_gf_palette.png"));
+    QDir::temp();
 
 }
 void GifPaletteGenerator::generatePalette()

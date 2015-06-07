@@ -24,13 +24,13 @@
 #include <QDebug>
 #include <QString>
 #include <paths.h>
-
+#include "filefilters.h"
 class GifGenerator : public QObject
 {
     Q_OBJECT
 public:
     explicit GifGenerator(QObject *parent = 0);
-    void setFfmpegOptions(QString filename,double startPos,short duration);
+    void setFfmpegOptions(QString filename,double startPos,short duration,QString outpath);
     void generateGif();
 
 signals:

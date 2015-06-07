@@ -76,6 +76,7 @@
 #include <videodl.h>
 #include "gifpalettegenerator.h"
 #include "gifgenerator.h"
+#include <gifanimatordialog.h>
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
@@ -196,6 +197,7 @@ private:
     QPointer<QProgressIndicator> pi;
     QPointer<QProgressIndicator> piv;
     QPointer<cutterDialog> cdlg;
+    QPointer<GifAnimatorDialog> gifdlg;
     QPointer<preferenceDialog>optionDlg;
     QPointer<miDialog> midlg;
     QPointer<aboutDialog> abtDlg;
@@ -527,7 +529,7 @@ private slots:
     void on_toolButtonInfo_clicked();
     void on_actionVideo_Downloader_triggered();
     void on_actionGIF_Animator_triggered();
-    void triggerGifGenerator(int ec);
+
 };
 
 #endif // PLAYERWINDOW_H
