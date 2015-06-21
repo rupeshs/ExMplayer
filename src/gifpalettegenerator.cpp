@@ -26,9 +26,10 @@ GifPaletteGenerator::GifPaletteGenerator(QObject *parent) :
     QObject::connect(ffmpegProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
 
 }
-void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,short duration){
+void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,short duration,int fps,long width,long height){
 
     QString ffmpegBinPath;
+    QString gifQualityStr;
 #ifdef Q_OS_WIN
     ffmpegBinPath=qApp->applicationDirPath()+"/ffmpeg.exe";
 #endif
@@ -45,7 +46,9 @@ void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,shor
     ffmpegProcess->addArgument("-i");
     ffmpegProcess->addArgument(filename);
     ffmpegProcess->addArgument("-vf");
-    ffmpegProcess->addArgument("fps=15,scale=320:-1:flags=lanczos,palettegen");
+    gifQualityStr="fps="+QString::number(fps)+",scale="+QString::number(width)+":"+QString::number(height)+":flags=lanczos,palettegen";
+    qDebug()<<gifQualityStr;
+    ffmpegProcess->addArgument(gifQualityStr);
     ffmpegProcess->addArgument("-y");
     ffmpegProcess->addArgument(QDir::tempPath()+QString("\\exm_gf_palette.png"));
     QDir::temp();

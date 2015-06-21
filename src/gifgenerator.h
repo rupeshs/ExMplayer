@@ -30,11 +30,11 @@ class GifGenerator : public QObject
     Q_OBJECT
 public:
     explicit GifGenerator(QObject *parent = 0);
-    void setFfmpegOptions(QString filename,double startPos,short duration,QString outpath);
+    void setFfmpegOptions(QString filename,double startPos,short duration,int fps,long width,long height,QString outpath);
     void generateGif();
 
 signals:
-    void ffmpegexit(int);
+    void ffmpegexit(int,QString);
 
 public slots:
     void ffmpegConsole(QByteArray);
@@ -42,6 +42,7 @@ public slots:
 
 private:
     MyProcess *ffmpegProcess;
+    QString gifPath;
     
 };
 

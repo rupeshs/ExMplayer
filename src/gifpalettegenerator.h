@@ -34,7 +34,7 @@ class GifPaletteGenerator : public QObject
     Q_OBJECT
 public:
     explicit GifPaletteGenerator(QObject *parent = 0);
-    void setFfmpegOptions(QString filename,double startPos,short duration);
+    void setFfmpegOptions(QString filename,double startPos,short duration,int fps,long width,long height);
     void generatePalette();
 
 signals:

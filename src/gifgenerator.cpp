@@ -25,14 +25,12 @@ GifGenerator::GifGenerator(QObject *parent) :
     QObject::connect(ffmpegProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
 
 }
-void GifGenerator::setFfmpegOptions(QString filename,double startPos,short duration,QString outpath){
+void GifGenerator::setFfmpegOptions(QString filename,double startPos,short duration,int fps,long width,long height,QString outpath){
 
     QString ffmpegBinPath;
+    QString gifQualityStr;
     //ffmpeg -v warning -ss 6767 -t 2  -i %1 -i %palette% -lavfi "%filters% [x]; [x][1:v] paletteuse" -y %2
     QFileInfo fi(fileFilters::shortPathName(filename));
-
-
-
 
 #ifdef Q_OS_WIN
     ffmpegBinPath=qApp->applicationDirPath()+"/ffmpeg.exe";
@@ -52,9 +50,15 @@ void GifGenerator::setFfmpegOptions(QString filename,double startPos,short durat
     ffmpegProcess->addArgument("-i");
     ffmpegProcess->addArgument(QDir::tempPath()+"\\exm_gf_palette.png");
     ffmpegProcess->addArgument("-lavfi");
-    ffmpegProcess->addArgument("fps=15,scale=320:-1:flags=lanczos [x]; [x][1:v] paletteuse");
+
+    gifQualityStr="fps="+QString::number(fps)+",scale="+QString::number(width)+":"+QString::number(height)+":flags=lanczos [x]; [x][1:v] paletteuse";
+    qDebug()<<gifQualityStr;
+    ffmpegProcess->addArgument(gifQualityStr);
     ffmpegProcess->addArgument("-y");
-    ffmpegProcess->addArgument( fileFilters::shortPathName(outpath+"Anim_"+fi.baseName()+".gif"));
+    gifPath=fileFilters::shortPathName(outpath+"Anim_"+fi.baseName()+"_"+QString::number(QDateTime::currentDateTime().toTime_t ())+".gif");
+    ffmpegProcess->addArgument("-metadata");
+    ffmpegProcess->addArgument("copyright=\"Created by ExMplayer Movie Animator\"");
+    ffmpegProcess->addArgument( gifPath);
 }
 void GifGenerator::generateGif()
 {
@@ -71,6 +75,6 @@ void GifGenerator::ffmpegConsole(QByteArray ba)
 
 void GifGenerator::emitProcessFinished(int ec)
 {
-    emit ffmpegexit(ec);
+    emit ffmpegexit(ec,gifPath);
     qDebug()<<"GifGenerator Exit code :"<<QString::number(ec);
 }

@@ -119,5 +119,6 @@
         <file>images/vid_down.png</file>
         <file>images/ExManim.png</file>
         <file>images/loaderanim.gif</file>
+        <file>images/undo.png</file>
     </qresource>
 </RCC>
