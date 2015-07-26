@@ -10,18 +10,21 @@ Download video/audio from YouTube,facebook,dailymotion,metacafe and more sites.
 
 Features
 --------
-Thumbnail seeking
-Movie Animator
-Video downloader powered by youtube-dl
-Subtitle Search (Opensubtitles.org)
-Facebook sharing( Listening to... Watching....)
-3D video support
-Added Volume booster (up to 5000% boost) enables playback of low volume files
-Wide variety of 3D output formats supported
-Anaglyph glasses or polarized 3D glass can be used
-Added H265/HEVC support
-No codecs required
-Enhanced Aqua skin
-Watch 3D videos without glasses using inbuilt 2D playback
-Improved thumbnail seeking
-Added Advanced Info
+<ul>
+  <li>Video downloader </li>
+  <li>Subtitle Search (Opensubtitles.org) </li>
+ <li>3D video playback support </li>
+	 <li>Volume booster </li>
+    <li>Seekview </li>
+	 <li>Audio extractor</li>
+	 <li>Audio converter</li>
+	 <li>Media cutter</li>
+	 <li>Movie Animator</li>
+	 <li>10 band audio equalizer</li>
+	 <li>video equalizer</li>
+	 <li>Winamp dsp plugins support</li>
+	 <li>8 Audio effect filters</li>
+	 <li>17 Video effect filters</li>
+	 <li>Configurable keyboard shortcuts and mouse</li>
+	 <li>Facebook sharing( Listening to... Watching....) </li>
+</ul>
