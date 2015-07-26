@@ -1,3 +1,9 @@
+Version 5.0.0
+Release Date : 26-7-2015
+*Movie Animator,Convert your favorite video section into high quality animation
+*Improved thumbnail seeking
+*Some performance improvements
+
 Version 4.0.0
 Release Date : 11-9-2014
 *Added Video downloader
