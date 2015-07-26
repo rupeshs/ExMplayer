@@ -4693,7 +4693,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="actionGIF_Animator">
    <property name="text">
-    <string>GIF Animator</string>
+    <string>Movie Animator</string>
    </property>
    <property name="toolTip">
     <string>Converts your favorite video portion into animation</string>

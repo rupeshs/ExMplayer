@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2014 Rupesh Sreeraman
+    Copyright (C) 2010-2015 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,16 +18,16 @@
 #ifndef WINVERSION_H
 #define WINVERSION_H
 
-#define VER_FILEVERSION             4,0,0,0
-#define VER_FILEVERSION_STR         "4.0.0.0\0"
+#define VER_FILEVERSION             5,0,0,0
+#define VER_FILEVERSION_STR         "5.0.0.0\0"
 
-#define VER_PRODUCTVERSION          4,0,0,0
-#define VER_PRODUCTVERSION_STR      "4.0.0.0\0"
+#define VER_PRODUCTVERSION          5,0,0,0
+#define VER_PRODUCTVERSION_STR      "5.0.0.0\0"
 
 #define VER_COMPANYNAME_STR         "Rupesh Sreeraman\0"
-#define VER_FILEDESCRIPTION_STR     "ExMplayer 4.0 \0"
+#define VER_FILEDESCRIPTION_STR     "ExMplayer 5.0 \0"
 #define VER_INTERNALNAME_STR        "exmplayer\0"
-#define VER_LEGALCOPYRIGHT_STR      "Copyright (c)2010-2014 Rupesh Sreeraman\0"
+#define VER_LEGALCOPYRIGHT_STR      "Copyright (c)2010-2015 Rupesh Sreeraman\0"
 #define VER_ORIGINALFILENAME_STR    "exmplayer.exe\0"
 #define VER_PRODUCTNAME_STR         "ExMplayer\0"
 #define VER_COMPANYDOMAIN_STR       "http://exmplayer.sourceforge.net"

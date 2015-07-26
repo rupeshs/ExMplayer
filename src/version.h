@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2014 Rupesh Sreeraman
+    Copyright (C) 2010-2015 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 #include <QString>
 
 //Stable version of ExMplayer
-#define VERSION "4.0.0"
+#define VERSION "5.0.0"
 
 class Version
 {

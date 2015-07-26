@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2014 Rupesh Sreeraman
+    Copyright (C) 2010-2015 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,8 +26,8 @@ GifAnimatorDialog::GifAnimatorDialog(QWidget *parent,mplayerfe *mpf) :
     ui->setupUi(this);
 
 
-    ui->lineEditStart->setInputMask("99:99:99");
-    ui->lineEditStop->setInputMask("99:99:99");
+    //ui->lineEditStart->setInputMask("99:99:99");
+   // ui->lineEditStop->setInputMask("99:99:99");
     ui->pushButtonStart->setEnabled(true);
     ui->pushButtonStop->setEnabled(false);
     ui->pushButtonAnimate->setEnabled(false);
@@ -38,6 +38,8 @@ GifAnimatorDialog::GifAnimatorDialog(QWidget *parent,mplayerfe *mpf) :
 
 
     mp=mpf;
+    if(!mp->hasvideo())
+        ui->pushButtonStart->setEnabled(false);
     startPos=0;
     stopPos=0;
     movie = new QMovie(":/images/loaderanim.gif");
@@ -191,7 +193,8 @@ ui->pushButtonOpenFolder->setEnabled(true);
 
 void GifAnimatorDialog::on_pushButtonReset_clicked()
 {
-    ui->pushButtonStart->setEnabled(true);
+    if(mp->hasvideo())
+        ui->pushButtonStart->setEnabled(true);
     ui->pushButtonStop->setEnabled(false);
     ui->pushButtonAnimate->setEnabled(false);
     ui->lineEditStart->clear();

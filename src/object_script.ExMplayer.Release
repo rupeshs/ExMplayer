@@ -3,6 +3,7 @@ INPUT(
 ./release\qtlocalpeer.o
 ./release\gifpalettegenerator.o
 ./release\gifgenerator.o
+./release\gifanimatordialog.o
 ./release\opensubtitleclient.o
 ./release\gzipuncompressor.o
 ./release\searchsubtitle.o
@@ -65,6 +66,7 @@ INPUT(
 ./release\moc_qtlocalpeer.o
 ./release\moc_gifpalettegenerator.o
 ./release\moc_gifgenerator.o
+./release\moc_gifanimatordialog.o
 ./release\moc_opensubtitleclient.o
 ./release\moc_gzipuncompressor.o
 ./release\moc_searchsubtitle.o

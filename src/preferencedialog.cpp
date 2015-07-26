@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2014 Rupesh Sreeraman
+    Copyright (C) 2010-2015 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -229,13 +229,15 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
                 // if ( QString(hashData.toHex())!=actHash)
                 //{
                 //   qDebug() << "Differnt font config";
-                QString exeFileName(qApp->applicationDirPath()+"/exmplayer-font-cache.exe");
+                if (ui->checkBoxUseCodePage->isChecked())
+                {QString exeFileName(qApp->applicationDirPath()+"/exmplayer-font-cache.exe");
 
                 int result = (int)::ShellExecuteA(0, "open", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
                 if (SE_ERR_ACCESSDENIED == result)
                 {
                     // Requesting elevation(Windows Vista/Window7/window8)
                     result = (int)::ShellExecuteA(0, "runas", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
+                }
                 }
 
                 //c8ba9d01342f8488c815fb5e63e96f53ba9f46fb
