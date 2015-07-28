@@ -45,6 +45,8 @@ public:
  private:
 
     int _systemType;
+    bool _dpmsEnabled;
+    bool _screenSvrEnabled;
     uint _inhibitCookie;
      QPointer<QDBusInterface> interfaceScreenSvr;
 
@@ -54,7 +56,8 @@ public:
 
     void dectectSystem();
     int checkProcess(const char* name);
-
+    bool checkDpms();
+    bool checkScreenSvr();
 
 };
 
