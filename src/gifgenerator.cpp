@@ -48,7 +48,7 @@ void GifGenerator::setFfmpegOptions(QString filename,double startPos,short durat
     ffmpegProcess->addArgument("-i");
     ffmpegProcess->addArgument(filename);
     ffmpegProcess->addArgument("-i");
-    ffmpegProcess->addArgument(QDir::tempPath()+"\\exm_gf_palette.png");
+    ffmpegProcess->addArgument(QDir::tempPath()+QString(QDir::separator())+"exm_gf_palette.png");
     ffmpegProcess->addArgument("-lavfi");
 
     gifQualityStr="fps="+QString::number(fps)+",scale="+QString::number(width)+":"+QString::number(height)+":flags=lanczos [x]; [x][1:v] paletteuse";

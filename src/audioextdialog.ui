@@ -96,13 +96,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>270</x>
+     <x>210</x>
      <y>80</y>
-     <width>265</width>
-     <height>26</height>
+     <width>318</width>
+     <height>29</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">

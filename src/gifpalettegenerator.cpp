@@ -50,7 +50,7 @@ void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,shor
     qDebug()<<gifQualityStr;
     ffmpegProcess->addArgument(gifQualityStr);
     ffmpegProcess->addArgument("-y");
-    ffmpegProcess->addArgument(QDir::tempPath()+QString("\\exm_gf_palette.png"));
+    ffmpegProcess->addArgument(QDir::tempPath()+QString(QString(QDir::separator())+"exm_gf_palette.png"));
    // QDir::temp();
 
 }

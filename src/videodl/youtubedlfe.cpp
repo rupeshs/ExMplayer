@@ -25,6 +25,12 @@ YoutubedlFe::YoutubedlFe(QObject *parent,QString ydlPath) :
     ydlProcess=new MyProcess(this);
     qDebug()<<"ydlpath :"<< ydlPath;
 
+   QFileInfo checkFile(ydlPath);
+   if(!checkFile.exists())
+   {
+       QMessageBox::critical(0,"ExMplayer",tr("Youtube-dl not found..please install youtube-dl. https://rg3.github.io/youtube-dl/"),QMessageBox::Ok);
+
+   }
 
     QObject::connect(ydlProcess,SIGNAL(lineAvailable(QByteArray)),this,SLOT(ydlConsole(QByteArray)));
     QObject::connect(ydlProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
