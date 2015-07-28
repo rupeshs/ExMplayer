@@ -37,7 +37,7 @@
 #include <QSequentialAnimationGroup>
 #include "filefilters.h"
 #include <QCloseEvent>
-
+#include <QUrl>
 //[download]  32.2% of 3.95MiB at 136.61KiB/s ETA 00:20"
 //format code extension resolution  note
 static QRegExp rx_pro("[download].*(\\d+.\\d+)%.*");

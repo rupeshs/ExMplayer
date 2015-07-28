@@ -25,7 +25,7 @@
 #include <QString>
 #include <paths.h>
 #include <QDesktopServices>
-
+#include <QMessageBox>
 //Purpose:
 // Generate one palette for a whole video stream.
 

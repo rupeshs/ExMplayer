@@ -27,18 +27,19 @@ VdlSettingsDialog::VdlSettingsDialog(QWidget *parent,QSettings *settings) :
     _settings=settings;
     oPath=QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
 
+    ui->lineEditDomDir->setText(_settings->value("VideoDl/DownloadDir",oPath).toString());
+
     //For future use
     ui->pushButtonUpdate->setVisible(false);
 
 #ifdef Q_OS_WIN
 
-    ui->lineEditDomDir->setText(_settings->value("VideoDl/DownloadDir",oPath).toString());
 
     ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir",qApp->applicationDirPath()).toString());
     ui->pushButtonUpdate->setVisible(true);
 #endif
 #ifdef Q_OS_LINUX
-
+     ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir","/usr/local/bin/").toString());
 # endif
 
 
@@ -57,7 +58,7 @@ void VdlSettingsDialog::on_toolButtonBrFolderYdl_clicked()
     QString root=_settings->value("VideoDl/YoutubedlDir","").toString();
 
 
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Browse for youtube-dl binary"),
                                                     root,
                                                     QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
@@ -103,11 +104,19 @@ void VdlSettingsDialog::on_pushButtonReset_clicked()
     ui->lineEditYoudlDir->setText(qApp->applicationDirPath());
     settingChanged("VideoDl","YoutubedlDir",qApp->applicationDirPath());
 #endif
+#ifdef Q_OS_LINUX
+     settingChanged("VideoDl","DownloadDir",oPath);
+      ui->lineEditDomDir->setText(oPath);
+     settingChanged("VideoDl","YoutubedlDir","/usr/local/bin/");
+     ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir","/usr/local/bin/").toString());
+# endif
+
 }
 
 void VdlSettingsDialog::on_pushButtonUpdate_clicked()
 {
     close();
+  #ifdef Q_OS_WIN
     QString exeFileName(qApp->applicationDirPath()+"/update-youtube-dl.exe");
 
     int result = (int)::ShellExecuteA(0, "open", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
@@ -116,6 +125,7 @@ void VdlSettingsDialog::on_pushButtonUpdate_clicked()
         // Requesting elevation(Windows Vista/Window7/window8)
         result = (int)::ShellExecuteA(0, "runas", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
     }
+ #endif
 }
 
 void VdlSettingsDialog::on_buttonBox_accepted()

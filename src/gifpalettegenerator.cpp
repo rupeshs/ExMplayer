@@ -62,6 +62,11 @@ void GifPaletteGenerator::generatePalette()
 void GifPaletteGenerator::ffmpegConsole(QByteArray ba)
 {
     qDebug()<<QString(ba);
+     if (ba.contains("Error opening filters"))
+     {
+             QMessageBox::critical(0,qApp->applicationName(),tr("Error..Please update ffmpeg binary."),QMessageBox::Ok);
+
+     }
 }
 
 void GifPaletteGenerator::emitProcessFinished(int ec)

@@ -23,7 +23,7 @@
 #include <QString>
 #include <myprocess.h>
 #include <QDebug>
-
+#include <QDir>
 static QRegExp rx_download(".*\\s+[download]\\s+.*");
 
 class YoutubedlFe : public QObject

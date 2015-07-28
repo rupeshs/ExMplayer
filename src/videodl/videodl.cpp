@@ -226,7 +226,7 @@ void  Videodl::initYoutubeDl(QString ydlPath,QString videoUrl)
     if (!ydlFe)
     {
 
-        ydlFe=new YoutubedlFe(this,fileFilters::shortPathName(qApp->applicationDirPath()+"/youtube-dl.exe"));
+        ydlFe=new YoutubedlFe(this,fileFilters::shortPathName(ydlPath));
         qDebug()<<"Set video URL:"<<videoUrl;
     }
     ydlFe->setVideoUrl(videoUrl);
@@ -298,13 +298,16 @@ QString Videodl::getYoutubeDlPath()
 #ifdef Q_OS_WIN
     return _settings->value("VideoDl/YoutubedlDir",qApp->applicationDirPath()).toString()+"/youtube-dl.exe";
 #endif
+#ifdef Q_OS_LINUX
+ return _settings->value("VideoDl/YoutubedlDir","/usr/local/bin/").toString()+"/youtube-dl";
+# endif
 
 }
 QString Videodl::getDownloadPath()
 {
-#ifdef Q_OS_WIN
+
     return _settings->value("VideoDl/DownloadDir",QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString();
-#endif
+
 }
 void  Videodl::initDownload()
 {
@@ -337,7 +340,12 @@ void  Videodl::initDownload()
 
 void Videodl::on_pushButtonOpenOutput_clicked()
 {
-    emit  showfile(QString(""),getDownloadPath());
+#ifdef Q_OS_WIN
+     emit  showfile(QString(""),getDownloadPath());
+#endif
+ #ifdef Q_OS_LINUX
+    QDesktopServices::openUrl(QUrl(getDownloadPath()));
+ #endif
 }
 
 void Videodl::on_toolButtonSupFormats_clicked()

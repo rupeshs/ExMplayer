@@ -64,7 +64,7 @@ void  YoutubedlFe::downloadVideo(QString outputPath,QString id,bool isDefault)
     ydlProcess->addArgument(_ydlPath);
     ydlProcess->addArgument("-o");
     QString outFileName;
-    outFileName ="\\%(title)s-%(id)s"+ id+".%(ext)s";
+    outFileName =QString(QDir::separator())+"%(title)s-%(id)s"+ id+".%(ext)s";
 
     ydlProcess->addArgument(outputPath+outFileName);
 
