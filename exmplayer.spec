@@ -2,7 +2,7 @@
 
 
 Name:          exmplayer
-Version:       3.8.0
+Version:       5.0.1
 Release:       1%{?dist}
 Summary:       MPlayer GUI with thumbnail seeking, 3D Video support,
 
@@ -62,6 +62,7 @@ ln -s /usr/bin/ffmpeg  %{buildroot}/usr/share/%{name}/ffmpeg
 %{_sysconfdir}/%{name}/sc_default.xml
 
 %changelog
-
+* Tue Jul 28 2015 Rupesh Sreeraman <exmplayer.dev@gmail.com> - 5.0.0-1
+- updated  for version 5
 * Sat Feb 07 2015 David Vasquez <davidjeremias82 at gmail dot com> - 3.8.0-1
 - initial build rpm

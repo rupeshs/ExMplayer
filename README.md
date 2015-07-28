@@ -28,3 +28,9 @@ Features
 	 <li>Configurable keyboard shortcuts and mouse</li>
 	 <li>Facebook sharing( Listening to... Watching....) </li>
 </ul>
+
+For Linux users
+---------------
+Install youtube-dl from the https://rg3.github.io/youtube-dl/download.html.
+
+
