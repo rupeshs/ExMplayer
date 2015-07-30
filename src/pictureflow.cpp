@@ -1041,7 +1041,7 @@ PictureFlow::PictureFlow(QWidget* parent): QWidget(parent)
         }
 
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
         QFile file(Paths::getStaticConfigPath()+"/fmts");
 
         if (!QFile(Paths::getStaticConfigPath()+ "/fmts").exists())
@@ -1500,7 +1500,7 @@ void PictureFlow::addFolder(QString path )
 #ifdef Q_OS_WIN
                     myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+QDir::tempPath()+ "/covers/cover"+QString::number(i)+".png""\"");
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
                     myProcess->start("\""+Paths::sharePath()+"/ffmpeg\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+QDir::tempPath()+ "/covers/cover"+QString::number(i)+".png""\"");
 
 #endif
@@ -1924,7 +1924,7 @@ void PictureFlow::createThumbnails()
             myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+QDir::tempPath()+ "/pictures/cover"+QString::number(piccount)+".png""\"");
 
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
             myProcess->start("\""+Paths::sharePath()+"/ffmpeg\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+QDir::tempPath()+ "/pictures/cover"+QString::number(piccount)+".png""\"");
 
 #endif

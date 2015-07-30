@@ -58,6 +58,10 @@ QString Paths::sharePath()
 
 #endif
 
+#ifdef Q_OS_OPENBSD
+    return  QString("/usr/local/share/exmplayer");
+
+#endif
  }
 
 QString Paths::getStaticConfigPath()
@@ -67,7 +71,7 @@ QString Paths::getStaticConfigPath()
     return qApp->applicationDirPath();
 #endif
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     return  QString("/etc/exmplayer");
 
 #endif

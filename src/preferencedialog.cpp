@@ -87,7 +87,7 @@ preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
 #endif
 
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     ui->comboBox->setEnabled(false);
     ui->comboBoxStyle->addItem("GTK+");
 #endif
@@ -500,7 +500,7 @@ void preferenceDialog::on_pushButton_clicked()
 #ifdef Q_OS_WIN
     file.copy(Paths::configPath()+"/"+"sc_default.xml",Paths::configPath()+"/"+"sc_user.xml");
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     file.copy(Paths::getStaticConfigPath()+"/"+"sc_default.xml",Paths::configPath()+"/"+"sc_user.xml");
 # endif
 

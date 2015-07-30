@@ -78,6 +78,9 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
 #ifdef Q_OS_LINUX
     mPath="/usr/bin/mplayer";
 # endif
+#ifdef Q_OS_OPENBSD
+    mPath="/usr/local/bin/mplayer";
+# endif
     mutelock=true;
 
     qDebug()<<"Checking for MPlayer binary...";
@@ -164,7 +167,7 @@ void mplayerfe::play(QString File,int volume)
 #ifdef Q_OS_WIN
     argfrontEnd<<"-slave"<<"-identify"<<"-noquiet"<<"-priority"<<_priority;
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     argfrontEnd<<"-slave"<<"-identify"<<"-noquiet";
     argVideoOpt<<"-stop-xscreensaver";
 # endif
@@ -1610,6 +1613,9 @@ void mplayerfe::setaudiodriver(int devnum)
 # endif
 #ifdef Q_OS_LINUX
      argao<<"-ao"<<"sdl,alsa,pulse,oss";
+# endif
+#ifdef Q_OS_OPENBSD
+     argao<<"-ao"<<"sdl,pulse,oss";
 # endif
 
 
