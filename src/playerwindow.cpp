@@ -270,7 +270,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
 #ifdef Q_OS_WIN
     mp->setaudiodriver(settings->value("Audio/DevNo","0").toInt());
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     mp->setaudiodriver(0);
 #endif
 
@@ -432,7 +432,7 @@ void  PlayerWindow::setupMyUi()
 {
     bool bMin=true;
 
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     ui->actionWinamp_Dsp->setVisible(false);
     screensaverInhibit=new Inhibitor();
     screensaverInhibit->activateInhibit();
@@ -2387,7 +2387,7 @@ void PlayerWindow::on_action_Open_Screenshot_folder_triggered()
     QString arg= myconfig->screenshotfolder;
 #ifdef Q_OS_WIN
     winExplorer(QString(""),arg);
-#elif defined Q_OS_LINUX
+#elif defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     QDesktopServices::openUrl(QUrl(arg));
 #endif
 }
@@ -3069,7 +3069,7 @@ void PlayerWindow::cleanMp()
         setState(0x80000000);
     }
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     if (screensaverInhibit)
         screensaverInhibit->deactivateInhibit();
 # endif
@@ -3773,7 +3773,7 @@ void PlayerWindow::createShortcuts()
 #ifdef Q_OS_WIN
         path=Paths::configPath();
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
         path=Paths::getStaticConfigPath();
 # endif
         path.append("/sc_default.xml");
@@ -3899,7 +3899,7 @@ void PlayerWindow::toggleFullscreen()
 
         delete hidetimer;
         this->showNormal();
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
         this->setWindowState(Qt::WindowActive);
 #endif
 
@@ -4116,7 +4116,7 @@ void PlayerWindow::winExplorer(QString opt,QString path)
 #ifdef Q_OS_WIN
     path=path.replace("/","\\");
     QProcess::execute("explorer.exe "+opt+path);
-#elif defined Q_OS_LINUX
+#elif defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     QString lpath = QDir::toNativeSeparators(path);
     // lpath.left(lpath.length()- lpath.lastIndexOf(QDir::separator () );
     //qDebug()<<lpath.left(lpath.length()-lpath.lastIndexOf("/")+1);
@@ -5421,7 +5421,7 @@ bool PlayerWindow::userInactive()
             if (fullScreenControls->isVisible())
             {
                 // qDebug("%d %d %d",ypos,xpos,fullScreenControls->geometry().top());
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
                 if (ypos<fullScreenControls->geometry().top())
                 {
                     fullScreenControls->hide();

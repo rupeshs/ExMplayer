@@ -126,7 +126,7 @@ private:
     QPointer<audioextDialog> axdlg;
     QPointer<audioconvDialog> aucdlg;
     QPointer<StereoVinputDialog> svindlg;
-    #ifdef Q_OS_LINUX
+    #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
      QPointer<Inhibitor> screensaverInhibit;
     #endif
     //QPointer<ripDialog> auripdlg;

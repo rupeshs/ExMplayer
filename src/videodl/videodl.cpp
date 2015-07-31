@@ -298,7 +298,7 @@ QString Videodl::getYoutubeDlPath()
 #ifdef Q_OS_WIN
     return _settings->value("VideoDl/YoutubedlDir",qApp->applicationDirPath()).toString()+"/youtube-dl.exe";
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
  return _settings->value("VideoDl/YoutubedlDir","/usr/local/bin/").toString()+"/youtube-dl";
 # endif
 
@@ -343,7 +343,7 @@ void Videodl::on_pushButtonOpenOutput_clicked()
 #ifdef Q_OS_WIN
      emit  showfile(QString(""),getDownloadPath());
 #endif
- #ifdef Q_OS_LINUX
+ #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     QDesktopServices::openUrl(QUrl(getDownloadPath()));
  #endif
 }

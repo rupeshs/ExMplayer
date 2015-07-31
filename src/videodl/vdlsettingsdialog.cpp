@@ -38,7 +38,7 @@ VdlSettingsDialog::VdlSettingsDialog(QWidget *parent,QSettings *settings) :
     ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir",qApp->applicationDirPath()).toString());
     ui->pushButtonUpdate->setVisible(true);
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
      ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir","/usr/local/bin/").toString());
 # endif
 
@@ -104,7 +104,7 @@ void VdlSettingsDialog::on_pushButtonReset_clicked()
     ui->lineEditYoudlDir->setText(qApp->applicationDirPath());
     settingChanged("VideoDl","YoutubedlDir",qApp->applicationDirPath());
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
      settingChanged("VideoDl","DownloadDir",oPath);
       ui->lineEditDomDir->setText(oPath);
      settingChanged("VideoDl","YoutubedlDir","/usr/local/bin/");

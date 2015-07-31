@@ -67,7 +67,7 @@ void mixDialog::changeEvent(QEvent *e)
 #ifdef Q_OS_WIN
             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
              ffProcess->start(Paths::sharePath()+"/ffmpeg", arguments);
 #endif
 

@@ -90,7 +90,7 @@ void UpdateCheck::fileIsReady( QNetworkReply * reply)
         emit gotUpdateChkResponse(bUpdateAvail,mapVersions["Windows"].at(0),mapVersions["Windows"].at(1));
 
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     QString latestVersion;
     QString myVersion=Version::stable();
     if (mapVersions["Linux"].count()>0)

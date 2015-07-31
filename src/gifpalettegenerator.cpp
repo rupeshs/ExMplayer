@@ -33,7 +33,7 @@ void GifPaletteGenerator::setFfmpegOptions(QString filename,double startPos,shor
 #ifdef Q_OS_WIN
     ffmpegBinPath=qApp->applicationDirPath()+"/ffmpeg.exe";
 #endif
-#ifdef Q_OS_LINUX
+#if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     ffmpegBinPath=Paths::sharePath()+"/ffmpeg";
 
 #endif
