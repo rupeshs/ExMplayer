@@ -2584,7 +2584,7 @@ void PlayerWindow::on_comboBox_currentIndexChanged(int index)
             values<<QString::number((double)ebt->Techno[i]*0.6);
         break;
     }
-    if (index!=18)
+    if (index >= 0 && index < 18)
         animate_ae_slider(values);
 
     delete ebt;
