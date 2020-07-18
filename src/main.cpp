@@ -15,11 +15,12 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include <QtCore>
 #include "playerwindow.h"
-#include "qtsingleapplication.h"
-
+#if QT_VERSION_MAJOR != 5
+  #include "qtsingleapplication.h"
+#endif
 
 void crashingMessageHandler(QtMsgType type, const char *msg)
 {
@@ -45,6 +46,9 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     qInstallMsgHandler(crashingMessageHandler);
 #endif
+#if QT_VERSION >= 0x050000
+
+#else
     QtSingleApplication instance(argc, argv);
     if(instance.isRunning())
     {
@@ -62,13 +66,14 @@ int main(int argc, char *argv[])
 
         return 0;
     }
+
     QApplication::setApplicationName("ExMplayer");
     PlayerWindow w;
     instance.setActivationWindow(&w,true);
     QObject::connect(&instance, SIGNAL(messageReceived(const QString&)),
                      &w, SLOT(getMessage(QString)));
     w.show();
-
+#endif
     return qApp->exec();
 
 

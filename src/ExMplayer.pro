@@ -1,25 +1,33 @@
 # -------------------------------------------------
 # Project created by QtCreator 2010-06-10T20:36:40
 # -------------------------------------------------
-QT       += core gui
+TEMPLATE = app
+LANGUAGE = C++
+
 QT       += network xml
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 unix{
 QT       += dbus
 TARGET    = exmplayer
 }
-TEMPLATE  = app
 
+contains(QT_VERSION, ^4\\.[0-3]\\..*) {
+message("Some features requires Qt > 4.3.")
 INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication
-HEADERS += qtsingleapplication.h qtlocalpeer.h \
-    gifpalettegenerator.h \
-    gifgenerator.h \
-    gifanimatordialog.h
 
-SOURCES += qtsingleapplication.cpp qtlocalpeer.cpp \
-    gifpalettegenerator.cpp \
-    gifgenerator.cpp \
-    gifanimatordialog.cpp
+HEADERS += qtsingleapplication/qtsingleapplication.h qtsingleapplication/qtlocalpeer.h
+SOURCES += qtsingleapplication/qtsingleapplication.cpp qtsingleapplication/qtlocalpeer.cpp
+}
+
+HEADERS +=  gifpalettegenerator.h \
+            gifgenerator.h \
+            gifanimatordialog.h
+
+SOURCES += gifpalettegenerator.cpp \
+           gifgenerator.cpp \
+           gifanimatordialog.cpp
 
 INCLUDEPATH += searchsubtitle
 DEPENDPATH += searchsubtitle
@@ -31,10 +39,10 @@ INCLUDEPATH += searchsubtitle/miniz
 DEPENDPATH += searchsubtitle/miniz
 
 
-HEADERS += opensubtitleclient.h gzipuncompressor.h searchsubtitle.h
-SOURCES += opensubtitleclient.cpp gzipuncompressor.cpp searchsubtitle.cpp
+HEADERS += searchsubtitle/opensubtitleclient.h searchsubtitle/gzipuncompressor.h searchsubtitle/searchsubtitle.h
+SOURCES += searchsubtitle/opensubtitleclient.cpp searchsubtitle/gzipuncompressor.cpp searchsubtitle/searchsubtitle.cpp
 
-FORMS += searchsubtitle.ui \
+FORMS += searchsubtitle/searchsubtitle.ui \
     coverartdialog.ui \
     gifanimatordialog.ui
 
@@ -42,15 +50,15 @@ FORMS += searchsubtitle.ui \
 SOURCES += miniz.c tinfl.c
 
 # xmlrpc client code to connect to opensubtitles.org
-HEADERS += maiaObject.h maiaFault.h maiaXmlRpcClient.h
-SOURCES += maiaObject.cpp maiaFault.cpp maiaXmlRpcClient.cpp
+HEADERS +=searchsubtitle/maia/maiaObject.h maiaFault.h searchsubtitle/maia/maiaXmlRpcClient.h
+SOURCES += searchsubtitle/maia/maiaObject.cpp searchsubtitle/maia/maiaFault.cpp searchsubtitle/maia/maiaXmlRpcClient.cpp
 
 #video dl suppport
 INCLUDEPATH += videodl
 DEPENDPATH += videodl
 
-HEADERS += youtubedlfe.h videodl.h vdlsettingsdialog.h supsitesdialog.h
-SOURCES += youtubedlfe.cpp videodl.cpp vdlsettingsdialog.cpp supsitesdialog.cpp
+HEADERS += videodl/youtubedlfe.h videodl/videodl.h videodl/vdlsettingsdialog.h videodl/supsitesdialog.h
+SOURCES += videodl/youtubedlfe.cpp videodl/videodl.cpp videodl/vdlsettingsdialog.cpp videodl/supsitesdialog.cpp
 SOURCES += main.cpp \
     playerwindow.cpp \
     mplayerfe.cpp \
@@ -161,9 +169,9 @@ FORMS += playerwindow.ui \
     advancedinfodialog.ui \
     stereovinputdialog.ui \
     updatecheckdlg.ui\
-    videodl.ui\
-    supsitesdialog.ui \
-    vdlsettingsdialog.ui
+    videodl/videodl.ui\
+    videodl/supsitesdialog.ui \
+    videodl/vdlsettingsdialog.ui
 unix{
 HEADERS += inhibitor.h
 SOURCES += inhibitor.cpp
