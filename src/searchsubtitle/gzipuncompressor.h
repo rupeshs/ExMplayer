@@ -31,7 +31,7 @@
 #include <QDialog>
 #include <QNetworkAccessManager>
 #include <QUrl>
-#include <QtGui>
+#include <QtWidgets>
 #include <QProgressDialog>
 #include <QByteArray>
 

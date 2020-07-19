@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2015 Rupesh Sreeraman
+    Copyright (C) 2010-2020 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #include <QtWidgets/QApplication>
 #include <QtCore>
 #include "playerwindow.h"
-#if QT_VERSION_MAJOR != 5
+#ifdef SINGLE_INSTANCE
   #include "qtsingleapplication.h"
 #endif
 
@@ -46,9 +46,7 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     qInstallMsgHandler(crashingMessageHandler);
 #endif
-#if QT_VERSION >= 0x050000
-
-#else
+#ifdef SINGLE_INSTANCE
     QtSingleApplication instance(argc, argv);
     if(instance.isRunning())
     {
@@ -74,7 +72,11 @@ int main(int argc, char *argv[])
                      &w, SLOT(getMessage(QString)));
     w.show();
 #endif
-    return qApp->exec();
+     QApplication a(argc, argv);
+     QApplication::setApplicationName("ExMplayer");
+      PlayerWindow w;
+    w.show();
+    return a.exec();
 
 
 }

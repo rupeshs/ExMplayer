@@ -305,9 +305,11 @@ QString Videodl::getYoutubeDlPath()
 }
 QString Videodl::getDownloadPath()
 {
-
+#if QT_VERSION >= 0x050000
+    return _settings->value("VideoDl/DownloadDir",QStandardPaths::StandardLocation(QStandardPaths::MoviesLocation)).toString();
+#else
     return _settings->value("VideoDl/DownloadDir",QDesktopServices::storageLocation(QDesktopServices::MoviesLocation)).toString();
-
+#endif
 }
 void  Videodl::initDownload()
 {

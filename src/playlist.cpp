@@ -530,7 +530,7 @@ void playList::setDuration(float dur)
 {
     QTableWidgetItem *newItem = new QTableWidgetItem(QString::number(dur));
     tab->setItem(currentIndex,3, newItem);
-    QTime _tduration=QTime();
+    QTime _tduration=QTime(0,0);
     _tduration=  _tduration.addSecs(dur);
     //qDebug()<<"fd"<<_tduration.toString();
     QTableWidgetItem *newItem1 = new QTableWidgetItem( _tduration.toString());

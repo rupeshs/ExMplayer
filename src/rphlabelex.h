@@ -18,7 +18,7 @@
 #ifndef RPHLABELEX_H
 #define RPHLABELEX_H
 #include <QLabel>
-#include <QtGui>
+#include <QtWidgets>
 #include <QTimer>
 class QRubberBand;
 class rphLabelEx : public QLabel

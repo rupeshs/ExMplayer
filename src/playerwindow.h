@@ -21,7 +21,7 @@
 
 #include <QMainWindow>
 #include "mplayerfe.h"
-#include <QtGui>
+#include <QtWidgets>
 #include <QSettings>
 #include "config.h"
 #include "equalizertypes.h"
@@ -37,12 +37,16 @@
 #ifdef Q_OS_WIN
 #include <Winbase.h>
 #include "screensaver.h"
+#ifdef TAGLIB
 #include "qcoverart.h"
+#endif
 #endif
 #endif
 #include "aboutdialog.h"
 #include "cutterdialog.h"
-#include "norwegianwoodstyle.h"
+ #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+  #include "norwegianwoodstyle.h"
+#endif
 #include "helpdialog.h"
 #include "winfileassoc.h"
 #include "mixdialog.h"

@@ -40,14 +40,17 @@
 #include "colorutils.h"
 #include "assstyles.h"
 #include "rphmpfehelp.h"
+#if QT_VERSION < 0x050000
 #include "norwegianwoodstyle.h"
+#endif
 #include "languages.h"
 #include <QMap>
 #include <QString>
 #include <QStringList>
 #include <version.h>
-int sound_devices;
+#include <QAction>
 
+int sound_devices;
 
 QStringList AudioDriverLst;
 #ifdef Q_OS_WIN
@@ -167,7 +170,11 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
                 emit settingChanged("General","recentFilesClear",QString::number(ui->checkBoxRemrm->checkState()));
 
                 if (ui->comboBoxStyle->currentText()=="wood")
+                  {
+#if QT_VERSION < 0x050000
                     QApplication::setStyle(new NorwegianWoodStyle);
+#endif
+                }
                 else if(ui->comboBoxStyle->currentText()=="aqua")
                     emit setAqua();
                 else
@@ -334,7 +341,12 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
         ui->hSliderVolumeBoost->setValue(_settings->value("Audio/VolumeBoost","500").toInt());
         break;
     case  2 :{QDesktopServices mycomputer;
-        QString picfolder=mycomputer.storageLocation(QDesktopServices::PicturesLocation);
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+     QString picfolder=mycomputer->storageLocation(QDesktopServices::PicturesLocation);
+ #else
+     QString picfolder=QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+ #endif
+
         ui->lineEditSc->setText(_settings->value("Video/CaptureDir",picfolder).toString());
         if (_settings->value("Video/EnableSoftEQ","0").toInt()==0)
             ui->cbEnableVideoSoftEq->setCheckState(Qt::Unchecked);
@@ -528,7 +540,11 @@ void preferenceDialog::on_pushButton_2_clicked()
 void preferenceDialog::on_chScDir_clicked()
 {
     QDesktopServices mycomputer;
-    QString picfolder=mycomputer.storageLocation(QDesktopServices::PicturesLocation);
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+     QString picfolder=mycomputer->storageLocation(QDesktopServices::PicturesLocation);
+ #else
+     QString picfolder=QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+ #endif
     QString root=_settings->value("Video/CaptureDir",picfolder).toString();
 
 

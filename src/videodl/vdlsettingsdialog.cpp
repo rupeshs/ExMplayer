@@ -25,8 +25,12 @@ VdlSettingsDialog::VdlSettingsDialog(QWidget *parent,QSettings *settings) :
 {
     ui->setupUi(this);
     _settings=settings;
-    oPath=QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
 
+#if QT_VERSION >= 0x050000
+    oPath=QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+#else
+    oPath=QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
+#endif
     ui->lineEditDomDir->setText(_settings->value("VideoDl/DownloadDir",oPath).toString());
 
     //For future use
@@ -98,7 +102,12 @@ void VdlSettingsDialog::settingChanged(QString group,QString key,QString value)
 void VdlSettingsDialog::on_pushButtonReset_clicked()
 {
 #ifdef Q_OS_WIN
+
+#if QT_VERSION >= 0x050000
+    oPath=QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+#else
     oPath=QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
+#endif
     ui->lineEditDomDir->setText(oPath);
     settingChanged("VideoDl","DownloadDir",oPath);
     ui->lineEditYoudlDir->setText(qApp->applicationDirPath());

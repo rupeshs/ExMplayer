@@ -2,8 +2,7 @@
 # Project created by QtCreator 2010-06-10T20:36:40
 # -------------------------------------------------
 TEMPLATE = app
-LANGUAGE = C++
-
+QT       += core gui
 QT       += network xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,14 +10,26 @@ unix{
 QT       += dbus
 TARGET    = exmplayer
 }
+#DEFINES += TAGLIB
 
-contains(QT_VERSION, ^4\\.[0-3]\\..*) {
-message("Some features requires Qt > 4.3.")
+message(Qt version: $$QT_VERSION)
+
+lessThan(QT_MAJOR_VERSION, 5) {
+message("Single instance enabled(Qt<5)")
+
+DEFINES += SINGLE_INSTANCE
+}
+# qtsingleapplication
+contains( DEFINES, SINGLE_INSTANCE ) {
+
 INCLUDEPATH += qtsingleapplication
 DEPENDPATH += qtsingleapplication
 
 HEADERS += qtsingleapplication/qtsingleapplication.h qtsingleapplication/qtlocalpeer.h
 SOURCES += qtsingleapplication/qtsingleapplication.cpp qtsingleapplication/qtlocalpeer.cpp
+
+HEADERS +=norwegianwoodstyle.h
+SOURCES +=norwegianwoodstyle.cpp
 }
 
 HEADERS +=  gifpalettegenerator.h \
@@ -38,7 +49,6 @@ DEPENDPATH += searchsubtitle/maia
 INCLUDEPATH += searchsubtitle/miniz
 DEPENDPATH += searchsubtitle/miniz
 
-
 HEADERS += searchsubtitle/opensubtitleclient.h searchsubtitle/gzipuncompressor.h searchsubtitle/searchsubtitle.h
 SOURCES += searchsubtitle/opensubtitleclient.cpp searchsubtitle/gzipuncompressor.cpp searchsubtitle/searchsubtitle.cpp
 
@@ -47,10 +57,10 @@ FORMS += searchsubtitle/searchsubtitle.ui \
     gifanimatordialog.ui
 
 #miniz libarary to uncompress data
-SOURCES += miniz.c tinfl.c
+SOURCES += searchsubtitle/miniz/miniz.c searchsubtitle/miniz/tinfl.c
 
 # xmlrpc client code to connect to opensubtitles.org
-HEADERS +=searchsubtitle/maia/maiaObject.h maiaFault.h searchsubtitle/maia/maiaXmlRpcClient.h
+HEADERS +=searchsubtitle/maia/maiaObject.h searchsubtitle/maia/maiaFault.h searchsubtitle/maia/maiaXmlRpcClient.h
 SOURCES += searchsubtitle/maia/maiaObject.cpp searchsubtitle/maia/maiaFault.cpp searchsubtitle/maia/maiaXmlRpcClient.cpp
 
 #video dl suppport
@@ -83,7 +93,6 @@ SOURCES += main.cpp \
     helpdialog.cpp \
     rphmpfehelp.cpp \
     cutterdialog.cpp \
-    norwegianwoodstyle.cpp \
     winfileassoc.cpp \
     mixdialog.cpp \
     rphfile.cpp \
@@ -130,7 +139,6 @@ HEADERS += playerwindow.h \
     helpdialog.h \
     rphmpfehelp.h \
     cutterdialog.h \
-    norwegianwoodstyle.h \
     winfileassoc.h \
     mixdialog.h \
     rphfile.h \
@@ -176,6 +184,7 @@ unix{
 HEADERS += inhibitor.h
 SOURCES += inhibitor.cpp
 }
+contains( DEFINES, TAGLIB ) {
 
 win32 {
 INCLUDEPATH +=taglib
@@ -186,13 +195,13 @@ HEADERS += qcoverart.h
 SOURCES += qcoverart.cpp
 }
 
+}
 
 win32 {
-
 INCLUDEPATH += directx
-
 HEADERS += screensaver.h
 SOURCES += screensaver.cpp
+
 LIBS += -ldsound \
     -lddraw
 contains(TEMPLATE,vcapp):LIBS += ole32.lib \

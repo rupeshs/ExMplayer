@@ -1,4 +1,4 @@
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include "searchsubtitle.h"
 
 int main(int argc, char *argv[])

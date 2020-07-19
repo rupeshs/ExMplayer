@@ -43,7 +43,11 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     settings=new QSettings(Paths::configPath()+"/ExMplayer.ini",QSettings::IniFormat,this);
 
     if (settings->value("Skin/style","aqua").toString()=="wood")
-        QApplication::setStyle(new NorwegianWoodStyle);
+    {
+     #if QT_VERSION < 0x050000
+           QApplication::setStyle(new NorwegianWoodStyle);
+     #endif
+    }
     else if(settings->value("Skin/style","aqua").toString()=="aqua")
         emit setAqua();
     else
@@ -70,7 +74,12 @@ PlayerWindow::PlayerWindow(QWidget *parent) :
     setupPlaylistWindow();
 
 
-    QString picfolder=mycomputer->storageLocation(QDesktopServices::PicturesLocation);
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+     QString picfolder=mycomputer->storageLocation(QDesktopServices::PicturesLocation);
+ #else
+     QString picfolder=QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+ #endif
     myconfig->set_screenshotfolder(settings->value("Video/CaptureDir",picfolder).toString());
 
     //log window
@@ -258,7 +267,11 @@ void PlayerWindow::initMPlayer(QString file,int type)
         currentFilePos=0;
 
     }
-    QString picfolder=mycomputer->storageLocation(QDesktopServices::PicturesLocation);
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+     QString picfolder=mycomputer->storageLocation(QDesktopServices::PicturesLocation);
+ #else
+     QString picfolder=QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+ #endif
     myconfig->set_screenshotfolder(settings->value("Video/CaptureDir",picfolder).toString());
     loadMPlayerConfig();
     mp->mProcess->setWorkingDirectory(myconfig->screenshotfolder);
@@ -1339,6 +1352,7 @@ void PlayerWindow::startingPlayback()
                                 Cover Art
             ************************************************************/
 #ifdef Q_OS_WIN
+ #ifdef TAGLIB
             TagLib::FileRef  f(currentFile.toStdString().c_str());
             QCoverArt coverArt;
 
@@ -1374,6 +1388,7 @@ void PlayerWindow::startingPlayback()
                                      tr("This is likely a bug."));
 
             }
+#endif
 #endif
 
             /************************************************************/
@@ -1580,6 +1595,7 @@ void PlayerWindow::updateSeekbar()
                 if(sliderSeekFullSc)
                     sliderSeekFullSc->setValue((mp->curpos()/mp->duration())*100);
                 ui->lcdCurPos->display(mp->tcurpos().toString());
+
 
                 QString curtPos=mp->tcurpos().toString("hh:mm:ss");
                 //qDebug()<<curtPos.mid(3);
@@ -1853,9 +1869,16 @@ void PlayerWindow::on_action_File_triggered()
                                                  options);
     }
     else
-    { fileName = QFileDialog::getOpenFileNames(this,
+    {
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+     QString moviefolder=mycomputer->storageLocation(QDesktopServices::MoviesLocation);
+
+ #else
+     QString moviefolder=QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+ #endif
+        fileName = QFileDialog::getOpenFileNames(this,
                                                tr("Open media file(s)"),
-                                               mycomputer->storageLocation( mycomputer->MoviesLocation),
+                                               moviefolder,
                                                tr("Any File (*.*)"),
                                                &selectedFilter,
                                                options);
@@ -2292,10 +2315,13 @@ void PlayerWindow::changeVideoTrack(QAction* act)
 void PlayerWindow::on_actionStay_on_top_triggered()
 {if (!mp->isfullscreen())
     {
+
         if(ui->actionStay_on_top->isChecked())
-            this->setWindowFlags(Qt::WindowStaysOnTopHint);
+            this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
         else
-            this->setWindowFlags(!Qt::WindowStaysOnTopHint);
+        {
+            this->setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
+        }
         this->showNormal();
     }
 
@@ -3154,7 +3180,7 @@ void PlayerWindow::showSeekpos(QString pos, QPoint *pt)
 {
 
     float p=(pos.toInt()/100.0)*mp->duration();
-    QTime _duration(0,0,0,0);
+    QTime _duration(0,0);
     _duration=_duration.addSecs(p);
 
     if(lab)
@@ -3863,7 +3889,7 @@ void PlayerWindow::toggleFullscreen()
 #ifdef Q_OS_WIN
 
         if (!ui->actionStay_on_top->isChecked())
-            this->setWindowFlags(!Qt::WindowStaysOnTopHint);
+            this->setWindowFlags(windowFlags() & ~Qt::WindowStaysOnTopHint);
 #endif
         ui->actionFullscreen->setIcon(QIcon(":/images/fullscreen.png"));
         ui->actionFullscreen->setToolTip("Show fullscreen");
@@ -3927,8 +3953,14 @@ void PlayerWindow::toggleFullscreen()
             lcdDurationFullSc=new QLCDNumber(this);
             lcdCurPosFullSc->setSegmentStyle(ui->lcdCurPos->segmentStyle());
             lcdDurationFullSc->setSegmentStyle(ui->lcdDuration->segmentStyle());
+
+#if QT_VERSION < QT_VERSION_CHECK(4,8 , 0)
             lcdCurPosFullSc->setNumDigits(8);
             lcdDurationFullSc->setNumDigits(8);
+ #else
+            lcdCurPosFullSc->setDigitCount(8);
+            lcdDurationFullSc->setDigitCount(8);
+ #endif
             lcdCurPosFullSc->setMaximumSize(ui->lcdCurPos->maximumSize());
             lcdDurationFullSc->setMaximumSize(ui->lcdDuration->maximumSize());
             lcdCurPosFullSc->setFrameShape(ui->lcdCurPos->frameShape());

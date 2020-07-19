@@ -111,7 +111,7 @@ void GifAnimatorDialog::on_pushButtonStop_clicked()
     if (mp)
     {ui->lineEditStop->setText(mp->tcurpos().toString());
         stopPos=mp->curpos();
-        QTime t;
+        QTime t(0,0);
         t = t.addSecs(stopPos-startPos);
         //ui->lineEditLen->setText( t.toString());
     }

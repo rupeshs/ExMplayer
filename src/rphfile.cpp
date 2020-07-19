@@ -17,7 +17,7 @@
 */
 #include "rphfile.h"
 #include "QFileDialog"
-#include <QtGui>
+#include <QtWidgets>
 rphFile::rphFile()
 {
 }

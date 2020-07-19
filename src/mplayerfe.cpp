@@ -121,7 +121,7 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     bmute=false;
     volumeBoost=110;
     _usevolumeboost=false;
-     _tduration = QTime(0,0,0,0);
+     _tduration = QTime(0,0);
     _osdLevel=1;
     _currentSubtitleTrack="0";
      _useVideoSoftEq=false;
@@ -350,7 +350,7 @@ void mplayerfe::seek(int per)
     {
         float pos=((this->duration())*(float)per)/100.0;
         cmd =QString("pausing_keep seek " + QString::number(pos) + " 2\n");
-        mProcess->write(cmd.toAscii());
+        writeCmd(cmd);
 
         emit show_message("Seeking :"+ QString::number(per)+"% ",1000);
     }
@@ -360,8 +360,7 @@ void mplayerfe::seek(int per)
         pos=pos-_curpos;
         //qDebug()<<QString::number(_curpos)<< " Seeking :"+ QString::number(pos);
         cmd =QString("pausing_keep seek " + QString::number(pos) + " 0\n");
-        mProcess->write(cmd.toAscii());
-
+        writeCmd(cmd);
     }
 
 }
@@ -369,12 +368,12 @@ void mplayerfe::pause()
 {
     bpause=!bpause;
     cmd=QString("pause\n");
-    mProcess->write(cmd.toAscii());
+    writeCmd(cmd);
 
 }
 void mplayerfe::stop()
 {
-    mProcess->write(QString("quit\n").toAscii());
+    writeCmd(QString("quit\n"));
     emit this->show_endmessage("Stopped");
 }
 
@@ -384,40 +383,37 @@ void mplayerfe::setVolume(int vol)
             bmute=!bmute;
         _curvolume=vol;
         cmd=QString("volume " + QString::number(vol) + " 1\n");
-        mProcess->write(cmd.toAscii()) ;
+        writeCmd(cmd) ;
         emit show_message("Volume :"+ QString::number(vol)+"% ",1000);
     }
 }
 void mplayerfe::toggleMute()
 {
     bmute=!bmute;
-
-    mProcess->write(QString("pausing_keep mute\n").toAscii()) ;
+    writeCmd(QString("pausing_keep mute\n")) ;
     if(bmute)
         emit show_message("Mute enabled",1000);
     else
-    {emit show_message("Mute disabled",1000);
-
-
+    {
+        emit show_message("Mute disabled",1000);
     }
 }
 void mplayerfe::setOSDlevel(int osdlevel)
 {
     cmd="osd "+QString::number(osdlevel)+"\n";
     _osdLevel=osdlevel;
-    mProcess->write(cmd.toAscii()) ;
+    writeCmd(cmd) ;
 
 }
 void mplayerfe::setframedroplevel(int framedroplevel)
 {
     cmd="frame_drop "+QString::number(framedroplevel)+"\n";
-    mProcess->write(cmd.toAscii()) ;
-    qDebug()<<cmd.toAscii();
+    writeCmd(cmd) ;
+
 }
 void mplayerfe::framestep()
 {
-
-    mProcess->write(QString("frame_step\n").toAscii());
+    writeCmd(QString("frame_step\n"));
 }
 
 void  mplayerfe::seeknseconds(int nsec)
@@ -425,7 +421,7 @@ void  mplayerfe::seeknseconds(int nsec)
     // this->smoothSeek();
     cmd=QString("seek " + QString::number(nsec) + " 0\n");
     qDebug()<<cmd;
-    mProcess->write(cmd.toAscii());
+    writeCmd(cmd);
     if(nsec>0)
         emit show_message("Forward "+QString::number(nsec)+" Seconds",1000);
     else
@@ -461,7 +457,7 @@ void  mplayerfe::setSpeed(float speed, int type)
             break;
         }
         emit show_message(speedstr,1000);
-        mProcess->write(cmd.toAscii()) ;
+        writeCmd(cmd);
     }
 }
 void  mplayerfe::setaudiodelay(float delay,QWidget* par)
@@ -471,10 +467,15 @@ void  mplayerfe::setaudiodelay(float delay,QWidget* par)
         bool ok;
         int i ;
 
-        i= QInputDialog::getInteger(par, tr("Set Audio delay"), tr("Delay:(in milliseconds)"),100, -1000000, 1000000, 1, &ok);
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+   i= QInputDialog::getInteger(par, tr("Set Audio delay"), tr("Delay:(in milliseconds)"),100, -1000000, 1000000, 1, &ok);
+ #else
+    i= QInputDialog::getInt(par, tr("Set Audio delay"), tr("Delay:(in milliseconds)"),100, -1000000, 1000000, 1, &ok);
+ #endif
         if(ok)
         {cmd="audio_delay "+QString::number((float)i/1000)+" 1\n";
-            mProcess->write(cmd.toAscii()) ;
+           writeCmd(cmd) ;
         }
     }
     else
@@ -485,7 +486,7 @@ void  mplayerfe::setaudiodelay(float delay,QWidget* par)
             emit  show_message("Decreasing Audio delay by "+QString::number(abs(delay*1000)) +" milliseconds",1000);
 
         cmd="audio_delay "+QString::number(delay)+" 0\n";
-        mProcess->write(cmd.toAscii()) ;
+        writeCmd(cmd);
     }
 
 }
@@ -493,7 +494,7 @@ void  mplayerfe::setvideoproperty(QString property, int value)
 {
 
     cmd=QString("pausing_keep "+ property +" " +QString::number(value) + " 1\n");
-    mProcess->write(cmd.toAscii());
+    writeCmd(cmd);
     emit show_message( property +" "+QString::number(value),1000);
 }
 void mplayerfe::setequalizerbandvalue(QString bandvalues)
@@ -503,13 +504,13 @@ void mplayerfe::setequalizerbandvalue(QString bandvalues)
     cmd=QString("af_cmdline equalizer "+bandvalues+"\n");
     qDebug()<<cmd;
     emit  settingChanged ("Audio","Eq",bandvalues);
-    mProcess->write(cmd.toAscii());
+    writeCmd(cmd);
     //qDebug()<<"equlizerstr"<<equlizerstr ;
 }
 void mplayerfe::takescreenshot(int type)
 {
     cmd=QString("screenshot "+QString::number(type)+"\n");
-    mProcess->write(cmd.toAscii());
+    writeCmd(cmd);
 }
 void mplayerfe::loadsubtitles(QString subfile)
 {
@@ -537,7 +538,7 @@ void mplayerfe::loadsubtitles(QString subfile)
         subfile = subfile.replace("\\","/");
 
         cmd="sub_load \""+ subfile+"\"\n";
-        mProcess->write(cmd.toAscii());
+        writeCmd(cmd);
         qDebug()<<cmd;
         switchSubtitle(listSubtitleTrack.count());
 
@@ -559,7 +560,7 @@ void mplayerfe::toggle_subtitle_visibility()
 {
     bsubtvisible=! bsubtvisible;
     cmd="sub_visibility\n";
-    mProcess->write(cmd.toAscii());
+    writeCmd(cmd);
     if (bsubtvisible)
         emit show_message("Subtitles enabled",1000);
     else
@@ -569,7 +570,7 @@ void mplayerfe::toggle_subtitle_visibility()
 }
 void  mplayerfe::usercommand(QString user_cmd)
 {
-    mProcess->write(user_cmd.toAscii()+"\n");
+    writeCmd(user_cmd+"\n");
 }
 void  mplayerfe::switchAudio(int id)
 {
@@ -605,7 +606,7 @@ void  mplayerfe::switchVideo(int id)
     }
     else
     { cmd="switch_video "+QString::number(id);
-        mProcess->write(cmd.toAscii()+"\n");
+        writeCmd(cmd+"\n");
     }
 }
 void  mplayerfe::fastRestart(QStringList extraOption)
@@ -683,7 +684,7 @@ void mplayerfe::restart()
     if(!bsubtvisible)
     {
         cmd="sub_visibility\n";
-        mProcess->write(cmd.toAscii());
+        writeCmd(cmd);
     }
     else
     {
@@ -694,10 +695,10 @@ void mplayerfe::restart()
     if (_starttime>0)
     {
         cmd =QString("pausing_keep seek " + QString::number(_curpos) + " 0\n");
-        mProcess->write(cmd.toAscii());
+        writeCmd(cmd);
     }
     cmd="osd "+QString::number(_osdLevel)+"\n";
-    mProcess->write(cmd.toAscii()) ;
+    writeCmd(cmd);
     //setequalizerbandvalue(this->equlizerstr);
 }
 void mplayerfe::loadExternalFile(QString File)
@@ -1441,7 +1442,7 @@ void mplayerfe::setAspectRatio(float val)
     else
     {
         cmd=QString("switch_ratio %1\n").arg(val);
-        mProcess->write(cmd.toAscii());
+        writeCmd(cmd);
         emit show_message("Changing aspectratio to "+QString::number(val),1000);
     }
 }
@@ -1469,7 +1470,7 @@ void mplayerfe::switchSubtitle(int id)
 
         //Disable subtitle from file, vob,demux.
         cmd=QString("sub_source %1").arg(id);
-        mProcess->write(cmd.toAscii()+"\n");
+        writeCmd(cmd+"\n");
         _currentSubtitleTrack=QString::number(-1);
         return;
 
@@ -1478,7 +1479,7 @@ void mplayerfe::switchSubtitle(int id)
     if (mapFileSubtitles.count()>0)
     {
        cmd=QString("sub_file %1").arg(id);
-       mProcess->write(cmd.toAscii()+"\n");
+       writeCmd(cmd+"\n");
        _currentSubtitleTrack=QString::number(id);
     }
     else
@@ -1489,7 +1490,7 @@ void mplayerfe::switchSubtitle(int id)
        if(! _isRestarting)
        {
          cmd=QString("sub_demux %1").arg(id);
-         mProcess->write(cmd.toAscii()+"\n");
+         writeCmd(cmd+"\n");
          _currentSubtitleTrack=QString::number(id);
          //qDebug()<<listSubtitleTrack;
        }
@@ -1500,7 +1501,7 @@ void mplayerfe::switchSubtitle(int id)
 void mplayerfe::setSubAlignment(int align)
 {
     cmd=QString("sub_alignment %1").arg(align);
-    mProcess->write(cmd.toAscii()+"\n");
+    writeCmd(cmd+"\n");
     switch(align)
     {case 0:emit show_message("Setting Alignment to top",1000);
         break;
@@ -1517,7 +1518,7 @@ void mplayerfe::scaleSubFont(int typ)
     else
         cmd=QString("sub_scale -0.1 0");
 
-    mProcess->write(cmd.toAscii()+"\n");
+    writeCmd(cmd+"\n");
     qDebug()<<cmd;
 }
 void mplayerfe::setSubPos(int typ)       
@@ -1534,7 +1535,7 @@ void mplayerfe::setSubPos(int typ)
             _subpos= 100;
     }
     cmd=QString("sub_pos %1 1").arg(_subpos);
-    mProcess->write(cmd.toAscii()+"\n");
+    writeCmd(cmd+"\n");
 
 }
 void mplayerfe::setSubDelay(int typ,QWidget* par)
@@ -1543,8 +1544,13 @@ void mplayerfe::setSubDelay(int typ,QWidget* par)
     {bool ok;
         int i ;
 
-        i= QInputDialog::getInteger(par, tr("Set subtitle delay"), tr("Delay:(in milliseconds)"),100, -1000000, 1000000, 1, &ok);
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+   i= QInputDialog::getInteger(par, tr("Set subtitle delay"), tr("Delay:(in milliseconds)"),100, -1000000, 1000000, 1, &ok);
+
+ #else
+   i= QInputDialog::getInt(par, tr("Set subtitle delay"), tr("Delay:(in milliseconds)"),100, -1000000, 1000000, 1, &ok);
+ #endif
         if(ok)
             cmd=QString("sub_delay %1 1").arg((float)i/1000);
     }
@@ -1553,7 +1559,7 @@ void mplayerfe::setSubDelay(int typ,QWidget* par)
     else
         cmd=QString("sub_delay -0.1 0");
 
-    mProcess->write(cmd.toAscii()+"\n");
+    writeCmd(cmd+"\n");
 
 }
 void mplayerfe::addAudioFilterWinampDsp()
@@ -1775,8 +1781,12 @@ void mplayerfe::initMediaInfo()
 
             //QString to wchar_t*
             /////////////////////////////////////////////////////////////////
-            const char *string=this->filepath().toAscii().constData();
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    const char *string=this->filepath().toAscii().constData();
+ #else
+    const char *string=this->filepath().toLatin1().constData();
+ #endif
             size_t size = strlen (string) + 1;
             wchar_t *buf = (wchar_t *)malloc (size * sizeof (wchar_t));
 
@@ -1936,7 +1946,13 @@ void mplayerfe::mplayerConsole(QByteArray ba)
                 }
                 else
                 {
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
                     scanPer=fontFile.fileName().at(0).toUpper().toAscii()-64;
+#else
+                    scanPer=fontFile.fileName().at(0).toUpper().toLatin1()-64;
+
+#endif
                 }
 
                 qDebug()<<"Font :"<<QString::number(scanPer)<<fontFile.fileName();
@@ -2213,7 +2229,7 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
                 //Recheck length
                 cmd=QString("get_time_length\n");
-                mProcess->write(cmd.toAscii());
+                writeCmd(cmd);
 
                 //Resize video
                 if (_video_width>0 && _video_height>0){
@@ -2300,7 +2316,7 @@ void mplayerfe::mplayerConsole(QByteArray ba)
 
                if (_duration>tmpstr.toFloat())
                 {  _duration=tmpstr.toFloat();
-                   _tduration=QTime();
+                   _tduration=QTime(0,0);
                 _tduration=  _tduration.addSecs(_duration);
 
                 emit lengthChanged();
@@ -2336,7 +2352,7 @@ void mplayerfe::mplayerConsole(QByteArray ba)
             if (_duration!=rx_dur.cap(1).toFloat())
             {
                 _duration=rx_dur.cap(1).toFloat();
-                _tduration=QTime();
+                _tduration=QTime(0,0);
                 _tduration=  _tduration.addSecs(_duration);
 
                 emit lengthChanged();
@@ -2356,7 +2372,7 @@ void mplayerfe::mplayerConsole(QByteArray ba)
                 _curpos=-_curpos;
            // qDebug()<<QString::number(_curpos);
 
-            _tcurpos=QTime();
+            _tcurpos=QTime(0,0);
             _tcurpos=_tcurpos.addSecs(_curpos);
 
             //qDebug()<<QString::number((int)_curpos-1);
@@ -2698,4 +2714,12 @@ void mplayerfe::setSubtitleCodePage(QString cp)
 {
     removeOption("-subcp",true);
     arguments<<"-subcp"<< cp;
+}
+void mplayerfe::writeCmd(QString cmd)
+{
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+   mProcess->write(cmd.toAscii());
+#else
+    mProcess->write(cmd.toLatin1());
+ #endif
 }

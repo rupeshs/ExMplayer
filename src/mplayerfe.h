@@ -18,7 +18,7 @@
 #ifndef MPLAYERFE_H
 #define MPLAYERFE_H
 #include <QtCore>
-#include <QtGui>
+#include <QtWidgets>
 #include <QDebug>
 #include "winampdspdialog.h"
 #include <QActionGroup>
@@ -402,6 +402,7 @@ public slots:
    void removeOption(QString option,bool addseek);
    QString colorToRGB(unsigned int color) ;
    QString _videoFormat;
+   void writeCmd(QString str);
 
 
 
