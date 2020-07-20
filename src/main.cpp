@@ -43,10 +43,11 @@ void crashingMessageHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
+
+#ifdef SINGLE_INSTANCE
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     qInstallMsgHandler(crashingMessageHandler);
 #endif
-#ifdef SINGLE_INSTANCE
     QtSingleApplication instance(argc, argv);
     if(instance.isRunning())
     {

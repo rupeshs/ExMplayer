@@ -93,8 +93,12 @@ int Inhibitor::checkProcess(const char* name)
 {
     QProcess p;
     QString cmd="pidof -x ";
-
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
     p.start(cmd+QString::fromAscii(name));
+#else
+    p.start(cmd+QString::fromLatin1(name));
+#endif
+
     p.waitForFinished(1000);
     QString p_stdout = p.readAllStandardOutput();
     int pid=p_stdout.toInt();

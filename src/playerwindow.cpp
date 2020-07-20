@@ -474,7 +474,7 @@ void  PlayerWindow::setupMyUi()
     panel->setMinimumSize( QSize(1,1) );
     panel->setFocusPolicy( Qt::StrongFocus );
     // panel
-    panel->setAutoFillBackground(TRUE);
+    panel->setAutoFillBackground(true);
 
     QHBoxLayout * layout = new QHBoxLayout;
     layout->setSpacing(0);

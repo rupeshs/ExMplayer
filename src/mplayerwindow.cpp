@@ -34,7 +34,7 @@
 
 Screen::Screen(QWidget* parent, Qt::WindowFlags f) : rphLabelEx(parent)
 {
-	setMouseTracking(TRUE);
+    setMouseTracking(true);
 	setFocusPolicy( Qt::NoFocus );
 	setMinimumSize( QSize(0,0) );
     showtext=true;
@@ -191,10 +191,10 @@ MplayerWindow::MplayerWindow(QWidget* parent, Qt::WindowFlags f)
     ColorUtils::setBackgroundColor( this, QColor(1,1,1) );
 
 	mplayerlayer = new MplayerLayer( this );
-    mplayerlayer->setAutoFillBackground(TRUE);
+    mplayerlayer->setAutoFillBackground(true);
 
     logo = new QLabel( mplayerlayer );
-    logo->setAutoFillBackground(TRUE);
+    logo->setAutoFillBackground(true);
     bshowLogo=false;
 
 
