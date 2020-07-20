@@ -273,43 +273,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBoxStyle">
-          <item>
-           <property name="text">
-            <string>windows</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>wood</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>cleanlooks</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>aqua</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>motif</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>cde</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>plastique</string>
-           </property>
-          </item>
-         </widget>
+         <widget class="QComboBox" name="comboBoxStyle"/>
         </item>
        </layout>
       </item>

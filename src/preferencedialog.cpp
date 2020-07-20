@@ -86,9 +86,22 @@ preferenceDialog::preferenceDialog(QWidget *parent,QSettings *settings) :
         ui->cmbAO->addItem(AudioDriverLst.at(i));
 
     }
-    ui->comboBoxStyle->addItem("windowsxp");
+#if QT_VERSION < 0x050000
+       ui->comboBoxStyle->addItem("windowsxp");
 #endif
-
+#endif
+#if QT_VERSION < 0x050000
+    ui->comboBoxStyle->addItem("windows");
+    ui->comboBoxStyle->addItem("wood");
+    ui->comboBoxStyle->addItem("cleanlooks");
+    ui->comboBoxStyle->addItem("aqua");
+    ui->comboBoxStyle->addItem("motif");
+    ui->comboBoxStyle->addItem("cde");
+    ui->comboBoxStyle->addItem("plastique");
+#else
+    ui->comboBoxStyle->addItem("windows");
+    ui->comboBoxStyle->addItem("aqua");
+#endif
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
     ui->comboBox->setEnabled(false);
@@ -178,7 +191,11 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
                 else if(ui->comboBoxStyle->currentText()=="aqua")
                     emit setAqua();
                 else
+                {
+ #if QT_VERSION < 0x050000
                     qApp->setStyle(ui->comboBoxStyle->currentText());
+ #endif
+                }
 
 
 

@@ -4234,7 +4234,8 @@ void PlayerWindow::on_action_Help_triggered()
     mainhlpDlg->show();
 }
 void PlayerWindow::setAqua()
-{   //qApp->setStyle("windowsxp");
+{
+    //qApp->setStyle("windowsxp");
     qApp->setStyle(new GlassStyle);
 
     ui->statusBar->setStyleSheet(QString::fromUtf8("background:white;"));

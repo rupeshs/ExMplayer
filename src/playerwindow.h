@@ -44,8 +44,8 @@
 #endif
 #include "aboutdialog.h"
 #include "cutterdialog.h"
- #if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-  #include "norwegianwoodstyle.h"
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+#include "norwegianwoodstyle.h"
 #endif
 #include "helpdialog.h"
 #include "winfileassoc.h"
@@ -81,6 +81,7 @@
 #include "gifpalettegenerator.h"
 #include "gifgenerator.h"
 #include <gifanimatordialog.h>
+#include <QStyleFactory>
 
 #define FULLSCREENCTRL_WIDTH_PERCENTAGE  .60
 #define FULLSCREENCTRLHEIGHT  70
