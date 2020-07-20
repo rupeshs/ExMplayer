@@ -53,13 +53,15 @@ Screen::Screen(QWidget* parent, Qt::WindowFlags f) : rphLabelEx(parent)
 	timer->start(2000);
 #endif
 
-	// Change attributes
-	setAttribute(Qt::WA_NoSystemBackground);
-	//setAttribute(Qt::WA_StaticContents);
-        //setAttribute( Qt::WA_OpaquePaintEvent );
-	setAttribute(Qt::WA_PaintOnScreen);
-	setAttribute(Qt::WA_PaintUnclipped);
-	//setAttribute(Qt::WA_PaintOutsidePaintEvent);
+
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    // Change attributes
+    setAttribute(Qt::WA_NoSystemBackground);
+    setAttribute(Qt::WA_PaintOnScreen);
+    setAttribute(Qt::WA_PaintUnclipped);
+#endif
+
+
 
 }
 
