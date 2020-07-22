@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2015 Rupesh Sreeraman
+    Copyright (C) 2010-2020 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ aboutDialog::aboutDialog(QWidget *parent) :
       QDateTime dt=fi.created();
 
       strQtVersion=QString::fromLatin1(qVersion());
-      strBuildText="Using "+strQtVersion +"(Compiled with "+strQtVersion+")\n";
+      strBuildText="Using Qt "+strQtVersion +" (Compiled with Qt "+strQtVersion+")\n";
       strBuildText+=QString("Build on "+dt.toString());
 
       ui->labelDate->setText(strBuildText);

@@ -18,6 +18,7 @@
 #include <QtWidgets/QApplication>
 #include <QtCore>
 #include "playerwindow.h"
+#include <QImageReader>
 #ifdef SINGLE_INSTANCE
   #include "qtsingleapplication.h"
 #endif
@@ -73,6 +74,7 @@ int main(int argc, char *argv[])
                      &w, SLOT(getMessage(QString)));
     w.show();
 #endif
+    qDebug()<<QImageReader::supportedImageFormats();
      QApplication a(argc, argv);
      QApplication::setApplicationName("ExMplayer");
       PlayerWindow w;

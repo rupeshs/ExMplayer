@@ -1,6 +1,6 @@
 /*
     exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2015 Rupesh Sreeraman <exmplayer.dev@gmail.com>
+    Copyright (C) 2010-2020 Rupesh Sreeraman <exmplayer.dev@gmail.com>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
