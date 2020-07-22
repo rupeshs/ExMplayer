@@ -27,9 +27,16 @@ aboutDialog::aboutDialog(QWidget *parent) :
     ui(new Ui::aboutDialog)
 {
       ui->setupUi(this);
+      QString strBuildText;
+      QString strQtVersion;
       QFileInfo fi(qApp->applicationFilePath());
       QDateTime dt=fi.created();
-      ui->labelDate->setText(QString("Build on "+dt.toString()));
+
+      strQtVersion=QString::fromLatin1(qVersion());
+      strBuildText="Using "+strQtVersion +"(Compiled with "+strQtVersion+")\n";
+      strBuildText+=QString("Build on "+dt.toString());
+
+      ui->labelDate->setText(strBuildText);
       ui->labelVersion->setText("<span style=\" font-size:12pt; font-weight:600; color:#000000;\">ExMplayer v"+Version::stable()+ " <span>");
 }
 
