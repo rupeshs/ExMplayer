@@ -516,7 +516,7 @@ private slots:
     void on_toolButtonVolumeBoost_clicked();
     void setStereoInputFormat(int mode);
     void hideSeek();
-    bool userInactive();
+    void userInactive();
     void addSubtitletrack(QStringList sl);
     void on_actionCheck_for_updates_triggered();
     void on_toolButtonVolume_pressed();

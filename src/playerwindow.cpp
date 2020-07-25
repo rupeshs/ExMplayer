@@ -5443,7 +5443,7 @@ bool PlayerWindow::eventFilter(QObject *obj, QEvent *event)
 
     return QMainWindow::eventFilter(obj, event);
 }
-bool PlayerWindow::userInactive()
+void PlayerWindow::userInactive()
 {
 
     if (isfullscreen)
