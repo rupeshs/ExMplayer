@@ -82,8 +82,7 @@ SearchSubtitle::SearchSubtitle(QWidget *parent) :
     context_menu->addAction(downloadAct);
     context_menu->addAction(copyLinkAct);
 
-    gzDownloader=new GzipUncompressor(this);
-    QObject::connect(gzDownloader,SIGNAL(uncompressFinished()),this,SLOT(downloadComplete()));
+
     disableUi();
 
 
@@ -372,7 +371,8 @@ void SearchSubtitle::on_pushButtonDwnld_clicked()
            qDebug()<<QFile::exists(fileName);
         _subfileName=fileName;
 
-
+        gzDownloader=new GzipUncompressor(this);
+        QObject::connect(gzDownloader,SIGNAL(uncompressFinished()),this,SLOT(downloadComplete()));
         gzDownloader->downloadAndUncompress(QUrl(subUrl),fileName);
         gzDownloader->show();
     }

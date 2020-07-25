@@ -95,7 +95,7 @@ color: rgb(0, 0, 255);
     <property name="smallDecimalPoint">
      <bool>true</bool>
     </property>
-    <property name="numDigits">
+    <property name="digitCount">
      <number>8</number>
     </property>
     <property name="segmentStyle">
@@ -147,7 +147,7 @@ color: rgb(0, 0, 255);
     <property name="smallDecimalPoint">
      <bool>true</bool>
     </property>
-    <property name="numDigits">
+    <property name="digitCount">
      <number>8</number>
     </property>
     <property name="mode">
@@ -711,7 +711,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>40</x>
          <y>140</y>
-         <width>308</width>
+         <width>310</width>
          <height>19</height>
         </rect>
        </property>
@@ -853,7 +853,7 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>10</x>
          <y>10</y>
-         <width>433</width>
+         <width>443</width>
          <height>141</height>
         </rect>
        </property>
@@ -2017,7 +2017,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="styleSheet">
      <string notr="true">QLabel{font: 75 7pt &quot;MS Shell Dlg 2&quot;;
-color: grey;
+color: rgb(0, 0, 0);
 }</string>
     </property>
     <property name="text">
@@ -2178,7 +2178,7 @@ color: grey;
      <x>0</x>
      <y>0</y>
      <width>879</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
