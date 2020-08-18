@@ -34,3 +34,19 @@ For Linux users
 Install youtube-dl from the https://rg3.github.io/youtube-dl/download.html.
 
 
+For Ubuntu 20.04 
+----------------
+sudo add-apt-repository ppa:exmplayer-dev/exmplayer-qt5
+sudo apt-get update
+sudo apt-get install exmplayer
+
+https://launchpad.net/~exmplayer-dev/+archive/ubuntu/exmplayer-qt5/+packages
+
+
+For Ubuntu 12.04-18.04
+----------------------
+sudo add-apt-repository ppa:exmplayer-dev/exmplayer
+sudo apt-get update
+sudo apt-get install exmplayer
+
+https://launchpad.net/~exmplayer-dev/+archive/ubuntu/exmplayer/+packages
