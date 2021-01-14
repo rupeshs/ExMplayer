@@ -62,7 +62,7 @@ void OpenSubtitlesClient::handleLogin(QVariant& result)
 
     if (resultMap["status"].toString() == QLatin1String("200 OK")) {
         token = resultMap["token"].toString();
-        qDebug()<<"Login succesful"<<resultMap["status"].toString();
+        qDebug()<<"Login successful"<<resultMap["status"].toString();
         emit readyForSearch();
         // XXX
         //search("F:/films/Despicable Me 2 (2013)/Despicable.Me.2.2013.720p.BluRay.x264.YIFY.mp4",FILEHASH);
