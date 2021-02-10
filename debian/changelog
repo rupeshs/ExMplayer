@@ -1,6 +1,6 @@
 exmplayer (5.5.0)  focal; urgency=low
   *Qt4 to Qt5 porting 
- -- rupeshsreeraman <exmplayer.dev@gmail.com>  Tue, 21 Jul 2020 05:12:05 +0430 
+ -- Rupesh Sreeraman <exmplayer.dev@gmail.com>  Tue, 21 Jul 2020 05:12:05 +0430 
  
 exmplayer (5.0.1)  precise; urgency=low
   *Added video downloader,youtube-dl needed
