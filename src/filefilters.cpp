@@ -57,7 +57,7 @@ QString fileFilters::getvideofilters()
 
        mul+=faul.at(i)+" ";
     }
-     fau.prepend("Audio files (");
+     fau.prepend("Audio files ( ");
      fau.append(");");
      QStringList fvil;
      QString fvi;
@@ -94,7 +94,7 @@ QString fileFilters::getvideofilters()
          mul+=fvil.at(i)+" ";
      }
      }
-      fvi.prepend("Video files (");
+      fvi.prepend("Video files ( ");
       fvi.append(");");
       mul.prepend("Mutimedia files (");
       mul.append(");");
@@ -132,7 +132,7 @@ QString fileFilters::getaudiofilters()
 
        mul+=faul.at(i)+" ";
     }
-     fau.prepend("Audio files (");
+     fau.prepend("Audio files ( ");
      fau.append(");");
      QStringList fvil;
      QString fvi;
@@ -169,7 +169,7 @@ QString fileFilters::getaudiofilters()
          mul+=fvil.at(i)+" ";
      }
      }
-      fvi.prepend("Video files (");
+      fvi.prepend("Video files ( ");
       fvi.append(");");
       mul.prepend("Mutimedia files (");
       mul.append(");");

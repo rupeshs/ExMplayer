@@ -416,7 +416,7 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
         break;
     case 8:{ QFileInfo fi(qApp->applicationFilePath());
         QDateTime dt=fi.created();
-        ui->labelDate->setText(QString("Build on "+dt.toString()));
+        //ui->labelDate->setText(QString("Build on "+dt.toString()));
         break;
     }
     case  5 :

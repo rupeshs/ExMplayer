@@ -18,7 +18,7 @@
 #ifndef PATHS_H
 #define PATHS_H
 #include <QString>
-
+static QString strFfmpegPath;
 class Paths
 {
 public:
@@ -27,6 +27,8 @@ public:
     static QString configPath();
     static QString sharePath();
     static QString getStaticConfigPath();
+    static QString getFfmpegPath();
+
 };
 
 #endif // PATHS_H

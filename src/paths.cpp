@@ -23,6 +23,8 @@
 #include <QDir>
 #include <stdlib.h>
 #include <QApplication>
+#include <QProcess>
+#include "qdebug.h"
 
 Paths::Paths()
 {
@@ -75,4 +77,17 @@ QString Paths::getStaticConfigPath()
     return  QString("/etc/exmplayer");
 
 #endif
+}
+QString Paths::getFfmpegPath()
+{
+    if (strFfmpegPath.isEmpty())
+    {
+        QProcess process;
+        process.start("which ffmpeg");
+        process.waitForFinished();
+        QString output = process.readAllStandardOutput();
+        strFfmpegPath=output.remove("\n");
+        qDebug() << "ffmpeg path :"<<strFfmpegPath;
+    }
+    return strFfmpegPath;
 }

@@ -36,7 +36,7 @@ void GifGenerator::setFfmpegOptions(QString filename,double startPos,short durat
     ffmpegBinPath=qApp->applicationDirPath()+"/ffmpeg.exe";
 #endif
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
-    ffmpegBinPath=Paths::sharePath()+"/ffmpeg";
+    ffmpegBinPath=Paths::getFfmpegPath();
 
 #endif
     ffmpegProcess->clearArguments();

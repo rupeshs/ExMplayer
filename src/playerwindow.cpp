@@ -4690,7 +4690,7 @@ QString PlayerWindow::getFilter()
 
         mul+=faul.at(i)+" ";
     }
-    fau.prepend("Audio files (");
+    fau.prepend("Audio files ( ");
     fau.append(");;");
     QStringList fvil;
     QString fvi;
@@ -4728,11 +4728,11 @@ QString PlayerWindow::getFilter()
             mul+=fvil.at(i)+" ";
         }
     }
-    fvi.prepend("Video files (");
+    fvi.prepend("Video files ( ");
     fvi.append(");;");
-    mul.prepend("Mutimedia files (");
+    mul.prepend("Mutimedia files ( ");
     mul.append(");;");
-    fpl="Playlists (*.m3u *.pls);;Any file (*.*)";
+    fpl="Playlists ( *.m3u *.pls);;Any file (*.*)";
     return mul+fvi+fau+fpl;
 }
 
@@ -4800,7 +4800,7 @@ QString PlayerWindow::getaudioFilter()
     {file.open(QIODevice::ReadOnly);
         QTextStream stream(&file);
         QString line;
-        fila.prepend("Audio files (");
+        fila.prepend("Audio files ( ");
         do {line = stream.readLine();
             if (line=="eof")
                 break;

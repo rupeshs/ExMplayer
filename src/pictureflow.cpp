@@ -1501,7 +1501,7 @@ void PictureFlow::addFolder(QString path )
                     myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+QDir::tempPath()+ "/covers/cover"+QString::number(i)+".png""\"");
 #endif
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
-                    myProcess->start("\""+Paths::sharePath()+"/ffmpeg\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+QDir::tempPath()+ "/covers/cover"+QString::number(i)+".png""\"");
+                    myProcess->start("\""+Paths::getFfmpegPath()+"\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 96x54 -f image2 "+ "\""+QDir::tempPath()+ "/covers/cover"+QString::number(i)+".png""\"");
 
 #endif
                     addSlide(QPixmap(":/images/videofile.png"));
@@ -1930,7 +1930,7 @@ void PictureFlow::createThumbnails()
 
 #endif
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
-            myProcess->start("\""+Paths::sharePath()+"/ffmpeg\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+QDir::tempPath()+ "/pictures/cover"+QString::number(piccount)+".png""\"");
+            myProcess->start("\""+Paths::getFfmpegPath()+"\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+QDir::tempPath()+ "/pictures/cover"+QString::number(piccount)+".png""\"");
 
 #endif
             addSlide(QPixmap(":/images/image_file.png"));
