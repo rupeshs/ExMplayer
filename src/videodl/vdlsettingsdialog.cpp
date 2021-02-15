@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,36 +32,25 @@ VdlSettingsDialog::VdlSettingsDialog(QWidget *parent,QSettings *settings) :
     oPath=QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
 #endif
     ui->lineEditDomDir->setText(_settings->value("VideoDl/DownloadDir",oPath).toString());
-
     //For future use
     ui->pushButtonUpdate->setVisible(false);
 
 #ifdef Q_OS_WIN
-
-
     ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir",qApp->applicationDirPath()).toString());
     ui->pushButtonUpdate->setVisible(true);
 #endif
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
      ui->lineEditYoudlDir->setText(_settings->value("VideoDl/YoutubedlDir","/usr/local/bin/").toString());
 # endif
-
-
 }
 
 VdlSettingsDialog::~VdlSettingsDialog()
 {
     delete ui;
 }
-
-
-
 void VdlSettingsDialog::on_toolButtonBrFolderYdl_clicked()
 {
-
     QString root=_settings->value("VideoDl/YoutubedlDir","").toString();
-
-
     QString dir = QFileDialog::getExistingDirectory(this, tr("Browse for youtube-dl binary"),
                                                     root,
                                                     QFileDialog::ShowDirsOnly
@@ -74,12 +63,9 @@ void VdlSettingsDialog::on_toolButtonBrFolderYdl_clicked()
 
     }
 }
-
 void VdlSettingsDialog::on_toolButtonBrFolder_clicked()
 {
     QString root=_settings->value("VideoDl/DownloadDir","").toString();
-
-
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Directory"),
                                                     root,
                                                     QFileDialog::ShowDirsOnly
@@ -124,7 +110,7 @@ void VdlSettingsDialog::on_pushButtonReset_clicked()
 
 void VdlSettingsDialog::on_pushButtonUpdate_clicked()
 {
-    close();
+   close();
   #ifdef Q_OS_WIN
     QString exeFileName(qApp->applicationDirPath()+"/update-youtube-dl.exe");
 
@@ -135,9 +121,4 @@ void VdlSettingsDialog::on_pushButtonUpdate_clicked()
         result = (int)::ShellExecuteA(0, "runas", exeFileName.toUtf8().constData(), 0, 0, SW_HIDE);
     }
  #endif
-}
-
-void VdlSettingsDialog::on_buttonBox_accepted()
-{
-
 }

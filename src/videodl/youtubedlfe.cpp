@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,34 +24,26 @@ YoutubedlFe::YoutubedlFe(QObject *parent,QString ydlPath) :
     _ydlPath=ydlPath;
     ydlProcess=new MyProcess(this);
     qDebug()<<"ydlpath :"<< ydlPath;
-
    QFileInfo checkFile(ydlPath);
    if(!checkFile.exists())
    {
        QMessageBox::critical(0,"ExMplayer",tr("Youtube-dl not found..please install youtube-dl. https://rg3.github.io/youtube-dl/"),QMessageBox::Ok);
 
    }
-
     QObject::connect(ydlProcess,SIGNAL(lineAvailable(QByteArray)),this,SLOT(ydlConsole(QByteArray)));
     QObject::connect(ydlProcess,SIGNAL(finished(int)),this,SLOT(emitProcessFinished(int)));
-
-
 }
 void YoutubedlFe::emitProcessFinished(int ec)
 {
-
     emit ytexit(ec);
-
     _isdownloading=false;
 }
 void  YoutubedlFe::ydlConsole(QByteArray ba)
 {
-
     if(QString(ba).contains("[download]")){
         _isdownloading=true;
     }
     emit ytconsoleline(ba);
-
 }
 void  YoutubedlFe::queryAvailableFormats()
 {
@@ -71,7 +63,6 @@ void  YoutubedlFe::downloadVideo(QString outputPath,QString id,bool isDefault)
     ydlProcess->addArgument("-o");
     QString outFileName;
     outFileName =QString(QDir::separator())+"%(title)s-%(id)s"+ id+".%(ext)s";
-
     ydlProcess->addArgument(outputPath+outFileName);
 
     if (!isDefault)

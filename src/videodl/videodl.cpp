@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,13 +36,10 @@ Videodl::Videodl(QWidget *parent,QSettings *settings) :
     ui->pushButtonUpdate->setVisible(false);
     // ui->pushButtonUpdate->setVisible(false);
     _settings=settings;
-
     animateUi();
     isdownloading=false;
     bForcedClose=false;
     bDownloadComplete=false;
-
-
 }
 
 Videodl::~Videodl()
@@ -62,27 +59,21 @@ void Videodl::ydlConsole(QByteArray ba)
             this->statusBar()->showMessage("Updated successfully");
             QMessageBox::information(this,"Videodl","Updated successfully");
 
-
         }
         if (ydlOutputLine.contains("up-to-date"))
         {
             QMessageBox::information(this,"Videodl",ydlOutputLine);
 
         }
-
-
     }
     else if (blistExtrators)
     {
         supDlg->addSite(ydlOutputLine);
-
     }
     else
     {
-
         if (!isdownloading)
         {
-
             if (formatsFound)
             {
                 if( !ba.contains("video only")){
@@ -100,9 +91,7 @@ void Videodl::ydlConsole(QByteArray ba)
                     ui->pushButtonChkFormats->setEnabled(true);
 
                 }
-
             }
-
         }
         else
         {
@@ -122,7 +111,6 @@ void Videodl::ydlConsole(QByteArray ba)
                     ui->pushButtonDwnload->setEnabled(false);
                     pgIndicator->hide();
                 }
-
             }
             this->statusBar()->showMessage(ba);
         }
@@ -132,12 +120,6 @@ void Videodl::ydlConsole(QByteArray ba)
 
 void Videodl::on_pushButtonChkFormats_clicked()
 {
-
-    //http://www.dailymotion.com/video/xctqbl_enigma-beyond-the-invisible_music
-    //http://www.youtube.com/watch?v=FfRAiTtOVEY
-    //ttps://www.facebook.com/photo.php?v=702226306466656&set=vb.105754412780518&type=2&theater
-    //https://soundcloud.com/devinder-singh-1/stereo-love-akcent-astronomia
-
     if(ui->lineEditVurl->text()=="")
     {
         QMessageBox::information(this,"Videodl","Please enter a valid URL");
@@ -154,33 +136,27 @@ void Videodl::on_pushButtonChkFormats_clicked()
     pgIndicator->startAnimation();
     pgIndicator->show();
 }
-
 void Videodl::on_pushButtonDwnload_clicked()
 {
     blistExtrators=false;
     bDownloadComplete=false;
-
     if(ui->lineEditVurl->text()=="")
     {
         QMessageBox::information(this,"Videodl","Please enter a valid URL");
         return;
     }
     //Advanced options enabled
-
     if (ui->groupBox->isChecked())
     {
         if (ui->formatsCombo->count()>0)
             initDownload();
         else
             QMessageBox::information(this,"Videodl","Advacned options enabled,so first check formats available");
-
     }
     else
     {
         initDownload();
     }
-
-
 }
 void Videodl::emitProcessFinished(int)
 {
@@ -188,7 +164,6 @@ void Videodl::emitProcessFinished(int)
     {
         if(ydlFe->isDownloading())
         {
-
             if (!isUpdating)
             {
                 if (!bForcedClose)
@@ -212,20 +187,12 @@ void Videodl::emitProcessFinished(int)
     ui->pushButtonChkFormats->setText("Recheck formats Available");
     blistExtrators=false;
     pgIndicator->hide();
-
-
-
-
 }
 void  Videodl::initYoutubeDl(QString ydlPath,QString videoUrl)
 {
-
     delete ydlFe;
-
-
     if (!ydlFe)
     {
-
         ydlFe=new YoutubedlFe(this,fileFilters::shortPathName(ydlPath));
         qDebug()<<"Set video URL:"<<videoUrl;
     }
@@ -233,8 +200,6 @@ void  Videodl::initYoutubeDl(QString ydlPath,QString videoUrl)
 
     QObject::connect(ydlFe,SIGNAL(ytconsoleline(QByteArray)),this,SLOT(ydlConsole(QByteArray)));
     QObject::connect(ydlFe,SIGNAL(ytexit(int)),this,SLOT(emitProcessFinished(int)));
-
-
     isUpdating=false;
 }
 
@@ -252,7 +217,6 @@ void Videodl::on_pushButtonCancel_clicked()
         ui->pushButtonChkFormats->setEnabled(true);
         ui->toolButtonSupFormats->setEnabled(true);
     }
-
 }
 
 void Videodl::on_lineEditVurl_textChanged(const QString &arg1)
@@ -272,12 +236,6 @@ void Videodl::on_toolButtonSettings_clicked()
     settingDlg = new VdlSettingsDialog(this,_settings);
     settingDlg->show();
 }
-
-void Videodl::on_toolButton_clicked()
-{
-
-}
-
 void Videodl::on_pushButtonUpdate_clicked()
 {
     initYoutubeDl(getYoutubeDlPath(),"");
@@ -316,12 +274,8 @@ void  Videodl::initDownload()
     ui->pushButtonCancel->setEnabled(true);
     ui->pushButtonDwnload->setEnabled(false);
     QString oPath=getDownloadPath();
-    qDebug()<<"youtube-dl download"<<oPath;
-    // qDebug()<<QDesktopServices::storageLocation(QDesktopServices::MoviesLocation);
-
-
+    qDebug()<<"youtube-dl download path :"<<oPath;
     initYoutubeDl(getYoutubeDlPath(),ui->lineEditVurl->text());
-
     if (ui->formatsCombo->count()>1)
     { QString id=ui->formatsCombo->currentText().split("-").at(0);
         ydlFe->downloadVideo(oPath,id,false);
@@ -330,8 +284,6 @@ void  Videodl::initDownload()
     }
     else
     {
-
-
         ydlFe->downloadVideo(oPath,0,true);
         pgIndicator->startAnimation();
         pgIndicator->show();
@@ -350,74 +302,19 @@ void Videodl::on_pushButtonOpenOutput_clicked()
     QDesktopServices::openUrl(QUrl(getDownloadPath()));
  #endif
 }
-
 void Videodl::on_toolButtonSupFormats_clicked()
 {
-
     initYoutubeDl(getYoutubeDlPath(),"");
     blistExtrators=true;
     isdownloading=false;
     ydlFe->querySupportedSites();
-
-
     supDlg = new SupSitesDialog(this);
-
     supDlg->show();
     ui->pushButtonChkFormats->setEnabled(false);
 
 }
 void Videodl::animateUi()
 {
-    /*QGraphicsOpacityEffect* fade_effect = new QGraphicsOpacityEffect(this);
-     ui->label_4->setGraphicsEffect(fade_effect);
-
-     QPropertyAnimation *animation = new QPropertyAnimation(fade_effect, "opacity");
-     animation->setEasingCurve(QEasingCurve::InOutQuad);
-     animation->setDuration(600);
-     animation->setStartValue(0.01);
-     animation->setEndValue(1.0);
-     animation->start();
-
-      fade_effect = new QGraphicsOpacityEffect(this);
-     ui->label_5->setGraphicsEffect(fade_effect);
-
-     animation = new QPropertyAnimation(fade_effect, "opacity");
-     animation->setEasingCurve(QEasingCurve::InOutQuad);
-     animation->setDuration(700);
-     animation->setStartValue(0.01);
-     animation->setEndValue(1.0);
-     animation->start();
-
-     fade_effect = new QGraphicsOpacityEffect(this);
-     ui->label_6->setGraphicsEffect(fade_effect);
-
-     animation = new QPropertyAnimation(fade_effect, "opacity");
-     animation->setEasingCurve(QEasingCurve::InOutQuad);
-     animation->setDuration(800);
-     animation->setStartValue(0.01);
-     animation->setEndValue(1.0);
-     animation->start();
-
-     fade_effect = new QGraphicsOpacityEffect(this);
-     ui->label_7->setGraphicsEffect(fade_effect);
-
-     animation = new QPropertyAnimation(fade_effect, "opacity");
-     animation->setEasingCurve(QEasingCurve::InOutQuad);
-     animation->setDuration(900);
-     animation->setStartValue(0.01);
-     animation->setEndValue(1.0);
-     animation->start();
-
-     fade_effect = new QGraphicsOpacityEffect(this);
-     ui->label_8->setGraphicsEffect(fade_effect);
-
-     animation = new QPropertyAnimation(fade_effect, "opacity");
-     animation->setEasingCurve(QEasingCurve::InOutQuad);
-     animation->setDuration(1000);
-     animation->setStartValue(0.01);
-     animation->setEndValue(1.0);
-     animation->start();*/
-
     QPropertyAnimation *animation = new QPropertyAnimation(ui->label_4, "geometry");
     animation->setDuration(300);
     animation->setStartValue(QRect(ui->label_4->x(), 0, ui->label_4->width(), ui->label_4->height()));
@@ -459,8 +356,6 @@ void Videodl::animateUi()
     animation6->setEndValue(QRect(ui->label_3->x(), 20, ui->label_3->width(), ui->label_3->height()));
 
     animation6->start();
-
-
 }
 
 void Videodl::on_labelMore_linkActivated(const QString &link)
@@ -472,7 +367,6 @@ void Videodl::on_labelMore_linkActivated(const QString &link)
         ydlFe->querySupportedSites();
     }
     supDlg = new SupSitesDialog(this);
-
     supDlg->show();
 
 }
@@ -480,9 +374,10 @@ void Videodl::closeEvent ( QCloseEvent * event )
 {
     event->ignore();
     if (isdownloading)
-    {if (QMessageBox::Yes == QMessageBox::question(this, "Close Confirmation?",
-                                                   "You haven't finished your download yet.Do you want to exit without finishing?",
-                                                   QMessageBox::Yes|QMessageBox::No))
+    {
+        if (QMessageBox::Yes == QMessageBox::question(this, "Close Confirmation?",
+                                                      "You haven't finished your download yet.Do you want to exit without finishing?",
+                                                      QMessageBox::Yes|QMessageBox::No))
         {
             event->accept();
             bForcedClose=true;
@@ -493,9 +388,4 @@ void Videodl::closeEvent ( QCloseEvent * event )
     {
         event->accept();
     }
-}
-
-void Videodl::on_lineEditVurl_cursorPositionChanged(int arg1, int arg2)
-{
-
 }

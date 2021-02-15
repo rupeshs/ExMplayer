@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,17 +39,11 @@ public:
     ~VdlSettingsDialog();
     
 private slots:
-
-
     void on_toolButtonBrFolderYdl_clicked();
-
     void on_toolButtonBrFolder_clicked();
     void settingChanged(QString group,QString key,QString value);
     void on_pushButtonReset_clicked();
-
     void on_pushButtonUpdate_clicked();
-
-    void on_buttonBox_accepted();
 
 private:
     Ui::vdlSettingsDialog *ui;

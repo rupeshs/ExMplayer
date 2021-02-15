@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,10 +38,12 @@
 #include "filefilters.h"
 #include <QCloseEvent>
 #include <QUrl>
+
 //[download]  32.2% of 3.95MiB at 136.61KiB/s ETA 00:20"
 //format code extension resolution  note
 static QRegExp rx_pro("[download].*(\\d+.\\d+)%.*");
 static QRegExp rx_fmt("format.*code.*extension.*resolution.*note.*");
+
 namespace Ui {
 class Videodl;
 }
@@ -59,34 +61,21 @@ public:
     void animateUi();
 private slots:
     void on_pushButtonChkFormats_clicked();
-
     void on_pushButtonDwnload_clicked();
     void initYoutubeDl(QString ydlPath,QString videoUrl);
-
     void on_pushButtonCancel_clicked();
-
     void on_lineEditVurl_textChanged(const QString &arg1);
-
     void on_toolButtonSettings_clicked();
-
-    void on_toolButton_clicked();
-
     void on_pushButtonUpdate_clicked();
-
     //get youtube-dl path it varies
     QString getYoutubeDlPath();
     //ger download path default my video
     QString getDownloadPath();
-
     void initDownload();
-
     void on_pushButtonOpenOutput_clicked();
     void on_toolButtonSupFormats_clicked();
-
     void on_labelMore_linkActivated(const QString &link);
     void closeEvent ( QCloseEvent * event);
-
-    void on_lineEditVurl_cursorPositionChanged(int arg1, int arg2);
 
 signals:
     void showfile(QString opt,QString fn);
