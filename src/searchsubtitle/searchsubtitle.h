@@ -2,7 +2,7 @@
 #define SEARCHSUBTITLE_H
 /*
     exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2011-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 #include <gzipuncompressor.h>
 #include <QDesktopServices>
 #include <rphfile.h>
+
 namespace Ui {
 class SearchSubtitle;
 }
@@ -45,7 +46,6 @@ public:
     ~SearchSubtitle();
 protected:
     QStandardItemModel * table;
-
     QSortFilterProxyModel * proxy_model;
 public slots:
      void searchSubtitleForMovie(const QString& filename);
@@ -62,33 +62,26 @@ signals:
 
 private slots:
      void on_comboLangFilter_currentIndexChanged(const QString &arg1);
-
      void on_toolButtonSearch_clicked();
-
      void on_lineEditSeachFilm_returnPressed();
      void gotNetworkError(QString);
-
      void on_tableSubtitles_clicked(const QModelIndex &index);
-
      void on_pushCopyLink_clicked();
-
      void on_pushButtonDwnld_clicked();
-
      void on_tableSubtitles_customContextMenuRequested(const QPoint &pos);
-
      void on_pushButtonUploadSub_clicked();
      void downloadComplete();
 
 private:
-    Ui::SearchSubtitle *ui;
-    OpenSubtitlesClient *oSubClient;
-    QProgressIndicator *pgIndicator;
-    QMenu * context_menu;
-    QAction * downloadAct;
-    QAction * copyLinkAct;
-    GzipUncompressor *gzDownloader;
-    QString _filePath;
-    QString _subfileName;
+     Ui::SearchSubtitle *ui;
+     OpenSubtitlesClient *oSubClient;
+     QProgressIndicator *pgIndicator;
+     QMenu * context_menu;
+     QAction * downloadAct;
+     QAction * copyLinkAct;
+     GzipUncompressor *gzDownloader;
+     QString _filePath;
+     QString _subfileName;
 
 };
 

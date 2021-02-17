@@ -1,6 +1,6 @@
 /*
     exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2011-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,8 +35,6 @@
  typedef unsigned __int64 uint64_t;
 #endif
 
-
-
 class OpenSubtitlesClient : public QObject
 {
     Q_OBJECT
@@ -47,8 +45,6 @@ public:
         FILEHASH=0,
         QUERY
        };
-
-    
 signals:
     void gotSubtitles(QVariantList data);
     void NetworkError(QString);
@@ -58,7 +54,6 @@ public slots:
     void login();
     void logout();
     void search(const QString& filename,SearchMode mode);
-
 
 private slots:
     void handleResponse(QVariant &);

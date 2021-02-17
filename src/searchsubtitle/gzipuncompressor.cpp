@@ -1,6 +1,6 @@
 /*
     exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2011-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -71,24 +71,22 @@ void GzipUncompressor::httpFinished()
         reply->deleteLater();
         return;
     }
-   if (reply->error()) {
-       QMessageBox::critical(this, tr("Download Error"),
-                                 tr("Download failed: %1.")
-                                 .arg(reply->errorString()));
-    this->close();
-   }
+    if (reply->error()) {
+        QMessageBox::critical(this, tr("Download Error"),
+                              tr("Download failed: %1.")
+                              .arg(reply->errorString()));
+        this->close();
+    }
     reply->deleteLater();
     reply = 0;
     //Uncompress file
     if (gzFileData.size()>0)
-       if(!gzUncompress(gzFileData))
-       {
-           QMessageBox::critical(this, tr("Error"),
-                               tr("Error while uncompressing"));
+        if(!gzUncompress(gzFileData))
+        {
+            QMessageBox::critical(this, tr("Error"),
+                                  tr("Error while uncompressing"));
 
-       }
-
-
+        }
 }
 
 void GzipUncompressor::httpReadyRead()
@@ -146,7 +144,6 @@ bool GzipUncompressor::gzUncompress(QByteArray const& data)
   size_t outTotal(0);
 
   tinfl_status ret;
-
   do
   {
      if (httpRequestAborted)

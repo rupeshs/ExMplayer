@@ -1,6 +1,6 @@
 /*
     exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2011-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -64,8 +64,6 @@ void OpenSubtitlesClient::handleLogin(QVariant& result)
         token = resultMap["token"].toString();
         qDebug()<<"Login succesful"<<resultMap["status"].toString();
         emit readyForSearch();
-        // XXX
-        //search("F:/films/Despicable Me 2 (2013)/Despicable.Me.2.2013.720p.BluRay.x264.YIFY.mp4",FILEHASH);
     }
 }
 void OpenSubtitlesClient::handleError(int error, const QString& message)
@@ -73,7 +71,6 @@ void OpenSubtitlesClient::handleError(int error, const QString& message)
     qDebug() << error << "-" << message;
     if (message.contains("not found"))
       {
-
         emit NetworkError("No network,please check your network connection");
       }
      else
@@ -154,13 +151,5 @@ void OpenSubtitlesClient::handleResponse(QVariant& result)
 
     for (int n = 0; n < data.count(); n++) {
         QVariantMap mResult = data[n].toMap();
-        /* qDebug()<<mResult["SubDownloadLink"].toString()<<":"
-                 <<mResult["SubFormat"].toString()<<":"
-                <<mResult["SubLanguageID"].toString()<<":"
-                <<mResult["SubDownloadsCnt"].toString();*/
-
-
-
     }
-
 }
