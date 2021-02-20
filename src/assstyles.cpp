@@ -1,4 +1,8 @@
-/*   This program is free software; you can redistribute it and/or modify
+/*  smplayer, GUI front-end for mplayer.
+    Copyright (C) 2006-2009 Ricardo Villalba <rvm@escomposlinux.org>
+    Copyright (C) 2010-2021 Rupesh Sreeraman
+
+    This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
@@ -20,12 +24,13 @@
 #include "colorutils.h"
 
 AssStyles::AssStyles() {
+
 	fontname = "Arial";
 	fontsize = 20;
 	primarycolor = 0xFFFFFF;
 	backcolor = 0;
 	outlinecolor = 0;
-        bold = true;
+    bold = true;
 	italic = false;
 	halignment = 2; // Centered
 	valignment = 0; // Bottom
@@ -38,7 +43,6 @@ AssStyles::AssStyles() {
 }
 
 void AssStyles::save(QSettings * set) {
-	qDebug("AssStyles::save");
 
 	set->setValue("styles/fontname", fontname);
 	set->setValue("styles/fontsize", fontsize);
@@ -58,7 +62,6 @@ void AssStyles::save(QSettings * set) {
 }
 
 void AssStyles::load(QSettings * set) {
-	qDebug("AssStyles::load");
 
 	fontname = set->value("styles/fontname", fontname).toString();
 	fontsize = set->value("styles/fontsize", fontsize).toInt();
@@ -78,42 +81,38 @@ void AssStyles::load(QSettings * set) {
 }
 
 bool AssStyles::exportStyles(const QString & filename) {
-	qDebug("AssStyles::exportStyles: filename: %s", filename.toUtf8().constData());
 
-	QFile f(filename);
-	if (f.open(QFile::WriteOnly)) {
-		QTextStream out(&f);
+    QFile f(filename);
+    if (f.open(QFile::WriteOnly)) {
+        QTextStream out(&f);
 
-                int alignment = halignment;
-                if (valignment == 1) alignment += 3; // Middle
-                else
-                if (valignment == 2) alignment += 6; // Top
+        int alignment = halignment;
+        if (valignment == 1) alignment += 3; // Middle
+        else
+            if (valignment == 2) alignment += 6; // Top
 
-
-		out << "[Script Info]" << endl;
-		out << "ScriptType: v4.00+" << endl;
-		out << "Collisions: Normal" << endl;
+        out << "[Script Info]" << endl;
+        out << "ScriptType: v4.00+" << endl;
+        out << "Collisions: Normal" << endl;
+        out << endl;
+        out << "[V4+ Styles]" << endl;
+        out << "Format: Name, Fontname, Fontsize, PrimaryColour, BackColour, OutlineColour, Bold, Italic, Alignment, BorderStyle, Outline, Shadow, MarginL, MarginR, MarginV" << endl;
+        out << "Style: Default,";
+        out << fontname << "," ;
+        out << fontsize << "," ;
+        out << "&H" << ColorUtils::colorToAABBGGRR(primarycolor) << "," ;
+        out << "&H" << ColorUtils::colorToAABBGGRR(backcolor) << "," ;
+        out << "&H" << ColorUtils::colorToAABBGGRR(outlinecolor) << "," ;
+        out << (bold ? -1 : 0) << "," ;
+        out << (italic ? -1 : 0) << "," ;
+        out << alignment << "," ;
+        out << borderstyle << "," ;
+        out << outline << "," ;
+        out << shadow << "," ;
+        out << marginl << "," ;
+        out << marginr << "," ;
+        out << marginv;
 		out << endl;
-		out << "[V4+ Styles]" << endl;
-		out << "Format: Name, Fontname, Fontsize, PrimaryColour, BackColour, OutlineColour, Bold, Italic, Alignment, BorderStyle, Outline, Shadow, MarginL, MarginR, MarginV" << endl;
-		out << "Style: Default,";
-		out << fontname << "," ;
-                out << fontsize << "," ;
-                out << "&H" << ColorUtils::colorToAABBGGRR(primarycolor) << "," ;
-                out << "&H" << ColorUtils::colorToAABBGGRR(backcolor) << "," ;
-                out << "&H" << ColorUtils::colorToAABBGGRR(outlinecolor) << "," ;
-                out << (bold ? -1 : 0) << "," ;
-                out << (italic ? -1 : 0) << "," ;
-                out << alignment << "," ;
-                out << borderstyle << "," ;
-                out << outline << "," ;
-                out << shadow << "," ;
-                out << marginl << "," ;
-                out << marginr << "," ;
-                out << marginv;
-
-		out << endl;
-
 		f.close();
 		return true;
 	}
@@ -124,6 +123,7 @@ bool AssStyles::exportStyles(const QString & filename) {
 // It seems that option ignores "ScriptType: v4.00+" 
 // so the function uses the v4.00 format
 QString AssStyles::toString() {
+
 	int alignment = halignment;
 	if (valignment == 1) alignment += 8; // Middle
 	else
@@ -142,6 +142,5 @@ QString AssStyles::toString() {
 	s += QString("Outline=%1,Shadow=%2,MarginL=%3,MarginR=%4,MarginV=%5")
                  .arg(outline).arg(shadow).arg(marginl).arg(marginr).arg(marginv);
 
-
-	return s;
+    return s;
 }

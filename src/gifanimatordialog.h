@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -41,19 +41,20 @@ public:
     
 private:
     Ui::GifAnimatorDialog *ui;
-     QPointer<mplayerfe> mp;
-     float startPos;
-     float stopPos;
-     int testnum;
-     QString outPath;
-     QPointer<GifPaletteGenerator> gifPalettteGen;
-     QPointer<GifGenerator> gifGene;
-     QMovie *movie;
-     QWidget *extension;
-     QString gifPath;
+    QPointer<mplayerfe> mp;
+    float startPos;
+    float stopPos;
+    int testnum;
+    QString outPath;
+    QPointer<GifPaletteGenerator> gifPalettteGen;
+    QPointer<GifGenerator> gifGene;
+    QMovie *movie;
+    QWidget *extension;
+    QString gifPath;
 
 signals:
     void showfile(QString opt,QString fn);
+
 private slots:
 
     void on_pushButtonOpenFolder_clicked();

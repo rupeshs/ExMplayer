@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -294,14 +294,10 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(starting()),ui->mpconsole,SLOT(clear()));
     QObject::connect(mp,SIGNAL(lineavailable(QString)),ui->mpconsole,SLOT(append(QString)));
     QObject::connect(mp,SIGNAL(startingplayback()),this,SLOT(startingPlayback()));
-    //QObject::connect(mp,SIGNAL(show_message(QString,int)),ui->statusBar,SLOT(showMessage(QString,int)));
-    //QObject::connect(mp,SIGNAL(restarting()),ui->mpconsole,SLOT(clear()));
     QObject::connect(mp,SIGNAL(settingChanged(QString,QString,QString)),this,SLOT(settingChanged(QString,QString,QString)));
     QObject::connect(mp,SIGNAL(lengthChanged()),this,SLOT(lengthChanged()));
     QObject::connect(mp,SIGNAL(foundSubtitletrack(QStringList)),this,SLOT(foundSubtitletrack(QStringList)));
     QObject::connect(mp,SIGNAL(addSubtitletrack(QStringList)),this,SLOT(addSubtitletrack(QStringList)));
-
-    //QObject::connect(mp,SIGNAL(show_endmessage(QString)),ui->labelStatus,SLOT(setText(QString)));
     QObject::connect(mp,SIGNAL(paused()),this,SLOT(paused()));
     QObject::connect(mp,SIGNAL(playing()),this,SLOT(playing()));
     QObject::connect(mp,SIGNAL(stopping()),this,SLOT(stopping()));
@@ -318,9 +314,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     QObject::connect(mp,SIGNAL(hidepg()),piv,SLOT(stopAnimation()));
     QObject::connect(mp,SIGNAL(showerrortext(QString)),this,SLOT(showerror(QString)));
     QObject::connect(mp,SIGNAL(showvideoui()),videoWin->mplayerlayer,SLOT(show()));
-    //QObject::connect(mp,SIGNAL(resizeVideoWindow(int,int)),this,SLOT(resizeVideoWindow(int,int)));
-    //QObject::connect(mp,SIGNAL(eof()),this,SLOT(resetUi()));
-    //QObject::connect(mp,SIGNAL(showmsgBox(QString)),this,SLOT(showMsgBox(QString)));
+
 
     actPrgsIndicator->setVisible(true);
     isstreaming=false;
@@ -421,23 +415,14 @@ void PlayerWindow::initMPlayer(QString file,int type)
     piv->show();
     piv->setAnimationDelay(25);
     piv->startAnimation();
-    // QMessageBox::critical(this,qApp->applicationName(),QString::number(videoWin->width()/2-piv->width()/2),QMessageBox::Ok,QMessageBox::Cancel);
 
-    //ui->progressBarBusy->setMinimum(0);
-    //ui->progressBarBusy->setMaximum(0);
-    //ui->progressBarBusy->show();
-
-    //ui->labelStatus->setText(tr("Opening..."));
     ui->labelCurrentPosition->setText("Opening...");
-
-
 
     iseof=false;
     bplay=false;
     bstop=false;
     recentFilesMenu->addRecentFile(currentFile);
     mutex.unlock();
-
 
 }
 
@@ -619,25 +604,12 @@ void  PlayerWindow::setupMyUi()
     QObject::connect(myplaylist,SIGNAL(playThisfile(QString)),this,SLOT(playThisfile(QString)));
     QObject::connect(ui->dock_Playlist,SIGNAL(visibilityChanged (bool)),this,SLOT(playlistVisibility(bool)));
 
-    /***********************************************/
-    //qApp->setEffectEnabled(Qt::UI_AnimateMenu,true);
-    //qApp->setEffectEnabled(Qt::UI_AnimateTooltip,true);
     ui->dockBrowser->resize(this->width(),500);
     w= new PictureFlow(this);
-    /*labanim=new QLabel(w,0);
-     QMovie *movie = new QMovie(":/images/backanimsmall.gif");
-
-     this->labanim->setMovie(movie);
-     movie->start();*/
-
-    //w->setSlideSize(QSize(67,50));
     w->setSlideSize(QSize(4*24,3*18));
-    //w->setSlideSize(QSize(100,80));
     w->setReflectionEffect(w->PlainReflection);
     w->resize(this->width(), 100);
-    //w->setReflectionEffect(picflow->PlainReflection);
     w->addDrives();
-
 
     QObject::connect(w,SIGNAL(play()),myplaylist,SLOT(playLastFile()));
     QObject::connect(w,SIGNAL(filename(QString)),myplaylist,SLOT(addFile(QString)));
@@ -656,53 +628,27 @@ void  PlayerWindow::setupMyUi()
     pi->setColor(QColor(qRgb(60,150,255) ));
     piv = new QProgressIndicator(videoWin);
     piv->ShowGif();
-
-
-    //testlab =new QLabel(videoWin,0);
-    //testlab->setText("ffffffffffffffffff");
-    //testlab->show();
-    //videoWin->setAspect(1.0);
-    //videoWin->showLogo(false);
-
     piv->setColor(QColor(qRgb(255,255,255) ));
     piv->resize(32,32);
     ui->dock_log->setVisible(false);
 
-    ///////////////////////////////////////////////////////////////////
     //statusbar
     ui->statusBar->addPermanentWidget(ui->labAD);
     ui->statusBar->addPermanentWidget(ui->lcdCurPos);
     ui->statusBar->addPermanentWidget(ui->lcdDuration);
-    //ui->statusBar->addPermanentWidget(ui->lcdDuration);
-
-    ///////////////////////////////////////////////////////////////////
-    //metainfodisnplay-toolbar
 
     ui->labelCpuAudio->setVisible(false);
     ui->labelCpuVideo->setVisible(false);
     ui->labelAVdelay->setVisible(false);
     ui->labelFrameCount->setVisible(false);
-    //ui->toolBarStatus->addWidget(youtubeBox);
-
     ui->toolBarStatus->addWidget(ui->label_display);
-    //ui->toolBarStatus->addSeparator();
     ui->toolBarStatus->addWidget(ui->labelFrameCount);
-    //ui->toolBarStatus->addSeparator();
     ui->toolBarStatus->addWidget(ui->labelAVdelay);
-    // ui->toolBarStatus->addSeparator();
     ui->toolBarStatus->addWidget(ui->labelCpuVideo);
-    // ui->toolBarStatus->addSeparator();
     ui->toolBarStatus->addWidget(ui->labelCpuAudio);
-    // ui->toolBarStatus->addSeparator();
     ui->toolBarStatus->addWidget(ui->labVD);
     ui->toolBarStatus->addWidget(ui->labelSpeed);
 
-
-
-    ///////////////////////////////////////////////////////////////////
-    //seekbar-toolbar
-
-    //ui->toolBarSeekBar->addSeparator();
     if (!bMin)
     {
         ui->toolBarSeekBar->addWidget(ui->toolButtonRewind);
@@ -731,7 +677,6 @@ void  PlayerWindow::setupMyUi()
 
         ui->toolBarSeekBar->addAction(ui->action_Play_Pause);
         ui->toolBarSeekBar->addAction(ui->action_Stop);
-
         ui->toolBarSeekBar->addWidget(ui->labelCurrentPosition);
 
         actPrgsIndicator=ui->toolBarSeekBar->addWidget(pi);
@@ -741,9 +686,7 @@ void  PlayerWindow::setupMyUi()
         ui->toolBarSeekBar->addWidget(ui->sliderSeek);
         toolButtonForwardAction=ui->toolBarSeek->addWidget(ui->toolButtonForward);
 
-
         ui->toolBarSeekBar->addWidget(ui->labelDuration);
-
         ui->toolBarSeekBar->addWidget(ui->toolButtonVolume);
         ui->toolBarSeekBar->addWidget(ui->sliderVolume);
         ui->toolBarSeekBar->addWidget(ui->toolButtonVolumeBoost);
@@ -751,12 +694,8 @@ void  PlayerWindow::setupMyUi()
         ui->toolBarSeekBar->addAction(ui->actionFullscreen);
         //this->addToolBarBreak();
 
-
         ui->toolBarSeek->addAction(ui->actionPlay_Previous_File);
         ui->toolBarSeek->addAction(ui->actionPlay_Next_File);
-
-
-
         ui->toolBarSeek->addAction(ui->action_Equalizer);
         ui->toolBarSeek->addWidget(ui->toolButtonplaylist);
         ui->toolBarSeek->addWidget(ui->toolButtonFblike);
@@ -770,31 +709,15 @@ void  PlayerWindow::setupMyUi()
         ui->lcdCurPos->setVisible(false);
         ui->lcdDuration->setVisible(false);
         ui->toolBarSeek->addWidget(ui->labelStatus);
-        //ui->toolBarSeek->hide();
-        //ui->statusBar->hide();
-        //ui->labelStatus->hide();
     }
 
-
-    // ui->toolBarSeek->addWidget(youtubeBox);
     ui->actionPlay_Previous_File->setVisible(false);
     ui->actionPlay_Next_File->setVisible(false);
-    //version 2
-    //ui->toolBarSeek->addAction(ui->actionMedia_cutter);
     ui->toolButtonfs->hide();
-    // ui->toolBarSeek->addSeparator();
-    //ui->toolBarSeek->addAction(ui->actionScreen_shot);
     ui->toolBarSeek->addWidget(ui->labToolbarSpace);
     ui->labToolbarSpace->setSizePolicy(QSizePolicy::Expanding,
                                        QSizePolicy::Fixed);
 
-    //ui->toolBarSeek->addSeparator();
-    //ui->toolBarSeek->addWidget(ui->toolButtonSpeed);
-    //ui->toolBarSeek->addSeparator();
-
-
-
-    //////////////////////////////////////////////////////////////////
     setMutebtnIcon(ui->sliderVolume->value());
     actiongroupChannels=new QActionGroup(this);
     actiongroupChannels->addAction(ui->actionStereo);
@@ -816,13 +739,11 @@ void  PlayerWindow::setupMyUi()
     actiongroupResample->addAction(ui->action8000);
     actiongroupResample->addAction(ui->action96000);
     QObject::connect(actiongroupResample, SIGNAL(triggered(QAction*)), this,SLOT(changeSamplingFrequency(QAction*)));
-
     actiongroupStereoMode=new QActionGroup(this);
     actiongroupStereoMode->addAction(ui->actionStereomode);
     actiongroupStereoMode->addAction(ui->actionLeft_channel);
     actiongroupStereoMode->addAction(ui->actionRight_channel);
     QObject::connect(actiongroupStereoMode, SIGNAL(triggered(QAction*)), this,SLOT(changeStereoMode(QAction*)));
-
     actiongroupRotate=new QActionGroup(this);
     actiongroupRotate->addAction(ui->action_RotateDisable);
     actiongroupRotate->addAction(ui->actionRotate_0);
@@ -830,7 +751,6 @@ void  PlayerWindow::setupMyUi()
     actiongroupRotate->addAction(ui->actionRotate_2);
     actiongroupRotate->addAction(ui->actionRotate_3);
     QObject::connect(actiongroupRotate, SIGNAL(triggered(QAction*)), this,SLOT(changeRotation(QAction*)));
-
     actiongroupAspectRatio=new QActionGroup(this);
     actiongroupAspectRatio->addAction(ui->action_ar_Auto);
     actiongroupAspectRatio->addAction(ui->action1_1);
@@ -930,14 +850,10 @@ void  PlayerWindow::setupMyUi()
     QObject::connect(videoWin, SIGNAL(doubleClicked()), this,SLOT(toggleFullscreen()));
     QObject::connect(videoWin, SIGNAL(mouseMoveEventsg(QMouseEvent*)), this,SLOT(mouseMoveEvent(QMouseEvent*)));
     QObject::connect(videoWin, SIGNAL(rectRubberBand(QRect*)), this,SLOT(rubberBandval(QRect*)));
-    //QObject::connect(videoWin, SIGNAL(resizeVideo(int,int)), this,SLOT(resizeVideo(int,int)));
-
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this,SLOT(cleanMp()));
 
     ui->dock_Filter->setWidget(ui->tabWidget);
     ui->dock_Filter->hide();
-    // this->setCentralWidget(videoWin);
-
     coreTimer = new QTimer(this);
     QObject::connect(coreTimer, SIGNAL(timeout()), this,SLOT(checkForNextPlayback()));
     coreTimer->start(500);
@@ -954,15 +870,11 @@ void  PlayerWindow::setupMyUi()
     mpseekView=new SeekView(this);
     mpseekView->hide();
 
-
-
-
     if (settings->value("Video/3D","0").toInt()==1)
     {
         ui->toolButtonStereoVideo->setIcon(QIcon(":/images/3D_on.png"));
         ui->toolButtonStereoVideo->setToolTip("Turn <b>OFF</b> 3D video");
         ui->actionEnable_3D->setChecked(true);
-
 
     }
 
@@ -1034,11 +946,8 @@ void PlayerWindow::resetUi()
         if(frameTimer)
             this->frameTimer->stop();
 
-        //myplaylist->playNextFile();
-
     }
-    //ui->progressBarBusy->setMaximum(1);
-    // ui->progressBarBusy->hide();
+
     pi->hide();
     pi->stopAnimation();
     piv->hide();
@@ -1088,10 +997,6 @@ void PlayerWindow::resetUi()
     ui->actionLoad_external_file->setDisabled(true);
     ui->actionMix_and_save->setDisabled(true);
     ui->actionIncrease_Video_quality->setChecked(false);
-    //ui->menuPlay->setDisabled(true);
-    //ui->menu_Audio->setDisabled(true);
-    //ui->menu_Video->setDisabled(true);
-    // ui->menu_Subtitles->setDisabled(true);
     ui->action_Crop->setChecked(false);
     ui->action_Crop->setEnabled(true);
     ui->action_Remove_logo->setEnabled(true);
@@ -1149,7 +1054,8 @@ void PlayerWindow::startingPlayback()
         ui->action_Stop->setEnabled(true);
         //setup seek slider
         if (mp->isseekable())
-        {  ui->sliderSeek->setEnabled(true);
+        {
+            ui->sliderSeek->setEnabled(true);
             if(sliderSeekFullSc)
                 sliderSeekFullSc->setEnabled(true);
 
@@ -1180,10 +1086,6 @@ void PlayerWindow::startingPlayback()
         }
         //show status
         ui->lcdCurPos->display("00:00:00");
-        //ui->labelStatus->hide();
-        //ui->labelStatus->setText(tr("Playing"));
-        //videoWin->mplayerlayer->show();
-        //video stream
         if( mp->hasvideo()){
             //set up width and height
 
@@ -1194,8 +1096,6 @@ void PlayerWindow::startingPlayback()
             videoWin->setAspect((float)mp->videowidth()/mp->videoheight());
             int eh;
             ui->dock_Filter->setFloating(true);
-            //videoWin->setShowVideo(true);
-            //videoWin->setShowText(false);
             //dock browser
             eh=getEh();
 
@@ -1283,9 +1183,6 @@ void PlayerWindow::startingPlayback()
                 actiongroupSubtitleTrack=new QActionGroup(this);
                 actiongroupSubtitleTrack->addAction(ui->actionStNone);
             }
-
-
-
             actiongroupVideoTrack=new QActionGroup(this);
 
             QObject::connect(actiongroupSubtitleTrack,SIGNAL(triggered(QAction*)),this,SLOT(changeSubTitles(QAction*)));
@@ -1535,12 +1432,6 @@ void PlayerWindow::startingPlayback()
 }
 void PlayerWindow::updateSeekbar()
 {
-    /* if (mp->hasaudio()&&!mp->hasvideo())
-    {// qDebug()<<"chk;";
-        if(this->videoWin->mplayerlayer->isVisible())
-         this->videoWin->mplayerlayer->hide();
-    }*/
-
     if (windowTimer->isActive())
     {
         windowTimer->stop();
@@ -1563,7 +1454,6 @@ void PlayerWindow::updateSeekbar()
         }
         else
         {
-
             ui->sliderSeek->setEnabled(false);
             if(sliderSeekFullSc)
                 sliderSeekFullSc->setEnabled(false);
@@ -1634,23 +1524,6 @@ void PlayerWindow::updateSeekbar()
         }
 
     }
-
-    /*if (mp->state()==mp->PLAYING)
-    {if(ui->labelStatus->text()=="Playing")
-      ui->labelStatus->setText("Playing.");
-     else if(ui->labelStatus->text()=="Playing.")
-       ui->labelStatus->setText("Playing..");
-     else if(ui->labelStatus->text()=="Playing..")
-       ui->labelStatus->setText("Playing...");
-     else if(ui->labelStatus->text()=="Playing...")
-       ui->labelStatus->setText("Playing");
-       ui->labelStatus->setText("Playing...");
-    }*/
-    //if (mp->state()==mp->PAUSED)
-    // ui->labelStatus->setText("Paused.");
-
-
-
 }
 void PlayerWindow::updateFrameDisplay()
 {
@@ -1688,13 +1561,6 @@ void PlayerWindow::on_toolButtonRewind_clicked()
 }
 void PlayerWindow::on_sliderVolume_valueChanged(int value)
 {
-   /*if (mp->hasvideo())
-    {if (value>90)
-        mp->usercommand("af_cmdline volnorm ");
-    else if (value<89)
-         mp->usercommand("af_cmdline volume 0,1");
-    }*/
-
     if(mp)
         mp->setVolume(value);
     if (sliderVolumeFullSc)
@@ -1716,7 +1582,8 @@ void PlayerWindow::on_sliderVolume_valueChanged(int value)
 
 }
 void PlayerWindow::setMutebtnIcon(int value)
-{ if (starting)
+{
+   if (starting)
     { if (settings->value("Audio/mute","0").toInt()==1)
         {ui->toolButtonVolume->setIcon(QIcon(":/images/mute.png"));
             qDebug()<<"mute"<<settings->value("Audio/mute","0").toInt();
@@ -1742,12 +1609,6 @@ jmp:
 }
 void PlayerWindow::on_toolButtonVolume_clicked()
 {
-    /*ui->sliderVolume->setGeometry(0,0,0,20);
-    QPropertyAnimation *animation = new QPropertyAnimation(ui->sliderVolume, "size");
-    animation->setDuration(1000);
-    animation->setEndValue(QSize(1,20));
-    animation->setEndValue(QSize(70,20));
-    animation->start();*/
     toggleMute();
 }
 
@@ -2858,15 +2719,6 @@ void PlayerWindow::hidestatus()
 
     if (fullScreenControls->geometry().top()==desktop->screen()->height()-70)
     {
-        //ui->toolBarSeekBar->hide();
-        //  ui->toolBarSeek->hide();
-        // ui->toolBarStatus->hide();
-        //ui->statusBar->hide();
-        /* QPropertyAnimation *animation = new QPropertyAnimation(fullScreenControls, "geometry");
-        animation->setDuration(300);
-        animation->setStartValue(QRect(leftSide,desktop->screen()->height()-70,fullScreenControlWidth,70));
-        animation->setEndValue(QRect(leftSide,desktop->screen()->height(),fullScreenControlWidth,70));
-        animation->start();*/
         fullScreenControls->hide();
         this->setCursor(Qt::BlankCursor);
         hidetimer->stop();
@@ -2942,7 +2794,6 @@ void PlayerWindow::addfile()
 
         }
     }
-    /////////////////////////////////////////////
 
 }
 void PlayerWindow::addFolder()
@@ -3386,7 +3237,7 @@ void PlayerWindow::hidebusypg()
 
 void PlayerWindow::on_action_Media_Info_triggered()
 {
-    /*<TABLE BORDER=1 WIDTH=80%>
+/*<TABLE BORDER=1 WIDTH=80%>
 <TBODY>
 <TR>
 <TD>Row 1, Column 1 text.</TD>
@@ -3556,27 +3407,15 @@ void PlayerWindow::on_action_Media_Info_triggered()
         }
         else if (!mp->hasvideo())
         { if (!hascover)
-            { midlg->resize(250,400);
-                /*QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
-                animation->setDuration(300);
-                animation->setStartValue(QSize(250, 0));
-                animation->setEndValue(QSize(250, 400));
-                //animation->setEasingCurve(QEasingCurve::InCurve);
-                midlg->show();
-                animation->start();*/
+            {
+                midlg->resize(250,400);
                 midlg->show();
 
             }
 
             else
-            {midlg->resize(500,550);
-                /*QPropertyAnimation *animation = new QPropertyAnimation(midlg, "size");
-                animation->setDuration(300);
-                animation->setStartValue(QSize(500, 0));
-                animation->setEndValue(QSize(500, 550));
-               // animation->setEasingCurve(QEasingCurve::InCurve);
-                midlg->show();
-                animation->start();*/
+            {
+                midlg->resize(500,550);
                 midlg->show();
 
             }
@@ -3584,26 +3423,8 @@ void PlayerWindow::on_action_Media_Info_triggered()
 
     }
 }
-void PlayerWindow::showtooltip(QPoint *pt)
-{/*if (lab)
-    {QPropertyAnimation *animation = new QPropertyAnimation(lab, "geometry");
-    animation->setDuration(200);
-    animation->setStartValue(QRect(pt->x()-210, ui->statusBar->y(), 65, 25));
-    animation->setEndValue(QRect(pt->x()+10, ui->statusBar->y()-25, 65, 25));
-    animation->start();
-}
-    qDebug()<<"dsggggggggggggggggggggggggggggg";*/
-}
-
-void PlayerWindow::on_sliderSeek_valueChanged(int value)
-{
-
-}
 void PlayerWindow::hideframe()
-{/*QPropertyAnimation *animation = new QPropertyAnimation(lab, "geometry");
-animation->setDuration(100);
-animation->setEndValue(QRect(lab->x(), ui->statusBar->y()-64, 65, 0));
-animation->start();*/
+{
     videoWin->update();
     if (lab)
     {  lab->resize(1,1);
@@ -3612,13 +3433,7 @@ animation->start();*/
         mpseekView->resize(1,1);
         mpseekView->close();
     }
-    /*if (mpseekview)
-    {
-        mpseekview->resize(1,1);
-        mpseekview->hide();
-    }*/
 
-    //delete lab;
     videoWin->update();
 }
 
@@ -5634,8 +5449,5 @@ void PlayerWindow::on_actionGIF_Animator_triggered()
         QObject::connect(gifdlg,SIGNAL(showfile(QString,QString)),this,SLOT(winExplorer(QString,QString)));
         gifdlg->show();
     }
-
-
-
 }
 

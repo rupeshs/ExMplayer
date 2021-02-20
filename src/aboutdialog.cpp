@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include <QDateTime>
 #include <QPropertyAnimation>
 #include <version.h>
+
 aboutDialog::aboutDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::aboutDialog)
@@ -31,11 +32,9 @@ aboutDialog::aboutDialog(QWidget *parent) :
       QString strQtVersion;
       QFileInfo fi(qApp->applicationFilePath());
       QDateTime dt=fi.created();
-
       strQtVersion=QString::fromLatin1(qVersion());
       strBuildText="Using Qt "+strQtVersion +" (Compiled with Qt "+strQtVersion+")\n";
       strBuildText+=QString("Build on "+dt.toString());
-
       ui->labelDate->setText(strBuildText);
       ui->labelVersion->setText("<span style=\" font-size:12pt; font-weight:600; color:#000000;\">ExMplayer v"+Version::stable()+ " <span>");
 }

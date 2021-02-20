@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -34,13 +34,12 @@ public:
 
     inline bool Stereo(){return _bstereo;} //for stereo selection dialogue
     inline void setStereo(bool b){_bstereo=b;}
+
 signals:
     void stereoInputFormat(int mode);
     
 private slots:
     void on_pushButtonOk_clicked();
-
-
 
 private:
     Ui::StereoVinputDialog *ui;

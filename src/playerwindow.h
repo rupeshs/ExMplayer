@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2011-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -312,7 +312,6 @@ private slots:
     void on_actionNegative_triggered();
     void on_actionVolume_Normalization_triggered();
     void on_action_Options_triggered();
-    void on_sliderSeek_valueChanged(int value);
     void on_action_Media_Info_triggered();
     void on_sliderVolume_actionTriggered(int action);
     void on_actionSelected_item_s_triggered();
@@ -449,7 +448,6 @@ private slots:
     void checkForNextPlayback();
     void crossfadePlay();
     void hidebusypg();
-    void showtooltip(QPoint *pt);
     void hideframe();
     void loadMPlayerConfig();
     void setcmbIndex();

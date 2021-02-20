@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,11 +30,9 @@ cutterDialog::cutterDialog(QWidget *parent, mplayerfe *mpf) :
     ui->pushButtonStop->setEnabled(false);
     ui->pushButtonCut->setEnabled(false);
     mp=mpf;
-
     startPos=0;
     stopPos=0;
     ui->progressBar->setValue(0);
-   // ui->progressBar->setVisible(false);
     ui->pushButtonof->setEnabled(false);
     ui->pushButtonclose->setEnabled(false);
     ui->pushButtonpre->setEnabled(false);
@@ -42,11 +40,13 @@ cutterDialog::cutterDialog(QWidget *parent, mplayerfe *mpf) :
     ui->seek->setEnabled(false);
     ui->lineEditStart->setInputMask("99:99:99");
     ui->lineEditStop->setInputMask("99:99:99");
-     if (mpf->starttime()>0)
-     {ui->seek->setEnabled(false);
-      ui->pushButtonStop->setEnabled(false);
-      ui->pushButtonpre->setVisible(false);
-     }
+
+    if (mpf->starttime()>0)
+    {
+        ui->seek->setEnabled(false);
+        ui->pushButtonStop->setEnabled(false);
+        ui->pushButtonpre->setVisible(false);
+    }
 
 }
 
@@ -68,18 +68,20 @@ void cutterDialog::changeEvent(QEvent *e)
 }
 
 void cutterDialog::on_pushButtonStart_clicked()
-{if (mp)
+{
+    if (mp)
     {ui->lineEditStart->setText(mp->tcurpos().toString());
-    startPos=mp->curpos();
+        startPos=mp->curpos();
     }
-  if (!ui->lineEditStart->text().isEmpty())
+    if (!ui->lineEditStart->text().isEmpty())
     {ui->pushButtonStop->setEnabled(true);
-     ui->pushButtonStart->setEnabled(false);
+        ui->pushButtonStart->setEnabled(false);
     }
 }
 
 void cutterDialog::on_pushButtonStop_clicked()
-{if (mp) 
+{
+    if (mp)
     {ui->lineEditStop->setText(mp->tcurpos().toString());
         stopPos=mp->curpos();
         QTime t(0,0);
@@ -94,8 +96,6 @@ void cutterDialog::on_pushButtonStop_clicked()
         ui->pushButtonCut->setEnabled(true);
         ui->pushButtonpre->setEnabled(true);
     }
-
-
 }
 
 void cutterDialog::on_pushButtonReset_clicked()
@@ -116,16 +116,13 @@ void cutterDialog::on_pushButtonReset_clicked()
 void cutterDialog::on_pushButtonCut_clicked()
 {
     if(stopPos-startPos>0)
-    {QString dir = rphFile::getDir(this,"Open a Directory for output:","");
-
-
+    {
+        QString dir = rphFile::getDir(this,"Open a Directory for output:","");
         if (!dir.isEmpty())
         {
             ffProcess = new QProcess(this);
             QObject::connect(ffProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(readffmpegoutput()));
             QObject::connect(ffProcess,SIGNAL(finished(int)),this,SLOT(completed(int)));
-
-
             mp->stop();
             if (mpp)
                 mpp->stop();
@@ -144,7 +141,6 @@ void cutterDialog::on_pushButtonCut_clicked()
 
             cfile=new  QFile(dir+"strip_"+fi.baseName()+"."+fi.suffix());
             filepath=shortPathName(dir+"strip_"+fi.baseName()+"."+fi.suffix());
-
             //http://trac.ffmpeg.org/wiki/Seeking added Output seeking
             arguments<<"-i"<<shortPathName(mp->filepath())<<"-ss"<<QString::number(startPos)<<"-t"<<QString::number(stopPos-startPos)<<"-c"<<"copy"<<"-y"<<dir+"strip_"+fi.baseName()+"."+fi.suffix();
 
@@ -153,20 +149,15 @@ void cutterDialog::on_pushButtonCut_clicked()
             ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
 #endif
 #if defined(Q_OS_LINUX) || defined(Q_OS_OPENBSD)
-             ffProcess->start(Paths::getFfmpegPath(), arguments);
+            ffProcess->start(Paths::getFfmpegPath(), arguments);
 #endif
-            \
             ui->pushButtonpre->setEnabled(false);
-
-            //coreTimer->start();
         }
     }
 }
 void cutterDialog::readffmpegoutput()
 {
     QString str= ffProcess->readAllStandardOutput();
-    //qDebug() <<str;
-
 }
 
 void cutterDialog::on_pushButton_2_clicked()
@@ -183,14 +174,11 @@ void cutterDialog::completed(int val)
     ui->progressBar->setValue(0);
     //ui->progressBar->setVisible(false);
     if (cfile->size()==0){
-
         QMessageBox::critical(this,qApp->applicationName(),tr("Error while saving the file!"),QMessageBox::Ok,QMessageBox::Cancel);
-
     }
-
 }
 void cutterDialog::updateStatus()
-{//qDebug()<<"fafsf";
+{
     float  val;
 
     QString tex;
@@ -205,33 +193,15 @@ void cutterDialog::updateStatus()
 
     ui->labelst->setText(tex);
 }
-
-
-
-
-
-
 void cutterDialog::on_pushButtonclose_clicked()
 {
-
     ffProcess->close();
     ui->pushButtonclose->setEnabled(false);
-
 }
-
-void cutterDialog::on_pushButtonStop_pressed()
-{
-
-}
-
 void cutterDialog::on_pushButtonof_clicked()
 {
-    //qDebug()<<filepath;
-    //winExplorer(,filepath);
     emit  showfile(QString("/select,"),filepath);
-
 }
-
 
 void cutterDialog::on_pushButtonpre_clicked()
 {
@@ -250,15 +220,14 @@ void cutterDialog::on_pushButtonpre_clicked()
     QObject::connect(cTimer, SIGNAL(timeout()), this,SLOT(updateSeekbar()));
     cTimer->start();
     ui->seek->setEnabled(true);
-
     mpp->setStartStop(startPos,(stopPos-startPos));
-
     mpp->play(mp->filepath(),mp->getVolume());
 
 }
 
 void cutterDialog::on_toolButtonStop_clicked()
-{if( mpp)
+{
+    if( mpp)
         mpp->stop();
 }
 void cutterDialog::closeEvent ( QCloseEvent * e )
@@ -268,18 +237,18 @@ void cutterDialog::closeEvent ( QCloseEvent * e )
 
 }
 void cutterDialog::updateSeekbar()
-{if(mpp)
+{
+    if(mpp)
     {
-
         ui->seek->setValue(((mpp->curpos()-startPos)/(stopPos-startPos))*100);
-
     }
 }
 
 void cutterDialog::on_seek_actionTriggered(int action)
 {
     if (mpp)
-    {this->cTimer->stop();
+    {
+        this->cTimer->stop();
         mpp->seek(ui->seek->value());
         this->cTimer->start();
     }

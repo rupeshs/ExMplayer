@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -62,7 +62,6 @@ private slots:
     void on_toolButtonStop_clicked();
     void on_pushButtonpre_clicked();
     void on_pushButtonof_clicked();
-    void on_pushButtonStop_pressed();
     void on_pushButtonclose_clicked();
     void on_pushButton_2_clicked();
     void on_pushButtonCut_clicked();

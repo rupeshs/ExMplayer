@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -121,10 +121,10 @@ mplayerfe::mplayerfe(QObject *parent, QWidget* wparent)
     bmute=false;
     volumeBoost=110;
     _usevolumeboost=false;
-     _tduration = QTime(0,0);
+    _tduration = QTime(0,0);
     _osdLevel=1;
     _currentSubtitleTrack="0";
-     _useVideoSoftEq=false;
+    _useVideoSoftEq=false;
 
 
 }
@@ -140,9 +140,6 @@ void mplayerfe::init()
     rx_videocpu_usage.setMinimal(true);
     bedlstart=false;
     uselavf=true;
-
-
-
 }
 mplayerfe::~mplayerfe()
 {
@@ -156,8 +153,6 @@ mplayerfe::~mplayerfe()
 }
 void mplayerfe::play(QString File,int volume)
 {
-
-
     _curvolume=  volume;
 
     qDebug()<<"Starting mplayer process...";
@@ -176,14 +171,9 @@ void mplayerfe::play(QString File,int volume)
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     argAudioOpt<<"-volume"<<QString::number(volume);
 
-
-     //argAudioOpt<<"-hr-mp3-seek";
-    //argAudioOpt<<"-afm"<< "ffmpeg";
-
     if(bwinampdsp){
         removeFilter(equlizerstr);
     }
-
     //Video options
 #ifdef Q_WS_WIN
     argVideoOpt<<"-vo"<<"direct3d,directx";
@@ -210,17 +200,13 @@ void mplayerfe::play(QString File,int volume)
     }
 
     argSubOpt<<"-sub-fuzziness"<<QString::number(1)<<"-ass"<<"-embeddedfonts"<<"-ass-styles"<<Paths::configPath()+"/styles.ass";
-
     argvideofilters<<"-vf"<<"screenshot";
-    //argDemuxerOpt<<"-demuxer"<<"lavf";
 
     if(_useVideoSoftEq)
     {
       argvideofilters<<"-vf-add"<<"eq2";
       argvideofilters<<"-vf-add"<<"hue";
     }
-
-    //argAudioOpt<<"-softvol"<<"-softvol-max"<<QString::number(1000);
 
     //All options
     //******************************************************
@@ -265,23 +251,19 @@ void mplayerfe::play(QString File,int volume)
     if( _usevolumeboost)
         arguments<<"-softvol" <<"-softvol-max"<<QString::number(volumeBoost+10);
 
-
     //Starting mplayer
     //******************************************************
     qDebug()<<"Starting mplayer...";
 
     _filepath=File;
-     emit starting();
+    emit starting();
     startMplayer();
-
-
     //******************************************************
 }
 
 //Not using anymore..deprecated from version 2.0
 void mplayerfe::readmpconsole()
 {
-
     QString str= mProcess->readAllStandardOutput();
 
     //Get lines
@@ -295,7 +277,6 @@ void mplayerfe::readmpconsole()
             //inform
             emit lineavailable (tmp);
         }
-
     }
 
     if (!_started)
@@ -324,9 +305,6 @@ void mplayerfe::readmpconsole()
             metainfo <<"VIDEO_CODEC: "+ parsevalue("ID_VIDEO_CODEC","=",str);
 
         }
-
-
-
     }
 
 }
@@ -378,8 +356,9 @@ void mplayerfe::stop()
 }
 
 void mplayerfe::setVolume(int vol)
-{if (!_isRestarting)
-    {if(bmute)
+{
+    if (!_isRestarting)
+    {   if(bmute)
             bmute=!bmute;
         _curvolume=vol;
         cmd=QString("volume " + QString::number(vol) + " 1\n");
@@ -543,7 +522,6 @@ void mplayerfe::loadsubtitles(QString subfile)
         switchSubtitle(listSubtitleTrack.count());
 
     }
-
 
 }
 
@@ -1124,7 +1102,8 @@ void mplayerfe::setStereoMode(int mode)
 
 }
 void  mplayerfe::removeLogo(QRect *rect,bool enable )
-{if (enable)
+{
+    if (enable)
     {
         removeFilter(delogostr);
         delogostr=QString("delogo=%1:%2:%3:%4:1").arg(rect->x()).arg(rect->y()).arg(rect->width()).arg(rect->height());
@@ -2615,7 +2594,7 @@ mr or mono_right
 mono output (right eye only)
 NOTE: To use either of the interleaved-rows output formats to display full-screen on a row-interleaved 3D display, you will need to scale the video to the correct height first using the "scale" filter, if it is not already the right height. Typically, that is 1080 rows (so use e.g. "-vf scale=1440:1080,stereo3d=sbsl:irl" for a 720p side-by-side encoded movie).
 
-  */
+*/
 
 void  mplayerfe::Stereo3D(bool enable)
 {

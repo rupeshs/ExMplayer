@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -38,20 +38,20 @@ public:
     QFileInfo *cfile;
 signals:
   void showfile(QString opt,QString fn);
+
 public slots:
   void completed(int ec);
   void updateStatus();
   void mix(QString cfn,QString af,QString  dir);
   void readffmpegoutput();
+
 protected:
     void changeEvent(QEvent *e);
     void closeEvent(QCloseEvent * e );
 
 private:
     Ui::mixDialog *ui;
-
     QString filepath;
-
 
 private slots:
     void on_pushButtonof_clicked();

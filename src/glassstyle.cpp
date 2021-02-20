@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #include <QMenuBar>
 #include <QToolBar>
 #include <QLayout>
+
 GlassStyle::GlassStyle()
 {
 
@@ -45,14 +46,7 @@ GlassStyle::GlassStyle()
     m_colorBarBegin = qRgb( 255, 255, 255 );
     m_colorBarMiddle = qRgb( 225, 225, 225 );
     m_colorBarEnd = qRgb( 255,255, 255 );
-    /*int h,s,v;
-    m_colorBarMiddle.getHsl(&h,&s,&v);
-    qDebug("%d %d %d",h,s,v);
-   //m_colorBarMiddle.setHsl(200,128,150,30);*/
 
-    /*m_colorBarBegin = qRgb( 199, 219, 219 );
-    m_colorBarMiddle = qRgb( 125, 132, 219 );
-    m_colorBarEnd = qRgb( 53, 56,  );&*/
     m_colorHandle = qRgb( 250, 250, 250 );
     m_colorHandleLight = qRgb( 255, 255, 255 );
     m_colorSeparator = qRgba( 200, 200, 200,100 );
@@ -74,8 +68,6 @@ GlassStyle::GlassStyle()
 
     m_colorBorder = qRgb( 255,0, 0 );
     m_colorBorderLight = qRgb(0 , 255, 0 );
-
-
 
 }
 int GlassStyle::pixelMetric( PixelMetric metric, const QStyleOption* option, const QWidget* widget ) const
@@ -106,7 +98,6 @@ int GlassStyle::pixelMetric( PixelMetric metric, const QStyleOption* option, con
 
         if ( widget && qobject_cast<QToolBar*>( widget->parentWidget() ) )
             return 0;
-
 
     default:
         break;
@@ -176,9 +167,8 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
         if ( qobject_cast<const QMainWindow*>( widget ) ) {
             QRect rect=option->rect;
 
-            if (QToolBar*  toolBar = widget->findChild<QToolBar*>()) {
-
-
+            if (QToolBar*  toolBar = widget->findChild<QToolBar*>())
+            {
                 QRect rect =  toolBar ->geometry();
 
                 QLinearGradient gradient(rect.topLeft(), rect.bottomLeft());
@@ -200,46 +190,34 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
                 painter->fillRect( rect2, gradient );
             }
 
-            if (QMenuBar*  menuBar = widget->findChild<QMenuBar*>() ) {
+            if (QMenuBar*  menuBar = widget->findChild<QMenuBar*>() )
+            {
                 QRect rect = menuBar->geometry();
 
                 QLinearGradient gradient(rect.topLeft(), rect.bottomLeft());
-
                 gradient.setColorAt( 0.0,m_colorBarBegin );
-                //gradient.setColorAt( 0.5, m_colorBarMiddle );
                 gradient.setColorAt( 1.0,QColor(255,255,255,255) );
                 painter->fillRect( rect, gradient );
-
                 gradient.setColorAt( 0.0, QColor(255,255,255,255) );
-                //gradient.setColorAt( 0.4, QColor(220,220,220,255) );
-                //gradient.setColorAt( 0.6,QColor(220,220,220,255)  );
                 gradient.setColorAt( 1.0,QColor(255,255,255,255) );
-                QRect rect2 = rect;
 
+                QRect rect2 = rect;
                 rect2.setHeight(rect.height()/2);
                 painter->fillRect( rect2, gradient );
 
             }
-            if ( QStatusBar* statusBar = widget->findChild<QStatusBar*>() ) {
-                //qDebug()<< statusBar->rect().height();
+            if ( QStatusBar* statusBar = widget->findChild<QStatusBar*>() )
+            {
                 QRect rect =  statusBar->geometry();
-
                 QLinearGradient gradient(rect.topLeft(), rect.bottomLeft());
 
                 gradient.setColorAt( 0.0, m_colorBarBegin );
-
-               // gradient.setColorAt( 0.5, m_colorBarMiddle);
                 gradient.setColorAt( 1.0,QColor(255,255,255,255));
-                //gradient.setColorAt( 0.5, QColor(255,255,255));
-
                 painter->fillRect( rect, gradient );
-
                 gradient.setColorAt( 0.0, QColor(255,255,255,150) );
-                //gradient.setColorAt( 0.4, QColor(255,255,255,150) );
-                //gradient.setColorAt( 0.6,QColor(240,240,240,250)  );
                 gradient.setColorAt( 1.0,QColor(255,255,255,255) );
-                QRect rect2 = rect;
 
+                QRect rect2 = rect;
                 rect2.setHeight(rect.height()/2);
                 painter->fillRect( rect2, gradient );
 
@@ -265,9 +243,6 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
     case PE_PanelToolBar:
     {QRect rect = option->rect;
         bool vertical = false;
-        //rect.setRight( toolBar->childrenRect().right() + 2 );
-
-        //painter->save();
         QRegion region = rect.adjusted( 2, 0, -2, 0 );
         region += rect.adjusted( 0, 2, 0, -2 );
         region += rect.adjusted( 1, 1, -1, -1 );
@@ -283,10 +258,7 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
         painter->fillRect( rect, gradient );
 
     }
-
         return;
-
-
     case PE_FrameStatusBar:
     {
         QRect rect = option->rect;
@@ -420,7 +392,8 @@ void GlassStyle::drawPrimitive( PrimitiveElement element, const QStyleOption* op
 
 void GlassStyle::drawControl( ControlElement element, const QStyleOption* option,
                               QPainter* painter, const QWidget* widget ) const
-{ switch ( element ) {
+{
+    switch ( element ) {
 
 
     case CE_MenuBarEmptyArea:

@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2011-2013 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -70,21 +70,16 @@ public:
     QString audioFile;
     bool bstop;
     QString commandLine;
-
-
-    //---------------------------------------------
     QStringList listTemp;
     QStringList listVideoTrack;
     QStringList listAudioTrack;
     QStringList listSubtitleTrack;
     QStringList listAudioRepeat;
-
     QMap<QString, QString> mapCodecs;
     QMap<QString, QString> mapDevices;
     QMap<QString, QString> mapMetaInfo;
     QMap<QString, QString> mapFileSubtitles;
 
-    //-----------------------------------------------
     QString getVideoFormat(){return _videoFormat;}
     QString getAudioRate(){return _audio_rate;}
     QString getAudioNch(){return _audio_nch;}
@@ -117,6 +112,7 @@ public:
     State state(){return _state;}
     bool isstarted(){return _started;}
     int getBufferFill(){return _bufferfill;}
+
 signals:
     void starting();
     void startingplayback();
@@ -150,6 +146,7 @@ signals:
     void resizeVideoWindow(int wid,int height);
     void fontScanProgress(int val);
     void disableSeek();
+
 public slots:
     void startMplayer();
     void play(QString File,int volume);
@@ -273,14 +270,12 @@ public slots:
     //void setcrossfading(int sec,bool enable);
 
  private:
-   QString parsestatusline(QString serstr,QString str);
-   QString parsevalue( QString serstr,QString sep, QString str);
+
    QString _audio_nch;
    QString _audio_rate;
    QString _audio_bitrate;
    QString _video_width;
    QString _video_height;
-
    QString cmd;
    bool _started;
    float _duration;
@@ -314,11 +309,9 @@ public slots:
    bool _playmonovideo;
    bool _usevolumeboost;
    bool _useVideoSoftEq;
-
    QString _filepath;
    QStringList metainfovalue;
    QStringList metainfoname;
-   void init();
    int _curvolume;
    QDialog *dlg;
    QSpinBox *sb ;
@@ -355,8 +348,6 @@ public slots:
    QString svstr;
    QString stereo3Dstr;
    QString volumeBoostStr;
-
-
    QFile *edlfile;
    QString edlline;
    QString winampdspstr;
@@ -385,8 +376,6 @@ public slots:
    QString edl;
    long volumeBoost;
    QString subTrackId;
-
-
    bool mutelock;
    long mh;
    QLibrary *myLib0;
@@ -399,12 +388,14 @@ public slots:
    int _osdLevel;
    QString _currentSubtitleTrack;
    QPointer<fontLoadDialog> fldDlg;
+   QString _videoFormat;
+
+   QString parsestatusline(QString serstr,QString str);
+   QString parsevalue( QString serstr,QString sep, QString str);
+   void init();
+   void writeCmd(QString str);
    void removeOption(QString option,bool addseek);
    QString colorToRGB(unsigned int color) ;
-   QString _videoFormat;
-   void writeCmd(QString str);
-
-
 
 };
 

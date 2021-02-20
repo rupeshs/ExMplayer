@@ -16,24 +16,25 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-
 #ifndef CONFIG_H
 #define CONFIG_H
 #include <QString>
 #include <QSettings>
+
 class config
 {
- public:
- QSettings _settings;
- config();
- void set_screenshotfolder(QString dir){screenshotfolder=dir;}
- void setcrossfade(bool val);
- //String processPriority(){return _settings.value("General/Priority","abovenormal").toString();};
- QString screenshotfolder;
- public slots:
- private:
- //QString _processPriority;
- bool crossfade;
+public:
+    config();
+
+    QSettings _settings;
+    QString screenshotfolder;
+
+    void set_screenshotfolder(QString dir){screenshotfolder=dir;}
+    void setcrossfade(bool val);
+
+private:
+    //QString _processPriority;
+    bool crossfade;
 
 };
 

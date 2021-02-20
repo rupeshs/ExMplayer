@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -30,10 +30,12 @@ class helpDialog : public QDialog {
 public:
     helpDialog(QWidget *parent = 0);
     ~helpDialog();
+
 public slots:
     void setHelpText(QString str);
     void showContent();
     void showcutterHelp(QString str);
+
 protected:
     void changeEvent(QEvent *e);
 
@@ -41,8 +43,8 @@ private:
     Ui::helpDialog *ui;
 
 private slots:
-
     void on_listWidgetContent_currentRowChanged(int currentRow);
+
 };
 
 #endif // HELPDIALOG_H

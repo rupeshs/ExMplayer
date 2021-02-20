@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,7 +43,6 @@ CoverArtDialog::CoverArtDialog(QWidget *parent) :
     animation->setEndValue(1.0);
     animation->start();
     this->setVisible(true);
-
 
     QPropertyAnimation *animation2 = new QPropertyAnimation(ui->toolButton, "geometry");
     animation2->setDuration(1000);

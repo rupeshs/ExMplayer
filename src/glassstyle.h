@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ class GlassStyle : public  QProxyStyle
  public:
      GlassStyle();
     ~GlassStyle() {}
-
 
      // toolbar, tab, toolbox
      QColor m_colorBarBegin;
@@ -72,16 +71,16 @@ class GlassStyle : public  QProxyStyle
      QColor m_colorBackgroundBegin;
      QColor m_colorBackgroundEnd;
      QSize sizeFromContents( ContentsType type, const QStyleOption* option,
-         const QSize& contentsSize, const QWidget* widget ) const;
+     const QSize& contentsSize, const QWidget* widget ) const;
 
      void polish( QWidget* widget );
      void unpolish( QWidget* widget );
      int pixelMetric( PixelMetric metric, const QStyleOption* option, const QWidget* widget ) const;
      void   drawControl( ControlElement element, const QStyleOption* option,
-         QPainter* painter, const QWidget* widget ) const;
+                         QPainter* painter, const QWidget* widget ) const;
      void drawPrimitive( PrimitiveElement element, const QStyleOption* option,
-           QPainter* painter, const QWidget* widget ) const;
+                         QPainter* painter, const QWidget* widget ) const;
      void drawComplexControl( ComplexControl control, const QStyleOptionComplex* option,
-         QPainter* painter, const QWidget* widget ) const;
-      };
+                              QPainter* painter, const QWidget* widget ) const;
+};
 #endif // GLASSSTYLE_H

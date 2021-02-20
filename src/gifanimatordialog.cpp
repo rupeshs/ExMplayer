@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -24,19 +24,12 @@ GifAnimatorDialog::GifAnimatorDialog(QWidget *parent,mplayerfe *mpf) :
 {
 
     ui->setupUi(this);
-
-
-    //ui->lineEditStart->setInputMask("99:99:99");
-   // ui->lineEditStop->setInputMask("99:99:99");
     ui->pushButtonStart->setEnabled(true);
     ui->pushButtonStop->setEnabled(false);
     ui->pushButtonAnimate->setEnabled(false);
     ui->spinBoxFps->setValue(15);
     ui->spinBoxWidth->setValue(320);
     ui->spinBoxHeight->setValue(-1);
-
-
-
     mp=mpf;
     if(!mp->hasvideo())
         ui->pushButtonStart->setEnabled(false);
@@ -45,37 +38,27 @@ GifAnimatorDialog::GifAnimatorDialog(QWidget *parent,mplayerfe *mpf) :
     movie = new QMovie(":/images/loaderanim.gif");
     ui->labelLoader->hide();
     ui->labelLoader->setMovie(movie);
-
     ui->pushButtonOpenFolder->setEnabled(false);
-
     extension = new QWidget(this);
+
     QObject::connect(ui->detailsPushButton, SIGNAL(toggled(bool)), extension, SLOT(setVisible(bool)));
     QObject::connect(ui->detailsPushButton, SIGNAL(toggled(bool)), this, SLOT(toggleExtension(bool)));
-
     QVBoxLayout *extensionLayout = new QVBoxLayout;
+
     extensionLayout->setMargin(0);
-
-
     extensionLayout->addWidget(ui->groupBox_2);
     extension->setLayout(extensionLayout);
 
-
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
-    //mainLayout->setMargin(10);
     mainLayout->setVerticalSpacing(20);
     mainLayout->setHorizontalSpacing(20);
-
     mainLayout->addWidget(ui->groupBox, 0, 0);
-
     mainLayout->addWidget(ui->detailsPushButton,0,2);
     mainLayout->addWidget(extension,3,0);
-
     setLayout(mainLayout);
 
-
     extension->hide();
-
 
 }
 GifAnimatorDialog::~GifAnimatorDialog()
@@ -92,24 +75,22 @@ void GifAnimatorDialog::on_pushButtonOpenFolder_clicked()
 
 void GifAnimatorDialog::on_pushButtonStart_clicked()
 {
-
-
     if (mp)
-    {ui->lineEditStart->setText(mp->tcurpos().toString());
+    {
+        ui->lineEditStart->setText(mp->tcurpos().toString());
         startPos=mp->curpos();
-
-
     }
     if (!ui->lineEditStart->text().isEmpty())
-    {ui->pushButtonStop->setEnabled(true);
-       ui->pushButtonStart->setEnabled(false);
+    {   ui->pushButtonStop->setEnabled(true);
+        ui->pushButtonStart->setEnabled(false);
     }
 }
 
 void GifAnimatorDialog::on_pushButtonStop_clicked()
 {
     if (mp)
-    {ui->lineEditStop->setText(mp->tcurpos().toString());
+    {
+        ui->lineEditStop->setText(mp->tcurpos().toString());
         stopPos=mp->curpos();
         QTime t(0,0);
         t = t.addSecs(stopPos-startPos);
@@ -123,17 +104,13 @@ void GifAnimatorDialog::on_pushButtonStop_clicked()
         ui->pushButtonAnimate->setEnabled(true);
 
     }
-
-
 }
 
 void GifAnimatorDialog::on_pushButtonAnimate_clicked()
 {
-
    if (stopPos-startPos>120)
    {  QMessageBox::warning(this, tr("ExMplayer Movie Animator"),
                                    tr("Selected video length is too large") ,
-
                                    QMessageBox::Cancel);
        return;
    }
@@ -141,32 +118,25 @@ void GifAnimatorDialog::on_pushButtonAnimate_clicked()
    {
        QMessageBox::warning(this, tr("ExMplayer Movie Animator"),
                                           tr("Selected video length is too small") ,
-
                                           QMessageBox::Cancel);
        return;
    }
-    if(stopPos-startPos>0)
-    {QString dir = rphFile::getDir(this,"Open a Directory for output:","");
+   if(stopPos-startPos>0)
+   {
+       QString dir = rphFile::getDir(this,"Open a Directory for output:","");
+       if (!dir.isEmpty())
+       {
 
-
-        if (!dir.isEmpty())
-        {
-
-            outPath=dir;
-
-            ui->labelLoader->show();
-            movie->start();
-            gifPalettteGen=new GifPaletteGenerator();
-            ui->labelStatus->setText("Generating palette...");
-            QObject::connect(gifPalettteGen,SIGNAL(ffmpegexit(int)),this,SLOT(triggerGifGenerator(int)));
-
-            gifPalettteGen->setFfmpegOptions(fileFilters::shortPathName(mp->filepath()),startPos,stopPos-startPos,ui->spinBoxFps->value(),ui->spinBoxWidth->value(),ui->spinBoxHeight->value());
-            gifPalettteGen->generatePalette();
-
-
-
-        }
-    }
+           outPath=dir;
+           ui->labelLoader->show();
+           movie->start();
+           gifPalettteGen=new GifPaletteGenerator();
+           ui->labelStatus->setText("Generating palette...");
+           QObject::connect(gifPalettteGen,SIGNAL(ffmpegexit(int)),this,SLOT(triggerGifGenerator(int)));
+           gifPalettteGen->setFfmpegOptions(fileFilters::shortPathName(mp->filepath()),startPos,stopPos-startPos,ui->spinBoxFps->value(),ui->spinBoxWidth->value(),ui->spinBoxHeight->value());
+           gifPalettteGen->generatePalette();
+       }
+   }
 }
 
 void GifAnimatorDialog::triggerGifGenerator(int ec)
@@ -184,11 +154,11 @@ void GifAnimatorDialog::triggerGifGenerator(int ec)
 
 void GifAnimatorDialog::ProcessingCompleted(int ec,QString outpath)
 {
-gifPath=outpath;
-ui->labelStatus->setText("Completed.");
-movie->stop();
-ui->labelLoader->hide();
-ui->pushButtonOpenFolder->setEnabled(true);
+    gifPath=outpath;
+    ui->labelStatus->setText("Completed.");
+    movie->stop();
+    ui->labelLoader->hide();
+    ui->pushButtonOpenFolder->setEnabled(true);
 }
 
 void GifAnimatorDialog::on_pushButtonReset_clicked()

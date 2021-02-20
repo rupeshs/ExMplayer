@@ -1,6 +1,6 @@
 /*
     exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman <exmplayer.dev@gmail.com>
+    Copyright (C) 2010-2021 Rupesh Sreeraman <exmplayer.dev@gmail.com>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -43,12 +43,11 @@ public:
     bool deactivateInhibit();
 
  private:
-
     int _systemType;
     bool _dpmsEnabled;
     bool _screenSvrEnabled;
     uint _inhibitCookie;
-     QPointer<QDBusInterface> interfaceScreenSvr;
+    QPointer<QDBusInterface> interfaceScreenSvr;
 
     QStringList serviceLst;
     QStringList servicePathLst;

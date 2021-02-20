@@ -41,26 +41,18 @@ audioconvDialog::audioconvDialog(QWidget *parent) :
     QVBoxLayout *extensionLayout = new QVBoxLayout;
     extensionLayout->setMargin(0);
 
-
     extensionLayout->addWidget(ui->groupBox_2);
     extension->setLayout(extensionLayout);
 
-
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
-    //mainLayout->setMargin(30);
     mainLayout->setVerticalSpacing(30);
-
     mainLayout->addWidget(ui->groupBox, 0, 0);
     mainLayout->addWidget(ui->btnConv, 0, 1);
     mainLayout->addWidget(ui->labfmt,2,0);
     mainLayout->addWidget(ui->detailsPushButton,2,1);
     mainLayout->addWidget(extension,3,0);
-
     setLayout(mainLayout);
-
-
-
 
     extension->hide();
     ui->comboBoxAfmts->setCurrentIndex(7);
@@ -70,17 +62,6 @@ audioconvDialog::audioconvDialog(QWidget *parent) :
 audioconvDialog::~audioconvDialog()
 {
     delete ui;
-}
-
-void audioconvDialog::on_comboBox_currentIndexChanged(QString val )
-{
-
-}
-
-void audioconvDialog::on_comboBox_currentIndexChanged(int index)
-{
-
-
 }
 
 void audioconvDialog::on_comboBoxCh_currentIndexChanged(int index)
@@ -93,12 +74,6 @@ void audioconvDialog::on_comboBoxCh_currentIndexChanged(int index)
         ui->comboBoxBr->insertItem(0,QString::number(re));
     }
 }
-
-void audioconvDialog::on_comboBoxAfmts_currentIndexChanged(int index)
-{
-
-}
-
 void audioconvDialog::on_comboBoxSr_currentIndexChanged(int index)
 {
     if (ui->comboBoxAfmts->currentText()=="wav")
@@ -124,21 +99,22 @@ void audioconvDialog::toggleExtension(bool fa)
 }
 
 void audioconvDialog::on_pushButton_clicked()
-{  QFileDialog::Options options;
+{
+    QFileDialog::Options options;
     QString selectedFilter;
     QString fileName;
     QSettings settings;
 
     QString filter =fileFilters::getaudiofilters();
-    qDebug()<<filter;
+    qDebug()<<"filter"<<filter;
     qDebug()<<settings.value("Playlist/OpenfileDlg","").toString();
+    //Audio files ( *.wav *.ac3 *.flac *.mka *.mp3 *.m4a *.aac *.mpc *.ogg *.oga *.ra *.wma *.spx *.mmf *.amr *.ape );"
     fileName = QFileDialog::getOpenFileName(this,
                                             tr("Open a audio file..."),
                                             "",
                                             filter,
                                             &selectedFilter,
                                             options);
-
 
     if (!fileName.isEmpty())
     { ui->lineEdit->setText(fileName);
@@ -167,7 +143,8 @@ void audioconvDialog::completed(int ec)
 
 }
 void audioconvDialog::updateStatus()
-{if (!ui->pushButton_2->isEnabled())
+{
+    if (!ui->pushButton_2->isEnabled())
     {ui->pushButton_2->setDisabled(false);
         ui->pushButtonof->setDisabled(false);
     }
@@ -202,13 +179,6 @@ void audioconvDialog::on_btnConv_clicked()
 
         encodeaudio(cfn,filepath,ui->comboBoxAfmts->currentText(),ui->comboBoxSr->currentText(),ui->comboBoxCh->currentText(),ui->comboBoxBr->currentText());
 
-        // QObject::connect(ffProcess,SIGNAL(readyReadStandardOutput()),this,SLOT(readffmpegoutput()));
-
-        // arguments<<"-i"<<cfn<<"-ab"<<QString::number(128000)<<"-ac"<<QString::number(2)<<"-ar"<<QString::number(44100)<<"-y"<<filepath;
-        // arguments<<"-i"<<cfn<<"-y"<<filepath;
-
-        //  ffProcess->start(qApp->applicationDirPath()+"/ffmpeg.exe", arguments);
-
     }
 }
 void audioconvDialog::encodeaudio(QString cfn,QString ofn,  QString fmt,QString sr,QString ch,QString br)
@@ -218,7 +188,7 @@ void audioconvDialog::encodeaudio(QString cfn,QString ofn,  QString fmt,QString 
     arguments<<"-i"<<cfn;
     if(fmt=="amr")
     {
-        //arguments<<"-acodec" <<"amr_nb";
+        arguments<<"-acodec" <<"amr_nb";
     }
     if (fmt=="ogg")
     {
@@ -252,15 +222,14 @@ void audioconvDialog::encodeaudio(QString cfn,QString ofn,  QString fmt,QString 
 }
 
 void audioconvDialog::on_pushButton_2_clicked()
-{if(ffProcess)
+{
+    if(ffProcess)
         ffProcess->close();
-
 }
 
 void audioconvDialog::on_pushButtonof_clicked()
-{ emit  showfile(QString("/select,"),cfile->filePath());
-
-
+{
+    emit  showfile(QString("/select,"),cfile->filePath());
 }
 
 void audioconvDialog::on_comboBoxAfmts_currentIndexChanged(QString fmt)

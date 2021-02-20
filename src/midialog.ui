@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>272</width>
+    <width>290</width>
     <height>385</height>
    </rect>
   </property>
@@ -17,15 +17,24 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
+   <item row="0" column="0">
     <widget class="QTextEdit" name="textEdit">
      <property name="readOnly">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
+   <item row="1" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
+     <property name="topMargin">
+      <number>5</number>
+     </property>
+     <property name="bottomMargin">
+      <number>5</number>
+     </property>
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
@@ -45,7 +54,7 @@
         <string>Save &amp;Cover</string>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="ExMplayer.qrc">
          <normaloff>:/images/filesave .png</normaloff>:/images/filesave .png</iconset>
        </property>
       </widget>
@@ -68,7 +77,7 @@
         <string>&amp;Save As..</string>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="ExMplayer.qrc">
          <normaloff>:/images/filesave .png</normaloff>:/images/filesave .png</iconset>
        </property>
       </widget>
@@ -91,7 +100,7 @@
         <string>&amp;Ok</string>
        </property>
        <property name="icon">
-        <iconset>
+        <iconset resource="ExMplayer.qrc">
          <normaloff>:/images/ok.png</normaloff>:/images/ok.png</iconset>
        </property>
        <property name="default">
@@ -103,6 +112,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="ExMplayer.qrc"/>
+ </resources>
  <connections/>
 </ui>

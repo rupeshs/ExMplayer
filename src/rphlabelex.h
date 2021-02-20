@@ -62,6 +62,7 @@ protected:
     bool mrubberBand;
     void paintEvent (QPaintEvent * event ) ;
     void resizeEvent ( QResizeEvent * event ) ;
+
 private:
     QString _title;
     QString _artist;
@@ -79,7 +80,6 @@ private:
     int step2;
     int step3;
     int step4;
-
     bool _drawtext;
 
 

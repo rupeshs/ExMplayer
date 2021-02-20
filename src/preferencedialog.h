@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -54,8 +54,6 @@ public slots:
 void setSettings(QSettings *settings){/*_settings=settings;*/};
 void setSc(QWidget *w){_w=w;};
 private slots:
-    void on_buttonBox_accepted();
-    void on_listWidget_viewportEntered();
     void on_pushButton_6_clicked();
     void on_pushButton_5_clicked();
     void on_pushButton_4_clicked();
@@ -65,28 +63,20 @@ private slots:
     void on_rbVol_toggled(bool checked);
     void on_pushButton_clicked();
     void on_twsc_itemDoubleClicked(QTableWidgetItem* item);
-    void on_twsc_itemClicked(QTableWidgetItem* item);
-    void on_cbEnableAEq_stateChanged(int );
     void on_listWidget_currentRowChanged(int currentRow);
     void on_buttonBox_clicked(QAbstractButton* button);
     void saveActionToXml();
-
-    void on_comboBoxStyle_activated(const QString &arg1);
-
-
-
     void on_hSliderVolumeBoost_valueChanged(int value);
-
     void on_pushButtonResetVolumeBoost_clicked();
 
 private:
-QWidget *_w;
-ShortcutGetter *scg;
-helpDialog *hlpDlg;
-helpDialog *mDlg;
-bool resetsc;
-int mw;
-bool apply;
+    QWidget *_w;
+    ShortcutGetter *scg;
+    helpDialog *hlpDlg;
+    helpDialog *mDlg;
+    bool resetsc;
+    int mw;
+    bool apply;
 };
 
 

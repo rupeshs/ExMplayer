@@ -1,4 +1,7 @@
-/*from smplayer
+/*  smplayer, GUI front-end for mplayer.
+    Copyright (C) 2006-2009 Ricardo Villalba <rvm@escomposlinux.org>
+    Copyright (C) 2010-2021 Rupesh Sreeraman
+
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
@@ -37,13 +40,13 @@ protected:
 	bool RemoveClassId();
 	bool VistaGetDefaultApps(const QStringList &extensions, QStringList& registeredExt);
 	int  VistaSetAppsAsDefault(const QStringList& extensions);
+
 public:
-        WinFileAssoc(const QString ClassId = "ExMplayer File", const QString AppName="ExMplayer");
+    WinFileAssoc(const QString ClassId = "ExMplayer File", const QString AppName="ExMplayer");
 
-	bool GetRegisteredExtensions(const QStringList& extensionsToCheck, QStringList& registeredExtensions);
-
-	int CreateFileAssociations(const QStringList& fileExtensions); 
-	int RestoreFileAssociations(const QStringList& fileExtensions);
+    bool GetRegisteredExtensions(const QStringList& extensionsToCheck, QStringList& registeredExtensions);
+    int CreateFileAssociations(const QStringList& fileExtensions);
+    int RestoreFileAssociations(const QStringList& fileExtensions);
 };
 
 #endif

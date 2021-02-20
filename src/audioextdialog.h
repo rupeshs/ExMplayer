@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -46,16 +46,18 @@ private:
     QPointer<QProcess> ffProcess;
     QString cfn;
     QFileInfo *cfile;
+
 signals:
     void showfile(QString opt,QString fn);
+
 private slots:
     void on_pushButton_2_clicked();
     void on_pushButtonof_clicked();
     void on_pex_clicked();
     void on_pushButton_clicked();
-    //void readffmpegoutput();
     void updateStatus();
     void completed(int ec);
+
 protected:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);

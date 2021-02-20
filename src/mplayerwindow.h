@@ -1,5 +1,6 @@
 /*  smplayer, GUI front-end for mplayer.
     Copyright (C) 2006-2009 Ricardo Villalba <rvm@escomposlinux.org>
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -121,29 +122,21 @@ public:
     void setAspect( double asp);
     void setMonitorAspect(double asp);
     void updateVideoWindow();
-
-
     void setColorKey(QColor c);
-
-
     void setOffsetX( int );
     int offsetX();
-
     void setOffsetY( int );
     int offsetY();
-
     void setZoom( double );
     double zoom();
-
     void allowVideoMovement(bool b) { allow_video_movement = b; };
     bool isVideoMovementAllowed() { return allow_video_movement; };
-
     virtual QSize sizeHint () const;
     virtual QSize minimumSizeHint() const;
-
     virtual bool eventFilter( QObject * watched, QEvent * event );
     void setShowVideo(bool en){showvideo=en;update();}
     long int getWinid(){return (long int)this->winId();}
+
 public slots:
     void moveLeft();
     void moveRight();
@@ -166,8 +159,6 @@ protected:
     virtual void mouseReleaseEvent( QMouseEvent * e);
     virtual void mouseDoubleClickEvent( QMouseEvent * e );
     virtual void wheelEvent( QWheelEvent * e );
-
-
     void moveLayer( int offset_x, int offset_y );
     virtual void hideEvent(QHideEvent *);
     virtual void showEvent(QShowEvent *);
@@ -186,16 +177,13 @@ signals:
     void mouseMoveEventsg(QMouseEvent *e);
     void mousewheelsg(QWheelEvent * event);
     void resizeVideo(int wid, int hei);
-protected:
 
+protected:
     int video_width, video_height;
     double aspect;
     double monitoraspect;
-
-
     QLabel * logo;
     QMovie * movie;
-
     // Zoom and moving
     int offset_x, offset_y;
     double zoom_factor;

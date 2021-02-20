@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -449,16 +449,6 @@ void preferenceDialog::on_listWidget_currentRowChanged(int currentRow)
 
     }
 }
-
-void preferenceDialog::on_cbEnableAEq_stateChanged(int )
-{
-
-}
-
-void preferenceDialog::on_twsc_itemClicked(QTableWidgetItem* item)
-{
-
-}
 void preferenceDialog::saveActionToXml()
 {//QMessageBox msgBox;
 
@@ -619,23 +609,6 @@ void preferenceDialog::on_pushButton_6_clicked()
     ui->checkBoxUseCodePage->setChecked(false);
 
 }
-
-void preferenceDialog::on_listWidget_viewportEntered()
-{
-
-}
-
-void preferenceDialog::on_buttonBox_accepted()
-{
-
-}
-
-void preferenceDialog::on_comboBoxStyle_activated(const QString &arg1)
-{
-
-}
-
-
 
 void preferenceDialog::on_hSliderVolumeBoost_valueChanged(int value)
 {

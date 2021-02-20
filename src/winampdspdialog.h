@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -37,14 +37,18 @@ signals:
 public slots:
     void getPlugins();
     void dlgsettings(QSettings *se);
+
 protected:
     void changeEvent(QEvent *e);
     void showEvent ( QShowEvent * event ) ;
+
 signals:
     void enableWinampPlugin(bool enable,QString path);
+
 private:
     Ui::WinampDspDialog *ui;
-QPointer<QSettings>_settings;
+    QPointer<QSettings>_settings;
+
 private slots:
     void on_buttonBox_accepted();
     void on_pushButton_2_clicked();

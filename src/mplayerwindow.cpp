@@ -1,5 +1,6 @@
 /*  smplayer, GUI front-end for mplayer.
     Copyright (C) 2006-2009 Ricardo Villalba <rvm@escomposlinux.org>
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -198,15 +199,6 @@ MplayerWindow::MplayerWindow(QWidget* parent, Qt::WindowFlags f)
     logo = new QLabel( mplayerlayer );
     logo->setAutoFillBackground(true);
     bshowLogo=false;
-
-
-
-//#if QT_VERSION >= 0x040400
-//	logo->setAttribute(Qt::WA_NativeWindow); // Otherwise the logo is not visible in Qt 4.4
-//#else
-//	logo->setAttribute(Qt::WA_PaintOnScreen); // Fixes the problem if compiled with Qt < 4.4
-//#endif
-    //ColorUtils::setBackgroundColor( logo, QColor(0,0,0) );
 
 	QVBoxLayout * mplayerlayerLayout = new QVBoxLayout( mplayerlayer );
 	mplayerlayerLayout->addWidget( logo, 0, Qt::AlignHCenter | Qt::AlignVCenter );
@@ -567,7 +559,6 @@ void MplayerWindow::changeEvent(QEvent *e) {
 }
 void MplayerWindow::mousePressEvent(QMouseEvent *event)
 {
-
     rphLabelEx::mousePressEvent(event);
 }
 void  MplayerWindow::mouseMoveEvent(QMouseEvent *event)

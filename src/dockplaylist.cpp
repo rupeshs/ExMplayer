@@ -1,5 +1,5 @@
 /*  exmplayer, GUI front-end for mplayer.
-    Copyright (C) 2010-2020 Rupesh Sreeraman
+    Copyright (C) 2010-2021 Rupesh Sreeraman
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "dockplaylist.h"
 #include "QDragEnterEvent"
 #include "QDropEvent"
+
 dockPlayList::dockPlayList(QWidget  *parent)
     :QDockWidget(parent)
 {
@@ -28,19 +29,19 @@ void dockPlayList::dragEnterEvent(QDragEnterEvent *event)
     QDockWidget::dragEnterEvent(event);
 }
 void dockPlayList::dropEvent(QDropEvent *event)
-{   emit sgdropEvent( event);
+{
+    emit sgdropEvent( event);
     event->acceptProposedAction();
     QDockWidget::dropEvent(event) ;
 }
 void dockPlayList::contextMenuEvent(QContextMenuEvent *event)
 {
-emit sgcontextMenuEvent(event);
-event->accept();
-//QDockWidget::contextMenuEvent(event);
+    emit sgcontextMenuEvent(event);
+    event->accept();
+    //QDockWidget::contextMenuEvent(event);
 
 }
 void dockPlayList::keyPressEvent ( QKeyEvent * event )
-{//qDebug("dk");
-  // event->accept();
+{
    QDockWidget::keyPressEvent(event);
 }
