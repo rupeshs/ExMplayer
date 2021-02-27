@@ -11,7 +11,7 @@ Vcs-Git: https://github.com/rupeshs/ExMplayer.git
 
 Package: exmplayer
 Architecture: any
-Depends: ${shlibs:Depends},mplayer | mplayer-nogui
+Depends: ${shlibs:Depends},mplayer | mplayer-nogui,ffmpeg
 Description: MPlayer GUI with thumbnail seeking
  ExMplayer(Extended MPlayer) is a GUI front-end for MPlayer. 
  Version 3 introduces 3D video playback,wide variety 
