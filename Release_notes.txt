@@ -1,3 +1,15 @@
+Version 5.8.0 
+Release Date : 27-2-2021
+*youtube-dl download path issue fixed
+
+Version 5.5.0
+Release Date : 21-7-2020
+*Qt4 to Qt5 porting 
+
+Version 5.0.1
+Release Date : 28-7-2015
+*Fixed powersaving
+
 Version 5.0.0
 Release Date : 26-7-2015
 *Movie Animator,Convert your favorite video section into high quality animation

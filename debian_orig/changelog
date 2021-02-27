@@ -1,4 +1,4 @@
-exmplayer (5.8.0)  buster; urgency=low
+exmplayer (5.8.0)  focal; urgency=low
   *youtube-dl download path issue fixed
  -- Rupesh Sreeraman <exmplayer.dev@gmail.com>  Tue, 27 Feb 2021 07:32:08 +0430 
    
@@ -12,7 +12,7 @@ exmplayer (5.0.1)  precise; urgency=low
   *Added software video equaliser
   *Improved thumbnail seeking
   *Fixed powersaving
- -- Rupesh Sreeraman <exmplayer.dev@gmail.com>  Tue, 28 Jul 2015 02:12:05 +0430 
+ -- rupeshsreeraman <exmplayer.dev@gmail.com>  Tue, 28 Jul 2015 02:12:05 +0430 
 
 exmplayer (3.8.0)  precise; urgency=low
   
@@ -26,7 +26,7 @@ exmplayer (3.8.0)  precise; urgency=low
   *Fixed screen flickering (Seek view) on Windows8
   *Up-down keys for volume control and left-right keys for seeking
   
- -- Rupesh Sreeraman <exmplayer.dev@gmail.com>  Tue, 04 Feb 2014 01:49:08 +0430 
+ -- rupeshsreeraman <exmplayer.dev@gmail.com>  Tue, 04 Feb 2014 01:49:08 +0430 
 
 exmplayer (3.2.0)  precise; urgency=low
   
@@ -35,7 +35,7 @@ exmplayer (3.2.0)  precise; urgency=low
   *Animated fullscreen controls
   *Improved media cutter
   
- -- Rupesh Sreeraman <exmplayer.dev@gmail.com>  Tue, 03 Dec 2013 00:38:13 +0430 
+ -- rupeshsreeraman <exmplayer.dev@gmail.com>  Tue, 03 Dec 2013 00:38:13 +0430 
 
 exmplayer (3.0.0)  precise; urgency=low
   
@@ -49,10 +49,10 @@ exmplayer (3.0.0)  precise; urgency=low
   *Configurable infobar
   *Added taglib
 
- -- Rupesh Sreeraman <exmplayer.dev@gmail.com>  Sat, 16 Nov 2013 22:17:04 +0430 
+ -- rupeshsreeraman <exmplayer.dev@gmail.com>  Sat, 16 Nov 2013 22:17:04 +0430 
 
 exmplayer (2.0.0)  precise; urgency=low
 
   * Initial Release.
 
- -- Rupesh Sreeraman <exmplayer.dev@gmail.com>  Sun, 04 Aug 2013 15:25:04 +0430
+ -- rupeshsreeraman <exmplayer.dev@gmail.com>  Sun, 04 Aug 2013 15:25:04 +0430

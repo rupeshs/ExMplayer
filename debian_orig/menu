@@ -1,0 +1,2 @@
+?package(exmplayer):needs="X11" section="Apps/Graphics"\
+  title="exmplayer" command="/usr/bin/exmplayer"
