@@ -1752,10 +1752,10 @@ void mplayerfe::initMediaInfo()
     f5  MediaInfo_Option=(f5) myLib0->resolve("MediaInfo_Option");
     f6  MediaInfo_Inform=(f6) myLib0->resolve(" MediaInfo_Inform");
 
-    if (openMediaInfo>0)
+    if (0 != openMediaInfo)
     {
         mh=openMediaInfo();
-        if (readFile>0)
+        if (0 != readFile)
         {wchar_t *prop=L"Duration";
 
             //QString to wchar_t*
@@ -1789,7 +1789,7 @@ float mplayerfe::getStreamingDuration()
 {float pos;
     f3 readInfo=(f3) myLib0->resolve("MediaInfo_Get");
 
-    if (readInfo>0)
+    if (0 != readInfo)
     {wchar_t *prop=L"Duration";
         wchar_t *result;
         result=readInfo(mh,0,0,prop,1,0);

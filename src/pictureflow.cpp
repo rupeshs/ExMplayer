@@ -1923,7 +1923,7 @@ void PictureFlow::createThumbnails()
         d->renderer->fileTitle=QString("Adding Pictures,Please Wait...(%1)%").arg((double)(piccount+1)/filelist.size()*100,0,'g',4);
         d->renderer->filePath=filelist.value(piccount).filePath();
         this->repaint();
-        if (myProcess>0)
+        if (0 != myProcess)
         {
 #ifdef Q_OS_WIN
             myProcess->start("\""+qApp->applicationDirPath()+"/ffmpeg.exe\" -i "+"\""+shortPathName(d->renderer->filePath)+"\""+" -vframes 1 -r 1 -s 128x128 -f image2 "+ "\""+QDir::tempPath()+ "/pictures/cover"+QString::number(piccount)+".png""\"");
