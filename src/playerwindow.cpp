@@ -244,7 +244,7 @@ void PlayerWindow::initMPlayer(QString file,int type)
     zoomfact=1.0;
     usingfidx=false;
 
-    if (picflow>0)
+    if (0 != picflow)
     {
         picflow->close() ;
         delete  picflow;
@@ -1720,7 +1720,7 @@ void PlayerWindow::on_action_File_triggered()
     QString filter =getFilter();
     //tr("Any File (*.*)")
 
-    if (mp>0)
+    if (0 != mp)
     {
         fileName = QFileDialog::getOpenFileNames(this,
                                                  tr("Open media file(s)"),
@@ -1770,14 +1770,14 @@ void PlayerWindow::on_action_File_triggered()
 void PlayerWindow::on_actionForward_10_seconds_triggered()
 {if(mp)
         mp->seeknseconds(10);
-    if (picflow>  0 )
+    if (0 != picflow )
         picflow->showNext();
 }
 
 void PlayerWindow::on_actionRewind_10_seconds_triggered()
 {if(mp)
         mp->seeknseconds(-10);
-    if (picflow>  0 )
+    if (0 != picflow )
         picflow->showPrevious();
 }
 
@@ -3755,7 +3755,7 @@ void PlayerWindow::toggleFullscreen()
         qDebug()<<"Screen Height :"<<desktop->screen()->height();
         qDebug()<<"Screen Width :"<<desktop->screen()->width();
 
-        if(fullScreenControls<=0)
+        if(0 != fullScreenControls)
         {
             fullScreenControls=new QToolBar(this);
             fullScreenControls->setMouseTracking(true);
@@ -4553,7 +4553,7 @@ QString PlayerWindow::getFilter()
 
 void PlayerWindow::showPictureFlow(QString path)
 {
-    if (picflow>0)
+    if (0 != picflow)
     {   picflow->close() ;
 
         delete  picflow;
@@ -4585,7 +4585,7 @@ void PlayerWindow::showPictureFlow(QString path)
 void PlayerWindow::resizeVideo(int w,int hei)
 {
 
-    if(picflow>0)
+    if(0 != picflow)
     {
         if(picflow->slideCount()>0)
             picflow->resize(w,hei);
