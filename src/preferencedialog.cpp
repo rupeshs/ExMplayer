@@ -252,7 +252,7 @@ void preferenceDialog::on_buttonBox_clicked(QAbstractButton* button)
                     QString actHash="c8ba9d01342f8488c815fb5e63e96f53ba9f46fb";*/
                 // if ( QString(hashData.toHex())!=actHash)
                 //{
-                //   qDebug() << "Differnt font config";
+                //   qDebug() << "Different font config";
                 if (ui->checkBoxUseCodePage->isChecked())
                 {QString exeFileName(qApp->applicationDirPath()+"/exmplayer-font-cache.exe");
 

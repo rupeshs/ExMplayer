@@ -47,7 +47,7 @@ namespace TagLib {
      * split between a collection of frames (which are in turn split into fields
      * (Structure, <a href="id3v2-structure.html#4">4</a>)
      * (<a href="id3v2-frames.html">Frames</a>).  This class provides an API for
-     * gathering information about and modifying ID3v2 frames.  Funtionallity
+     * gathering information about and modifying ID3v2 frames.  Functionality
      * specific to a given frame type is handed in one of the many subclasses.
      */
 
@@ -165,7 +165,7 @@ namespace TagLib {
        * All other processing of \a data should be handled in a subclass.
        *
        * \note This need not contain anything more than a frame ID, but
-       * \e must constain at least that.
+       * \e must contain at least that.
        */
       explicit Frame(const ByteVector &data);
 
@@ -255,7 +255,7 @@ namespace TagLib {
 
 
       /*!
-       * Parses the contents of this frame as PropertyMap. If that fails, the returend
+       * Parses the contents of this frame as PropertyMap. If that fails, the returned
        * PropertyMap will be empty, and its unsupportedData() will contain this frame's
        * ID.
        * BIC: Will be a virtual function in future releases.
