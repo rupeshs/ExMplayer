@@ -3925,7 +3925,7 @@ void PlayerWindow::saveCoverArt()
     if (!fileName.isEmpty())
     {
         if(!cover->save(fileName,0,-1))
-            QMessageBox::critical(this,qApp->applicationName(),tr("An error occured while saving"),QMessageBox::Ok,QMessageBox::Cancel);
+            QMessageBox::critical(this,qApp->applicationName(),tr("An error occurred while saving"),QMessageBox::Ok,QMessageBox::Cancel);
 
     }
 }

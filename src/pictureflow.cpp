@@ -635,7 +635,7 @@ static QImage* prepareSurface(const QImage* slideImage, int w, int h, QRgb bgcol
     QImage img = slideImage->smoothScale(w, h);
 #endif
 
-    // slightly larger, to accomodate for the reflection
+    // slightly larger, to accommodate for the reflection
     int hs = h * 2;
     int hofs = h / 3;
 
