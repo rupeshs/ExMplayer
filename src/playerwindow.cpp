@@ -848,6 +848,7 @@ void  PlayerWindow::setupMyUi()
 
 
     QObject::connect(videoWin, SIGNAL(doubleClicked()), this,SLOT(toggleFullscreen()));
+    QObject::connect(videoWin, SIGNAL(leftClicked()), this,SLOT(togglePause()));
     QObject::connect(videoWin, SIGNAL(mouseMoveEventsg(QMouseEvent*)), this,SLOT(mouseMoveEvent(QMouseEvent*)));
     QObject::connect(videoWin, SIGNAL(rectRubberBand(QRect*)), this,SLOT(rubberBandval(QRect*)));
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this,SLOT(cleanMp()));
