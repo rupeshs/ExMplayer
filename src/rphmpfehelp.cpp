@@ -47,7 +47,7 @@ rphMPFEhelp::rphMPFEhelp()
                   this->addLine("Media mixer")+
                   this->addLine("Audio extractor")+
                   this->addLine("Network streaming")+
-                  this->addLine("Cool Seek view-you can see a frame at a partuicular postion without seeking.")+
+                  this->addLine("Cool Seek view-you can see a frame at a partuicular position without seeking.")+
                   this->addLine("Family friendly mode")+
                   this->addLine("10 band audio equalizer")+
                   this->addLine("video equalizer")+
@@ -128,7 +128,7 @@ internethlpstr=   this->addTitle("Network streaming") +
 
 keyboardhlpstr=   this->addTitle("Keyboard")+
                   this->addHeading("Edit shortcut")+
-                  this->addLine("You can edit shortcuts accoding to your preference just double click the row to edit the shortcut.A restart is necessary to initialise the new shortcuts.");
+                  this->addLine("You can edit shortcuts according to your preference just double click the row to edit the shortcut.A restart is necessary to initialise the new shortcuts.");
 
 mousehlpstr=      this->addTitle("Mouse") +
                   this->addHeading("Mose wheel role")+
