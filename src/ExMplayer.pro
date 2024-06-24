@@ -56,14 +56,14 @@ FORMS += searchsubtitle/searchsubtitle.ui \
     coverartdialog.ui \
     gifanimatordialog.ui
 
-#miniz libarary to uncompress data
+#miniz library to uncompress data
 SOURCES += searchsubtitle/miniz/miniz.c searchsubtitle/miniz/tinfl.c
 
 # xmlrpc client code to connect to opensubtitles.org
 HEADERS +=searchsubtitle/maia/maiaObject.h searchsubtitle/maia/maiaFault.h searchsubtitle/maia/maiaXmlRpcClient.h
 SOURCES += searchsubtitle/maia/maiaObject.cpp searchsubtitle/maia/maiaFault.cpp searchsubtitle/maia/maiaXmlRpcClient.cpp
 
-#video dl suppport
+#video dl support
 INCLUDEPATH += videodl
 DEPENDPATH += videodl
 

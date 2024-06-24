@@ -64,7 +64,7 @@ void WinScreenSaver::retrieveState() {
 		qDebug("WinScreenSaver::retrieveState: lowpower: %d, poweroff: %d, screensaver: %d", lowpower, poweroff, screensaver);
 #else
 		state_saved = true;
-		qDebug("WinScreensaver::retrieveState: init done %s", SSCore_TempDisable ?"succesfully":"failed");
+		qDebug("WinScreensaver::retrieveState: init done %s", SSCore_TempDisable ?"successfully":"failed");
 #endif
 	} else {
 		qDebug("WinScreenSaver::retrieveState: state already saved previously, doing nothing");

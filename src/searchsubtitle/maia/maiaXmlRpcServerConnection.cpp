@@ -92,7 +92,7 @@ void MaiaXmlRpcServerConnection::parseCall(QString call) {
 	QObject *responseObject;
 	const char *responseSlot;
 	
-	if(!doc.setContent(call)) { /* recieved invalid xml */
+	if(!doc.setContent(call)) { /* received invalid xml */
 		MaiaFault fault(-32700, "parse error: not well formed");
 		sendResponse(fault.toString());
 		return;
